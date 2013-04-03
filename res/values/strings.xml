@@ -5,4 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
+    <string name="searchable.hint">Think culture!</string>
+    <string name="searchable.label">Europeana.eu</string>
+    
 </resources>
