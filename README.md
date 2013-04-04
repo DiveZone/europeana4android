@@ -1,4 +1,4 @@
-# europeana.eu for Android
+# Europeana.eu for Android
 
 This is a demo application for the Europeana.eu API version 2.
 
@@ -20,6 +20,25 @@ It's also possible to be added to the development team and submit directly
 into the repository. But it would be nice if we know you a bit, so use the
 fork method first a few times. :-) 
 
+### Contribute translations
+If you want to contribute or correct translations of the application there
+are two ways to do so. We try to find a better way of doing this but till then...
+
+1. __Pull requests__: same as the code contribution method, fork the project
+and add the language folder and the translated `strings.xml` or update an existing one. 
+Commit and send us a pull request to merge the translations into our master branch.
+2. __Submit as issue__: download the 
+[`strings.xml`](https://raw.github.com/eLedge/europeana.eu/blob/master/res/values/strings.xml)
+and translate it. Create an issue starting with the language and it's code and post the
+complete translation into the issue between three of this quote: `. A preview should look like this:
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Europeana.eu</string>
+</resources>
+```
+
 ## Setup project
 ... TODO ...
 
@@ -39,8 +58,10 @@ the `Extras` tree item.
 ... TODO ...
 
 #### Setting up eLedge Android Toolkit
+At the moment the project depends on the master branch of eLAT but we should work to a
+tagged version, to prevent compile errors when the library changes.
 
-https://github.com/eLedge/AndroidToolkit
+<https://github.com/eLedge/AndroidToolkit>
 
 ... TODO ...
 
