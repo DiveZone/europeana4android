@@ -30,13 +30,13 @@ then...
 and add the language folder and the translated `strings.xml` or update an 
 existing one. Commit and send us a pull request to merge the translations 
 into our master branch.
-2. __Submit as issue__: download the 
-[`strings.xml`](https://raw.github.com/eLedge/europeana.eu/blob/master/res/values/strings.xml)
-and translate it. Create an issue starting with the language and it's code and 
-post the complete translation into the issue between three of this quote: `. 
-A preview should look like this:
+2. __Submit as issue__: download this file: 
+[strings.xml](https://raw.github.com/eLedge/europeana.eu/blob/master/res/values/strings.xml)
+and translate it. Create an issue starting with the language and it's code 
+and post the complete translation into the issue between three of markdown 
+code quotes. A preview should look like this:
 
-```xml
+  ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">Europeana.eu</string>
