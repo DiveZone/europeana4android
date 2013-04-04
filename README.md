@@ -29,3 +29,7 @@ https://github.com/eLedge/AndroidToolkit
 
 ... TODO ...
 
+## More project information
+
+For more detailed project documentation, visit the WIKI pages on:
+<https://github.com/eLedge/europeana.eu/wiki>
