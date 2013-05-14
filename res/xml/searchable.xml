@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <searchable xmlns:android="http://schemas.android.com/apk/res/android"
-	android:label="@string/searchable.label"
-	android:hint="@string/searchable.hint" 
+	android:label="@string/searchable_label"
+	android:hint="@string/searchable_hint" 
 	android:includeInGlobalSearch="true" 
 	android:searchSuggestIntentAction="android.intent.action.VIEW"
 	android:searchSuggestAuthority="net.eledge.android.europeana.provider.SuggestionProvider" 
