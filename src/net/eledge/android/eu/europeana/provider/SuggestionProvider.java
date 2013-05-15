@@ -1,4 +1,4 @@
-package net.eledge.android.europeana.provider;
+package net.eledge.android.eu.europeana.provider;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Locale;
 
-import net.eledge.android.europeana.Config;
-import net.eledge.android.europeana.tools.UriHelper;
+import net.eledge.android.eu.europeana.Config;
+import net.eledge.android.eu.europeana.tools.UriHelper;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -28,7 +28,7 @@ import android.text.TextUtils;
 
 public class SuggestionProvider extends ContentProvider {
 	
-	public static String AUTHORITY = "net.eledge.android.europeana.provider.SuggestionProvider";
+	public static String AUTHORITY = "net.eledge.android.eu.europeana.provider.SuggestionProvider";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/suggestions");
 
 	// UriMatcher stuff

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- GENERAL -->
+    <string name="app_name">Europeana.eu</string>
+    <string name="searchable_hint">Denk cultuur!</string>
+    <string name="searchable_label">Europeana.eu</string>
+    
+    <!-- HOME SCREEN -->
+    <string name="title_activity_home">Europeana.eu</string>
+
+    <!-- ACTIONS/MENU -->
+    <string name="action_settings">Instellingen</string>
+    <string name="action_search">Zoeken</string>
+    <string name="action_share">Delen</string>
+    
+</resources>

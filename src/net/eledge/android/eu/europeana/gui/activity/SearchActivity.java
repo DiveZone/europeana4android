@@ -1,7 +1,7 @@
-package net.eledge.android.europeana.gui.activity;
+package net.eledge.android.eu.europeana.gui.activity;
 
-import net.eledge.android.europeana.Config;
-import net.eledge.android.europeana.R;
+import net.eledge.android.eu.europeana.Config;
+import net.eledge.android.eu.europeana.R;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;

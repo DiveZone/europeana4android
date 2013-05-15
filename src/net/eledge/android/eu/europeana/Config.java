@@ -1,4 +1,4 @@
-package net.eledge.android.europeana;
+package net.eledge.android.eu.europeana;
 
 public class Config {
 

@@ -1,4 +1,4 @@
-package net.eledge.android.europeana.tools;
+package net.eledge.android.eu.europeana.tools;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -7,7 +7,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import net.eledge.android.europeana.Config;
+import net.eledge.android.eu.europeana.Config;
 
 public class UriHelper {
 
