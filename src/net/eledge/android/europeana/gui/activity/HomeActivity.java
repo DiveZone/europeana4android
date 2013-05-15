@@ -2,8 +2,11 @@ package net.eledge.android.europeana.gui.activity;
 
 import net.eledge.android.europeana.R;
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.SearchView;
 
 public class HomeActivity extends Activity {
 
@@ -17,7 +20,15 @@ public class HomeActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.home, menu);
-		return true;
+
+	    // Get the SearchView and set the searchable configuration
+	    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+	    SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+	    // Assumes current activity is the searchable activity
+//	    searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+	    searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+	    return true;
 	}
 
 }
