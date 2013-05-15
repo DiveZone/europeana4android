@@ -2,7 +2,7 @@ package net.eledge.android.europeana.gui.activity;
 
 import net.eledge.android.europeana.Config;
 import net.eledge.android.europeana.R;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.widget.SearchView;
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends ListActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class SearchActivity extends Activity {
 		if (Config.DEBUGMODE) {
 			StrictMode.enableDefaults();
 		}
-
+		handleIntent(getIntent());
 	}
 
 	@Override
@@ -42,16 +42,18 @@ public class SearchActivity extends Activity {
 
 	private void handleIntent(Intent intent) {
 		String query = null;
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			query = intent.getStringExtra(SearchManager.QUERY);
-		} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-			query = intent.getDataString();
-		} else {
-			onSearchRequested();
-		}
-		if (!TextUtils.isEmpty(query)) {
-			// mQuery = query.toLowerCase();
-			// mSearchFragment.search(mQuery);
+		if (intent != null) {
+			if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+				query = intent.getStringExtra(SearchManager.QUERY);
+			} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+				query = intent.getDataString();
+			} else {
+				onSearchRequested();
+			}
+			if (!TextUtils.isEmpty(query)) {
+				// mQuery = query.toLowerCase();
+				// mSearchFragment.search(mQuery);
+			}
 		}
 	}
 
