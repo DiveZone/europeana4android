@@ -2,17 +2,17 @@ package net.eledge.android.europeana.gui.activity;
 
 import net.eledge.android.europeana.Config;
 import net.eledge.android.europeana.R;
-import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.widget.SearchView;
 
-public class SearchActivity extends ListActivity {
+public class SearchActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
