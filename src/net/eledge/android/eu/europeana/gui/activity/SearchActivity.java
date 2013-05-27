@@ -10,9 +10,13 @@ import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.ShareActionProvider;
 
 public class SearchActivity extends FragmentActivity {
+	
+	private ShareActionProvider mShareActionProvider;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,8 @@ public class SearchActivity extends FragmentActivity {
 			StrictMode.enableDefaults();
 		}
 		handleIntent(getIntent());
+		
+//		mSearchFragment = (SearchResultsFragment) getFragmentManager().findFragmentById(R.id.fragment_search_results);
 	}
 
 	@Override
@@ -31,8 +37,23 @@ public class SearchActivity extends FragmentActivity {
 	    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 	    SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 	    searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+	    
+	    MenuItem share = menu.findItem(R.id.action_share);
+	    // Fetch and store ShareActionProvider
+	    mShareActionProvider = (ShareActionProvider) share.getActionProvider();
+	    if (mShareActionProvider != null) {
+	    	mShareActionProvider.setShareIntent(createShareIntent());
+	    }
+
 		return true;
 	}
+	
+	private Intent createShareIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/*");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "www.europeana.eu");
+        return shareIntent;
+    }
 
 	@Override
 	protected void onNewIntent(Intent intent) {
