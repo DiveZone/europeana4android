@@ -2,6 +2,7 @@ package net.eledge.android.eu.europeana.gui.activity;
 
 import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +29,7 @@ public class SearchActivity extends FragmentActivity {
 		}
 		handleIntent(getIntent());
 		
-//		mSearchFragment = (SearchResultsFragment) getFragmentManager().findFragmentById(R.id.fragment_search_results);
+		mSearchFragment = (SearchResultsFragment) getFragmentManager().findFragmentById(R.id.fragment_search_results);
 	}
 
 	@Override
