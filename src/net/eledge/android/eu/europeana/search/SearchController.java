@@ -13,6 +13,7 @@ import net.eledge.android.eu.europeana.search.model.Facet;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.submodel.Field;
 import net.eledge.android.eu.europeana.tools.UriHelper;
+import net.eledge.android.toolkit.StringArrayUtils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -20,32 +21,58 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.database.Cursor;
 import android.os.AsyncTask;
 
-public class SearchManager implements SearchTaskListener {
+public class SearchController implements SearchTaskListener {
 	
-	private static SearchManager instance = new SearchManager();
+	private static SearchController instance = new SearchController();
 	
 	private String query;
+	private String[] refinements;
+	private SearchTaskListener externalListener;
+	List<String> terms = new ArrayList<String>();
+	
 	private int pageLoad = 1;
 	private long totalResults;
 	
-	private List<SearchResult> searchItems;
-	private List<BreadCrumb> breadcrumbs;
-	private List<Facet> facets;
+	private List<SearchResult> searchItems = new ArrayList<SearchResult>();
+	private List<BreadCrumb> breadcrumbs = new ArrayList<BreadCrumb>();
+	private List<Facet> facets = new ArrayList<Facet>();
 	
-	private SearchManager() {
+	private SearchTask mTask;
+	
+	private SearchController() {
 		// Singleton
 	}
 	
-	public static SearchManager getInstance() {
+	public static SearchController getInstance() {
 		return instance;
 	}
 	
-	public void search(String query, SearchTaskListener listener) {
+	public void search(SearchTaskListener listener, String query, String... qf) {
+		reset();
+		this.externalListener = listener;
 		this.query = query;
-		this.pageLoad = 1;
+		terms.add(query);
+		this.refinements = qf;
+		for (String s : qf) {
+			terms.add(s);
+		}
+		search();
+	}
+	
+	public void reset() {
+		pageLoad = 1;
+		totalResults = 0;
+		searchItems.clear();
+		breadcrumbs.clear();
+		facets.clear();
+	}
+	
+	private void search() {
+		mTask = new SearchTask();
+		mTask.execute(new String[] { this.query });
+		
 	}
 	
 	@Override
@@ -57,7 +84,7 @@ public class SearchManager implements SearchTaskListener {
 	@Override
 	public void onFinish(List<SearchResult> results, List<Facet> facets,
 			List<BreadCrumb> breadCrumbs) {
-		this.searchItems = results;
+		this.searchItems.addAll(results);
 		if (breadCrumbs != null) {
 			this.breadcrumbs = breadCrumbs;
 		}
@@ -87,7 +114,7 @@ public class SearchManager implements SearchTaskListener {
 		@Override
 		protected Void doInBackground(String... terms) {
 			searchItems = new ArrayList<SearchResult>();
-			URI url = UriHelper.getSearchURI(terms[0], pageLoad++);
+			URI url = UriHelper.getSearchURI(terms, pageLoad++);
 			try {
 				HttpResponse response = new DefaultHttpClient().execute(new HttpGet(url));
 				BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(),

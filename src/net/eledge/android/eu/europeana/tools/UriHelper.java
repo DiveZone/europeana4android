@@ -11,10 +11,9 @@ import net.eledge.android.eu.europeana.Config;
 
 public class UriHelper {
 
-	public static URL getSearchURL(String term, int page) {
+	public static URL getSearchURL(String[] terms, int page) {
 		try {
-			String termEncoded = URLEncoder.encode(term, Config.JSON_CHARSET);
-			return new URL(String.format(Config.URL_API_SEARCH, Config.API_KEY, Integer.valueOf(page), termEncoded));
+			return new URL(createSearchUrl(terms, page));
 		} catch (MalformedURLException e) {
 			return null;
 		} catch (UnsupportedEncodingException e) {
@@ -22,15 +21,23 @@ public class UriHelper {
 		}
 	}
 
-	public static URI getSearchURI(String term, int page) {
+	public static URI getSearchURI(String[] terms, int page) {
 		try {
-			String termEncoded = URLEncoder.encode(term, Config.JSON_CHARSET);
-			return new URI(String.format(Config.URL_API_SEARCH, Config.API_KEY, Integer.valueOf(page), termEncoded));
+			return new URI(createSearchUrl(terms, page));
 		} catch (URISyntaxException e) {
 			return null;
 		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
+	}
+	
+	private static String createSearchUrl(String[] terms, int page) throws UnsupportedEncodingException {
+		StringBuilder sb = new StringBuilder();
+		for (int i=0; i<terms.length; i++) {
+			String termEncoded = URLEncoder.encode(terms[i], Config.JSON_CHARSET);
+			sb.append(i==0?"":"&qf=").append(termEncoded);
+		}
+		return String.format(Config.URL_API_SEARCH, Config.API_KEY, Integer.valueOf(page), sb.toString());
 	}
 
 	public static URI getSuggestionURI(String term) {
