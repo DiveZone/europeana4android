@@ -13,7 +13,6 @@ import net.eledge.android.eu.europeana.search.model.Facet;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.submodel.Field;
 import net.eledge.android.eu.europeana.tools.UriHelper;
-import net.eledge.android.toolkit.StringArrayUtils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -49,7 +48,7 @@ public class SearchController implements SearchTaskListener {
 		return instance;
 	}
 	
-	public void search(SearchTaskListener listener, String query, String... qf) {
+	public void newSearch(SearchTaskListener listener, String query, String... qf) {
 		reset();
 		this.externalListener = listener;
 		this.query = query;
@@ -72,28 +71,31 @@ public class SearchController implements SearchTaskListener {
 	private void search() {
 		mTask = new SearchTask();
 		mTask.execute(new String[] { this.query });
-		
 	}
 	
 	@Override
-	public void onStart() {}
+	public void onSearchStart() {}
 	
 	@Override
-	public void onError(String message) {}
+	public void onSearchError(String message) {}
 	
 	@Override
-	public void onFinish(List<SearchResult> results, List<Facet> facets,
-			List<BreadCrumb> breadCrumbs) {
-		this.searchItems.addAll(results);
-		if (breadCrumbs != null) {
-			this.breadcrumbs = breadCrumbs;
-		}
+	public void onSearchFacetsUpdate(List<Facet> facets) {
 		if (facets != null) {
 			this.facets = facets;
 		}
 	}
 	
-	private class SearchTask extends AsyncTask<String, Void, Void> {
+	@Override
+	public void onSearchFinish(List<SearchResult> results,
+			List<BreadCrumb> breadCrumbs) {
+		this.searchItems.addAll(results);
+		if (breadCrumbs != null) {
+			this.breadcrumbs = breadCrumbs;
+		}
+	}
+	
+	private class SearchTask extends AsyncTask<String, Void, Boolean> {
 		
 		private SearchTaskListener[] listeners;
 
@@ -112,8 +114,9 @@ public class SearchController implements SearchTaskListener {
 		}
 
 		@Override
-		protected Void doInBackground(String... terms) {
+		protected Boolean doInBackground(String... terms) {
 			searchItems = new ArrayList<SearchResult>();
+			boolean facetsUpdated = false;
 			URI url = UriHelper.getSearchURI(terms, pageLoad++);
 			try {
 				HttpResponse response = new DefaultHttpClient().execute(new HttpGet(url));
@@ -172,6 +175,7 @@ public class SearchController implements SearchTaskListener {
 						}
 					}
 					if (jsonObj.has("facets")) {
+						facetsUpdated = true;
 						facets = new ArrayList<Facet>();
 						items = jsonObj.getJSONArray("facets");
 						for (int i = 0; i < items.length(); i++) {
@@ -198,13 +202,16 @@ public class SearchController implements SearchTaskListener {
 				}
 			} catch (Exception e) {
 			}
-			return null;
+			return Boolean.valueOf(facetsUpdated);
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(Boolean upgradeFacets) {
 			for (SearchTaskListener l: listeners) {
-				l.onFinish(searchItems, facets, breadcrumbs);
+				if (upgradeFacets.booleanValue()) {
+					l.onSearchFacetsUpdate(facets);
+				}
+				l.onSearchFinish(searchItems, breadcrumbs);
 			}
 		}
 

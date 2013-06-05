@@ -9,6 +9,10 @@
     <!-- HOME SCREEN -->
     <string name="title_activity_home">Europeana.eu</string>
 
+    <!-- SEARCH SCREEN -->
+    <string name="drawer_facets_open">Open facets drawer</string>
+    <string name="drawer_facets_close">Close facets drawer</string>
+    
     <!-- ACTIONS/MENU -->
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>

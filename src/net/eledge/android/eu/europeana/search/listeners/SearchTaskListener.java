@@ -8,10 +8,12 @@ import net.eledge.android.eu.europeana.search.model.SearchResult;
 
 public interface SearchTaskListener {
 	
-	public void onStart();
+	public void onSearchStart();
 	
-	public void onFinish(List<SearchResult> results, List<Facet> facets, List<BreadCrumb> breadCrumbs);
+	public void onSearchFinish(List<SearchResult> results, List<BreadCrumb> breadCrumbs);
 	
-	public void onError(String message);
+	public void onSearchFacetsUpdate(List<Facet> facets);
+	
+	public void onSearchError(String message);
 	
 }
