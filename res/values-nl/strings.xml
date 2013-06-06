@@ -9,9 +9,25 @@
     <!-- HOME SCREEN -->
     <string name="title_activity_home">Europeana.eu</string>
 
+    <!-- SEARCH SCREEN -->
+    <string name="drawer_facets_open">Open facets drawer</string>
+    <string name="drawer_facets_close">Close facets drawer</string>
+    <string name="drawer_facets_cat_breadcrumbs">Resultaten voor</string>
+    <string name="drawer_facets_cat_refine">Verfijn uw zoekresultaten</string>
+    
     <!-- ACTIONS/MENU -->
     <string name="action_settings">Instellingen</string>
     <string name="action_search">Zoeken</string>
     <string name="action_share">Delen</string>
+    
+    <!-- FACET TYPES -->
+    <string name="facettype_type">Op mediatype</string>
+    <string name="facettype_language">Naar taal beschrijving</string>
+    <string name="facettype_year">Naar jaar</string>
+    <string name="facettype_country">Naar land</string>
+    <string name="facettype_rights">Op copyright</string>
+    <string name="facettype_provider">Op aanbieder</string>
+    <string name="facettype_dataprovider">Op data aanbieder</string>
+    <string name="facettype_ugc">Toevoegen van door gebruikers aangeleverde content</string>
     
 </resources>
