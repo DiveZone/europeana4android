@@ -12,10 +12,22 @@
     <!-- SEARCH SCREEN -->
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
+    <string name="drawer_facets_cat_breadcrumbs">Matches for</string>
+    <string name="drawer_facets_cat_refine">Refine your results</string>
     
     <!-- ACTIONS/MENU -->
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="action_share">Share</string>
+    
+    <!-- FACET TYPES -->
+    <string name="facettype_type">By media type</string>
+    <string name="facettype_language">By language of description</string>
+    <string name="facettype_year">By year</string>
+    <string name="facettype_country">By providing country</string>
+    <string name="facettype_rights">By copyright</string>
+    <string name="facettype_provider">By provider</string>
+    <string name="facettype_dataprovider">By data provider</string>
+    <string name="facettype_ugc">Include content contributed by users</string>
     
 </resources>

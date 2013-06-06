@@ -22,9 +22,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class SearchTask extends AsyncTask<String, Void, Boolean> {
-	
+	private final static String TAG = "SearchTask";
 
 	private SearchTaskListener[] listeners;
 
@@ -82,7 +83,9 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 						Item tmp = new Item();
 						tmp.id = item.getString("id");
 						tmp.link = item.getString("link");
-						tmp.title = item.getString("title");
+						if (item.has("title")) {
+							tmp.title = item.getString("title");
+						}
 						tmp.type = item.getString("type");
 						if (item.has("edmPreview")) {
 							//tmp.thumbnail = String.format(Config.URL_API_IMAGE_BRIEF, item.getString("enclosure"));
@@ -103,7 +106,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 						bc.href = bcObject.getString("href");
 						bc.param = bcObject.getString("param");
 						bc.value = bcObject.getString("value");
-						bc.last = bcObject.getBoolean("display");
+						bc.last = bcObject.getBoolean("last");
 						breadcrumbs.add(bc);
 					}
 				}
@@ -119,7 +122,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 						Facet facet = new Facet();
 						facet.name = facetObject.getString("name");
 						JSONArray fields = facetObject.getJSONArray("fields");
-						for (int j = 0; i < fields.length(); j++) {
+						for (int j = 0; j < fields.length(); j++) {
 							if (isCancelled()) {
 								break;
 							}
@@ -134,6 +137,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 				}
 			}
 		} catch (Exception e) {
+			Log.e(TAG, e.getMessage());
 		}
 		return Boolean.valueOf(facetsUpdated);
 	}

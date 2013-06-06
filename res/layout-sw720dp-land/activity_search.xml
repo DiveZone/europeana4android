@@ -11,7 +11,7 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:background="#111"/>
+        android:background="@android:color/background_light"/>
     
     <FrameLayout
         android:id="@+id/content_frame"

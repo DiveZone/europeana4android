@@ -38,6 +38,7 @@ public class SearchController implements SearchTaskListener {
 	
 	public void newSearch(SearchTaskListener listener, String query, String... qf) {
 		reset();
+		terms.clear();
 		this.externalListener = listener;
 		terms.add(query);
 		for (String s : qf) {

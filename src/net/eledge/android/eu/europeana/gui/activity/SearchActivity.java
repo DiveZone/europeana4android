@@ -1,10 +1,15 @@
 package net.eledge.android.eu.europeana.gui.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.gui.adaptor.FacetsAdaptor;
+import net.eledge.android.eu.europeana.gui.enums.FacetItemType;
+import net.eledge.android.eu.europeana.gui.enums.FacetType;
 import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
+import net.eledge.android.eu.europeana.gui.model.FacetItem;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
@@ -12,6 +17,7 @@ import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -35,53 +41,47 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	private DrawerLayout mDrawerLayout;
 	private ListView mFacetsList;
 	private ActionBarDrawerToggle mDrawerToggle;
+	private FacetsAdaptor mFacetsAdaptor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
 
-		if (Config.DEBUGMODE) {
-			StrictMode.enableDefaults();
-		}
-		handleIntent(getIntent());
-
 		mSearchFragment = (SearchResultsFragment) getSupportFragmentManager().findFragmentById(
 				R.id.fragment_search_results);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.layout_activity_search);
 		mFacetsList = (ListView) findViewById(R.id.drawer_facets);
+		mFacetsAdaptor = new FacetsAdaptor(this, new ArrayList<FacetItem>());
 
-		// set a custom shadow that overlays the main content when the drawer
-		// opens
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		// set up the drawer's list view with items and click listener
-		// mFacetsList.setAdapter(new ArrayAdapter<String>(this,
-		// R.layout.drawer_list_item, mPlanetTitles));
+		mFacetsList.setAdapter(mFacetsAdaptor);
 		mFacetsList.setOnItemClickListener(new DrawerItemClickListener());
 
-		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-		mDrawerLayout, /* DrawerLayout object */
-		R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
-		R.string.drawer_facets_open, /*
-									 * "open drawer" description for accessibility
-									 */
-		R.string.drawer_facets_close /*
-									 * "close drawer" description for accessibility
-									 */
-		) {
-			public void onDrawerClosed(View view) {
-				// getActionBar().setTitle(mTitle);
-				invalidateOptionsMenu(); // creates call to
-											// onPrepareOptionsMenu()
-			}
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
 
-			public void onDrawerOpened(View drawerView) {
-				// getActionBar().setTitle(mDrawerTitle);
-				invalidateOptionsMenu(); // creates call to
-											// onPrepareOptionsMenu()
-			}
-		};
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		if (mDrawerLayout != null) {
+			mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
+					R.string.drawer_facets_open, R.string.drawer_facets_close) {
+				public void onDrawerClosed(View view) {
+					// getActionBar().setTitle(mTitle);
+					invalidateOptionsMenu();
+				}
+
+				public void onDrawerOpened(View drawerView) {
+					// getActionBar().setTitle(mDrawerTitle);
+					invalidateOptionsMenu();
+				}
+			};
+			mDrawerLayout.setDrawerListener(mDrawerToggle);
+		}
+
+		if (Config.DEBUGMODE) {
+			StrictMode.enableDefaults();
+		}
+		handleIntent(getIntent());
 	}
 
 	@Override
@@ -99,6 +99,44 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		if (mDrawerLayout != null) {
+			boolean drawerOpen = mDrawerLayout.isDrawerOpen(mFacetsList);
+			menu.findItem(R.id.action_search).setVisible(!drawerOpen);
+			menu.findItem(R.id.action_share).setVisible(!drawerOpen);
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if ((mDrawerLayout != null) && mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+		switch (item.getItemId()) {
+
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		if (mDrawerLayout != null) {
+			mDrawerToggle.syncState();
+		}
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		if (mDrawerLayout != null) {
+			mDrawerToggle.syncState();
+		}
 	}
 
 	@Override
@@ -124,7 +162,22 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 
 	@Override
 	public void onSearchFacetsUpdate(List<Facet> facets) {
-		// TODO Auto-generated method stub
+		if (facets != null) {
+			List<FacetItem> facetlist = new ArrayList<FacetItem>();
+			for (Facet facet : facets) {
+				FacetType type = FacetType.safeValueOf(facet.name);
+				if (type != null) {
+					FacetItem item = new FacetItem();
+					item.itemType = FacetItemType.CATEGORY;
+					item.facetType = type;
+					item.facet = facet.name;
+					facetlist.add(item);
+				}
+			}
+			mFacetsAdaptor.clear();
+			mFacetsAdaptor.addAll(facetlist);
+			mFacetsAdaptor.notifyDataSetChanged();
+		}
 	}
 
 	private Intent createShareIntent() {

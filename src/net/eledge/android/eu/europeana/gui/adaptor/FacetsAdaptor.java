@@ -2,6 +2,7 @@ package net.eledge.android.eu.europeana.gui.adaptor;
 
 import java.util.List;
 
+import net.eledge.android.eu.europeana.gui.enums.FacetItemType;
 import net.eledge.android.eu.europeana.gui.model.FacetItem;
 import android.content.Context;
 import android.util.Log;
@@ -24,10 +25,14 @@ public class FacetsAdaptor extends ArrayAdapter<FacetItem> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		FacetItem item = getItem(position);
-		View view = inflater.inflate(item.type.resId, parent, false);
+		View view = inflater.inflate(item.itemType.resId, parent, false);
 		try {
 			TextView textTitle = (TextView) view.findViewById(android.R.id.text1);
-			textTitle.setText(item.description);
+			if (item.itemType == FacetItemType.CATEGORY) {
+				textTitle.setText(item.facetType.resId);
+			} else {
+				textTitle.setText(item.description);
+			}
 		} catch (ClassCastException e) {
 			Log.e(TAG, "Your layout must provide an image and a text view with ID's icon and text.", e);
 			throw e;
