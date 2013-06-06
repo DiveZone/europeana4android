@@ -1,11 +1,17 @@
 package net.eledge.android.eu.europeana.search.model;
 
-public class SearchResult {
+import java.util.List;
 
-	public String id;
-	public String link;
-	public String title;
-	public String type;
-	public String thumbnail;
+import net.eledge.android.eu.europeana.search.model.searchresults.BreadCrumb;
+import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
+import net.eledge.android.eu.europeana.search.model.searchresults.Item;
+
+public class SearchResult {
+	
+	public int totalResults;
+	public boolean facetUpdated = false;
+	public List<Item> searchItems;
+	public List<BreadCrumb> breadcrumbs;
+	public List<Facet> facets;
 
 }

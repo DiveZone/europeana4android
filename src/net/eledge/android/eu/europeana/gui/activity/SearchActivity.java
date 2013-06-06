@@ -7,9 +7,8 @@ import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
-import net.eledge.android.eu.europeana.search.model.BreadCrumb;
-import net.eledge.android.eu.europeana.search.model.Facet;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
+import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -119,7 +118,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	}
 
 	@Override
-	public void onSearchFinish(List<SearchResult> results, List<BreadCrumb> breadCrumbs) {
+	public void onSearchFinish(SearchResult results) {
 		// TODO Add results to fragment
 	}
 

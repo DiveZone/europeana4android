@@ -1,4 +1,4 @@
-package net.eledge.android.eu.europeana.search.model;
+package net.eledge.android.eu.europeana.search.model.searchresults;
 
 public class BreadCrumb {
 

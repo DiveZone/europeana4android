@@ -1,9 +1,8 @@
-package net.eledge.android.eu.europeana.search.model;
+package net.eledge.android.eu.europeana.search.model.searchresults;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.eledge.android.eu.europeana.search.model.submodel.Field;
 
 public class Facet {
 	
