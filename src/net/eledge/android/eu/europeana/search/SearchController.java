@@ -90,4 +90,8 @@ public class SearchController implements SearchTaskListener {
 		}
 	}
 	
+	public List<Item> getSearchItems() {
+		return searchItems;
+	}
+	
 }

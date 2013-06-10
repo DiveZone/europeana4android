@@ -161,7 +161,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	public void onSearchFinish(SearchResult results) {
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//		SearchResultsFragment fragment = new SearchResultsFragment();
+		if (mSearchFragment == null) {
+			mSearchFragment = new SearchResultsFragment();
+		}
 		fragmentTransaction.add(R.id.content_frame, mSearchFragment);
 		fragmentTransaction.commit();
 	}
