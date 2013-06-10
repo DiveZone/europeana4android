@@ -50,8 +50,8 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
 
-		mSearchFragment = (SearchResultsFragment) getSupportFragmentManager().findFragmentById(
-				R.id.fragment_search_results);
+//		mSearchFragment = (SearchResultsFragment) getSupportFragmentManager().findFragmentById(
+//				R.id.fragment_search_results);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.layout_activity_search);
 		mFacetsList = (ListView) findViewById(R.id.drawer_facets);
 		mFacetsAdaptor = new FacetsAdaptor(this, new ArrayList<FacetItem>());
