@@ -22,6 +22,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
@@ -157,7 +159,11 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 
 	@Override
 	public void onSearchFinish(SearchResult results) {
-		// TODO Add results to fragment
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//		SearchResultsFragment fragment = new SearchResultsFragment();
+		fragmentTransaction.add(R.id.content_frame, mSearchFragment);
+		fragmentTransaction.commit();
 	}
 
 	@Override

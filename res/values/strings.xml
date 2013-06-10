@@ -14,6 +14,7 @@
     <string name="drawer_facets_close">Close facets drawer</string>
     <string name="drawer_facets_cat_breadcrumbs">Matches for</string>
     <string name="drawer_facets_cat_refine">Refine your results</string>
+    <string name="msg_searching">Searching&#8230;</string>
     
     <!-- ACTIONS/MENU -->
     <string name="action_settings">Settings</string>
