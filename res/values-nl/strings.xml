@@ -14,6 +14,7 @@
     <string name="drawer_facets_close">Close facets drawer</string>
     <string name="drawer_facets_cat_breadcrumbs">Resultaten voor</string>
     <string name="drawer_facets_cat_refine">Verfijn uw zoekresultaten</string>
+    <string name="msg_searching">Bezig met zoeken&#8230;</string>
     
     <!-- ACTIONS/MENU -->
     <string name="action_settings">Instellingen</string>
@@ -29,5 +30,8 @@
     <string name="facettype_provider">Op aanbieder</string>
     <string name="facettype_dataprovider">Op data aanbieder</string>
     <string name="facettype_ugc">Toevoegen van door gebruikers aangeleverde content</string>
+
+    <!-- CONTENT DESCRIPTORS -->
+    <string name="contentdescriptor_searchitem_image">zoekresultaat voorbeeld afbeelding</string>
     
 </resources>

@@ -30,5 +30,8 @@
     <string name="facettype_provider">By provider</string>
     <string name="facettype_dataprovider">By data provider</string>
     <string name="facettype_ugc">Include content contributed by users</string>
+
+    <!-- CONTENT DESCRIPTORS -->
+    <string name="contentdescriptor_searchitem_image">Search Item image preview</string>
     
 </resources>

@@ -6,7 +6,8 @@
     <ImageView
         android:id="@+id/imageview_searchItemImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:contentDescription="@string/contentdescriptor_searchitem_image" />
 
     <TextView
         android:id="@+id/textview_searchItemTitle"

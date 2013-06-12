@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Locale;
 
 import net.eledge.android.eu.europeana.Config;
 
@@ -37,7 +38,7 @@ public class UriHelper {
 			String termEncoded = URLEncoder.encode(terms[i], Config.JSON_CHARSET);
 			sb.append(i==0?"":"&qf=").append(termEncoded);
 		}
-		return String.format(Config.URL_API_SEARCH, Config.API_KEY, Integer.valueOf(page), sb.toString());
+		return String.format(Locale.US, Config.URL_API_SEARCH, Config.API_KEY, Integer.valueOf(page), sb.toString());
 	}
 
 	public static URI getSuggestionURI(String term) {
