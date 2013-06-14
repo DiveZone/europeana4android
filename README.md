@@ -8,7 +8,7 @@ You can contribute in several ways.
 
 ### Report bugs/suggestions
 Use the Issues functionality on 
-[our GitHub page](https://github.com/eLedge/europeana.eu) to add bug reports 
+[our GitHub page](https://github.com/eLedge/europeana4android) to add bug reports 
 or issues. Try to be as specific as possible, mention brand and type of 
 hardware, android version, screen size etc etc.
 
@@ -31,7 +31,7 @@ and add the language folder and the translated `strings.xml` or update an
 existing one. Commit and send us a pull request to merge the translations 
 into our master branch.
 2. __Submit as issue__: download this file: 
-[strings.xml](https://raw.github.com/eLedge/europeana.eu/blob/master/res/values/strings.xml)
+[strings.xml](https://raw.github.com/eLedge/europeana4android/blob/master/res/values/strings.xml)
 and translate it. Create an issue starting with the language and it's code 
 and post the complete translation into the issue between three of markdown 
 code quotes. A preview should look like this:
@@ -73,4 +73,4 @@ work to a tagged version, to prevent compile errors when the library changes.
 
 For more detailed project documentation, visit the WIKI pages on:
 
-<https://github.com/eLedge/europeana.eu/wiki>
+<https://github.com/eLedge/europeana4android/wiki>
