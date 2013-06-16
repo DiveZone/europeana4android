@@ -84,7 +84,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 						tmp.id = item.getString("id");
 						tmp.link = item.getString("link");
 						if (item.has("title")) {
-							tmp.title = item.getString("title");
+							tmp.title = item.getJSONArray("title").getString(0);
 						}
 						tmp.type = item.getString("type");
 						if (item.has("edmPreview")) {
