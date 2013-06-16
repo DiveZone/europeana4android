@@ -60,8 +60,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 
-		if (findViewById(R.id.layout_activity_search) != null) { 
-			mDrawerLayout = (DrawerLayout) findViewById(R.id.layout_activity_search);
+		View view = findViewById(R.id.layout_activity_search);
+		if ((view != null ) && view instanceof DrawerLayout) {
+			mDrawerLayout = (DrawerLayout) view;
 			mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
 					R.string.drawer_facets_open, R.string.drawer_facets_close) {
