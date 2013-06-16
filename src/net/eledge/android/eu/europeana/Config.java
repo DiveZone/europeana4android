@@ -18,6 +18,8 @@ public class Config {
 	// "http://europeanastatic.eu/api/image?uri=%s&size=FULL_DOC&type=IMAGE&rswUserId=unknown";
 
 	public static final String JSON_CHARSET = "UTF-8";
+	
+	public static final String URL_PORTAL_SEARCH = "http://europeana.eu/portal/search.html?query=%s";
 
 	private Config() {
 	}

@@ -32,6 +32,15 @@ public class UriHelper {
 		}
 	}
 	
+	public static String createPortalUrl(String[] terms) throws UnsupportedEncodingException {
+		StringBuilder sb = new StringBuilder();
+		for (int i=0; i<terms.length; i++) {
+			String termEncoded = URLEncoder.encode(terms[i], Config.JSON_CHARSET);
+			sb.append(i==0?"":"&qf=").append(termEncoded);
+		}
+		return String.format(Locale.US, Config.URL_PORTAL_SEARCH, sb.toString());
+	}
+	
 	private static String createSearchUrl(String[] terms, int page) throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
 		for (int i=0; i<terms.length; i++) {
