@@ -2,12 +2,10 @@
 <resources>
 
     <!-- GENERAL -->
-    <string name="app_name">Europeana.eu</string>
     <string name="searchable_hint">Denk cultuur!</string>
     <string name="searchable_label">Europeana.eu</string>
     
     <!-- HOME SCREEN -->
-    <string name="title_activity_home">Europeana.eu</string>
 
     <!-- SEARCH SCREEN -->
     <string name="drawer_facets_open">Open facets drawer</string>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<net.eledge.android.eu.europeana.gui.widget.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:padding="2dp"
+    >
 
     <ImageView
         android:id="@+id/imageview_searchItemImage"
@@ -14,10 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/imageview_searchItemImage"
-        android:layout_alignTop="@id/imageview_searchItemImage"
+        android:layout_alignBottom="@id/imageview_searchItemImage"
         android:layout_margin="1dp"
         android:background="#BF000000"
         android:gravity="center"
         android:textColor="#000000" />
 
-</RelativeLayout>
+</net.eledge.android.eu.europeana.gui.widget.SquareRelativeLayout>

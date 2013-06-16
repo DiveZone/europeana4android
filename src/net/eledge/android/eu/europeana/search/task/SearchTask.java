@@ -88,7 +88,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 						}
 						tmp.type = item.getString("type");
 						if (item.has("edmPreview")) {
-							//tmp.thumbnail = String.format(Config.URL_API_IMAGE_BRIEF, item.getString("enclosure"));
+							tmp.thumbnail = item.getJSONArray("edmPreview").getString(0);
 						}
 						searchItems.add(tmp);
 					}

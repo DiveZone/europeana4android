@@ -34,7 +34,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:launchMode="singleTop"
-        android:theme="@style/Europeana" >
+        android:theme="@style/Europeana">
         <activity
             android:name="net.eledge.android.eu.europeana.gui.activity.HomeActivity"
             android:label="@string/app_name" >
