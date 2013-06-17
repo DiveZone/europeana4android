@@ -2,12 +2,11 @@
 <resources>
 
     <!-- GENERAL -->
-    <string name="app_name">Europeana.eu</string>
+    <string name="app_name" translatable="false">Europeana4Android</string>
     <string name="searchable_hint">Think culture!</string>
     <string name="searchable_label">Europeana.eu</string>
     
     <!-- HOME SCREEN -->
-    <string name="title_activity_home">Europeana.eu</string>
 
     <!-- SEARCH SCREEN -->
     <string name="drawer_facets_open">Open facets drawer</string>

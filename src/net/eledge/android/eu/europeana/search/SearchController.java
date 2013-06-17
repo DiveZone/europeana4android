@@ -1,5 +1,6 @@
 package net.eledge.android.eu.europeana.search;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import net.eledge.android.eu.europeana.search.model.searchresults.BreadCrumb;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.eu.europeana.search.task.SearchTask;
+import net.eledge.android.eu.europeana.tools.UriHelper;
 
 
 
@@ -61,6 +63,14 @@ public class SearchController implements SearchTaskListener {
 		searchItems.clear();
 		breadcrumbs.clear();
 		facets.clear();
+	}
+	
+	public String getPortalUrl() {
+		try {
+			return UriHelper.createPortalUrl(terms.toArray(new String[terms.size()]));
+		} catch (UnsupportedEncodingException e) {
+			return "http://europeana.eu";
+		}
 	}
 	
 	private void search() {

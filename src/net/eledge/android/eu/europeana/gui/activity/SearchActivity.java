@@ -50,9 +50,6 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
 
-//		mSearchFragment = (SearchResultsFragment) getSupportFragmentManager().findFragmentById(
-//				R.id.fragment_search_results);
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.layout_activity_search);
 		mFacetsList = (ListView) findViewById(R.id.drawer_facets);
 		mFacetsAdaptor = new FacetsAdaptor(this, new ArrayList<FacetItem>());
 
@@ -63,7 +60,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 
-		if (mDrawerLayout != null) {
+		View view = findViewById(R.id.layout_activity_search);
+		if ((view != null ) && view instanceof DrawerLayout) {
+			mDrawerLayout = (DrawerLayout) view;
 			mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
 					R.string.drawer_facets_open, R.string.drawer_facets_close) {
@@ -164,7 +163,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		if (mSearchFragment == null) {
 			mSearchFragment = new SearchResultsFragment();
 		}
-		fragmentTransaction.add(R.id.content_frame, mSearchFragment);
+		fragmentTransaction.replace(R.id.content_frame, mSearchFragment);
 		fragmentTransaction.commit();
 	}
 
@@ -191,7 +190,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	private Intent createShareIntent() {
 		Intent shareIntent = new Intent(Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
-		shareIntent.putExtra(Intent.EXTRA_TEXT, "www.europeana.eu");
+		shareIntent.putExtra(Intent.EXTRA_TEXT, SearchController.getInstance().getPortalUrl());
 		shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this search on Europeana.eu!");
 		return shareIntent;
 	}
