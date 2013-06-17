@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.GridView;
 
 public class SearchResultsFragment extends Fragment {
@@ -34,6 +36,37 @@ public class SearchResultsFragment extends Fragment {
 	public void onStart() {
 		super.onStart();
 	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		mGridview.setOnScrollListener(new OnScrollListener() {
 
+			private int priorFirst = -1;
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int first, int visible, int total) {
+				if (visible < total && (first + visible == total)) {
+					// see if we have more results
+					if ((first != priorFirst) && (SearchController.getInstance().hasMoreResults())) {
+						priorFirst = first;
+						onLastListItemDisplayed(total, visible);
+					}
+				}
+			}
+		});
+	}
+
+	protected void onLastListItemDisplayed(int total, int visible) {
+		SearchController searchController = SearchController.getInstance();
+		if (searchController.hasMoreResults()) {
+			// TODO: show search active indication
+			searchController.continueSearch();
+		}
+	}
 
 }

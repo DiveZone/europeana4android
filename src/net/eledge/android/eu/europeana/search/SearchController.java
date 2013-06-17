@@ -56,6 +56,15 @@ public class SearchController implements SearchTaskListener {
 		}
 		search();
 	}
+
+	public void continueSearch() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public boolean hasMoreResults() {
+		return totalResults > searchItems.size();
+	}
 	
 	public void reset() {
 		pageLoad = 1;

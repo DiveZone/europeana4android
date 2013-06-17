@@ -14,8 +14,8 @@ import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
+import net.eledge.android.toolkit.StringArrayUtils;
 import net.eledge.android.toolkit.StringUtils;
-import net.eledge.android.toolkit.gui.GuiUtils;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -63,9 +63,8 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 
-		View view = findViewById(R.id.layout_activity_search);
-		if ((view != null ) && view instanceof DrawerLayout) {
-			mDrawerLayout = (DrawerLayout) view;
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_activity_search);
+		if (mDrawerLayout != null) {
 			mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
 					R.string.drawer_facets_open, R.string.drawer_facets_close) {
@@ -151,6 +150,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 
 	@Override
 	public void onSearchStart() {
+		findViewById(R.id.textview_searching).setVisibility(View.VISIBLE);
 		// TODO Search animation
 	}
 
@@ -161,6 +161,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 
 	@Override
 	public void onSearchFinish(SearchResult results) {
+		findViewById(R.id.textview_searching).setVisibility(View.INVISIBLE);
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		if (mSearchFragment == null) {
@@ -200,6 +201,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 
 	private void handleIntent(Intent intent) {
 		String query = null;
+		List<String> qf = null;
 		if (intent != null) {
 			if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 				query = intent.getStringExtra(SearchManager.QUERY);
@@ -209,12 +211,18 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 					if (StringUtils.contains(query, "europeana.eu/")) {
 						Uri uri = Uri.parse(query);
 						query = uri.getQueryParameter("query");
-						// TODO: handle qf filters as well!!!
+						qf = uri.getQueryParameters("qf");
 					}
-					SearchController.getInstance().newSearch(this, query);
 				}
 			} else {
 				onSearchRequested();
+			}
+			if (!TextUtils.isEmpty(query)) {
+				if ( (qf != null) && !qf.isEmpty()) {
+					SearchController.getInstance().newSearch(this, query, StringArrayUtils.toStringArray(qf));
+				} else {
+					SearchController.getInstance().newSearch(this, query);
+				}
 			}
 		}
 	}

@@ -43,10 +43,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="net.eledge.android.eu.europeana.gui.activity.SearchActivity" />
         </activity>
         <activity
             android:name="net.eledge.android.eu.europeana.gui.activity.SearchActivity"
@@ -68,6 +64,10 @@
                 android:resource="@xml/searchable"
                 android:value="true" />
         </activity>
+        
+		<meta-data 
+			android:name="android.app.default_searchable"
+			android:value="net.eledge.android.eu.europeana.gui.activity.SearchActivity" />
 
         <provider
             android:name="net.eledge.android.eu.europeana.provider.SuggestionProvider"
