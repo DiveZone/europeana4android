@@ -14,10 +14,13 @@ import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
+import net.eledge.android.toolkit.StringUtils;
+import net.eledge.android.toolkit.gui.GuiUtils;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -202,11 +205,16 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 				query = intent.getStringExtra(SearchManager.QUERY);
 			} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 				query = intent.getDataString();
+				if (!TextUtils.isEmpty(query)) {
+					if (StringUtils.contains(query, "europeana.eu/")) {
+						Uri uri = Uri.parse(query);
+						query = uri.getQueryParameter("query");
+						// TODO: handle qf filters as well!!!
+					}
+					SearchController.getInstance().newSearch(this, query);
+				}
 			} else {
 				onSearchRequested();
-			}
-			if (!TextUtils.isEmpty(query)) {
-				SearchController.getInstance().newSearch(this, query);
 			}
 		}
 	}
