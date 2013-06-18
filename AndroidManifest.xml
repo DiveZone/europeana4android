@@ -78,7 +78,6 @@
         <provider
             android:name="net.eledge.android.eu.europeana.provider.SuggestionProvider"
             android:authorities="net.eledge.android.eu.europeana.provider.SuggestionProvider"
-            android:exported="false"
             android:syncable="false" />
     </application>
 
