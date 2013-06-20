@@ -6,6 +6,7 @@ import java.util.List;
 import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adaptor.FacetsAdaptor;
+import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
 import net.eledge.android.eu.europeana.gui.enums.FacetItemType;
 import net.eledge.android.eu.europeana.gui.enums.FacetType;
 import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
@@ -16,9 +17,11 @@ import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import net.eledge.android.toolkit.StringArrayUtils;
 import net.eledge.android.toolkit.StringUtils;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -120,10 +123,16 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			return true;
 		}
 		switch (item.getItemId()) {
-
+		case R.id.action_about:
+			try {
+				Dialog dialog = new AboutDialog(this, getPackageManager().getPackageInfo(getPackageName(), 0));
+				dialog.show();
+			} catch (NameNotFoundException e) {}
+			break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+		return true;
 	}
 
 	@Override

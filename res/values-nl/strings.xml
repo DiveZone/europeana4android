@@ -15,6 +15,7 @@
     <string name="msg_searching">Bezig met zoeken&#8230;</string>
     
     <!-- ACTIONS/MENU -->
+    <string name="action_about">Over&#8230;</string>
     <string name="action_settings">Instellingen</string>
     <string name="action_search">Zoeken</string>
     <string name="action_share">Delen</string>

@@ -1,15 +1,16 @@
 package net.eledge.android.eu.europeana.gui.activity;
 
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 public class HomeActivity extends Activity {
 
@@ -17,14 +18,6 @@ public class HomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		try {
-			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-			StringBuilder sb = new StringBuilder("version:");
-			sb.append(pInfo.versionName).append(" - build:");
-			sb.append(pInfo.versionCode);
-			TextView text = (TextView) findViewById(R.id.textview_versioninfo);
-			text.setText(sb.toString());
-		} catch (NameNotFoundException e) {}
 	}
 
 	@Override
@@ -40,6 +33,21 @@ public class HomeActivity extends Activity {
 	    searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 	    
 	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_about:
+			try {
+				Dialog dialog = new AboutDialog(this, getPackageManager().getPackageInfo(getPackageName(), 0));
+				dialog.show();
+			} catch (NameNotFoundException e) {}
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
 	}
 
 }

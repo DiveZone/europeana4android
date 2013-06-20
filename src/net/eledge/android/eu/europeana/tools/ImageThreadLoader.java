@@ -131,6 +131,8 @@ public class ImageThreadLoader {
         thread = new Thread(runner);
         thread.start();
         break;
+	default:
+		break;
     }
     
     return null;

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class AboutDialog extends Dialog {
 	
@@ -22,11 +23,10 @@ public class AboutDialog extends Dialog {
 	}
 	
 	private void setVersionNumber() {
-		StringBuilder sb = new StringBuilder("version:");
-		sb.append(mInfo.versionName).append(" - build:");
-		sb.append(mInfo.versionCode);
-//		TextView text = (TextView) findViewById(R.id.textview_versioninfo);
-//		text.setText(sb.toString());
+		TextView version = (TextView) findViewById(R.id.dialog_about_version);
+		version.setText(mInfo.versionName);
+		TextView build = (TextView) findViewById(R.id.dialog_about_build);
+		build.setText("build:" + mInfo.versionCode);
 	}
 
 }
