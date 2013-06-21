@@ -7,16 +7,16 @@ import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adaptor.FacetsAdaptor;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
-import net.eledge.android.eu.europeana.gui.enums.FacetItemType;
-import net.eledge.android.eu.europeana.gui.enums.FacetType;
 import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
 import net.eledge.android.eu.europeana.gui.model.FacetItem;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
+import net.eledge.android.eu.europeana.search.model.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import net.eledge.android.toolkit.StringArrayUtils;
 import net.eledge.android.toolkit.StringUtils;
+import net.eledge.android.toolkit.gui.GuiUtils;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -50,6 +50,8 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	private ListView mFacetsList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private FacetsAdaptor mFacetsAdaptor;
+	
+	private SearchController searchController = SearchController.getInstance();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,21 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		mFacetsAdaptor = new FacetsAdaptor(this, new ArrayList<FacetItem>());
 
 		mFacetsList.setAdapter(mFacetsAdaptor);
-		mFacetsList.setOnItemClickListener(new DrawerItemClickListener());
+		mFacetsList.setOnItemClickListener(new DrawerItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mFacetsList.setItemChecked(position, false);
+				FacetItem item = searchController.getFacetList().get(position);
+				if (item.itemType == FacetItemType.CATEGORY) {
+					searchController.setCurrentFacetType(item.facetType);
+					onSearchFacetsUpdate(null);
+				}
+				if (item.itemType == FacetItemType.ITEM) {
+					GuiUtils.toast(SearchActivity.this, item.facet);
+				}
+			}
+		});
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -182,20 +198,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 
 	@Override
 	public void onSearchFacetsUpdate(List<Facet> facets) {
-		if (facets != null) {
-			List<FacetItem> facetlist = new ArrayList<FacetItem>();
-			for (Facet facet : facets) {
-				FacetType type = FacetType.safeValueOf(facet.name);
-				if (type != null) {
-					FacetItem item = new FacetItem();
-					item.itemType = FacetItemType.CATEGORY;
-					item.facetType = type;
-					item.facet = facet.name;
-					facetlist.add(item);
-				}
-			}
+		if (searchController.getFacetList() != null) {
 			mFacetsAdaptor.clear();
-			mFacetsAdaptor.addAll(facetlist);
+			mFacetsAdaptor.addAll(searchController.getFacetList());
 			mFacetsAdaptor.notifyDataSetChanged();
 		}
 	}
@@ -203,7 +208,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	private Intent createShareIntent() {
 		Intent shareIntent = new Intent(Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
-		shareIntent.putExtra(Intent.EXTRA_TEXT, SearchController.getInstance().getPortalUrl());
+		shareIntent.putExtra(Intent.EXTRA_TEXT, searchController.getPortalUrl());
 		shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this search on Europeana.eu!");
 		return shareIntent;
 	}
@@ -228,9 +233,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			}
 			if (!TextUtils.isEmpty(query)) {
 				if ( (qf != null) && !qf.isEmpty()) {
-					SearchController.getInstance().newSearch(this, query, StringArrayUtils.toStringArray(qf));
+					searchController.newSearch(this, query, StringArrayUtils.toStringArray(qf));
 				} else {
-					SearchController.getInstance().newSearch(this, query);
+					searchController.newSearch(this, query);
 				}
 			}
 		}

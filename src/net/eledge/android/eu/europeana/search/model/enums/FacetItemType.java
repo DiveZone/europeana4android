@@ -1,4 +1,4 @@
-package net.eledge.android.eu.europeana.gui.enums;
+package net.eledge.android.eu.europeana.search.model.enums;
 
 import net.eledge.android.eu.europeana.R;
 

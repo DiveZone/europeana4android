@@ -1,7 +1,7 @@
 package net.eledge.android.eu.europeana.gui.model;
 
-import net.eledge.android.eu.europeana.gui.enums.FacetItemType;
-import net.eledge.android.eu.europeana.gui.enums.FacetType;
+import net.eledge.android.eu.europeana.search.model.enums.FacetItemType;
+import net.eledge.android.eu.europeana.search.model.enums.FacetType;
 
 public class FacetItem {
 	

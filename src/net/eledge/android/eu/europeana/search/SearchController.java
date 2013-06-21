@@ -4,10 +4,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.eledge.android.eu.europeana.gui.model.FacetItem;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
+import net.eledge.android.eu.europeana.search.model.enums.FacetItemType;
+import net.eledge.android.eu.europeana.search.model.enums.FacetType;
 import net.eledge.android.eu.europeana.search.model.searchresults.BreadCrumb;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
+import net.eledge.android.eu.europeana.search.model.searchresults.Field;
 import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.eu.europeana.search.task.SearchTask;
 import net.eledge.android.eu.europeana.tools.UriHelper;
@@ -27,6 +31,8 @@ public class SearchController implements SearchTaskListener {
 	private List<Item> searchItems = new ArrayList<Item>();
 	private List<BreadCrumb> breadcrumbs = new ArrayList<BreadCrumb>();
 	private List<Facet> facets = new ArrayList<Facet>();
+	
+	private FacetType selectedFacet = FacetType.TYPE;
 	
 	private SearchTask mTask;
 	
@@ -60,6 +66,30 @@ public class SearchController implements SearchTaskListener {
 	public void continueSearch() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public List<FacetItem> getFacetList() {
+		List<FacetItem> facetlist = new ArrayList<FacetItem>();
+		for (Facet facet : facets) {
+			FacetType type = FacetType.safeValueOf(facet.name);
+			if (type != null) {
+				FacetItem item = new FacetItem();
+				item.itemType = FacetItemType.CATEGORY;
+				item.facetType = type;
+				item.facet = facet.name;
+				facetlist.add(item);
+				if (type == selectedFacet) {
+					for (Field field: facet.fields) {
+						item = new FacetItem();
+						item.itemType = FacetItemType.ITEM;
+						item.facet = facet.name + ":" + field.label;
+						item.description = field.label + " (" + field.count + ")";
+						facetlist.add(item);
+					}
+				}
+			}
+		}
+		return facetlist;
 	}
 	
 	public boolean hasMoreResults() {
@@ -111,6 +141,10 @@ public class SearchController implements SearchTaskListener {
 	
 	public List<Item> getSearchItems() {
 		return searchItems;
+	}
+
+	public void setCurrentFacetType(FacetType facetType) {
+		selectedFacet = facetType;
 	}
 	
 }
