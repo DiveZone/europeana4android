@@ -72,10 +72,7 @@ public class SearchController {
 	}
 
 	public void continueSearch() {
-		if (searchItems.size() < totalResults) {
-			if ((mTask != null) && (mTask.getStatus() != Status.FINISHED)) {
-				return;
-			}
+		if (hasMoreResults()) {
 			search();
 		}
 	}
