@@ -6,6 +6,6 @@
     android:textColor="#111" 
     android:gravity="center_vertical"
     android:paddingLeft="16dp"
-	android:drawableStart="@drawable/btn_check_off_holo_light"    
+	android:drawableStart="@drawable/btn_check_on_holo_light"    
     />
     

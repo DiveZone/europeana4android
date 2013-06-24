@@ -42,6 +42,8 @@ import android.widget.SearchView;
 import android.widget.ShareActionProvider;
 
 public class SearchActivity extends FragmentActivity implements SearchTaskListener {
+	
+	public static final String TAG_LISTENER = SearchActivity.class.getSimpleName();
 
 	private ShareActionProvider mShareActionProvider;
 
@@ -57,26 +59,14 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
+		
+		searchController.registerListener(TAG_LISTENER, this);
 
 		mFacetsList = (ListView) findViewById(R.id.drawer_facets);
 		mFacetsAdaptor = new FacetsAdaptor(this, new ArrayList<FacetItem>());
 
 		mFacetsList.setAdapter(mFacetsAdaptor);
-		mFacetsList.setOnItemClickListener(new DrawerItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				mFacetsList.setItemChecked(position, false);
-				FacetItem item = searchController.getFacetList().get(position);
-				if (item.itemType == FacetItemType.CATEGORY) {
-					searchController.setCurrentFacetType(item.facetType);
-					onSearchFacetsUpdate(null);
-				}
-				if (item.itemType == FacetItemType.ITEM) {
-					GuiUtils.toast(SearchActivity.this, item.facet);
-				}
-			}
-		});
+		mFacetsList.setOnItemClickListener(new DrawerItemClickListener());
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -104,6 +94,13 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			StrictMode.enableDefaults();
 		}
 		handleIntent(getIntent());
+	}
+	
+	@Override
+	protected void onDestroy() {
+		searchController.reset();
+		searchController.unregister(TAG_LISTENER);
+		super.onDestroy();
 	}
 
 	@Override
@@ -176,7 +173,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	@Override
 	public void onSearchStart() {
 		findViewById(R.id.textview_searching).setVisibility(View.VISIBLE);
-		// TODO Search animation
+		mFacetsAdaptor.clear();
+		mFacetsAdaptor.notifyDataSetChanged();
+		mDrawerLayout.setEnabled(false);
 	}
 
 	@Override
@@ -187,21 +186,32 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	@Override
 	public void onSearchFinish(SearchResult results) {
 		findViewById(R.id.textview_searching).setVisibility(View.INVISIBLE);
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		if (mSearchFragment == null) {
-			mSearchFragment = new SearchResultsFragment();
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			if (mSearchFragment == null) {
+				mSearchFragment = new SearchResultsFragment();
+			}
+			fragmentTransaction.replace(R.id.content_frame, mSearchFragment);
+			fragmentTransaction.commit();
 		}
-		fragmentTransaction.replace(R.id.content_frame, mSearchFragment);
-		fragmentTransaction.commit();
+		// redraw facets if needed
+		if (results.facetUpdated) {
+			updateFacetDrawer();
+		}
 	}
 
 	@Override
 	public void onSearchFacetsUpdate(List<Facet> facets) {
+		updateFacetDrawer();
+	}
+	
+	private void updateFacetDrawer() {
 		if (searchController.getFacetList() != null) {
 			mFacetsAdaptor.clear();
 			mFacetsAdaptor.addAll(searchController.getFacetList());
 			mFacetsAdaptor.notifyDataSetChanged();
+			mDrawerLayout.setEnabled(true);
 		}
 	}
 
@@ -233,9 +243,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			}
 			if (!TextUtils.isEmpty(query)) {
 				if ( (qf != null) && !qf.isEmpty()) {
-					searchController.newSearch(this, query, StringArrayUtils.toStringArray(qf));
+					searchController.newSearch(query, StringArrayUtils.toStringArray(qf));
 				} else {
-					searchController.newSearch(this, query);
+					searchController.newSearch(query);
 				}
 			}
 		}
@@ -245,7 +255,17 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			// selectItem(position);
+			mFacetsList.setItemChecked(position, false);
+			FacetItem item = searchController.getFacetList().get(position);
+			if (item.itemType == FacetItemType.CATEGORY) {
+				searchController.setCurrentFacetType(item.facetType);
+				onSearchFacetsUpdate(null);
+			}
+			if (item.itemType == FacetItemType.ITEM) {
+				GuiUtils.toast(SearchActivity.this, item.facet);
+				searchController.refineSearch(item.facet);
+				mDrawerLayout.closeDrawers();
+			}
 		}
 	}
 

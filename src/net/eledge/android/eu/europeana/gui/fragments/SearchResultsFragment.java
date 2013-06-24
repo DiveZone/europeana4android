@@ -1,9 +1,14 @@
 package net.eledge.android.eu.europeana.gui.fragments;
 
+import java.util.List;
+
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adaptor.ResultAdaptor;
 import net.eledge.android.eu.europeana.search.SearchController;
+import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
+import net.eledge.android.eu.europeana.search.model.SearchResult;
+import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,16 +18,21 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.GridView;
 
-public class SearchResultsFragment extends Fragment {
+public class SearchResultsFragment extends Fragment implements SearchTaskListener {
 	
+	private final String TAG_LISTENER = this.getClass().getSimpleName();
+
 	private ResultAdaptor mResultAdaptor;
 	
 	private GridView mGridview;
 	
+	private SearchController searchController = SearchController.getInstance();
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mResultAdaptor = new ResultAdaptor((EuropeanaApplication)this.getActivity().getApplication(), this.getActivity(), SearchController.getInstance().getSearchItems());
+		mResultAdaptor = new ResultAdaptor((EuropeanaApplication)this.getActivity().getApplication(), this.getActivity(), searchController.getSearchItems());
+		searchController.registerListener(TAG_LISTENER, this);
 	}
 	
 	@Override
@@ -36,6 +46,12 @@ public class SearchResultsFragment extends Fragment {
 	@Override
 	public void onStart() {
 		super.onStart();
+	}
+	
+	@Override
+	public void onDestroy() {
+		searchController.unregister(TAG_LISTENER);
+		super.onDestroy();
 	}
 	
 	@Override
@@ -68,6 +84,33 @@ public class SearchResultsFragment extends Fragment {
 			// TODO: show search active indication
 			searchController.continueSearch();
 		}
+	}
+
+	@Override
+	public void onSearchStart() {
+		if (mResultAdaptor != null) {
+			mResultAdaptor.clear();
+			mResultAdaptor.notifyDataSetChanged();
+		}
+	}
+
+	@Override
+	public void onSearchFinish(SearchResult results) {
+		if (mResultAdaptor != null) {
+			mResultAdaptor.clear();
+			mResultAdaptor.addAll(searchController.getSearchItems());
+			mResultAdaptor.notifyDataSetChanged();
+		}
+	}
+
+	@Override
+	public void onSearchFacetsUpdate(List<Facet> facets) {
+		// nothing...
+	}
+
+	@Override
+	public void onSearchError(String message) {
+		// TODO: Report error?
 	}
 
 }

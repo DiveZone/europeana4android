@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.eledge.android.eu.europeana.Config;
+import net.eledge.android.eu.europeana.gui.activity.SearchActivity;
+import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.searchresults.BreadCrumb;
@@ -27,7 +29,7 @@ import android.util.Log;
 public class SearchTask extends AsyncTask<String, Void, Boolean> {
 	private final static String TAG = "SearchTask";
 
-	private SearchTaskListener[] listeners;
+	private List<SearchTaskListener> listeners;
 
 	private List<Item> searchItems;
 	private List<BreadCrumb> breadcrumbs;
@@ -36,7 +38,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 
 	private int pageLoad = 1;
 	
-	public SearchTask(int pageLoad, SearchTaskListener... listeners) {
+	public SearchTask(int pageLoad, List<SearchTaskListener> listeners) {
 		super();
 		this.pageLoad = pageLoad;
 		this.listeners = listeners;
@@ -44,7 +46,11 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 
 	@Override
 	protected void onPreExecute() {
-		// TODO: start wait animation...
+		for (SearchTaskListener l: listeners) {
+			if (l != null) {
+				l.onSearchStart();
+			}
+		}
 	}
 
 	@Override
@@ -150,14 +156,36 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 		result.facets = facets;
 		result.totalResults = totalResults;
 		result.facetUpdated = upgradeFacets.booleanValue();
-		for (SearchTaskListener l: listeners) {
-			if (l != null) {
-				if (upgradeFacets.booleanValue()) {
-					l.onSearchFacetsUpdate(facets);
-				}
-				l.onSearchFinish(result);
-			}
+
+		SearchController controller = SearchController.getInstance();
+		if (controller.listeners.containsKey(SearchActivity.TAG_LISTENER)) {
+			SearchActivity a = (SearchActivity) controller.listeners.get(SearchActivity.TAG_LISTENER);
+			a.runOnUiThread(new ListenerNotifier(result));
 		}
 	}
 
+	private class ListenerNotifier implements Runnable {
+		
+		private SearchResult result;
+
+		public ListenerNotifier(SearchResult result) {
+			this.result = result;
+		}
+
+		public void run() {
+			if (result.facetUpdated) {
+				for (SearchTaskListener l: listeners) {
+					if (l != null) {
+						l.onSearchFacetsUpdate(facets);
+					}
+				}
+			}
+			for (SearchTaskListener l: listeners) {
+				if (l != null) {
+					l.onSearchFinish(result);
+				}
+			}
+		}
+	}
+	
 }
