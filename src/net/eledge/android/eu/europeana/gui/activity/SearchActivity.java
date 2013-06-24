@@ -174,7 +174,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		findViewById(R.id.textview_searching).setVisibility(View.VISIBLE);
 		mFacetsAdaptor.clear();
 		mFacetsAdaptor.notifyDataSetChanged();
-		mDrawerLayout.setEnabled(false);
+		if (mDrawerLayout != null) {
+			mDrawerLayout.setEnabled(false);
+		}
 	}
 
 	@Override
@@ -205,7 +207,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			mFacetsAdaptor.clear();
 			mFacetsAdaptor.addAll(searchController.getFacetList());
 			mFacetsAdaptor.notifyDataSetChanged();
-			mDrawerLayout.setEnabled(true);
+			if (mDrawerLayout != null) {
+				mDrawerLayout.setEnabled(true);
+			}
 		}
 	}
 
