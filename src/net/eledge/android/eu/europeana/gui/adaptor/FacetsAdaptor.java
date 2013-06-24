@@ -2,12 +2,9 @@ package net.eledge.android.eu.europeana.gui.adaptor;
 
 import java.util.List;
 
-import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.model.FacetItem;
-import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.enums.FacetItemType;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +16,6 @@ public class FacetsAdaptor extends ArrayAdapter<FacetItem> {
 	private final static String TAG = "FacetsAdaptor";
 
 	private LayoutInflater inflater;
-
-	private SearchController searchController = SearchController.getInstance();
 
 	public FacetsAdaptor(Context context, List<FacetItem> facetItems) {
 		super(context, 0, facetItems);

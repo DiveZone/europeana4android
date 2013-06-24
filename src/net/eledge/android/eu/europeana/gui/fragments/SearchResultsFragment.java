@@ -1,14 +1,11 @@
 package net.eledge.android.eu.europeana.gui.fragments;
 
-import java.util.List;
-
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adaptor.ResultAdaptor;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
-import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -89,7 +86,6 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 	@Override
 	public void onSearchStart() {
 		if (mResultAdaptor != null) {
-			mResultAdaptor.clear();
 			mResultAdaptor.notifyDataSetChanged();
 		}
 	}
@@ -97,15 +93,8 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 	@Override
 	public void onSearchFinish(SearchResult results) {
 		if (mResultAdaptor != null) {
-			mResultAdaptor.clear();
-			mResultAdaptor.addAll(searchController.getSearchItems());
 			mResultAdaptor.notifyDataSetChanged();
 		}
-	}
-
-	@Override
-	public void onSearchFacetsUpdate(List<Facet> facets) {
-		// nothing...
 	}
 
 	@Override

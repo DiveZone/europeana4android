@@ -19,9 +19,8 @@ import net.eledge.android.eu.europeana.search.task.SearchTask;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 import android.os.AsyncTask.Status;
 
-public class SearchController implements SearchTaskListener {
+public class SearchController {
 
-	private static final String TAG_LISTENER = SearchController.class.getSimpleName();
 	private static SearchController instance = new SearchController();
 
 	public Map<String, SearchTaskListener> listeners = new HashMap<String, SearchTaskListener>();
@@ -31,8 +30,8 @@ public class SearchController implements SearchTaskListener {
 	private long totalResults;
 
 	private final List<Item> searchItems = new ArrayList<Item>();
-	private List<BreadCrumb> breadcrumbs = new ArrayList<BreadCrumb>();
-	private List<Facet> facets = new ArrayList<Facet>();
+	private final List<BreadCrumb> breadcrumbs = new ArrayList<BreadCrumb>();
+	private final List<Facet> facets = new ArrayList<Facet>();
 
 	private FacetType selectedFacet = FacetType.TYPE;
 
@@ -40,7 +39,6 @@ public class SearchController implements SearchTaskListener {
 
 	private SearchController() {
 		// Singleton
-		registerListener(TAG_LISTENER, this);
 	}
 
 	public static SearchController getInstance() {
@@ -142,36 +140,21 @@ public class SearchController implements SearchTaskListener {
 		}
 	}
 
-	@Override
-	public void onSearchStart() {
-	}
-
-	@Override
-	public void onSearchError(String message) {
-	}
-
-	@Override
-	public void onSearchFacetsUpdate(List<Facet> facets) {
-		if (facets != null) {
-			this.facets = facets;
-		}
-	}
-
-	@Override
-	public void onSearchFinish(SearchResult results) {
+	public synchronized void onSearchFinish(SearchResult results) {
 		totalResults = results.totalResults;
-		synchronized (searchItems) {
-			searchItems.addAll(results.searchItems);
+		searchItems.addAll(results.searchItems);
+		if (results.facetUpdated) {
+			facets.clear();
+			facets.addAll(results.facets);
 		}
 		if (results.breadcrumbs != null) {
-			breadcrumbs = results.breadcrumbs;
+			breadcrumbs.clear();
+			breadcrumbs.addAll(results.breadcrumbs);
 		}
 	}
 
-	public List<Item> getSearchItems() {
-		synchronized (searchItems) {
-			return searchItems;
-		}
+	public synchronized List<Item> getSearchItems() {
+		return searchItems;
 	}
 
 	public void setCurrentFacetType(FacetType facetType) {

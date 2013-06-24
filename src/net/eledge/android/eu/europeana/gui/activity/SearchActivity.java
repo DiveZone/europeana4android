@@ -13,7 +13,6 @@ import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.enums.FacetItemType;
-import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import net.eledge.android.toolkit.StringArrayUtils;
 import net.eledge.android.toolkit.StringUtils;
 import net.eledge.android.toolkit.gui.GuiUtils;
@@ -200,11 +199,6 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			updateFacetDrawer();
 		}
 	}
-
-	@Override
-	public void onSearchFacetsUpdate(List<Facet> facets) {
-		updateFacetDrawer();
-	}
 	
 	private void updateFacetDrawer() {
 		if (searchController.getFacetList() != null) {
@@ -251,7 +245,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		}
 	}
 
-	/* The click listner for ListView in the navigation drawer */
+	/* The click listener for ListView in the navigation drawer */
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -259,7 +253,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			FacetItem item = searchController.getFacetList().get(position);
 			if (item.itemType == FacetItemType.CATEGORY) {
 				searchController.setCurrentFacetType(item.facetType);
-				onSearchFacetsUpdate(null);
+				updateFacetDrawer();
 			}
 			if (item.itemType == FacetItemType.ITEM) {
 				GuiUtils.toast(SearchActivity.this, item.facet);

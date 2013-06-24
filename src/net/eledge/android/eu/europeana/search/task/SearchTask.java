@@ -38,6 +38,8 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 
 	private int pageLoad = 1;
 	
+	private SearchController searchController = SearchController.getInstance();
+	
 	public SearchTask(int pageLoad, List<SearchTaskListener> listeners) {
 		super();
 		this.pageLoad = pageLoad;
@@ -173,13 +175,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 		}
 
 		public void run() {
-			if (result.facetUpdated) {
-				for (SearchTaskListener l: listeners) {
-					if (l != null) {
-						l.onSearchFacetsUpdate(facets);
-					}
-				}
-			}
+			searchController.onSearchFinish(result);
 			for (SearchTaskListener l: listeners) {
 				if (l != null) {
 					l.onSearchFinish(result);
