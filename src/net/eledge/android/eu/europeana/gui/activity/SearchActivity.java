@@ -54,6 +54,8 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	
 	private SearchController searchController = SearchController.getInstance();
 	
+	private String runningSearch = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -92,14 +94,12 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		if (Config.DEBUGMODE) {
 			StrictMode.enableDefaults();
 		}
-		if (savedInstanceState != null) {
-			if (searchController.hasResults()) {
-				createResultFragment();
-				updateFacetDrawer();
-			} else {
-				handleIntent(getIntent());
-			}
+		if (savedInstanceState != null && searchController.hasResults()) {
+			createResultFragment();
+			updateFacetDrawer();
+			return;
 		}
+		handleIntent(getIntent());
 	}
 	
 	@Override
@@ -197,6 +197,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		if (results.facetUpdated) {
 			updateFacetDrawer();
 		}
+		runningSearch = null;
 	}
 	
 	private void createResultFragment() {
@@ -249,7 +250,8 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			} else {
 				onSearchRequested();
 			}
-			if (!TextUtils.isEmpty(query)) {
+			if (!TextUtils.isEmpty(query) && !TextUtils.equals(runningSearch, query)) {
+				runningSearch = query;
 				if ( (qf != null) && !qf.isEmpty()) {
 					searchController.newSearch(query, StringArrayUtils.toStringArray(qf));
 				} else {
