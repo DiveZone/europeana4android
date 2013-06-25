@@ -2,7 +2,17 @@
 <resources>
 
     <style name="dialog_hidetitle" parent="android:style/Theme.Dialog">
-	   <item name="android:windowNoTitle">true</item>
-	</style>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="sectionHeader" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:drawableBottom">@drawable/shape_section_header</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/emphasis</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
 </resources>

@@ -71,6 +71,20 @@ public class SearchController {
 		search();
 	}
 
+	public void removeRefineSearch(String... qf) {
+		boolean changed = false;
+		for (String s : qf) {
+			if (terms.contains(s)) {
+				terms.remove(s);
+				changed = true;
+			}
+		}
+		if (changed) {
+			reset();
+			search();
+		}
+	}
+
 	public void continueSearch() {
 		if (hasMoreResults()) {
 			search();

@@ -272,8 +272,13 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 				updateFacetDrawer();
 			}
 			if (item.itemType == FacetItemType.ITEM) {
-				GuiUtils.toast(SearchActivity.this, item.facet);
 				searchController.refineSearch(item.facet);
+				if (mDrawerLayout != null) {
+					mDrawerLayout.closeDrawers();
+				}
+			}
+			if (item.itemType == FacetItemType.ITEM_SELECTED) {
+				searchController.removeRefineSearch(item.facet);
 				if (mDrawerLayout != null) {
 					mDrawerLayout.closeDrawers();
 				}
