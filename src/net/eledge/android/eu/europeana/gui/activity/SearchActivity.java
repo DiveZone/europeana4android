@@ -53,7 +53,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	private FacetsAdaptor mFacetsAdaptor;
 	
 	private SearchController searchController = SearchController.getInstance();
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -92,12 +92,18 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		if (Config.DEBUGMODE) {
 			StrictMode.enableDefaults();
 		}
-		handleIntent(getIntent());
+		if (savedInstanceState != null) {
+			if (searchController.hasResults()) {
+				createResultFragment();
+				updateFacetDrawer();
+			} else {
+				handleIntent(getIntent());
+			}
+		}
 	}
 	
 	@Override
 	protected void onDestroy() {
-		searchController.reset();
 		searchController.unregister(TAG_LISTENER);
 		super.onDestroy();
 	}
@@ -186,6 +192,14 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 
 	@Override
 	public void onSearchFinish(SearchResult results) {
+		createResultFragment();
+		// redraw facets if needed
+		if (results.facetUpdated) {
+			updateFacetDrawer();
+		}
+	}
+	
+	private void createResultFragment() {
 		findViewById(R.id.textview_searching).setVisibility(View.INVISIBLE);
 		if (mSearchFragment == null) {
 			FragmentManager fragmentManager = getSupportFragmentManager();
@@ -195,10 +209,6 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			}
 			fragmentTransaction.replace(R.id.content_frame, mSearchFragment);
 			fragmentTransaction.commit();
-		}
-		// redraw facets if needed
-		if (results.facetUpdated) {
-			updateFacetDrawer();
 		}
 	}
 	

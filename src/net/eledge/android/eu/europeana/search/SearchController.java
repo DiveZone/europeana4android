@@ -102,6 +102,10 @@ public class SearchController {
 		}
 		return facetlist;
 	}
+	
+	public boolean hasResults() {
+		return totalResults > 0;
+	}
 
 	public boolean hasMoreResults() {
 		return totalResults > searchItems.size();

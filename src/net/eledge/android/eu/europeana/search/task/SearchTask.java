@@ -165,7 +165,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 			a.runOnUiThread(new ListenerNotifier(result));
 		}
 	}
-
+	
 	private class ListenerNotifier implements Runnable {
 		
 		private SearchResult result;
