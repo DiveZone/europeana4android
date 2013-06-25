@@ -4,7 +4,10 @@ import net.eledge.android.eu.europeana.R;
 
 public enum FacetItemType {
 	
-	CATEGORY(R.layout.listitem_drawer_category), ITEM(R.layout.listitem_drawer_facet), ITEM_SELECTED(R.layout.listitem_drawer_facet_selected);
+	CATEGORY(R.layout.listitem_drawer_category), 
+	CATEGORY_OPENED(R.layout.listitem_drawer_category_opened), 
+	ITEM(R.layout.listitem_drawer_facet), 
+	ITEM_SELECTED(R.layout.listitem_drawer_facet_selected);
 	
 	public int resId;
 	

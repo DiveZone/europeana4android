@@ -2,11 +2,13 @@
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="48dp"
-    android:textColor="#111" 
+    android:textAppearance="?android:attr/textAppearanceListItemSmall"
     android:gravity="center_vertical"
     android:paddingLeft="16dp"
-	android:drawableStart="@drawable/btn_check_off_holo_light"    
+    android:paddingRight="16dp"
+    android:textColor="#111"
+    android:textSize="@dimen/drawer_facets_category_textsize"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:textAllCaps="true"
     android:background="@color/facet_open_background"
     />
-    

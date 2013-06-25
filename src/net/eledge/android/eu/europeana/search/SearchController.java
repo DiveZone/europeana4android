@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.eledge.android.eu.europeana.gui.model.FacetItem;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.enums.FacetType;
 import net.eledge.android.eu.europeana.search.model.searchresults.BreadCrumb;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
+import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import net.eledge.android.eu.europeana.search.model.searchresults.Field;
 import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.eu.europeana.search.task.SearchTask;
@@ -83,7 +83,7 @@ public class SearchController {
 			FacetType type = FacetType.safeValueOf(facet.name);
 			if (type != null) {
 				FacetItem item = new FacetItem();
-				item.itemType = FacetItemType.CATEGORY;
+				item.itemType = type == selectedFacet ? FacetItemType.CATEGORY_OPENED: FacetItemType.CATEGORY;
 				item.facetType = type;
 				item.facet = facet.name;
 				facetlist.add(item);

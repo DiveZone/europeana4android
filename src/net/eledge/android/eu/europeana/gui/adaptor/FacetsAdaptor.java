@@ -2,8 +2,8 @@ package net.eledge.android.eu.europeana.gui.adaptor;
 
 import java.util.List;
 
-import net.eledge.android.eu.europeana.gui.model.FacetItem;
 import net.eledge.android.eu.europeana.search.model.enums.FacetItemType;
+import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +28,8 @@ public class FacetsAdaptor extends ArrayAdapter<FacetItem> {
 		FacetItem item = getItem(position);
 		View view = inflater.inflate(item.itemType.resId, parent, false);
 		try {
-			if (item.itemType == FacetItemType.CATEGORY) {
+			if ((item.itemType == FacetItemType.CATEGORY)
+					|| (item.itemType == FacetItemType.CATEGORY_OPENED)) {
 				TextView textTitle = (TextView) view
 						.findViewById(android.R.id.text1);
 				textTitle.setText(item.facetType.resId);

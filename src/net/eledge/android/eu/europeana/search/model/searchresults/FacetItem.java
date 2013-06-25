@@ -1,4 +1,4 @@
-package net.eledge.android.eu.europeana.gui.model;
+package net.eledge.android.eu.europeana.search.model.searchresults;
 
 import net.eledge.android.eu.europeana.search.model.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.enums.FacetType;
