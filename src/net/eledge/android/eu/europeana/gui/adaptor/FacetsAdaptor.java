@@ -26,7 +26,11 @@ public class FacetsAdaptor extends ArrayAdapter<FacetItem> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		FacetItem item = getItem(position);
-		View view = inflater.inflate(item.itemType.resId, parent, false);
+		int resId = item.itemType.resId;
+		if (item.last && (item.itemType.lastResId != -1)) {
+			resId = item.itemType.lastResId;
+		}
+		View view = inflater.inflate(resId, parent, false);
 		try {
 			if ((item.itemType == FacetItemType.CATEGORY)
 					|| (item.itemType == FacetItemType.CATEGORY_OPENED)) {

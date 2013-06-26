@@ -112,9 +112,11 @@ public class SearchController {
 								+ ")";
 						facetlist.add(item);
 					}
+					facetlist.get(facetlist.size()-1).last = true;
 				}
 			}
 		}
+		facetlist.get(facetlist.size()-1).last = true;
 		return facetlist;
 	}
 	

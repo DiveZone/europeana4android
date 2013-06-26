@@ -13,4 +13,6 @@ public class FacetItem {
 	
 	public String description;
 	
+	public boolean last = false;
+	
 }

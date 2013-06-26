@@ -1,12 +1,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
+    style="@style/drawerFacetSelected"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="48dp"
-    android:textColor="#111" 
-    android:gravity="center_vertical"
-    android:paddingLeft="16dp"
-	android:drawableStart="@drawable/btn_check_on_holo_light"    
-    android:background="@color/facet_open_background"
     />
     
