@@ -29,7 +29,34 @@
     <string name="facettype_provider">Op aanbieder</string>
     <string name="facettype_dataprovider">Op data aanbieder</string>
     <string name="facettype_ugc">Toevoegen van door gebruikers aangeleverde content</string>
-
+    
+    <!-- LANGUAGES -->
+    <string name="locale_bg">Bulgaars</string>
+    <string name="locale_ca">Catalaans</string>
+    <string name="locale_cs">Tsjechisch</string>
+    <string name="locale_da">Deens</string>
+    <string name="locale_de">Duits</string>
+    <string name="locale_en">Engels</string>
+    <string name="locale_es">Spaans</string>
+    <string name="locale_et">Estisch</string>
+    <string name="locale_eu">Baskisch</string>
+    <string name="locale_fi">Fins</string>
+    <string name="locale_fr">Frans</string>
+    <string name="locale_hu">Hongaars</string>
+    <string name="locale_it">Italiaans</string>
+    <string name="locale_le">Grieks</string>
+    <string name="locale_nl">Nederlands</string>
+    <string name="locale_no">Noors</string>
+    <string name="locale_pl">Pools</string>
+    <string name="locale_pt">Portugees</string>
+    <string name="locale_ro">Roemeens</string>
+    <string name="locale_ru">Russisch</string>
+    <string name="locale_sk">Slovak</string>
+    <string name="locale_sr">Servisch</string>
+    <string name="locale_sv">Zweeds</string>
+    
+    <string name="locale_mul">Meertalig</string>
+    
     <!-- CONTENT DESCRIPTORS -->
     <string name="contentdescriptor_searchitem_image">zoekresultaat voorbeeld afbeelding</string>
     

@@ -17,6 +17,7 @@ import net.eledge.android.eu.europeana.search.model.searchresults.Field;
 import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.eu.europeana.search.task.SearchTask;
 import net.eledge.android.eu.europeana.tools.UriHelper;
+import android.content.Context;
 import android.os.AsyncTask.Status;
 
 public class SearchController {
@@ -91,7 +92,7 @@ public class SearchController {
 		}
 	}
 
-	public List<FacetItem> getFacetList() {
+	public List<FacetItem> getFacetList(Context context) {
 		List<FacetItem> facetlist = new ArrayList<FacetItem>();
 		for (Facet facet : facets) {
 			FacetType type = FacetType.safeValueOf(facet.name);
@@ -107,7 +108,7 @@ public class SearchController {
 						item.facet = facet.name + ":" + field.label;
 						item.itemType = terms.contains(item.facet) ? FacetItemType.ITEM_SELECTED
 								: FacetItemType.ITEM;
-						item.description = field.label + " (" + field.count
+						item.description = type.createFacetLabel(context, field.label) + " (" + field.count
 								+ ")";
 						facetlist.add(item);
 					}

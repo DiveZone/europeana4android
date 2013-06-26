@@ -33,7 +33,34 @@
     <string name="facettype_provider">By provider</string>
     <string name="facettype_dataprovider">By data provider</string>
     <string name="facettype_ugc">Include content contributed by users</string>
-
+    
+    <!-- LANGUAGES -->
+    <string name="locale_bg">Bulgarian</string>
+    <string name="locale_ca">Catalan</string>
+    <string name="locale_cs">Czech</string>
+    <string name="locale_da">Danish</string>
+    <string name="locale_de">German</string>
+    <string name="locale_en">English</string>
+    <string name="locale_es">Spanish</string>
+    <string name="locale_et">Estonian</string>
+    <string name="locale_eu">Basque</string>
+    <string name="locale_fi">Finnish</string>
+    <string name="locale_fr">French</string>
+    <string name="locale_hu">Hungarian</string>
+    <string name="locale_it">Italian</string>
+    <string name="locale_le">Greek</string>
+    <string name="locale_nl">Dutch</string>
+    <string name="locale_no">Norwegian</string>
+    <string name="locale_pl">Polish</string>
+    <string name="locale_pt">Portuguese</string>
+    <string name="locale_ro">Romanian</string>
+    <string name="locale_ru">Russian</string>
+    <string name="locale_sk">Slowaaks</string>
+    <string name="locale_sr">Serbian</string>
+    <string name="locale_sv">Swedish</string>
+    
+    <string name="locale_mul">Multilingue</string>
+    
     <!-- CONTENT DESCRIPTORS -->
     <string name="contentdescriptor_searchitem_image">Search Item image preview</string>
     

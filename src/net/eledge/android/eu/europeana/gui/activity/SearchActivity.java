@@ -11,11 +11,9 @@ import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
-import net.eledge.android.eu.europeana.search.model.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import net.eledge.android.toolkit.StringArrayUtils;
 import net.eledge.android.toolkit.StringUtils;
-import net.eledge.android.toolkit.gui.GuiUtils;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -214,9 +212,10 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	}
 	
 	private void updateFacetDrawer() {
-		if (searchController.getFacetList() != null) {
+		List<FacetItem> facetList = searchController.getFacetList(this);
+		if (facetList != null) {
 			mFacetsAdaptor.clear();
-			mFacetsAdaptor.addAll(searchController.getFacetList());
+			mFacetsAdaptor.addAll(facetList);
 			mFacetsAdaptor.notifyDataSetChanged();
 			if (mDrawerLayout != null) {
 				mDrawerLayout.setEnabled(true);
@@ -266,22 +265,28 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			mFacetsList.setItemChecked(position, false);
-			FacetItem item = searchController.getFacetList().get(position);
-			if (item.itemType == FacetItemType.CATEGORY) {
+			FacetItem item = searchController.getFacetList(SearchActivity.this).get(position);
+			switch (item.itemType) {
+			case CATEGORY:
 				searchController.setCurrentFacetType(item.facetType);
 				updateFacetDrawer();
-			}
-			if (item.itemType == FacetItemType.ITEM) {
+				break;
+			case CATEGORY_OPENED:
+				searchController.setCurrentFacetType(null);
+				updateFacetDrawer();
+				break;
+			case ITEM:
 				searchController.refineSearch(item.facet);
 				if (mDrawerLayout != null) {
 					mDrawerLayout.closeDrawers();
 				}
-			}
-			if (item.itemType == FacetItemType.ITEM_SELECTED) {
+				break;
+			case ITEM_SELECTED:
 				searchController.removeRefineSearch(item.facet);
 				if (mDrawerLayout != null) {
 					mDrawerLayout.closeDrawers();
 				}
+				break;
 			}
 		}
 	}
