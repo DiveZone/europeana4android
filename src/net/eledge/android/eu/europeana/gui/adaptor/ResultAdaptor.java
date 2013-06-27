@@ -19,13 +19,15 @@ import android.widget.TextView;
 public class ResultAdaptor extends ArrayAdapter<Item> {
 
 	private LayoutInflater inflater;
-	
+
 	private ImageCacheManager manager;
 
-	public ResultAdaptor(EuropeanaApplication application, Context context, List<Item> resultItems) {
+	public ResultAdaptor(EuropeanaApplication application, Context context,
+			List<Item> resultItems) {
 		super(context, 0, resultItems);
 		this.manager = application.getImageCacheManager();
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.manager.clearQueue();
 	}
 
@@ -45,12 +47,14 @@ public class ResultAdaptor extends ArrayAdapter<Item> {
 
 		Item item = getItem(position);
 
-		manager.displayImage(item.thumbnail, holder.image, -1, new AsyncLoaderListener<Bitmap>() {
-			@Override
-			public void onFinished(Bitmap result, int httpStatus) {
-				notifyDataSetChanged();
-			}
-		});
+		if (item.thumbnail != null) {
+			manager.displayImage(item.thumbnail, holder.image, -1, new AsyncLoaderListener<Bitmap>() {
+				@Override
+				public void onFinished(Bitmap result, int httpStatus) {
+					notifyDataSetChanged();
+				}
+			});
+		}
 		
 		holder.textTitle.setText(item.title);
 		return convertView;
@@ -61,10 +65,10 @@ public class ResultAdaptor extends ArrayAdapter<Item> {
 			add(searchResult);
 		}
 	}
-	
+
 	private class ResultViewHolder {
 		TextView textTitle = null;
 		ImageView image = null;
 	}
-
+	
 }
