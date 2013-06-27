@@ -50,7 +50,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	private ActionBarDrawerToggle mDrawerToggle;
 	private FacetsAdaptor mFacetsAdaptor;
 	
-	private SearchController searchController = SearchController.getInstance();
+	private SearchController searchController = SearchController.instance;
 	
 	private String runningSearch = null;
 	
@@ -252,7 +252,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			if (!TextUtils.isEmpty(query) && !TextUtils.equals(runningSearch, query)) {
 				runningSearch = query;
 				if ( (qf != null) && !qf.isEmpty()) {
-					searchController.newSearch(query, StringArrayUtils.toStringArray(qf));
+					searchController.newSearch(query, StringArrayUtils.toArray(qf));
 				} else {
 					searchController.newSearch(query);
 				}

@@ -23,7 +23,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 	
 	private GridView mGridview;
 	
-	private SearchController searchController = SearchController.getInstance();
+	private SearchController searchController = SearchController.instance;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 			public void onScroll(AbsListView view, int first, int visible, int total) {
 				if (visible < total && (first + visible == total)) {
 					// see if we have more results
-					if ((first != priorFirst) && (SearchController.getInstance().hasMoreResults())) {
+					if ((first != priorFirst) && (searchController.hasMoreResults())) {
 						priorFirst = first;
 						onLastListItemDisplayed(total, visible);
 					}
@@ -76,7 +76,6 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 	}
 
 	protected void onLastListItemDisplayed(int total, int visible) {
-		SearchController searchController = SearchController.getInstance();
 		if (searchController.hasMoreResults()) {
 			// TODO: show search active indication
 			searchController.continueSearch();

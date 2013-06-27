@@ -22,7 +22,7 @@ import android.os.AsyncTask.Status;
 
 public class SearchController {
 
-	private static SearchController instance = new SearchController();
+	public final static SearchController instance = new SearchController();
 
 	public Map<String, SearchTaskListener> listeners = new HashMap<String, SearchTaskListener>();
 	public List<String> terms = new ArrayList<String>();
@@ -40,10 +40,6 @@ public class SearchController {
 
 	private SearchController() {
 		// Singleton
-	}
-
-	public static SearchController getInstance() {
-		return instance;
 	}
 
 	public void registerListener(String tag, SearchTaskListener listener) {

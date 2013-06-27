@@ -11,6 +11,7 @@ import net.eledge.android.eu.europeana.gui.activity.SearchActivity;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
+import net.eledge.android.eu.europeana.search.model.enums.DocType;
 import net.eledge.android.eu.europeana.search.model.searchresults.BreadCrumb;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import net.eledge.android.eu.europeana.search.model.searchresults.Field;
@@ -38,7 +39,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 
 	private int pageLoad = 1;
 
-	private SearchController searchController = SearchController.getInstance();
+	private SearchController searchController = SearchController.instance;
 
 	public SearchTask(int pageLoad, List<SearchTaskListener> listeners) {
 		super();
@@ -93,7 +94,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 								tmp.title = item.getJSONArray("title")
 										.getString(0);
 							}
-							tmp.type = item.getString("type");
+							tmp.type = DocType.safeValueOf(item.getString("type"));
 							if (item.has("edmPreview")) {
 								tmp.thumbnail = item.getJSONArray("edmPreview")
 										.getString(0);
@@ -162,9 +163,8 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 		result.totalResults = totalResults;
 		result.facetUpdated = upgradeFacets.booleanValue();
 
-		SearchController controller = SearchController.getInstance();
-		if (controller.listeners.containsKey(SearchActivity.TAG_LISTENER)) {
-			SearchActivity a = (SearchActivity) controller.listeners
+		if (searchController.listeners.containsKey(SearchActivity.TAG_LISTENER)) {
+			SearchActivity a = (SearchActivity) searchController.listeners
 					.get(SearchActivity.TAG_LISTENER);
 			a.runOnUiThread(new ListenerNotifier(result));
 		}
