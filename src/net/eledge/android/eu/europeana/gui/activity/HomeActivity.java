@@ -2,6 +2,8 @@ package net.eledge.android.eu.europeana.gui.activity;
 
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
+import net.eledge.android.eu.europeana.search.listeners.SuggestionTaskListener;
+import net.eledge.android.eu.europeana.search.model.Suggestion;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.SearchManager;
@@ -10,10 +12,13 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 
-public class HomeActivity extends Activity {
-
+public class HomeActivity extends Activity implements SuggestionTaskListener {
+	
+	private ArrayAdapter<Suggestion> suggestionsAdaptor;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,6 +53,13 @@ public class HomeActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 		return true;
+	}
+	
+	@Override
+	public void onSuggestionFinish(Suggestion[] suggestions) {
+		suggestionsAdaptor.clear();
+		suggestionsAdaptor.addAll(suggestions);
+		suggestionsAdaptor.notifyDataSetChanged();
 	}
 
 }

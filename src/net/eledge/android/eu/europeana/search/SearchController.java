@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
+import net.eledge.android.eu.europeana.search.listeners.SuggestionTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.enums.FacetType;
@@ -16,6 +17,7 @@ import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import net.eledge.android.eu.europeana.search.model.searchresults.Field;
 import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.eu.europeana.search.task.SearchTask;
+import net.eledge.android.eu.europeana.search.task.SuggestionTask;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 import android.content.Context;
 import android.os.AsyncTask.Status;
@@ -36,7 +38,8 @@ public class SearchController {
 
 	private FacetType selectedFacet = FacetType.TYPE;
 
-	private SearchTask mTask;
+	private SearchTask mSearchTask;
+	private SuggestionTask mSuggestionTask;
 
 	private SearchController() {
 		// Singleton
@@ -49,7 +52,15 @@ public class SearchController {
 	public void unregister(String tag) {
 		listeners.remove(tag);
 	}
-
+	
+	public void suggestions(String query, SuggestionTaskListener listener) {
+		if (mSuggestionTask != null) {
+			mSuggestionTask.cancel(true);
+		}
+		mSuggestionTask = new SuggestionTask(listener);
+		mSuggestionTask.execute(query);
+	}
+	
 	public void newSearch(String query, String... qf) {
 		reset();
 		terms.clear();
@@ -125,8 +136,8 @@ public class SearchController {
 	}
 
 	public void reset() {
-		if (mTask != null) {
-			mTask.cancel(true);
+		if (mSearchTask != null) {
+			mSearchTask.cancel(true);
 		}
 		pageLoad = 1;
 		totalResults = 0;
@@ -147,10 +158,10 @@ public class SearchController {
 	}
 
 	private void search() {
-		if ((mTask == null) || (mTask.getStatus() == Status.FINISHED)) {
-			mTask = new SearchTask(pageLoad++,
+		if ((mSearchTask == null) || (mSearchTask.getStatus() == Status.FINISHED)) {
+			mSearchTask = new SearchTask(pageLoad++,
 					new ArrayList<SearchTaskListener>(listeners.values()));
-			mTask.execute(terms.toArray(new String[terms.size()]));
+			mSearchTask.execute(terms.toArray(new String[terms.size()]));
 		}
 	}
 
