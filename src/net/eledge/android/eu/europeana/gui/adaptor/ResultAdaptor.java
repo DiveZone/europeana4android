@@ -39,6 +39,7 @@ public class ResultAdaptor extends ArrayAdapter<Item> {
 			holder = new ResultViewHolder();
 			holder.textTitle = (TextView) convertView.findViewById(R.id.textview_searchItemTitle);
 			holder.image = (ImageView) convertView.findViewById(R.id.imageview_searchItemImage);
+			holder.icon = (ImageView) convertView.findViewById(R.id.imageview_searchItemType);
 			convertView.setTag(holder);
 		} else {
 			holder = (ResultViewHolder) convertView.getTag();
@@ -57,6 +58,7 @@ public class ResultAdaptor extends ArrayAdapter<Item> {
 		}
 		
 		holder.textTitle.setText(item.title);
+		holder.icon.setImageResource(item.type.icon);
 		return convertView;
 	}
 
@@ -69,6 +71,7 @@ public class ResultAdaptor extends ArrayAdapter<Item> {
 	private class ResultViewHolder {
 		TextView textTitle = null;
 		ImageView image = null;
+		ImageView icon = null;
 	}
 	
 }

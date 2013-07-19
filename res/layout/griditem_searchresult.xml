@@ -4,13 +4,23 @@
     android:layout_height="fill_parent" 
     android:padding="3dp"
     >
-
+    
     <ImageView
         android:id="@+id/imageview_searchItemImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/contentdescriptor_searchitem_image"
         android:scaleType="centerCrop" />
+    
+    <ImageView 
+        android:id="@+id/imageview_searchItemType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/imageview_searchItemImage"
+        android:layout_alignTop="@id/imageview_searchItemImage"
+        android:contentDescription="@string/contentdescriptor_searchitem_image"
+        android:src="@drawable/type_image"
+        />
 
     <TextView
         android:id="@+id/textview_searchItemTitle"

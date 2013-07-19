@@ -4,25 +4,4 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity" >
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:ems="10"
-        android:text="AutoCompleteTextView" >
-
-        <requestFocus />
-    </AutoCompleteTextView>
-
-    <SearchView
-        android:id="@+id/searchView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/autoCompleteTextView1"
-        android:layout_marginLeft="24dp" >
-    </SearchView>
-
 </RelativeLayout>
