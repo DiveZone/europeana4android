@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <net.eledge.android.toolkit.gui.widget.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" 
-    android:padding="3dp"
-    >
-    
+    android:layout_height="fill_parent"
+    android:padding="3dp" >
+
     <ImageView
         android:id="@+id/imageview_searchItemImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/contentdescriptor_searchitem_image"
         android:scaleType="centerCrop" />
-    
-    <ImageView 
-        android:id="@+id/imageview_searchItemType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@id/imageview_searchItemImage"
-        android:layout_alignTop="@id/imageview_searchItemImage"
-        android:contentDescription="@string/contentdescriptor_searchitem_image"
-        android:src="@drawable/type_image"
-        />
 
-    <TextView
-        android:id="@+id/textview_searchItemTitle"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/imageview_searchItemImage"
-        android:layout_alignBottom="@id/imageview_searchItemImage"
-        android:background="#BF000000"
-        android:gravity="center"
-        android:textColor="@android:color/white" 
-        android:maxLines="2"
-        />
+        android:layout_height="32dp"
+        android:layout_alignBottom="@+id/imageview_searchItemImage"
+        android:layout_alignLeft="@+id/imageview_searchItemImage"
+        android:orientation="horizontal"
+        android:background="#BF000000" >
+
+        <TextView
+            android:id="@+id/textview_searchItemTitle"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:maxLines="2"
+            android:paddingLeft="2dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/griditem_searchresult_textsize" />
+
+        <TextView
+            android:id="@+id/textview_searchItemType"
+            android:layout_width="24dp"
+            android:layout_height="match_parent"
+            android:gravity="bottom|right"
+            android:padding="2dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/griditem_searchresult_iconsize" />
+        
+    </LinearLayout>
 
 </net.eledge.android.toolkit.gui.widget.SquareRelativeLayout>

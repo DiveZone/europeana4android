@@ -2,11 +2,14 @@ package net.eledge.android.eu.europeana;
 
 import net.eledge.android.toolkit.net.ImageCacheManager;
 import android.app.Application;
+import android.graphics.Typeface;
 
 public class EuropeanaApplication extends Application {
 	
 	private ImageCacheManager imageCacheManager;
 	
+	private Typeface europeanaFont; 
+			
 	public EuropeanaApplication() {
 		super();
 	}
@@ -17,6 +20,13 @@ public class EuropeanaApplication extends Application {
 			imageCacheManager.clearCache();
 		}
 		return imageCacheManager;
+	}
+	
+	public Typeface getEuropeanaFont() {
+		if (europeanaFont == null) {
+			europeanaFont = Typeface.createFromAsset(getAssets(), "europeana.ttf");
+		}
+		return europeanaFont;
 	}
 	
 }

@@ -1,19 +1,18 @@
 package net.eledge.android.eu.europeana.search.model.enums;
 
-import net.eledge.android.eu.europeana.R;
 import net.eledge.android.toolkit.StringArrayUtils;
 import net.eledge.android.toolkit.StringUtils;
 
 public enum DocType {
-	TEXT(R.drawable.type_text), 
-	IMAGE(R.drawable.type_image), 
-	SOUND(R.drawable.type_sound),
-	VIDEO(R.drawable.type_video), 
-	_3D(R.drawable.type_3d);
+	TEXT(")"), 
+	IMAGE("["), 
+	SOUND("]"),
+	VIDEO("("), 
+	_3D("{");
 
-	public int icon;
+	public String icon;
 
-	private DocType(int icon) {
+	private DocType(String icon) {
 		this.icon = icon;
 	}
 

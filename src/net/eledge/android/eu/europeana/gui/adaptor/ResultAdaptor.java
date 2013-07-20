@@ -9,6 +9,7 @@ import net.eledge.android.toolkit.net.ImageCacheManager;
 import net.eledge.android.toolkit.net.abstracts.AsyncLoaderListener;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,14 @@ public class ResultAdaptor extends ArrayAdapter<Item> {
 	private LayoutInflater inflater;
 
 	private ImageCacheManager manager;
+	
+	private final Typeface europeanaFont;
 
-	public ResultAdaptor(EuropeanaApplication application, Context context,
+	public ResultAdaptor(EuropeanaApplication application, Context context, 
 			List<Item> resultItems) {
 		super(context, 0, resultItems);
 		this.manager = application.getImageCacheManager();
+		this.europeanaFont = application.getEuropeanaFont();
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.manager.clearQueue();
@@ -39,7 +43,7 @@ public class ResultAdaptor extends ArrayAdapter<Item> {
 			holder = new ResultViewHolder();
 			holder.textTitle = (TextView) convertView.findViewById(R.id.textview_searchItemTitle);
 			holder.image = (ImageView) convertView.findViewById(R.id.imageview_searchItemImage);
-			holder.icon = (ImageView) convertView.findViewById(R.id.imageview_searchItemType);
+			holder.icon = (TextView) convertView.findViewById(R.id.textview_searchItemType);
 			convertView.setTag(holder);
 		} else {
 			holder = (ResultViewHolder) convertView.getTag();
@@ -58,7 +62,8 @@ public class ResultAdaptor extends ArrayAdapter<Item> {
 		}
 		
 		holder.textTitle.setText(item.title);
-		holder.icon.setImageResource(item.type.icon);
+		holder.icon.setText(item.type.icon);
+		holder.icon.setTypeface(europeanaFont);
 		return convertView;
 	}
 
@@ -71,7 +76,7 @@ public class ResultAdaptor extends ArrayAdapter<Item> {
 	private class ResultViewHolder {
 		TextView textTitle = null;
 		ImageView image = null;
-		ImageView icon = null;
+		TextView icon = null;
 	}
 	
 }
