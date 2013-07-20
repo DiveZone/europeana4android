@@ -4,11 +4,7 @@ import net.eledge.android.toolkit.StringArrayUtils;
 import net.eledge.android.toolkit.StringUtils;
 
 public enum DocType {
-	TEXT(")"), 
-	IMAGE("["), 
-	SOUND("]"),
-	VIDEO("("), 
-	_3D("{");
+	TEXT(")"), IMAGE("["), SOUND("]"), VIDEO("("), _3D("{");
 
 	public String icon;
 

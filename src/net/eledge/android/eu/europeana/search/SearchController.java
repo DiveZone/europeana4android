@@ -112,6 +112,8 @@ public class SearchController {
 				if (type == selectedFacet) {
 					for (Field field : facet.fields) {
 						item = new FacetItem();
+						item.facetType = type;
+						item.label = field.label;
 						item.facet = facet.name + ":" + field.label;
 						item.itemType = terms.contains(item.facet) ? FacetItemType.ITEM_SELECTED
 								: FacetItemType.ITEM;

@@ -13,6 +13,7 @@
     </style>
 
     <style name="drawerFacetHeaderOpen" parent="drawerItem">
+        <item name="android:drawableTop">@drawable/shape_facet_section</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/emphasis</item>
         <item name="android:textSize">14sp</item>
@@ -21,7 +22,6 @@
 
     <style name="drawerFacetHeader" parent="drawerFacetHeaderOpen">
         <item name="android:drawablePadding">4dp</item>
-        <item name="android:drawableBottom">@drawable/shape_facet_section</item>
         <item name="android:textStyle">normal</item>
     </style>
 
@@ -33,19 +33,17 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="drawerFacetIcon" parent="drawerItem">
+        <item name="android:drawableTop">@drawable/shape_facet_divider</item>
+        <item name="android:textColor">@color/emphasis</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:paddingRight">2dp</item>
+        </style>
+    
     <style name="drawerFacetSelected" parent="drawerFacet">
         <item name="android:drawableStart">@drawable/btn_check_on_holo_light</item>
         <item name="android:textStyle">bold</item>
 	</style>
 
-    <style name="drawerFacetLast" parent="drawerFacet">
-        <item name="android:drawableBottom">@drawable/shape_facet_section</item>
-        <item name="android:drawablePadding">4dp</item>
-        </style>
-
-    <style name="drawerFacetSelectedLast" parent="drawerFacetSelected">
-        <item name="android:drawableBottom">@drawable/shape_facet_section</item>
-        <item name="android:drawablePadding">4dp</item>
-	</style>
-    
 </resources>

@@ -9,6 +9,8 @@ public class FacetItem {
 	
 	public FacetType facetType;
 
+	public String label;
+
 	public String facet;
 	
 	public String description;

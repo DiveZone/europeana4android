@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.eledge.android.eu.europeana.Config;
+import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adaptor.FacetsAdaptor;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
@@ -62,7 +63,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		searchController.registerListener(TAG_LISTENER, this);
 
 		mFacetsList = (ListView) findViewById(R.id.drawer_facets);
-		mFacetsAdaptor = new FacetsAdaptor(this, new ArrayList<FacetItem>());
+		mFacetsAdaptor = new FacetsAdaptor((EuropeanaApplication) getApplication(), this, new ArrayList<FacetItem>());
 
 		mFacetsList.setAdapter(mFacetsAdaptor);
 		mFacetsList.setOnItemClickListener(new DrawerItemClickListener());
