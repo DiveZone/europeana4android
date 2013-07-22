@@ -8,12 +8,16 @@
         style="@style/drawerFacet"
         android:layout_width="0dip"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1" 
+        android:layout_margin="0dip"
+        />
 
     <TextView
         android:id="@android:id/text2"
         style="@style/drawerFacetIcon"
         android:layout_width="32dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" 
+        android:layout_margin="0dip"
+        />
 
 </LinearLayout>
