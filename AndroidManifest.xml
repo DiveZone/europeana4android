@@ -73,6 +73,24 @@
                 android:value="true" />
         </activity>
 
+        <activity
+            android:name="net.eledge.android.eu.europeana.gui.activity.RecordActivity"
+            android:label="@string/app_name" 
+            android:launchMode = "singleInstance" >
+            
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="www.europeana.eu"
+                    android:path="/portal/record/*"
+                    android:scheme="http" />
+            </intent-filter>
+            
+        </activity>
+            
         <meta-data
             android:name="android.app.default_searchable"
             android:value="net.eledge.android.eu.europeana.gui.activity.SearchActivity" />
