@@ -6,6 +6,7 @@ import net.eledge.android.eu.europeana.gui.adaptor.ResultAdaptor;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
+import net.eledge.android.toolkit.gui.GuiUtils;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.GridView;
+import android.widget.TextView;
 
 public class SearchResultsFragment extends Fragment implements SearchTaskListener {
 	
@@ -22,6 +24,8 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 	private ResultAdaptor mResultAdaptor;
 	
 	private GridView mGridview;
+	
+	private TextView mStatusTextView;
 	
 	private SearchController searchController = SearchController.instance;
 	
@@ -35,6 +39,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = (ViewGroup) inflater.inflate(R.layout.fragment_search_results, null);
+		mStatusTextView = (TextView) root.findViewById(R.id.fragment_search_status_textview);
 		mGridview = (GridView) root.findViewById(R.id.fragment_search_gridview);
 		mGridview.setAdapter(mResultAdaptor);
 		return root;
@@ -61,7 +66,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 			}
-
+			
 			@Override
 			public void onScroll(AbsListView view, int first, int visible, int total) {
 				if (visible < total && (first + visible == total)) {
@@ -77,13 +82,14 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 
 	protected void onLastListItemDisplayed(int total, int visible) {
 		if (searchController.hasMoreResults()) {
-			// TODO: show search active indication
 			searchController.continueSearch();
 		}
 	}
 
 	@Override
 	public void onSearchStart() {
+		mStatusTextView.setVisibility(View.VISIBLE);
+		mStatusTextView.setText(R.string.msg_searching);
 		if (mResultAdaptor != null) {
 			mResultAdaptor.notifyDataSetChanged();
 		}
@@ -94,11 +100,14 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 		if (mResultAdaptor != null) {
 			mResultAdaptor.notifyDataSetChanged();
 		}
+		mStatusTextView.setText(GuiUtils.format(this.getActivity(), R.string.msg_searchresults, results.size(), results.totalResults));
+		mStatusTextView.setVisibility(View.VISIBLE);
 	}
 
 	@Override
 	public void onSearchError(String message) {
-		// TODO: Report error?
+		mStatusTextView.setText(message);
+		mStatusTextView.setVisibility(View.VISIBLE);
 	}
-
+	
 }

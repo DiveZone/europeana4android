@@ -30,8 +30,6 @@ import android.util.Log;
 public class SearchTask extends AsyncTask<String, Void, Boolean> {
 	private final static String TAG = "SearchTask";
 
-	private List<SearchTaskListener> listeners;
-
 	private List<Item> searchItems;
 	private List<BreadCrumb> breadcrumbs;
 	private List<Facet> facets;
@@ -41,15 +39,14 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 
 	private SearchController searchController = SearchController.instance;
 
-	public SearchTask(int pageLoad, List<SearchTaskListener> listeners) {
+	public SearchTask(int pageLoad) {
 		super();
 		this.pageLoad = pageLoad;
-		this.listeners = listeners;
 	}
 
 	@Override
 	protected void onPreExecute() {
-		for (SearchTaskListener l : listeners) {
+		for (SearchTaskListener l : searchController.listeners.values()) {
 			if (l != null) {
 				l.onSearchStart();
 			}
@@ -180,7 +177,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 
 		public void run() {
 			searchController.onSearchFinish(result);
-			for (SearchTaskListener l : listeners) {
+			for (SearchTaskListener l : searchController.listeners.values()) {
 				if (l != null) {
 					l.onSearchFinish(result);
 				}

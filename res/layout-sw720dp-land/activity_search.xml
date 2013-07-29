@@ -18,15 +18,6 @@
         android:id="@+id/content_frame"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_toRightOf="@id/drawer_facets">
-        <TextView
-            android:id="@+id/textview_searching"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:gravity="center"
-            android:text="@string/msg_searching"
-            android:textColor="#111" />
-    </FrameLayout>
+        android:layout_toRightOf="@id/drawer_facets"/>
     
 </RelativeLayout>

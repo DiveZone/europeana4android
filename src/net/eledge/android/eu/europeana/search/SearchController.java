@@ -161,8 +161,7 @@ public class SearchController {
 
 	private void search() {
 		if ((mSearchTask == null) || (mSearchTask.getStatus() == Status.FINISHED)) {
-			mSearchTask = new SearchTask(pageLoad++,
-					new ArrayList<SearchTaskListener>(listeners.values()));
+			mSearchTask = new SearchTask(pageLoad++);
 			mSearchTask.execute(terms.toArray(new String[terms.size()]));
 		}
 	}

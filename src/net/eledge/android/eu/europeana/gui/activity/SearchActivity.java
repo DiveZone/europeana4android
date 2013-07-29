@@ -93,8 +93,8 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		if (Config.DEBUGMODE) {
 			StrictMode.enableDefaults();
 		}
+		createResultFragment();
 		if (savedInstanceState != null && searchController.hasResults()) {
-			createResultFragment();
 			updateFacetDrawer();
 			return;
 		}
@@ -176,7 +176,6 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 
 	@Override
 	public void onSearchStart() {
-		findViewById(R.id.textview_searching).setVisibility(View.VISIBLE);
 		mFacetsAdaptor.clear();
 		mFacetsAdaptor.notifyDataSetChanged();
 		if (mDrawerLayout != null) {
@@ -191,8 +190,6 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 
 	@Override
 	public void onSearchFinish(SearchResult results) {
-		createResultFragment();
-		// redraw facets if needed
 		if (results.facetUpdated) {
 			updateFacetDrawer();
 		}
@@ -200,7 +197,6 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	}
 	
 	private void createResultFragment() {
-		findViewById(R.id.textview_searching).setVisibility(View.INVISIBLE);
 		if (mSearchFragment == null) {
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
