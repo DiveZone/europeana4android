@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.eledge.android.eu.europeana"
-    android:versionCode="18"
-    android:versionName="v0.1b18-alpha" >
+    android:versionCode="19"
+    android:versionName="v0.1b19-alpha" >
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="18" />
 
     <!--
          <uses-feature

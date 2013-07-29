@@ -26,6 +26,8 @@ public class SearchController {
 
 	public final static SearchController instance = new SearchController();
 
+	public int pagesize = 12;
+
 	public Map<String, SearchTaskListener> listeners = new HashMap<String, SearchTaskListener>();
 	public List<String> terms = new ArrayList<String>();
 
@@ -181,6 +183,13 @@ public class SearchController {
 
 	public synchronized List<Item> getSearchItems() {
 		return searchItems;
+	}
+	
+	public Integer size() {
+		if (searchItems != null) {
+			return Integer.valueOf(searchItems.size());
+		}
+		return Integer.valueOf(0);
 	}
 
 	public void setCurrentFacetType(FacetType facetType) {

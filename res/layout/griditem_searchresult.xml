@@ -14,8 +14,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:layout_alignBottom="@+id/imageview_searchItemImage"
-        android:layout_alignLeft="@+id/imageview_searchItemImage"
+        android:layout_alignBottom="@id/imageview_searchItemImage"
+        android:layout_alignLeft="@id/imageview_searchItemImage"
         android:orientation="horizontal"
         android:background="#BF000000" >
 

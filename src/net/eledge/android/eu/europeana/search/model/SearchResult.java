@@ -13,12 +13,5 @@ public class SearchResult {
 	public List<Item> searchItems;
 	public List<BreadCrumb> breadcrumbs;
 	public List<Facet> facets;
-	
-	public Integer size() {
-		if (searchItems != null) {
-			return Integer.valueOf(searchItems.size());
-		}
-		return Integer.valueOf(0);
-	}
 
 }

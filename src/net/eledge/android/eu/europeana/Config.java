@@ -2,8 +2,6 @@ package net.eledge.android.eu.europeana;
 
 public class Config {
 	
-	public static final int SEARCH_PAGESIZE = 24;
-
 	public static final boolean DEBUGMODE = true;
 
 	public static final String API_KEY = "emXtfoHCE";

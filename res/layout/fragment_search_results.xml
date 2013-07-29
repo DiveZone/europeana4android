@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
-<TextView
-    android:id="@+id/fragment_search_status_textview"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:text="@string/msg_searching"
-    android:visibility="visible" />
+    <GridView
+        android:id="@+id/fragment_search_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="@integer/search_results_columns"
+        android:stretchMode="columnWidth" />
 
-<GridView
-    android:id="@+id/fragment_search_gridview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:numColumns="@integer/search_results_columns"
-    android:stretchMode="columnWidth"
-/>    
-</LinearLayout>
+    <TextView
+        android:id="@+id/fragment_search_status_textview"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignLeft="@+id/fragment_search_gridview"
+        android:layout_alignTop="@+id/fragment_search_gridview"
+        android:background="#BF000000"
+        android:gravity="center"
+        android:text="@string/msg_searching"
+        android:textColor="@android:color/white"
+        android:visibility="visible" />
 
+</RelativeLayout>

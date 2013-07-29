@@ -10,52 +10,63 @@ import net.eledge.android.toolkit.gui.GuiUtils;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
-public class SearchResultsFragment extends Fragment implements SearchTaskListener {
-	
+public class SearchResultsFragment extends Fragment implements
+		SearchTaskListener {
+
 	private final String TAG_LISTENER = this.getClass().getSimpleName();
 
 	private ResultAdaptor mResultAdaptor;
-	
+
 	private GridView mGridview;
-	
+
 	private TextView mStatusTextView;
-	
+
 	private SearchController searchController = SearchController.instance;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mResultAdaptor = new ResultAdaptor((EuropeanaApplication)this.getActivity().getApplication(), this.getActivity(), searchController.getSearchItems());
+		mResultAdaptor = new ResultAdaptor((EuropeanaApplication) this
+				.getActivity().getApplication(), this.getActivity(),
+				searchController.getSearchItems());
 		searchController.registerListener(TAG_LISTENER, this);
 	}
-	
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = (ViewGroup) inflater.inflate(R.layout.fragment_search_results, null);
-		mStatusTextView = (TextView) root.findViewById(R.id.fragment_search_status_textview);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View root = (ViewGroup) inflater.inflate(
+				R.layout.fragment_search_results, null);
+		mStatusTextView = (TextView) root
+				.findViewById(R.id.fragment_search_status_textview);
 		mGridview = (GridView) root.findViewById(R.id.fragment_search_gridview);
 		mGridview.setAdapter(mResultAdaptor);
 		return root;
 	}
-	
+
 	@Override
 	public void onStart() {
 		super.onStart();
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		searchController.unregister(TAG_LISTENER);
 		super.onDestroy();
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -66,16 +77,50 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 			}
-			
+
 			@Override
-			public void onScroll(AbsListView view, int first, int visible, int total) {
+			public void onScroll(AbsListView view, int first, int visible,
+					int total) {
 				if (visible < total && (first + visible == total)) {
 					// see if we have more results
-					if ((first != priorFirst) && (searchController.hasMoreResults())) {
+					if ((first != priorFirst)
+							&& (searchController.hasMoreResults())) {
 						priorFirst = first;
 						onLastListItemDisplayed(total, visible);
 					}
 				}
+			}
+		});
+		mGridview.setOnTouchListener(new OnTouchListener() {
+
+			private static final int MIN_MOVE = 150;
+			private float downY = -1;
+			private boolean down = false;
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					down = true;
+					downY = event.getY();
+					break;
+				case MotionEvent.ACTION_MOVE:
+					if (mStatusTextView.isShown()) {
+						if (down && (event.getY() - downY < -MIN_MOVE)) {
+							hideStatusText();
+						}
+					}
+					if (!mStatusTextView.isShown()) {
+						if (down && (event.getY() - downY > MIN_MOVE)) {
+							showStatusText();
+						}
+					}
+					break;
+				case MotionEvent.ACTION_UP:
+					down = false;
+					break;
+				}
+				return false;
 			}
 		});
 	}
@@ -88,8 +133,8 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 
 	@Override
 	public void onSearchStart() {
-		mStatusTextView.setVisibility(View.VISIBLE);
 		mStatusTextView.setText(R.string.msg_searching);
+		showStatusText();
 		if (mResultAdaptor != null) {
 			mResultAdaptor.notifyDataSetChanged();
 		}
@@ -100,14 +145,62 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 		if (mResultAdaptor != null) {
 			mResultAdaptor.notifyDataSetChanged();
 		}
-		mStatusTextView.setText(GuiUtils.format(this.getActivity(), R.string.msg_searchresults, results.size(), results.totalResults));
-		mStatusTextView.setVisibility(View.VISIBLE);
+		mStatusTextView.setText(GuiUtils.format(this.getActivity(),
+				R.string.msg_searchresults, searchController.size(),
+				results.totalResults));
+		showStatusText();
 	}
 
 	@Override
 	public void onSearchError(String message) {
 		mStatusTextView.setText(message);
-		mStatusTextView.setVisibility(View.VISIBLE);
+		showStatusText();
 	}
-	
+
+	private void hideStatusText() {
+		if (!mStatusTextView.isShown()) {
+			return;
+		}
+		Animation fadeOut = new AlphaAnimation(1, 0);
+		fadeOut.setDuration(400);
+		fadeOut.setAnimationListener(new AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				mStatusTextView.setVisibility(View.GONE);
+			}
+		});
+		mStatusTextView.startAnimation(fadeOut);
+	}
+
+	private void showStatusText() {
+		if (mStatusTextView.isShown()) {
+			return;
+		}
+		Animation fadeOut = new AlphaAnimation(0, 1);
+		fadeOut.setDuration(400);
+		fadeOut.setAnimationListener(new AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+				mStatusTextView.setVisibility(View.VISIBLE);
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+			}
+		});
+		mStatusTextView.startAnimation(fadeOut);
+	}
+
 }

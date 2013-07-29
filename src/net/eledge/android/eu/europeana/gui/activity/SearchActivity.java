@@ -89,7 +89,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			};
 			mDrawerLayout.setDrawerListener(mDrawerToggle);
 		}
-
+		searchController.pagesize = getResources().getInteger(R.integer.search_result_pagesize);
 		if (Config.DEBUGMODE) {
 			StrictMode.enableDefaults();
 		}
@@ -163,6 +163,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
+		searchController.pagesize = getResources().getInteger(R.integer.search_result_pagesize);
 		if (mDrawerLayout != null) {
 			mDrawerToggle.syncState();
 		}
