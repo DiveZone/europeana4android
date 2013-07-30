@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="net.eledge.android.eu.europeana"
     android:versionCode="19"
     android:versionName="v0.1b19-alpha" >
@@ -98,7 +99,7 @@
         <provider
             android:name="net.eledge.android.eu.europeana.provider.SuggestionProvider"
             android:authorities="net.eledge.android.eu.europeana.provider.SuggestionProvider"
-            android:syncable="false" />
+            android:syncable="false" android:exported="false"/>
     </application>
 
 </manifest>
