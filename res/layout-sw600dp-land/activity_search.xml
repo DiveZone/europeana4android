@@ -15,7 +15,7 @@
         android:background="@android:color/background_light"/>
     
     <FrameLayout
-        android:id="@+id/content_frame"
+        android:id="@+id/content_frame_searchgrid"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_toRightOf="@id/drawer_facets"/>

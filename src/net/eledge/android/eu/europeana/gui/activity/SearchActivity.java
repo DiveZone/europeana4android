@@ -46,11 +46,14 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	private ShareActionProvider mShareActionProvider;
 
 	private SearchResultsFragment mSearchFragment;
+
+	// NavigationDrawer
 	private DrawerLayout mDrawerLayout;
-	private ListView mFacetsList;
 	private ActionBarDrawerToggle mDrawerToggle;
+	private ListView mFacetsList;
 	private FacetsAdaptor mFacetsAdaptor;
 	
+	// Controller
 	private SearchController searchController = SearchController.instance;
 	
 	private String runningSearch = null;
@@ -204,7 +207,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			if (mSearchFragment == null) {
 				mSearchFragment = new SearchResultsFragment();
 			}
-			fragmentTransaction.replace(R.id.content_frame, mSearchFragment);
+			fragmentTransaction.replace(R.id.content_frame_searchgrid, mSearchFragment);
 			fragmentTransaction.commit();
 		}
 	}
