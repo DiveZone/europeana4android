@@ -63,6 +63,7 @@ public class SuggestionTask extends AsyncTask<String, Void, Suggestion[]> {
 					suggestion.term = item.getString("term");
 					suggestion.field = item.getString("field");
 					suggestion.freq = item.getLong("frequency");
+					suggestion.query = item.getString("query");
 					results.add(suggestion);
 				}
 				return results.toArray(new Suggestion[results.size()]);
