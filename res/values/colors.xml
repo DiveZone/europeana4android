@@ -2,4 +2,5 @@
 <resources>
     <color name="facet_open_background">#eee</color>
     <color name="emphasis">#31b6e7</color>
+    <color name="suggestions">#ddd</color>
 </resources>

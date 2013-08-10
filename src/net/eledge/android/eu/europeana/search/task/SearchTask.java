@@ -57,7 +57,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 	protected Boolean doInBackground(String... terms) {
 		searchItems = new ArrayList<Item>();
 		boolean facetsUpdated = false;
-		URI url = UriHelper.getSearchURI(terms, pageLoad, searchController.pagesize);
+		URI url = UriHelper.getSearchURI(terms, pageLoad, searchController.searchPagesize);
 		try {
 			HttpResponse response = new DefaultHttpClient()
 					.execute(new HttpGet(url));

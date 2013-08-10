@@ -19,19 +19,17 @@ import android.widget.TextView;
 
 public class ResultAdaptor extends ArrayAdapter<Item> {
 
-	private LayoutInflater inflater;
+	private final LayoutInflater inflater;
 
 	private ImageCacheManager manager;
-	
+
 	private final Typeface europeanaFont;
 
-	public ResultAdaptor(EuropeanaApplication application, Context context, 
-			List<Item> resultItems) {
+	public ResultAdaptor(EuropeanaApplication application, Context context, List<Item> resultItems) {
 		super(context, 0, resultItems);
 		this.manager = application.getImageCacheManager();
 		this.europeanaFont = application.getEuropeanaFont();
-		inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.manager.clearQueue();
 	}
 
@@ -41,14 +39,13 @@ public class ResultAdaptor extends ArrayAdapter<Item> {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.griditem_searchresult, parent, false);
 			holder = new ResultViewHolder();
-			holder.textTitle = (TextView) convertView.findViewById(R.id.textview_searchItemTitle);
-			holder.image = (ImageView) convertView.findViewById(R.id.imageview_searchItemImage);
-			holder.icon = (TextView) convertView.findViewById(R.id.textview_searchItemType);
+			holder.textTitle = (TextView) convertView.findViewById(R.id.griditem_searchresult_textview_title);
+			holder.image = (ImageView) convertView.findViewById(R.id.griditem_searchresult_imageview_thumbnail);
+			holder.icon = (TextView) convertView.findViewById(R.id.griditem_searchresult_textview_type);
 			convertView.setTag(holder);
 		} else {
 			holder = (ResultViewHolder) convertView.getTag();
 		}
-		
 
 		Item item = getItem(position);
 
@@ -60,7 +57,7 @@ public class ResultAdaptor extends ArrayAdapter<Item> {
 				}
 			});
 		}
-		
+
 		holder.textTitle.setText(item.title);
 		holder.icon.setText(item.type.icon);
 		holder.icon.setTypeface(europeanaFont);
@@ -78,5 +75,5 @@ public class ResultAdaptor extends ArrayAdapter<Item> {
 		ImageView image = null;
 		TextView icon = null;
 	}
-	
+
 }

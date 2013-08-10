@@ -11,7 +11,7 @@
         android:stretchMode="columnWidth" />
 
     <TextView
-        android:id="@+id/fragment_search_status_textview"
+        android:id="@+id/fragment_search_textview_status"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_alignLeft="@+id/fragment_search_gridview"

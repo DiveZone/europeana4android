@@ -71,7 +71,7 @@ public class SuggestionProvider extends ContentProvider {
 		if (TextUtils.isEmpty(query)) {
 			return null;
 		}
-		URI url = UriHelper.getSuggestionURI(query);
+		URI url = UriHelper.getSuggestionURI(query, 12);
 		try {
 			HttpResponse response = new DefaultHttpClient().execute(new HttpGet(url));
 			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(),

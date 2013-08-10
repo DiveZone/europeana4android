@@ -4,6 +4,10 @@
     <style name="dialog_hidetitle" parent="android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
     </style>
+    
+    <style name="suggestion">
+        <item name="android:background">@color/suggestions</item>
+    </style>
 
     <style name="drawerItem" parent="android:Widget.Holo.Light.TextView">
         <item name="android:layout_marginTop">8dp</item>

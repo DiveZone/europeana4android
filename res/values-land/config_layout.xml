@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+	<item name="home_suggestions_columns" type="integer">3</item>
+    <item name="home_suggestions_pagesize" type="integer">18</item>
+		
     <item name="search_results_columns" type="integer">3</item>
     <item name="search_result_pagesize" type="integer">12</item>
+    
 </resources>

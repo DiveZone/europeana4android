@@ -11,7 +11,7 @@ public class Config {
 	public static final String URL_API_SEARCH = URL_API
 			+ "search.json?wskey=%s&start=%d&rows=%d&profile=portal&query=%s";
 	public static final String URL_API_SUGGESTIONS = URL_API
-			+ "suggestions.json?rows=12&query=%s&phrases=false";
+			+ "suggestions.json?rows=%d&query=%s&phrases=false";
 
 	// public static final String URL_API_IMAGE_BRIEF =
 	// "http://europeanastatic.eu/api/image?uri=%s&size=BRIEF_DOC&type=IMAGE&rswUserId=unknown";

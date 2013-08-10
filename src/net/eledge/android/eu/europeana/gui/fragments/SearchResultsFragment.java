@@ -50,7 +50,7 @@ public class SearchResultsFragment extends Fragment implements
 		View root = (ViewGroup) inflater.inflate(
 				R.layout.fragment_search_results, null);
 		mStatusTextView = (TextView) root
-				.findViewById(R.id.fragment_search_status_textview);
+				.findViewById(R.id.fragment_search_textview_status);
 		mGridview = (GridView) root.findViewById(R.id.fragment_search_gridview);
 		mGridview.setAdapter(mResultAdaptor);
 		return root;
