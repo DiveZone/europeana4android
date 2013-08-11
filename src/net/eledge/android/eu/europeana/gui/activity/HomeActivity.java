@@ -69,6 +69,8 @@ public class HomeActivity extends Activity implements SuggestionTaskListener, On
 				if ( s.length() > 2 ) {
 					mGridViewSuggestions.setVisibility(View.GONE);
 					searchController.suggestions(s.toString(), HomeActivity.this);
+				} else {
+					onSuggestionFinish(null);
 				}
 			}
 			
@@ -131,9 +133,13 @@ public class HomeActivity extends Activity implements SuggestionTaskListener, On
 	@Override
 	public void onSuggestionFinish(Suggestion[] suggestions) {
 		mSuggestionsAdaptor.clear();
-		mSuggestionsAdaptor.addAll(suggestions);
-		mSuggestionsAdaptor.notifyDataSetChanged();
-		mGridViewSuggestions.setVisibility(View.VISIBLE);
+		if ((suggestions != null) && (suggestions.length > 0)) {
+			mSuggestionsAdaptor.addAll(suggestions);
+			mGridViewSuggestions.setVisibility(View.VISIBLE);
+			mSuggestionsAdaptor.notifyDataSetChanged();
+		} else {
+			mGridViewSuggestions.setVisibility(View.GONE);
+		}
 	}
 
 }

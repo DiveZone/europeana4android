@@ -5,10 +5,20 @@
         <item name="android:windowNoTitle">true</item>
     </style>
     
-    <style name="suggestion">
-        <item name="android:background">@color/suggestions</item>
+    <style name="griditem_suggestion">
+        <item name="android:background">@color/suggestions_background</item>
+        <item name="android:height">@dimen/griditem_suggestion_height</item>
     </style>
 
+    <style name="griditem_suggestion_text">
+        <item name="android:textSize">@dimen/griditem_suggestion_textsize_suggestion</item>
+    </style>
+    
+    <style name="griditem_suggestion_info">
+        <item name="android:textSize">@dimen/griditem_suggestion_textsize_info</item>
+        <item name="android:textColor">@color/suggestions_info</item>
+    </style>
+    
     <style name="drawerItem" parent="android:Widget.Holo.Light.TextView">
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:paddingLeft">8dp</item>
