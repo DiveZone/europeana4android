@@ -3,10 +3,7 @@ package net.eledge.android.eu.europeana.gui.adaptor;
 import java.util.List;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
-import net.eledge.android.eu.europeana.search.model.enums.DocType;
-import net.eledge.android.eu.europeana.search.model.enums.Right;
 import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
-import net.eledge.android.eu.europeana.search.model.facets.enums.FacetType;
 import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import android.content.Context;
 import android.graphics.Typeface;

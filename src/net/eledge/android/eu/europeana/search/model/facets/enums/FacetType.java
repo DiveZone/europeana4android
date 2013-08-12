@@ -1,15 +1,16 @@
 package net.eledge.android.eu.europeana.search.model.facets.enums;
 
 import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.search.model.facets.Languages;
-import net.eledge.android.eu.europeana.search.model.facets.Rights;
 import net.eledge.android.eu.europeana.search.model.facets.abstracts.FacetConverter;
+import net.eledge.android.eu.europeana.search.model.facets.convertors.DocTypes;
+import net.eledge.android.eu.europeana.search.model.facets.convertors.Languages;
+import net.eledge.android.eu.europeana.search.model.facets.convertors.Rights;
 import net.eledge.android.toolkit.StringUtils;
 import android.content.Context;
 
 public enum FacetType implements FacetConverter {
 
-	TYPE(true, R.string.facettype_type), 
+	TYPE(true, R.string.facettype_type, new DocTypes()), 
 	LANGUAGE(false, R.string.facettype_language, new Languages()), 
 	YEAR(false, R.string.facettype_year), 
 	COUNTRY(false, R.string.facettype_country), 

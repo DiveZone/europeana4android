@@ -31,6 +31,13 @@
     <string name="facettype_dataprovider">Op data aanbieder</string>
     <string name="facettype_ugc">Toevoegen van door gebruikers aangeleverde content</string>
     
+    <!-- DOCTYPE -->
+    <string name="doctype_image">Afbeelding</string>
+    <string name="doctype_text">Tekst</string>
+    <string name="doctype_sound">Geluid</string>
+    <string name="doctype_video">Video</string>
+    <string name="doctype_3d">3D</string>
+    
     <!-- LANGUAGES -->
     <string name="locale_bg">Bulgaars</string>
     <string name="locale_ca">Catalaans</string>

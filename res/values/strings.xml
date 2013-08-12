@@ -35,6 +35,13 @@
     <string name="facettype_dataprovider">By data provider</string>
     <string name="facettype_ugc">Include content contributed by users</string>
     
+    <!-- DOCTYPE -->
+    <string name="doctype_image">Image</string>
+    <string name="doctype_text">Text</string>
+    <string name="doctype_sound">Sound</string>
+    <string name="doctype_video">Video</string>
+    <string name="doctype_3d">3D</string>
+    
     <!-- LANGUAGES -->
     <string name="locale_bg">Bulgarian</string>
     <string name="locale_ca">Catalan</string>

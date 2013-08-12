@@ -1,4 +1,4 @@
-package net.eledge.android.eu.europeana.search.model.facets;
+package net.eledge.android.eu.europeana.search.model.facets.convertors;
 
 import net.eledge.android.eu.europeana.search.model.enums.Right;
 import net.eledge.android.eu.europeana.search.model.facets.abstracts.FacetConverter;
