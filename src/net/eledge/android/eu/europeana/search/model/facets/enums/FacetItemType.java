@@ -1,4 +1,4 @@
-package net.eledge.android.eu.europeana.search.model.enums;
+package net.eledge.android.eu.europeana.search.model.facets.enums;
 
 import net.eledge.android.eu.europeana.R;
 
@@ -13,15 +13,11 @@ public enum FacetItemType {
 		case CATEGORY_OPENED:
 			return R.layout.listitem_drawer_category_opened;
 		case ITEM:
-			if (FacetType.TYPE == type) {
-				return R.layout.listitem_drawer_facet_doctype;
-			}
-			return R.layout.listitem_drawer_facet;
+			return type.hasIcon ? R.layout.listitem_drawer_facet_icon
+					: R.layout.listitem_drawer_facet;
 		case ITEM_SELECTED:
-			if (FacetType.TYPE == type) {
-				return R.layout.listitem_drawer_facet_doctype_selected;
-			}
-			return R.layout.listitem_drawer_facet_selected;
+			return type.hasIcon ? R.layout.listitem_drawer_facet_icon_selected
+					: R.layout.listitem_drawer_facet_selected;
 		}
 		return -1;
 	}

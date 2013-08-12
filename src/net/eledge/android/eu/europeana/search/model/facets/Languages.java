@@ -1,7 +1,7 @@
 package net.eledge.android.eu.europeana.search.model.facets;
 
+import net.eledge.android.eu.europeana.search.model.enums.Language;
 import net.eledge.android.eu.europeana.search.model.facets.abstracts.FacetConverter;
-import net.eledge.android.eu.europeana.search.model.facets.enums.Language;
 import net.eledge.android.toolkit.gui.GuiUtils;
 import android.content.Context;
 
@@ -14,6 +14,11 @@ public class Languages implements FacetConverter {
 			return GuiUtils.getString(context, language.resourceId);
 		}
 		return facet;
+	}
+	
+	@Override
+	public String getFacetIcon(String facet) {
+		return null;
 	}
 
 }

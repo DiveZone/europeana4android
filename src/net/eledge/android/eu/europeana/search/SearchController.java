@@ -9,8 +9,8 @@ import java.util.Map;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.listeners.SuggestionTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
-import net.eledge.android.eu.europeana.search.model.enums.FacetItemType;
-import net.eledge.android.eu.europeana.search.model.enums.FacetType;
+import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
+import net.eledge.android.eu.europeana.search.model.facets.enums.FacetType;
 import net.eledge.android.eu.europeana.search.model.searchresults.BreadCrumb;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
@@ -121,6 +121,7 @@ public class SearchController {
 								: FacetItemType.ITEM;
 						item.description = type.createFacetLabel(context, field.label) + " (" + field.count
 								+ ")";
+						item.icon = type.getFacetIcon(field.label);
 						facetlist.add(item);
 					}
 					facetlist.get(facetlist.size()-1).last = true;
