@@ -26,7 +26,8 @@ public class SearchController {
 
 	public final static SearchController instance = new SearchController();
 
-	public int pagesize = 12;
+	public int searchPagesize = 12;
+	public int suggestionPagesize = 12;
 
 	public Map<String, SearchTaskListener> listeners = new HashMap<String, SearchTaskListener>();
 	public List<String> terms = new ArrayList<String>();

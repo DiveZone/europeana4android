@@ -5,7 +5,7 @@
     android:padding="3dp" >
 
     <ImageView
-        android:id="@+id/imageview_searchItemImage"
+        android:id="@+id/griditem_searchresult_imageview_thumbnail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/contentdescriptor_searchitem_image"
@@ -14,13 +14,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:layout_alignBottom="@id/imageview_searchItemImage"
-        android:layout_alignLeft="@id/imageview_searchItemImage"
+        android:layout_alignBottom="@id/griditem_searchresult_imageview_thumbnail"
+        android:layout_alignLeft="@id/griditem_searchresult_imageview_thumbnail"
         android:orientation="horizontal"
         android:background="#BF000000" >
 
         <TextView
-            android:id="@+id/textview_searchItemTitle"
+            android:id="@+id/griditem_searchresult_textview_title"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -31,7 +31,7 @@
             android:textSize="@dimen/griditem_searchresult_textsize" />
 
         <TextView
-            android:id="@+id/textview_searchItemType"
+            android:id="@+id/griditem_searchresult_textview_type"
             android:layout_width="24dp"
             android:layout_height="match_parent"
             android:gravity="bottom|right"

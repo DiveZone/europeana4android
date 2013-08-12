@@ -23,9 +23,9 @@ public class AboutDialog extends Dialog {
 	}
 	
 	private void setVersionNumber() {
-		TextView version = (TextView) findViewById(R.id.dialog_about_version);
+		TextView version = (TextView) findViewById(R.id.dialog_about_textview_version);
 		version.setText(mInfo.versionName);
-		TextView build = (TextView) findViewById(R.id.dialog_about_build);
+		TextView build = (TextView) findViewById(R.id.dialog_about_textview_build);
 		build.setText("build:" + mInfo.versionCode);
 	}
 

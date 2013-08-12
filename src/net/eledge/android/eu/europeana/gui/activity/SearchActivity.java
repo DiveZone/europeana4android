@@ -64,10 +64,11 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		setContentView(R.layout.activity_search);
 		
 		searchController.registerListener(TAG_LISTENER, this);
+		searchController.searchPagesize = getResources().getInteger(R.integer.search_result_pagesize);
 
-		mFacetsList = (ListView) findViewById(R.id.drawer_facets);
 		mFacetsAdaptor = new FacetsAdaptor((EuropeanaApplication) getApplication(), this, new ArrayList<FacetItem>());
 
+		mFacetsList = (ListView) findViewById(R.id.drawer_facets);
 		mFacetsList.setAdapter(mFacetsAdaptor);
 		mFacetsList.setOnItemClickListener(new DrawerItemClickListener());
 
@@ -92,7 +93,6 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			};
 			mDrawerLayout.setDrawerListener(mDrawerToggle);
 		}
-		searchController.pagesize = getResources().getInteger(R.integer.search_result_pagesize);
 		if (Config.DEBUGMODE) {
 			StrictMode.enableDefaults();
 		}
@@ -166,7 +166,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		searchController.pagesize = getResources().getInteger(R.integer.search_result_pagesize);
+		searchController.searchPagesize = getResources().getInteger(R.integer.search_result_pagesize);
 		if (mDrawerLayout != null) {
 			mDrawerToggle.syncState();
 		}

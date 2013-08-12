@@ -52,10 +52,10 @@ public class UriHelper {
 				Integer.valueOf(pagesize), sb.toString());
 	}
 
-	public static URI getSuggestionURI(String term) {
+	public static URI getSuggestionURI(String term, int pagesize) {
 		try {
 			String termEncoded = URLEncoder.encode(term, Config.JSON_CHARSET);
-			return new URI(String.format(Config.URL_API_SUGGESTIONS, termEncoded));
+			return new URI(String.format(Config.URL_API_SUGGESTIONS, Integer.valueOf(pagesize), termEncoded));
 		} catch (URISyntaxException e) {
 			return null;
 		} catch (UnsupportedEncodingException e) {

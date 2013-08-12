@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/griditem_suggestion_height"
+    android:padding="3dp" 
+    style="@style/griditem_suggestion"
+    >
+
+    <TextView
+	    style="@style/griditem_suggestion_info"
+        android:id="@+id/griditem_suggestion_textview_scope"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true" />
+
+    <TextView
+	    style="@style/griditem_suggestion_info"
+        android:id="@+id/griditem_suggestion_textview_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true" />
+
+
+    <TextView
+	    style="@style/griditem_suggestion_text"
+        android:id="@+id/griditem_suggestion_textview_suggestion"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:layout_above="@id/griditem_suggestion_textview_scope"
+         />
+    
+</RelativeLayout>

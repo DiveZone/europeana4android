@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.eledge.android.eu.europeana.Config;
+import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SuggestionTaskListener;
 import net.eledge.android.eu.europeana.search.model.Suggestion;
 import net.eledge.android.eu.europeana.tools.UriHelper;
@@ -25,6 +26,8 @@ import android.text.TextUtils;
 
 public class SuggestionTask extends AsyncTask<String, Void, Suggestion[]> {
 	
+	private SearchController searchController = SearchController.instance;
+	
 	private SuggestionTaskListener listener;
 	
 	public SuggestionTask(SuggestionTaskListener listener) {
@@ -36,7 +39,7 @@ public class SuggestionTask extends AsyncTask<String, Void, Suggestion[]> {
 		if (TextUtils.isEmpty(params[0])) {
 			return null;
 		}
-		URI url = UriHelper.getSuggestionURI(params[0]);
+		URI url = UriHelper.getSuggestionURI(params[0], searchController.suggestionPagesize);
 		try {
 			HttpResponse response = new DefaultHttpClient().execute(new HttpGet(url));
 			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(),
