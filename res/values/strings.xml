@@ -9,15 +9,19 @@
     <!-- ABOUT -->
     <string name="dialog_about_copyright" translatable="false">&#169; The Europeana Foundation \n &#169; eLedge.net / GJW Boogerd</string>
     
-    <!-- HOME SCREEN -->
+    <!-- HOME ACTIVITY -->
 
-    <!-- SEARCH SCREEN -->
+    <!-- SEARCH ACTIVITY -->
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
     <string name="drawer_facets_cat_breadcrumbs">Matches for</string>
     <string name="drawer_facets_cat_refine">Refine your results</string>
     <string name="msg_searching">Searching&#8230;</string>
     <string name="msg_searchresults">Showing %1$d of %2$d results</string>
+    
+    <!-- RECORD ACTIVITY -->
+    <string name="record_field_title">Title</string>
+    <string name="record_field_dc_creator">Author</string>
     
     <!-- ACTIONS/MENU -->
     <string name="action_about">About&#8230;</string>

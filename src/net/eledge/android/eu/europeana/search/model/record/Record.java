@@ -1,16 +1,20 @@
 package net.eledge.android.eu.europeana.search.model.record;
 
+import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.search.model.enums.DocType;
+import net.eledge.android.eu.europeana.search.model.record.annotation.RecordDisplay;
 import net.eledge.android.toolkit.json.annotations.JsonField;
 
 public class Record {
 	
+	@RecordDisplay(R.string.record_field_title)
 	@JsonField
 	public String title = "Invalid title...";
 	
-	@JsonField
+	@JsonField(enumMethod="safeValueOf")
 	public DocType type;
 	
+	@RecordDisplay(R.string.record_field_dc_creator)
 	@JsonField("proxies[].dcCreator.def")
 	public String[] dcCreator;
 	

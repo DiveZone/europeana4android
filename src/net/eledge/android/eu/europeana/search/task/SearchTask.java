@@ -86,7 +86,6 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 							JSONObject item = items.getJSONObject(i);
 							Item tmp = new Item();
 							tmp.id = item.getString("id");
-							tmp.link = item.getString("link");
 							if (item.has("title")) {
 								tmp.title = item.getJSONArray("title")
 										.getString(0);

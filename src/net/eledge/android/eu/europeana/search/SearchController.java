@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
-import net.eledge.android.eu.europeana.search.listeners.SuggestionTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
+import net.eledge.android.eu.europeana.search.model.Suggestion;
 import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.facets.enums.FacetType;
 import net.eledge.android.eu.europeana.search.model.searchresults.BreadCrumb;
@@ -19,6 +19,7 @@ import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.eu.europeana.search.task.SearchTask;
 import net.eledge.android.eu.europeana.search.task.SuggestionTask;
 import net.eledge.android.eu.europeana.tools.UriHelper;
+import net.eledge.android.toolkit.async.listener.TaskListener;
 import android.content.Context;
 import android.os.AsyncTask.Status;
 
@@ -56,7 +57,7 @@ public class SearchController {
 		listeners.remove(tag);
 	}
 	
-	public void suggestions(String query, SuggestionTaskListener listener) {
+	public void suggestions(TaskListener<Suggestion[]> listener, String query) {
 		if (mSuggestionTask != null) {
 			mSuggestionTask.cancel(true);
 		}

@@ -1,6 +1,9 @@
 package net.eledge.android.eu.europeana.search;
 
 import net.eledge.android.eu.europeana.search.model.record.Record;
+import net.eledge.android.eu.europeana.search.task.RecordTask;
+import net.eledge.android.toolkit.StringUtils;
+import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.json.JsonParser;
 
 
@@ -8,10 +11,30 @@ public class RecordController {
 
 	public final static RecordController instance = new RecordController();
 	
-	private final JsonParser<Record> jsonParser;
+	public final JsonParser<Record> jsonParser;
 	
-	public RecordController() {
+	private String currentRecordId;
+	
+	private RecordTask mRecordTask;
+	
+	private RecordController() {
+		// Singleton
 		jsonParser = new JsonParser<Record>(Record.class);
+	}
+	
+	public void readRecord(TaskListener<Record> listener, String id) {
+		if (StringUtils.isNotBlank(id)) {
+			currentRecordId = id;
+			if (mRecordTask != null) {
+				mRecordTask.cancel(true);
+			}
+			mRecordTask = new RecordTask(listener);
+			mRecordTask.execute(id);
+		}
+	}
+	
+	public String getCurrentRecordId() {
+		return currentRecordId;
 	}
 	
 	public String getPortalUrl() {

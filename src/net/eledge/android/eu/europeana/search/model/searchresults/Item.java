@@ -5,7 +5,6 @@ import net.eledge.android.eu.europeana.search.model.enums.DocType;
 public class Item {
 
 	public String id;
-	public String link;
 	public String title = "Invalid title...";
 	public DocType type;
 	public String thumbnail;

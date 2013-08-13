@@ -6,7 +6,9 @@ import net.eledge.android.eu.europeana.gui.adaptor.ResultAdaptor;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
+import net.eledge.android.eu.europeana.search.model.record.Record;
 import net.eledge.android.toolkit.StringUtils;
+import net.eledge.android.toolkit.async.listener.TaskListener;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -24,7 +26,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ShareActionProvider;
 
-public class RecordActivity extends FragmentActivity {
+public class RecordActivity extends FragmentActivity implements TaskListener<Record> {
 	
 	public static final String RECORD_ID = "RECORDID";
 	
@@ -157,6 +159,12 @@ public class RecordActivity extends FragmentActivity {
 	}
 	
 	private void openRecord(String id) {
+		recordController.readRecord(this, id);
+	}
+	
+	@Override
+	public void onTaskFinished(Record record) {
+		// TODO Auto-generated method stub
 		
 	}
 	

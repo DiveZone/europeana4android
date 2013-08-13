@@ -2,11 +2,14 @@ package net.eledge.android.eu.europeana.gui.fragments;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.gui.activity.RecordActivity;
 import net.eledge.android.eu.europeana.gui.adaptor.ResultAdaptor;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
+import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.toolkit.gui.GuiUtils;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,6 +22,8 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -53,6 +58,16 @@ public class SearchResultsFragment extends Fragment implements
 				.findViewById(R.id.fragment_search_textview_status);
 		mGridview = (GridView) root.findViewById(R.id.fragment_search_gridview);
 		mGridview.setAdapter(mResultAdaptor);
+		mGridview.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				final Item selected = searchController.getSearchItems().get(position);
+				final Intent intent = new Intent(SearchResultsFragment.this.getActivity(), RecordActivity.class);
+				intent.setAction(Intent.ACTION_VIEW);
+				intent.putExtra(RecordActivity.RECORD_ID, selected.id);
+				SearchResultsFragment.this.getActivity().startActivity(intent);
+			}
+		});
 		return root;
 	}
 

@@ -6,8 +6,8 @@ import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adaptor.SuggestionAdaptor;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
 import net.eledge.android.eu.europeana.search.SearchController;
-import net.eledge.android.eu.europeana.search.listeners.SuggestionTaskListener;
 import net.eledge.android.eu.europeana.search.model.Suggestion;
+import net.eledge.android.toolkit.async.listener.TaskListener;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.SearchManager;
@@ -29,7 +29,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
-public class HomeActivity extends Activity implements SuggestionTaskListener, OnItemClickListener {
+public class HomeActivity extends Activity implements TaskListener<Suggestion[]>, OnItemClickListener {
 
 	private SuggestionAdaptor mSuggestionsAdaptor;
 
@@ -70,9 +70,9 @@ public class HomeActivity extends Activity implements SuggestionTaskListener, On
 						mSuggestionsAdaptor.clear();
 						mSuggestionsAdaptor.notifyDataSetChanged();
 					}
-					searchController.suggestions(s.toString(), HomeActivity.this);
+					searchController.suggestions(HomeActivity.this, s.toString());
 				} else {
-					onSuggestionFinish(null);
+					onTaskFinished(null);
 				}
 			}
 			@Override
@@ -136,7 +136,7 @@ public class HomeActivity extends Activity implements SuggestionTaskListener, On
 	}
 
 	@Override
-	public void onSuggestionFinish(Suggestion[] suggestions) {
+	public void onTaskFinished(Suggestion[] suggestions) {
 		mSuggestionsAdaptor.clear();
 		if ((suggestions != null) && (suggestions.length > 0)) {
 			mSuggestionsAdaptor.addAll(suggestions);
