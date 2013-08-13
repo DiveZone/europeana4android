@@ -21,7 +21,7 @@ public class UriHelper {
 	}
 	
 	public static URI getRecordURI(String id) {
-		String url = String.format(Locale.US, Config.URL_API_RECORD, Config.API_KEY, id);
+		String url = String.format(Locale.US, Config.URL_API_RECORD, id, Config.API_KEY);
 		try {
 			return new URI(url);
 		} catch (URISyntaxException e) {

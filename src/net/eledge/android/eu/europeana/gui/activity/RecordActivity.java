@@ -73,6 +73,7 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 			mDrawerLayout.setDrawerListener(mDrawerToggle);
 		}		
 		
+		handleIntent(getIntent());
 	}
 	
 	@Override

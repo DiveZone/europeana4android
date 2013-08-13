@@ -9,7 +9,7 @@ public class Record {
 	
 	@RecordDisplay(R.string.record_field_title)
 	@JsonField
-	public String title = "Invalid title...";
+	public String[] title;
 	
 	@JsonField(enumMethod="safeValueOf")
 	public DocType type;
@@ -21,7 +21,7 @@ public class Record {
 	@JsonField("proxies[].dcSubject.def")
 	public String[] dcSubject;
 	
-	@JsonField("europeanaAggregation[].edmPreview")
+	@JsonField("europeanaAggregation.edmPreview")
 	public String edmPreview;
 	
 	@JsonField("aggregations[].edmIsShownBy")
