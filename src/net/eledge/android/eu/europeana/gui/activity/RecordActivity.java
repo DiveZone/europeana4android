@@ -26,6 +26,8 @@ import android.widget.ShareActionProvider;
 
 public class RecordActivity extends FragmentActivity {
 	
+	public static final String RECORD_ID = "RECORDID";
+	
 	// Controller
 	private SearchController searchController = SearchController.instance;
 	private RecordController recordController = RecordController.instance;
@@ -144,9 +146,18 @@ public class RecordActivity extends FragmentActivity {
 						Uri uri = Uri.parse(id);
 						// TODO
 					}
+				} else {
+					id = intent.getStringExtra(RECORD_ID);
 				}
 			}
+			if (StringUtils.isNotBlank(id)) {
+				openRecord(id);
+			}
 		}
+	}
+	
+	private void openRecord(String id) {
+		
 	}
 	
 	private Intent createShareIntent() {

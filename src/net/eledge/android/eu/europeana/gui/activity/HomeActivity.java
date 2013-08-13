@@ -20,9 +20,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -50,7 +52,6 @@ public class HomeActivity extends Activity implements SuggestionTaskListener, On
 		mGridViewSuggestions.setOnItemClickListener(this);
 
 		mEditTextQuery = (EditText) findViewById(R.id.activity_home_edittext_query);
-
 		mEditTextQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -61,9 +62,7 @@ public class HomeActivity extends Activity implements SuggestionTaskListener, On
 				return false;
 			}
 		});
-
 		mEditTextQuery.addTextChangedListener(new TextWatcher() {
-
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if (s.length() > 2) {
@@ -76,20 +75,30 @@ public class HomeActivity extends Activity implements SuggestionTaskListener, On
 					onSuggestionFinish(null);
 				}
 			}
-
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 				// ignore
 			}
-
 			@Override
 			public void afterTextChanged(Editable s) {
 				// ignore
 			}
 		});
+		
+		Button button = (Button) findViewById(R.id.activity_home_button_testrecord);
+		button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String recordid = "/2021604/8ACD8560BCB47678B719C23AA1CB560182917A12";
+				final Intent intent = new Intent(HomeActivity.this, RecordActivity.class);
+				intent.setAction(Intent.ACTION_VIEW);
+				intent.putExtra(RecordActivity.RECORD_ID, recordid);
+				HomeActivity.this.startActivity(intent);
+			}
+		});
 
 	}
-
+	
 	private void performSearch(String query) {
 		final Intent intent = new Intent(this, SearchActivity.class);
 		intent.setAction(Intent.ACTION_SEARCH);

@@ -1,10 +1,8 @@
 package net.eledge.android.eu.europeana.tools;
 
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Locale;
 
@@ -12,22 +10,21 @@ import net.eledge.android.eu.europeana.Config;
 
 public class UriHelper {
 
-	public static URL getSearchURL(String[] terms, int page, int pagesize) {
-		try {
-			return new URL(createSearchUrl(terms, page, pagesize));
-		} catch (MalformedURLException e) {
-			return null;
-		} catch (UnsupportedEncodingException e) {
-			return null;
-		}
-	}
-
 	public static URI getSearchURI(String[] terms, int page, int pagesize) {
 		try {
 			return new URI(createSearchUrl(terms, page, pagesize));
 		} catch (URISyntaxException e) {
 			return null;
 		} catch (UnsupportedEncodingException e) {
+			return null;
+		}
+	}
+	
+	public static URI getRecordURI(String id) {
+		String url = String.format(Locale.US, Config.URL_API_RECORD, Config.API_KEY, id);
+		try {
+			return new URI(url);
+		} catch (URISyntaxException e) {
 			return null;
 		}
 	}
