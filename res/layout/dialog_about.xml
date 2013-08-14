@@ -3,26 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp" >
+    
+    <TextView
+        android:id="@+id/dialog_about_textview_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textSize="64sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="5dp"
-        android:text="@string/app_name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_launcher" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="5dp"
+        android:autoLink="web"
         android:text="@string/dialog_about_copyright"/>
     
     <TextView

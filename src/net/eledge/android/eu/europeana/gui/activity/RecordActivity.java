@@ -107,7 +107,7 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 		switch (item.getItemId()) {
 		case R.id.action_about:
 			try {
-				Dialog dialog = new AboutDialog(this, getPackageManager().getPackageInfo(getPackageName(), 0));
+				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager().getPackageInfo(getPackageName(), 0));
 				dialog.show();
 			} catch (NameNotFoundException e) {}
 			break;

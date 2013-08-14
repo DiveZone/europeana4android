@@ -7,7 +7,7 @@
     <string name="searchable_label">Europeana.eu</string>
     
     <!-- ABOUT -->
-    <string name="dialog_about_copyright" translatable="false">&#169; The Europeana Foundation \n &#169; eLedge.net / GJW Boogerd</string>
+    <string name="dialog_about_copyright" translatable="false">&#169; The Europeana Foundation \n www.europeana.eu \n\n &#169; eLedge / GJW Boogerd \n www.eledge.net \n \n Project site \n github.com/eledge/europeana4android</string>
     
     <!-- HOME ACTIVITY -->
 

@@ -2,6 +2,7 @@ package net.eledge.android.eu.europeana.gui.activity;
 
 import java.util.ArrayList;
 
+import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adaptor.SuggestionAdaptor;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
@@ -124,7 +125,7 @@ public class HomeActivity extends Activity implements TaskListener<Suggestion[]>
 		switch (item.getItemId()) {
 		case R.id.action_about:
 			try {
-				Dialog dialog = new AboutDialog(this, getPackageManager().getPackageInfo(getPackageName(), 0));
+				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager().getPackageInfo(getPackageName(), 0));
 				dialog.show();
 			} catch (NameNotFoundException e) {
 			}
