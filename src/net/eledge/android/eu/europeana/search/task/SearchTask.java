@@ -47,6 +47,9 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 	@Override
 	protected void onPreExecute() {
 		for (SearchTaskListener l : searchController.listeners.values()) {
+			if (isCancelled()) {
+				return;
+			}
 			if (l != null) {
 				l.onSearchStart();
 			}
@@ -152,6 +155,9 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 
 	@Override
 	protected void onPostExecute(Boolean upgradeFacets) {
+		if (isCancelled()) {
+			return;
+		}
 		SearchResult result = new SearchResult();
 		result.searchItems = searchItems;
 		result.breadcrumbs = breadcrumbs;

@@ -78,6 +78,7 @@ public class SearchResultsFragment extends Fragment implements
 
 	@Override
 	public void onDestroy() {
+		searchController.cancelSearch();
 		searchController.unregister(TAG_LISTENER);
 		super.onDestroy();
 	}

@@ -141,11 +141,15 @@ public class SearchController {
 	public boolean hasMoreResults() {
 		return totalResults > searchItems.size();
 	}
-
-	public void reset() {
+	
+	public void cancelSearch() {
 		if (mSearchTask != null) {
 			mSearchTask.cancel(true);
 		}
+	}
+
+	public void reset() {
+		cancelSearch();
 		pageLoad = 1;
 		totalResults = 0;
 		synchronized (searchItems) {
