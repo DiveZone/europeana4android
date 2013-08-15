@@ -106,6 +106,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	
 	@Override
 	protected void onDestroy() {
+		searchController.cancelSearch();
 		searchController.unregister(TAG_LISTENER);
 		super.onDestroy();
 	}
