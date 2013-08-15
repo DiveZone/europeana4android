@@ -24,13 +24,13 @@ public class Record {
 	@JsonField("proxies[].dcSubject.def")
 	public String[] dcSubject;
 	
-	@JsonField("europeanaAggregation.edmPreview")
+	@JsonField
 	public String edmPreview;
 	
-	@JsonField("aggregations[].edmIsShownBy")
+	@JsonField
 	public String edmIsShownBy;
 	
-	@JsonField("aggregations[].edmIsShownAt")
+	@JsonField
 	public String edmIsShownAt;
 	
 	@JsonField("aggregations[].edmDataProvider.def")
@@ -44,5 +44,11 @@ public class Record {
 	
 	@JsonField
 	public long europeanaCompleteness;
+	
+	@JsonField
+	public double longitude;
+
+	@JsonField
+	public double latitude;
 
 }
