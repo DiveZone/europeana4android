@@ -1,5 +1,8 @@
 package net.eledge.android.eu.europeana.search;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.eledge.android.eu.europeana.search.model.record.Record;
 import net.eledge.android.eu.europeana.search.task.RecordTask;
 import net.eledge.android.toolkit.StringUtils;
@@ -17,6 +20,8 @@ public class RecordController {
 	
 	private RecordTask mRecordTask;
 	
+	public Map<String, TaskListener<Record>> listeners = new HashMap<String, TaskListener<Record>>();
+	
 	private RecordController() {
 		// Singleton
 		jsonParser = new JsonParser<Record>(Record.class);
@@ -28,7 +33,7 @@ public class RecordController {
 			if (mRecordTask != null) {
 				mRecordTask.cancel(true);
 			}
-			mRecordTask = new RecordTask(listener);
+			mRecordTask = new RecordTask();
 			mRecordTask.execute(id);
 		}
 	}
@@ -37,6 +42,10 @@ public class RecordController {
 		return currentRecordId;
 	}
 	
+	public void registerListener(String tag, TaskListener<Record> listener) {
+		listeners.put(tag, listener);
+	}
+
 	public String getPortalUrl() {
 //		try {
 //			return UriHelper.createPortalUrl(terms.toArray(new String[terms

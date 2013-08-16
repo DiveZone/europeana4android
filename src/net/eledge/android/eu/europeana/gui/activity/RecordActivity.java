@@ -2,6 +2,7 @@ package net.eledge.android.eu.europeana.gui.activity;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.gui.adaptor.RecordPagerAdapter;
 import net.eledge.android.eu.europeana.gui.adaptor.ResultAdaptor;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
 import net.eledge.android.eu.europeana.search.RecordController;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -37,6 +39,10 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 	// Share button
 	private ShareActionProvider mShareActionProvider;
 	
+	// ViewPager
+	private RecordPagerAdapter mRecordPagerAdapter;
+    private ViewPager mViewPager;
+	
 	// NavigationDrawer
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -51,10 +57,15 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 		mResultsList = (ListView) findViewById(R.id.drawer_items);
 		mResultAdaptor = new ResultAdaptor((EuropeanaApplication) getApplication(), this, searchController.getSearchItems());
 
+		// ViewPager
+		mRecordPagerAdapter = new RecordPagerAdapter(getSupportFragmentManager(), getApplicationContext());
+        mViewPager = (ViewPager) findViewById(R.id.activity_record_pager);
+        mViewPager.setAdapter(mRecordPagerAdapter);
+
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-
+		
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_activity_record);
 		if (mDrawerLayout != null) {
 			mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
