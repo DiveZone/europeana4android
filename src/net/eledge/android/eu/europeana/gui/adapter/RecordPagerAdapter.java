@@ -1,4 +1,4 @@
-package net.eledge.android.eu.europeana.gui.adaptor;
+package net.eledge.android.eu.europeana.gui.adapter;
 
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.fragments.RecordDetailsFragment;

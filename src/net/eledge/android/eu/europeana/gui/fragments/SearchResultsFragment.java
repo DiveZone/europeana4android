@@ -3,7 +3,7 @@ package net.eledge.android.eu.europeana.gui.fragments;
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.activity.RecordActivity;
-import net.eledge.android.eu.europeana.gui.adaptor.ResultAdaptor;
+import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
@@ -27,12 +27,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
-public class SearchResultsFragment extends Fragment implements
-		SearchTaskListener {
+public class SearchResultsFragment extends Fragment implements SearchTaskListener {
 
-	private final String TAG_LISTENER = this.getClass().getSimpleName();
-
-	private ResultAdaptor mResultAdaptor;
+	private ResultAdapter mResultAdaptor;
 
 	private GridView mGridview;
 
@@ -43,19 +40,15 @@ public class SearchResultsFragment extends Fragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mResultAdaptor = new ResultAdaptor((EuropeanaApplication) this
-				.getActivity().getApplication(), this.getActivity(),
-				searchController.getSearchItems());
-		searchController.registerListener(TAG_LISTENER, this);
+		mResultAdaptor = new ResultAdapter((EuropeanaApplication) this.getActivity().getApplication(),
+				this.getActivity(), searchController.getSearchItems());
+		searchController.registerListener(SearchResultsFragment.class, this);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View root = (ViewGroup) inflater.inflate(
-				R.layout.fragment_search_results, null);
-		mStatusTextView = (TextView) root
-				.findViewById(R.id.fragment_search_textview_status);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View root = (ViewGroup) inflater.inflate(R.layout.fragment_search_results, null);
+		mStatusTextView = (TextView) root.findViewById(R.id.fragment_search_textview_status);
 		mGridview = (GridView) root.findViewById(R.id.fragment_search_gridview);
 		mGridview.setAdapter(mResultAdaptor);
 		mGridview.setOnItemClickListener(new OnItemClickListener() {
@@ -79,7 +72,7 @@ public class SearchResultsFragment extends Fragment implements
 	@Override
 	public void onDestroy() {
 		searchController.cancelSearch();
-		searchController.unregister(TAG_LISTENER);
+		searchController.unregister(SearchResultsFragment.class);
 		super.onDestroy();
 	}
 
@@ -95,12 +88,10 @@ public class SearchResultsFragment extends Fragment implements
 			}
 
 			@Override
-			public void onScroll(AbsListView view, int first, int visible,
-					int total) {
+			public void onScroll(AbsListView view, int first, int visible, int total) {
 				if (visible < total && (first + visible == total)) {
 					// see if we have more results
-					if ((first != priorFirst)
-							&& (searchController.hasMoreResults())) {
+					if ((first != priorFirst) && (searchController.hasMoreResults())) {
 						priorFirst = first;
 						onLastListItemDisplayed(total, visible);
 					}
@@ -161,9 +152,8 @@ public class SearchResultsFragment extends Fragment implements
 		if (mResultAdaptor != null) {
 			mResultAdaptor.notifyDataSetChanged();
 		}
-		mStatusTextView.setText(GuiUtils.format(this.getActivity(),
-				R.string.msg_searchresults, searchController.size(),
-				results.totalResults));
+		mStatusTextView.setText(GuiUtils.format(this.getActivity(), R.string.msg_searchresults,
+				searchController.size(), results.totalResults));
 		showStatusText();
 	}
 

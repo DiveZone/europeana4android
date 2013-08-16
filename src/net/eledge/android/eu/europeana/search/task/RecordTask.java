@@ -62,9 +62,9 @@ public class RecordTask extends AsyncTask<String, Void, Record>  {
 	
 	@Override
 	protected void onPostExecute(Record result) {
+		recordController.record = result;
 		if (recordController.listeners.containsKey(RecordActivity.class.getName())) {
-			RecordActivity a = (RecordActivity) recordController.listeners
-					.get(RecordActivity.class.getName());
+			RecordActivity a = (RecordActivity) recordController.listeners.get(RecordActivity.class.getName());
 			a.runOnUiThread(new ListenerNotifier<Record>(recordController.listeners.values(), result));
 		}
 	}

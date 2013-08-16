@@ -2,8 +2,8 @@ package net.eledge.android.eu.europeana.gui.activity;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.gui.adaptor.RecordPagerAdapter;
-import net.eledge.android.eu.europeana.gui.adaptor.ResultAdaptor;
+import net.eledge.android.eu.europeana.gui.adapter.RecordPagerAdapter;
+import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
@@ -47,15 +47,16 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ListView mResultsList;
-	private ResultAdaptor mResultAdaptor;
+	private ResultAdapter mResultAdaptor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_record);
+		recordController.registerListener(RecordActivity.class, this);
 		
 		mResultsList = (ListView) findViewById(R.id.drawer_items);
-		mResultAdaptor = new ResultAdaptor((EuropeanaApplication) getApplication(), this, searchController.getSearchItems());
+		mResultAdaptor = new ResultAdapter((EuropeanaApplication) getApplication(), this, searchController.getSearchItems());
 
 		// ViewPager
 		mRecordPagerAdapter = new RecordPagerAdapter(getSupportFragmentManager(), getApplicationContext());
@@ -108,6 +109,12 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 			menu.findItem(R.id.action_share).setVisible(!drawerOpen);
 		}
 		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		recordController.unregister(Record.class);
+		super.onDestroy();
 	}
 
 	@Override

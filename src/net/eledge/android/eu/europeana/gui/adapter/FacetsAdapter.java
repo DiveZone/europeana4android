@@ -1,4 +1,4 @@
-package net.eledge.android.eu.europeana.gui.adaptor;
+package net.eledge.android.eu.europeana.gui.adapter;
 
 import java.util.List;
 
@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class FacetsAdaptor extends ArrayAdapter<FacetItem> {
+public class FacetsAdapter extends ArrayAdapter<FacetItem> {
 
 	private LayoutInflater inflater;
 	private final Typeface europeanaFont;
 
-	public FacetsAdaptor(EuropeanaApplication application, Context context, List<FacetItem> facetItems) {
+	public FacetsAdapter(EuropeanaApplication application, Context context, List<FacetItem> facetItems) {
 		super(context, 0, facetItems);
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.europeanaFont = application.getEuropeanaFont();

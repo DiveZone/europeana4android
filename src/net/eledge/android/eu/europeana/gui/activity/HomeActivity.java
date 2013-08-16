@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.gui.adaptor.SuggestionAdaptor;
+import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.Suggestion;
@@ -32,7 +32,7 @@ import android.widget.TextView;
 
 public class HomeActivity extends Activity implements TaskListener<Suggestion[]>, OnItemClickListener {
 
-	private SuggestionAdaptor mSuggestionsAdaptor;
+	private SuggestionAdapter mSuggestionsAdaptor;
 
 	private EditText mEditTextQuery;
 	private GridView mGridViewSuggestions;
@@ -46,7 +46,7 @@ public class HomeActivity extends Activity implements TaskListener<Suggestion[]>
 
 		searchController.suggestionPagesize = getResources().getInteger(R.integer.home_suggestions_pagesize);
 
-		mSuggestionsAdaptor = new SuggestionAdaptor(this, new ArrayList<Suggestion>());
+		mSuggestionsAdaptor = new SuggestionAdapter(this, new ArrayList<Suggestion>());
 
 		mGridViewSuggestions = (GridView) findViewById(R.id.activity_home_gridview_suggestions);
 		mGridViewSuggestions.setAdapter(mSuggestionsAdaptor);

@@ -18,6 +18,8 @@ public class RecordController {
 	
 	private String currentRecordId;
 	
+	public Record record;
+	
 	private RecordTask mRecordTask;
 	
 	public Map<String, TaskListener<Record>> listeners = new HashMap<String, TaskListener<Record>>();
@@ -29,6 +31,7 @@ public class RecordController {
 	
 	public void readRecord(TaskListener<Record> listener, String id) {
 		if (StringUtils.isNotBlank(id)) {
+			record = null;
 			currentRecordId = id;
 			if (mRecordTask != null) {
 				mRecordTask.cancel(true);
@@ -42,8 +45,12 @@ public class RecordController {
 		return currentRecordId;
 	}
 	
-	public void registerListener(String tag, TaskListener<Record> listener) {
-		listeners.put(tag, listener);
+	public void registerListener(Class<?> clazz, TaskListener<Record> listener) {
+		listeners.put(clazz.getName(), listener);
+	}
+
+	public void unregister(Class<?> clazz) {
+		listeners.remove(clazz.getName());
 	}
 
 	public String getPortalUrl() {

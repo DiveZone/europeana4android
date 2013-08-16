@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.search.model.record.Record;
-import net.eledge.android.eu.europeana.search.model.record.abstracts.FlexibleDrawable;
+import net.eledge.android.eu.europeana.search.model.record.abstracts.RecordView;
 import net.eledge.android.toolkit.StringArrayUtils;
 import net.eledge.android.toolkit.StringUtils;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public enum RecordDetails implements FlexibleDrawable {
+public enum RecordDetails implements RecordView {
 	
 	TITLE {
 		@Override

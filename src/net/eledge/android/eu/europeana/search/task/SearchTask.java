@@ -165,9 +165,9 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 		result.totalResults = totalResults;
 		result.facetUpdated = upgradeFacets.booleanValue();
 
-		if (searchController.listeners.containsKey(SearchActivity.TAG_LISTENER)) {
+		if (searchController.listeners.containsKey(SearchActivity.class.getName())) {
 			SearchActivity a = (SearchActivity) searchController.listeners
-					.get(SearchActivity.TAG_LISTENER);
+					.get(SearchActivity.class.getName());
 			a.runOnUiThread(new ListenerNotifier(result));
 		}
 	}

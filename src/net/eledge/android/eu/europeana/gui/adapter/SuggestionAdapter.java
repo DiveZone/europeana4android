@@ -1,4 +1,4 @@
-package net.eledge.android.eu.europeana.gui.adaptor;
+package net.eledge.android.eu.europeana.gui.adapter;
 
 import java.util.List;
 
@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class SuggestionAdaptor extends ArrayAdapter<Suggestion> {
+public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
 
 	private final LayoutInflater inflater;
 	
-	public SuggestionAdaptor(Context context, List<Suggestion> suggestions) {
+	public SuggestionAdapter(Context context, List<Suggestion> suggestions) {
 		super(context, 0, suggestions);
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}

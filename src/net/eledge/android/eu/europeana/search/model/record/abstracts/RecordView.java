@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public interface FlexibleDrawable {
+public interface RecordView {
 
 	boolean draw(Record record);
 	View getView(Record record, ViewGroup parent, LayoutInflater inflater);

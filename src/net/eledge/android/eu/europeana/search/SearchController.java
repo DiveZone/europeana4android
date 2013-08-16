@@ -49,12 +49,12 @@ public class SearchController {
 		// Singleton
 	}
 
-	public void registerListener(String tag, SearchTaskListener listener) {
-		listeners.put(tag, listener);
+	public void registerListener(Class<?> clazz, SearchTaskListener listener) {
+		listeners.put(clazz.getName(), listener);
 	}
 
-	public void unregister(String tag) {
-		listeners.remove(tag);
+	public void unregister(Class<?> clazz) {
+		listeners.remove(clazz.getName());
 	}
 	
 	public void suggestions(TaskListener<Suggestion[]> listener, String query) {

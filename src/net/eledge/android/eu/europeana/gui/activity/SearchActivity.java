@@ -6,7 +6,7 @@ import java.util.List;
 import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.gui.adaptor.FacetsAdaptor;
+import net.eledge.android.eu.europeana.gui.adapter.FacetsAdapter;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
 import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
@@ -41,8 +41,6 @@ import android.widget.ShareActionProvider;
 
 public class SearchActivity extends FragmentActivity implements SearchTaskListener {
 	
-	public static final String TAG_LISTENER = SearchActivity.class.getSimpleName();
-
 	private ShareActionProvider mShareActionProvider;
 
 	private SearchResultsFragment mSearchFragment;
@@ -51,7 +49,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ListView mFacetsList;
-	private FacetsAdaptor mFacetsAdaptor;
+	private FacetsAdapter mFacetsAdaptor;
 	
 	// Controller
 	private SearchController searchController = SearchController.instance;
@@ -63,10 +61,10 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
 		
-		searchController.registerListener(TAG_LISTENER, this);
+		searchController.registerListener(SearchActivity.class, this);
 		searchController.searchPagesize = getResources().getInteger(R.integer.search_result_pagesize);
 
-		mFacetsAdaptor = new FacetsAdaptor((EuropeanaApplication) getApplication(), this, new ArrayList<FacetItem>());
+		mFacetsAdaptor = new FacetsAdapter((EuropeanaApplication) getApplication(), this, new ArrayList<FacetItem>());
 
 		mFacetsList = (ListView) findViewById(R.id.drawer_facets);
 		mFacetsList.setAdapter(mFacetsAdaptor);
@@ -107,7 +105,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	@Override
 	protected void onDestroy() {
 		searchController.cancelSearch();
-		searchController.unregister(TAG_LISTENER);
+		searchController.unregister(SearchActivity.class);
 		super.onDestroy();
 	}
 

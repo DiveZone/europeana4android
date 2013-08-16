@@ -1,4 +1,4 @@
-package net.eledge.android.eu.europeana.gui.adaptor;
+package net.eledge.android.eu.europeana.gui.adapter;
 
 import java.util.List;
 
@@ -17,15 +17,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ResultAdaptor extends ArrayAdapter<Item> {
+public class ResultAdapter extends ArrayAdapter<Item> {
 
 	private final LayoutInflater inflater;
 
-	private ImageCacheManager manager;
+	private final ImageCacheManager manager;
 
 	private final Typeface europeanaFont;
 
-	public ResultAdaptor(EuropeanaApplication application, Context context, List<Item> resultItems) {
+	public ResultAdapter(EuropeanaApplication application, Context context, List<Item> resultItems) {
 		super(context, 0, resultItems);
 		this.manager = application.getImageCacheManager();
 		this.europeanaFont = application.getEuropeanaFont();
