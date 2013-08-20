@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="net.eledge.android.eu.europeana"
-    android:versionCode="21"
-    android:versionName="v0.1b21-alpha" >
+    android:versionCode="23"
+    android:versionName="v0.1b23-alpha" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -38,6 +38,9 @@
         android:label="@string/app_name"
         android:launchMode="singleTop"
         android:theme="@android:style/Theme.Holo.Light" android:name="EuropeanaApplication">
+        
+        <meta-data android:name="eu.europeana.api.v2.API_PUBLIC_KEY" android:value="eu4andrd"/>
+        
         <activity
             android:name="net.eledge.android.eu.europeana.gui.activity.HomeActivity"
             android:label="@string/app_name" 

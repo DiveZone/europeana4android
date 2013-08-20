@@ -27,7 +27,7 @@ import android.text.TextUtils;
 
 public class SuggestionTask extends AsyncTask<String, Void, Suggestion[]> {
 	
-	private SearchController searchController = SearchController.instance;
+	private SearchController searchController = SearchController._instance;
 	
 	private TaskListener<Suggestion[]> listener;
 	

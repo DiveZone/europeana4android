@@ -5,46 +5,49 @@ import java.util.Map;
 
 import net.eledge.android.eu.europeana.search.model.record.Record;
 import net.eledge.android.eu.europeana.search.task.RecordTask;
-import net.eledge.android.toolkit.StringUtils;
+import net.eledge.android.eu.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.json.JsonParser;
 
+import org.apache.commons.lang.StringUtils;
+
+import android.app.Activity;
 
 public class RecordController {
 
-	public final static RecordController instance = new RecordController();
-	
+	public final static RecordController _instance = new RecordController();
+
 	public final JsonParser<Record> jsonParser;
-	
+
 	private String currentRecordId;
-	
+
 	public Record record;
-	
+
 	private RecordTask mRecordTask;
-	
+
 	public Map<String, TaskListener<Record>> listeners = new HashMap<String, TaskListener<Record>>();
-	
+
 	private RecordController() {
 		// Singleton
 		jsonParser = new JsonParser<Record>(Record.class);
 	}
-	
-	public void readRecord(TaskListener<Record> listener, String id) {
+
+	public void readRecord(Activity activity, String id) {
 		if (StringUtils.isNotBlank(id)) {
 			record = null;
 			currentRecordId = id;
 			if (mRecordTask != null) {
 				mRecordTask.cancel(true);
 			}
-			mRecordTask = new RecordTask();
+			mRecordTask = new RecordTask(activity);
 			mRecordTask.execute(id);
 		}
 	}
-	
+
 	public String getCurrentRecordId() {
 		return currentRecordId;
 	}
-	
+
 	public void registerListener(Class<?> clazz, TaskListener<Record> listener) {
 		listeners.put(clazz.getName(), listener);
 	}
@@ -54,12 +57,7 @@ public class RecordController {
 	}
 
 	public String getPortalUrl() {
-//		try {
-//			return UriHelper.createPortalUrl(terms.toArray(new String[terms
-//					.size()]));
-//		} catch (UnsupportedEncodingException e) {
-			return "http://europeana.eu";
-//		}
+		return UriHelper.getPortalRecordUrl(currentRecordId);
 	}
-	
+
 }

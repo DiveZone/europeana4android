@@ -18,7 +18,7 @@ public class RecordViewAdapter extends ArrayAdapter<RecordView> {
 	
 	private final Typeface europeanaFont;
 	
-	private final RecordController recordController = RecordController.instance;
+	private final RecordController recordController = RecordController._instance;
 	
 	public RecordViewAdapter(EuropeanaApplication application, Context context, List<RecordView> items) {
 		super(context, 0, items);
@@ -28,7 +28,7 @@ public class RecordViewAdapter extends ArrayAdapter<RecordView> {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		if (recordController.record == null) {
+		if (recordController.record != null) {
 			RecordView recordView = getItem(position);
 			return recordView.getView(recordController.record, parent, inflater);
 		}

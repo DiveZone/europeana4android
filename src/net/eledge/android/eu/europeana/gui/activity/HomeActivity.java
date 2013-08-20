@@ -21,11 +21,9 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -37,7 +35,7 @@ public class HomeActivity extends Activity implements TaskListener<Suggestion[]>
 	private EditText mEditTextQuery;
 	private GridView mGridViewSuggestions;
 
-	private SearchController searchController = SearchController.instance;
+	private SearchController searchController = SearchController._instance;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,17 +84,17 @@ public class HomeActivity extends Activity implements TaskListener<Suggestion[]>
 			}
 		});
 		
-		Button button = (Button) findViewById(R.id.activity_home_button_testrecord);
-		button.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String recordid = "/2021604/8ACD8560BCB47678B719C23AA1CB560182917A12";
-				final Intent intent = new Intent(HomeActivity.this, RecordActivity.class);
-				intent.setAction(Intent.ACTION_VIEW);
-				intent.putExtra(RecordActivity.RECORD_ID, recordid);
-				HomeActivity.this.startActivity(intent);
-			}
-		});
+//		Button button = (Button) findViewById(R.id.activity_home_button_testrecord);
+//		button.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				String recordid = "/2021604/8ACD8560BCB47678B719C23AA1CB560182917A12";
+//				final Intent intent = new Intent(HomeActivity.this, RecordActivity.class);
+//				intent.setAction(Intent.ACTION_VIEW);
+//				intent.putExtra(RecordActivity.RECORD_ID, recordid);
+//				HomeActivity.this.startActivity(intent);
+//			}
+//		});
 
 	}
 	

@@ -24,8 +24,8 @@
     <string name="record_tab_images">Image(s)</string>
     <string name="record_tab_also">See also</string>
     
-    <string name="record_field_title">Title</string>
-    <string name="record_field_dc_creator">Author</string>
+    <string name="record_field_dc_creator">Creator</string>
+    <string name="record_field_dc_subject">Subject</string>
     
     <!-- ACTIONS/MENU -->
     <string name="action_about">About&#8230;</string>

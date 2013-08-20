@@ -3,11 +3,8 @@ package net.eledge.android.eu.europeana.search.task;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.eledge.android.eu.europeana.Config;
-import net.eledge.android.eu.europeana.gui.activity.SearchActivity;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
@@ -24,23 +21,21 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class SearchTask extends AsyncTask<String, Void, Boolean> {
+public class SearchTask extends AsyncTask<String, Void, SearchResult> {
 	private final static String TAG = "SearchTask";
-
-	private List<Item> searchItems;
-	private List<BreadCrumb> breadcrumbs;
-	private List<Facet> facets;
-	private int totalResults;
 
 	private int pageLoad = 1;
 
-	private SearchController searchController = SearchController.instance;
+	private SearchController searchController = SearchController._instance;
+	private Activity mActivity;
 
-	public SearchTask(int pageLoad) {
+	public SearchTask(Activity activity, int pageLoad) {
 		super();
+		mActivity = activity;
 		this.pageLoad = pageLoad;
 	}
 
@@ -57,10 +52,8 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 	}
 
 	@Override
-	protected Boolean doInBackground(String... terms) {
-		searchItems = new ArrayList<Item>();
-		boolean facetsUpdated = false;
-		URI url = UriHelper.getSearchURI(terms, pageLoad, searchController.searchPagesize);
+	protected SearchResult doInBackground(String... terms) {
+		URI url = UriHelper.getSearchURI(Config._instance.getEuropeanaPublicKey(mActivity), terms, pageLoad, searchController.searchPagesize);
 		try {
 			HttpResponse response = new DefaultHttpClient()
 					.execute(new HttpGet(url));
@@ -78,13 +71,14 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 				// report error
 			} else {
 				// get statistics
-				totalResults = jsonObj.getInt("totalResults");
-				if (totalResults > 0) {
+				SearchResult result = new SearchResult();
+				result.totalResults = jsonObj.getInt("totalResults");
+				if (result.totalResults > 0) {
 					JSONArray items = jsonObj.getJSONArray("items");
 					if ((items != null) && (items.length() > 0)) {
 						for (int i = 0; i < items.length(); i++) {
 							if (isCancelled()) {
-								break;
+								return null;
 							}
 							JSONObject item = items.getJSONObject(i);
 							Item tmp = new Item();
@@ -98,15 +92,14 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 								tmp.thumbnail = item.getJSONArray("edmPreview")
 										.getString(0);
 							}
-							searchItems.add(tmp);
+							result.searchItems.add(tmp);
 						}
 					}
 					if (jsonObj.has("breadCrumbs")) {
-						breadcrumbs = new ArrayList<BreadCrumb>();
 						items = jsonObj.getJSONArray("breadCrumbs");
 						for (int i = 0; i < items.length(); i++) {
 							if (isCancelled()) {
-								break;
+								return null;
 							}
 							JSONObject bcObject = items.getJSONObject(i);
 							BreadCrumb bc = new BreadCrumb();
@@ -115,12 +108,11 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 							bc.param = bcObject.getString("param");
 							bc.value = bcObject.getString("value");
 							bc.last = bcObject.getBoolean("last");
-							breadcrumbs.add(bc);
+							result.breadcrumbs.add(bc);
 						}
 					}
 					if (jsonObj.has("facets")) {
-						facetsUpdated = true;
-						facets = new ArrayList<Facet>();
+						result.facetUpdated = true;
 						items = jsonObj.getJSONArray("facets");
 						for (int i = 0; i < items.length(); i++) {
 							if (isCancelled()) {
@@ -133,7 +125,7 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 									.getJSONArray("fields");
 							for (int j = 0; j < fields.length(); j++) {
 								if (isCancelled()) {
-									break;
+									return null;
 								}
 								JSONObject fieldObject = fields
 										.getJSONObject(j);
@@ -142,34 +134,25 @@ public class SearchTask extends AsyncTask<String, Void, Boolean> {
 								field.count = fieldObject.getLong("count");
 								facet.fields.add(field);
 							}
-							facets.add(facet);
+							result.facets.add(facet);
 						}
 					}
 				}
+				return result;
 			}
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 		}
-		return Boolean.valueOf(facetsUpdated);
+		return null;
 	}
 
 	@Override
-	protected void onPostExecute(Boolean upgradeFacets) {
+	protected void onPostExecute(SearchResult result) {
 		if (isCancelled()) {
 			return;
 		}
-		SearchResult result = new SearchResult();
-		result.searchItems = searchItems;
-		result.breadcrumbs = breadcrumbs;
-		result.facets = facets;
-		result.totalResults = totalResults;
-		result.facetUpdated = upgradeFacets.booleanValue();
 
-		if (searchController.listeners.containsKey(SearchActivity.class.getName())) {
-			SearchActivity a = (SearchActivity) searchController.listeners
-					.get(SearchActivity.class.getName());
-			a.runOnUiThread(new ListenerNotifier(result));
-		}
+		mActivity.runOnUiThread(new ListenerNotifier(result));
 	}
 
 	private class ListenerNotifier implements Runnable {

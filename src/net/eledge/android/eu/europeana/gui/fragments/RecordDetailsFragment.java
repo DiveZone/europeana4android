@@ -20,7 +20,7 @@ import android.widget.ListView;
 public class RecordDetailsFragment extends Fragment implements TaskListener<Record> {
 
 	// Controller
-	private RecordController recordController = RecordController.instance;
+	private RecordController recordController = RecordController._instance;
 
 	private ListView mListView;
 	

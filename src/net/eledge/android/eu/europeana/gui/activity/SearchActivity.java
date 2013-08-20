@@ -14,7 +14,9 @@ import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import net.eledge.android.toolkit.StringArrayUtils;
-import net.eledge.android.toolkit.StringUtils;
+
+import org.apache.commons.lang.StringUtils;
+
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -52,7 +54,7 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	private FacetsAdapter mFacetsAdaptor;
 	
 	// Controller
-	private SearchController searchController = SearchController.instance;
+	private SearchController searchController = SearchController._instance;
 	
 	private String runningSearch = null;
 	
@@ -252,9 +254,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 			if (!TextUtils.isEmpty(query) && !TextUtils.equals(runningSearch, query)) {
 				runningSearch = query;
 				if ( (qf != null) && !qf.isEmpty()) {
-					searchController.newSearch(query, StringArrayUtils.toArray(qf));
+					searchController.newSearch(this, query, StringArrayUtils.toArray(qf));
 				} else {
-					searchController.newSearch(query);
+					searchController.newSearch(this, query);
 				}
 			}
 		}
@@ -276,13 +278,13 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 				updateFacetDrawer();
 				break;
 			case ITEM:
-				searchController.refineSearch(item.facet);
+				searchController.refineSearch(SearchActivity.this, item.facet);
 				if (mDrawerLayout != null) {
 					mDrawerLayout.closeDrawers();
 				}
 				break;
 			case ITEM_SELECTED:
-				searchController.removeRefineSearch(item.facet);
+				searchController.removeRefineSearch(SearchActivity.this, item.facet);
 				if (mDrawerLayout != null) {
 					mDrawerLayout.closeDrawers();
 				}

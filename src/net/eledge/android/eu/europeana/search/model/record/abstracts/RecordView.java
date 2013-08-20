@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 public interface RecordView {
 
-	boolean draw(Record record);
+	boolean isVisible(Record record);
 	View getView(Record record, ViewGroup parent, LayoutInflater inflater);
 	
 }

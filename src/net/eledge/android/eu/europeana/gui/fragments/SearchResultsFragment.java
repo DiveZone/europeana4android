@@ -35,7 +35,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 
 	private TextView mStatusTextView;
 
-	private SearchController searchController = SearchController.instance;
+	private SearchController searchController = SearchController._instance;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -134,7 +134,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 
 	protected void onLastListItemDisplayed(int total, int visible) {
 		if (searchController.hasMoreResults()) {
-			searchController.continueSearch();
+			searchController.continueSearch(this.getActivity());
 		}
 	}
 

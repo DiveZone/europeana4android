@@ -7,7 +7,9 @@ import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.search.model.record.Record;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.RecordView;
 import net.eledge.android.toolkit.StringArrayUtils;
-import net.eledge.android.toolkit.StringUtils;
+
+import org.apache.commons.lang.StringUtils;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,30 +19,40 @@ public enum RecordDetails implements RecordView {
 	
 	TITLE {
 		@Override
-		public boolean draw(Record record) {
+		public boolean isVisible(Record record) {
 			return true;
 		}
 		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater) {
 			View view = inflater.inflate(R.layout.listitem_record_title, parent, false);
 			TextView textTitle = (TextView) view.findViewById(android.R.id.text1);
-			textTitle.setText(StringUtils.joinWithSeperator(";", record.title));
+			textTitle.setText(StringUtils.join(record.title, ";"));
 			return view;
 		}
 	},
 	DCCREATOR {
 		@Override
-		public boolean draw(Record record) {
+		public boolean isVisible(Record record) {
 			return StringArrayUtils.isNotBlank(record.dcCreator);
 		}
 		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater) {
 			return drawDetailView(R.string.record_field_dc_creator, record.dcCreator, parent, inflater);
 		}
+	},
+	DCSUBJECT {
+		@Override
+		public boolean isVisible(Record record) {
+			return StringArrayUtils.isNotBlank(record.dcSubject);
+		}
+		@Override
+		public View getView(Record record, ViewGroup parent, LayoutInflater inflater) {
+			return drawDetailView(R.string.record_field_dc_subject, record.dcSubject, parent, inflater);
+		}
 	};
 	
 	protected View drawDetailView(int titleResId, String[] values, ViewGroup parent, LayoutInflater inflater) {
-		return drawDetailView(titleResId, StringUtils.joinWithSeperator(";", values), parent, inflater);
+		return drawDetailView(titleResId, StringUtils.join(values, ";"), parent, inflater);
 	}
 	
 	protected View drawDetailView(int titleResId, String value, ViewGroup parent, LayoutInflater inflater) {
@@ -56,7 +68,9 @@ public enum RecordDetails implements RecordView {
 		List<RecordDetails> list = new ArrayList<RecordDetails>();
 		if (record != null) {
 			for (RecordDetails detail: RecordDetails.values()) {
-				list.add(detail);
+				if (detail.isVisible(record)) {
+					list.add(detail);
+				}
 			}
 		}
 		return list;

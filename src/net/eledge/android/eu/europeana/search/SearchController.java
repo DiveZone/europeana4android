@@ -20,12 +20,12 @@ import net.eledge.android.eu.europeana.search.task.SearchTask;
 import net.eledge.android.eu.europeana.search.task.SuggestionTask;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.async.listener.TaskListener;
+import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask.Status;
 
 public class SearchController {
 
-	public final static SearchController instance = new SearchController();
+	public final static SearchController _instance = new SearchController();
 
 	public int searchPagesize = 12;
 	public int suggestionPagesize = 12;
@@ -65,25 +65,25 @@ public class SearchController {
 		mSuggestionTask.execute(query);
 	}
 	
-	public void newSearch(String query, String... qf) {
+	public void newSearch(Activity activity, String query, String... qf) {
 		reset();
 		terms.clear();
 		terms.add(query);
 		for (String s : qf) {
 			terms.add(s);
 		}
-		search();
+		search(activity);
 	}
 
-	public void refineSearch(String... qf) {
+	public void refineSearch(Activity activity, String... qf) {
 		reset();
 		for (String s : qf) {
 			terms.add(s);
 		}
-		search();
+		search(activity);
 	}
 
-	public void removeRefineSearch(String... qf) {
+	public void removeRefineSearch(Activity activity, String... qf) {
 		boolean changed = false;
 		for (String s : qf) {
 			if (terms.contains(s)) {
@@ -93,13 +93,13 @@ public class SearchController {
 		}
 		if (changed) {
 			reset();
-			search();
+			search(activity);
 		}
 	}
 
-	public void continueSearch() {
+	public void continueSearch(Activity activity) {
 		if (hasMoreResults()) {
-			search();
+			search(activity);
 		}
 	}
 
@@ -161,18 +161,19 @@ public class SearchController {
 
 	public String getPortalUrl() {
 		try {
-			return UriHelper.createPortalUrl(terms.toArray(new String[terms
+			return UriHelper.createPortalSearchUrl(terms.toArray(new String[terms
 					.size()]));
 		} catch (UnsupportedEncodingException e) {
 			return "http://europeana.eu";
 		}
 	}
 
-	private void search() {
-		if ((mSearchTask == null) || (mSearchTask.getStatus() == Status.FINISHED)) {
-			mSearchTask = new SearchTask(pageLoad++);
-			mSearchTask.execute(terms.toArray(new String[terms.size()]));
+	private void search(Activity activity) {
+		if (mSearchTask != null) {
+			cancelSearch();
 		}
+		mSearchTask = new SearchTask(activity, pageLoad++);
+		mSearchTask.execute(terms.toArray(new String[terms.size()]));
 	}
 
 	public synchronized void onSearchFinish(SearchResult results) {

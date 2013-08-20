@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.URI;
 
 import net.eledge.android.eu.europeana.Config;
-import net.eledge.android.eu.europeana.gui.activity.RecordActivity;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.model.record.Record;
 import net.eledge.android.eu.europeana.tools.UriHelper;
@@ -19,19 +18,27 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
 public class RecordTask extends AsyncTask<String, Void, Record>  {
 	
-	private final RecordController recordController = RecordController.instance;
+	private final RecordController recordController = RecordController._instance;
+	
+	private Activity mActivity;
+	
+	public RecordTask(Activity activity) {
+		super();
+		mActivity = activity;
+	}
 	
 	@Override
 	protected Record doInBackground(String... params) {
 		if (TextUtils.isEmpty(params[0])) {
 			return null;
 		}
-		URI url = UriHelper.getRecordURI(params[0]);
+		URI url = UriHelper.getRecordURI(Config._instance.getEuropeanaPublicKey(mActivity), params[0]);
 		try {
 			HttpResponse response = new DefaultHttpClient().execute(new HttpGet(url));
 			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(),
@@ -63,10 +70,7 @@ public class RecordTask extends AsyncTask<String, Void, Record>  {
 	@Override
 	protected void onPostExecute(Record result) {
 		recordController.record = result;
-		if (recordController.listeners.containsKey(RecordActivity.class.getName())) {
-			RecordActivity a = (RecordActivity) recordController.listeners.get(RecordActivity.class.getName());
-			a.runOnUiThread(new ListenerNotifier<Record>(recordController.listeners.values(), result));
-		}
+		mActivity.runOnUiThread(new ListenerNotifier<Record>(recordController.listeners.values(), result));
 	}
 	
 }

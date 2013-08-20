@@ -8,13 +8,14 @@ import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.record.Record;
-import net.eledge.android.toolkit.StringUtils;
 import net.eledge.android.toolkit.async.listener.TaskListener;
+
+import org.apache.commons.lang.StringUtils;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
@@ -33,8 +34,8 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 	public static final String RECORD_ID = "RECORDID";
 	
 	// Controller
-	private SearchController searchController = SearchController.instance;
-	private RecordController recordController = RecordController.instance;
+	private SearchController searchController = SearchController._instance;
+	private RecordController recordController = RecordController._instance;
 	
 	// Share button
 	private ShareActionProvider mShareActionProvider;
@@ -164,7 +165,6 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 				id = intent.getDataString();
 				if (!TextUtils.isEmpty(id)) {
 					if (StringUtils.contains(id, "europeana.eu/")) {
-						Uri uri = Uri.parse(id);
 						// TODO
 					}
 				} else {

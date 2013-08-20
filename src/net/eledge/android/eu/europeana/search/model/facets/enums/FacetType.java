@@ -5,7 +5,9 @@ import net.eledge.android.eu.europeana.search.model.facets.abstracts.FacetConver
 import net.eledge.android.eu.europeana.search.model.facets.convertors.DocTypes;
 import net.eledge.android.eu.europeana.search.model.facets.convertors.Languages;
 import net.eledge.android.eu.europeana.search.model.facets.convertors.Rights;
-import net.eledge.android.toolkit.StringUtils;
+
+import org.apache.commons.lang.StringUtils;
+
 import android.content.Context;
 
 public enum FacetType implements FacetConverter {

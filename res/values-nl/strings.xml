@@ -7,13 +7,21 @@
     
     <!-- HOME SCREEN -->
 
-    <!-- SEARCH SCREEN -->
+    <!-- SEARCH ACTIVITY -->
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
     <string name="drawer_facets_cat_breadcrumbs">Resultaten voor</string>
     <string name="drawer_facets_cat_refine">Verfijn uw zoekresultaten</string>
     <string name="msg_searching">Bezig met zoeken&#8230;</string>
     <string name="msg_searchresults">Toont %1$d van %2$d resultaten</string>
+    
+    <!-- RECORD ACTIVITY -->
+    <string name="record_tab_details">Details</string>
+    <string name="record_tab_images">Afbeelding(en)</string>
+    <string name="record_tab_also">Zie ook</string>
+    
+    <string name="record_field_dc_creator">Creator</string>
+    <string name="record_field_dc_subject">Subject</string>
     
     <!-- ACTIONS/MENU -->
     <string name="action_about">Over&#8230;</string>

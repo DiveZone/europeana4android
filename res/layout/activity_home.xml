@@ -30,12 +30,12 @@
         android:padding="3dp"
         />
 
-    <Button
+    <!-- <Button
         android:id="@+id/activity_home_button_testrecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/activity_home_edittext_query"
-        android:text="Test record" />
+        android:text="Test record" /> -->
 
 </RelativeLayout>

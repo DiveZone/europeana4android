@@ -1,6 +1,6 @@
 package net.eledge.android.eu.europeana.search.model.enums;
 
-import net.eledge.android.toolkit.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 public enum Right {
 	

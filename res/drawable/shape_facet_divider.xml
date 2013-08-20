@@ -6,6 +6,6 @@
         android:height="1dp"
         android:width="1000dp" />
 
-    <solid android:color="@color/facet_open_background" />
+    <solid android:color="@color/background_facet_divider" />
 
 </shape>

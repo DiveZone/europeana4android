@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="facet_open_background">#eee</color>
+    
+    <color name="background_drawer">#fff3f3f3</color>
+    
+    <color name="background_facet_divider">#eee</color>
+    <color name="background_facet_section">#31b6e7</color>
+
     <color name="emphasis">#31b6e7</color>
+    
     <color name="suggestions_background">#ddd</color>
     <color name="suggestions_info">#999</color>
+    
 </resources>
