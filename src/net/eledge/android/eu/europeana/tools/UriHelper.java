@@ -19,9 +19,9 @@ public class UriHelper {
 	private static final String URL_API_RECORD = URL_API + "record%s.json?wskey=%s";
 
 	// PORTAL URL's
-	private static final String URL_PORTAL = "http://www.europeana.eu/";
-	private static final String URL_PORTAL_SEARCH = "http://europeana.eu/portal/search.html";
-	private static final String URL_PORTAL_RECORD = "http://www.europeana.eu/portal%s.html";
+	private static final String URL_PORTAL = "http://www.europeana.eu/portal/";
+	private static final String URL_PORTAL_SEARCH = URL_PORTAL + "search.html";
+	private static final String URL_PORTAL_RECORD = URL_PORTAL + "record%s.html";
 
 	public static URI getSearchURI(String apikey, String[] terms, int page, int pagesize) {
 		try {

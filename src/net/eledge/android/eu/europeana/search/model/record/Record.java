@@ -5,6 +5,9 @@ import net.eledge.android.toolkit.json.annotations.JsonField;
 
 public class Record {
 	
+	@JsonField(".about")
+	public String id;
+	
 	@JsonField
 	public String[] title;
 	
@@ -14,11 +17,17 @@ public class Record {
 	@JsonField
 	public String[] year;
 	
-	@JsonField("proxies[].dcCreator.def")
+	@JsonField(".proxies[].dcCreator.def")
 	public String[] dcCreator;
 	
-	@JsonField("proxies[].dcSubject.def")
+	@JsonField(".proxies[].dcIdentifier.def")
+	public String[] dcIdentifier;
+	
+	@JsonField(".proxies[].dcSubject.def")
 	public String[] dcSubject;
+	
+	@JsonField(".proxies[].dcType.def")
+	public String[] dcType;
 	
 	@JsonField
 	public String edmPreview;
@@ -29,11 +38,11 @@ public class Record {
 	@JsonField
 	public String edmIsShownAt;
 	
-	@JsonField("aggregations[].edmDataProvider.def")
-	public String edmDataProvider;
+	@JsonField(".aggregations[].edmDataProvider.def")
+	public String[] edmDataProvider;
 	
-	@JsonField("aggregations[].edmProvider.def")
-	public String edmProvider;
+	@JsonField(".aggregations[].edmProvider.def")
+	public String[] edmProvider;
 	
 //	@JsonField("aggregations[].webResources[].about")
 //	public String[] webResources;

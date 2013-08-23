@@ -4,8 +4,9 @@
     <!-- GENERAL -->
     <string name="searchable_hint">Denk cultuur!</string>
     <string name="searchable_label">Europeana.eu</string>
-    
+
     <!-- HOME SCREEN -->
+
 
     <!-- SEARCH ACTIVITY -->
     <string name="drawer_facets_open">Open facets drawer</string>
@@ -14,21 +15,26 @@
     <string name="drawer_facets_cat_refine">Verfijn uw zoekresultaten</string>
     <string name="msg_searching">Bezig met zoeken&#8230;</string>
     <string name="msg_searchresults">Toont %1$d van %2$d resultaten</string>
-    
+
     <!-- RECORD ACTIVITY -->
     <string name="record_tab_details">Details</string>
     <string name="record_tab_images">Afbeelding(en)</string>
+    <string name="record_tab_map">Kaart</string>
     <string name="record_tab_also">Zie ook</string>
     
-    <string name="record_field_dc_creator">Creator</string>
-    <string name="record_field_dc_subject">Subject</string>
+    <string name="record_field_dc_creator">Maker</string>
+    <string name="record_field_dc_identifier">Identifier</string>
+    <string name="record_field_dc_subject">Onderwerp</string>
+    <string name="record_field_dc_type">Type</string>
+    <string name="record_field_edm_dataprovider">Data provider</string>
+    <string name="record_field_edm_provider">Leverancier</string>
     
     <!-- ACTIONS/MENU -->
     <string name="action_about">Over&#8230;</string>
     <string name="action_settings">Instellingen</string>
     <string name="action_search">Zoeken</string>
     <string name="action_share">Delen</string>
-    
+
     <!-- FACET TYPES -->
     <string name="facettype_type">Op mediatype</string>
     <string name="facettype_language">Naar taal beschrijving</string>
@@ -38,14 +44,14 @@
     <string name="facettype_provider">Op aanbieder</string>
     <string name="facettype_dataprovider">Op data aanbieder</string>
     <string name="facettype_ugc">Toevoegen van door gebruikers aangeleverde content</string>
-    
+
     <!-- DOCTYPE -->
     <string name="doctype_image">Afbeelding</string>
     <string name="doctype_text">Tekst</string>
     <string name="doctype_sound">Geluid</string>
     <string name="doctype_video">Video</string>
     <string name="doctype_3d">3D</string>
-    
+
     <!-- LANGUAGES -->
     <string name="locale_bg">Bulgaars</string>
     <string name="locale_ca">Catalaans</string>
@@ -70,10 +76,9 @@
     <string name="locale_sk">Slovak</string>
     <string name="locale_sr">Servisch</string>
     <string name="locale_sv">Zweeds</string>
-    
     <string name="locale_mul">Meertalig</string>
-    
+
     <!-- CONTENT DESCRIPTORS -->
     <string name="contentdescriptor_searchitem_image">zoekresultaat voorbeeld afbeelding</string>
-    
+
 </resources>

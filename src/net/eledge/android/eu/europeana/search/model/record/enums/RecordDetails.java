@@ -3,6 +3,7 @@ package net.eledge.android.eu.europeana.search.model.record.enums;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.search.model.record.Record;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.RecordView;
@@ -23,10 +24,13 @@ public enum RecordDetails implements RecordView {
 			return true;
 		}
 		@Override
-		public View getView(Record record, ViewGroup parent, LayoutInflater inflater) {
+		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			View view = inflater.inflate(R.layout.listitem_record_title, parent, false);
-			TextView textTitle = (TextView) view.findViewById(android.R.id.text1);
-			textTitle.setText(StringUtils.join(record.title, ";"));
+			TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+			text1.setText(StringUtils.join(record.title, ";"));
+			TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+			text2.setTypeface(application.getEuropeanaFont());
+			text2.setText(record.type.icon);
 			return view;
 		}
 	},
@@ -36,8 +40,18 @@ public enum RecordDetails implements RecordView {
 			return StringArrayUtils.isNotBlank(record.dcCreator);
 		}
 		@Override
-		public View getView(Record record, ViewGroup parent, LayoutInflater inflater) {
+		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			return drawDetailView(R.string.record_field_dc_creator, record.dcCreator, parent, inflater);
+		}
+	},
+	DCTYPE {
+		@Override
+		public boolean isVisible(Record record) {
+			return StringArrayUtils.isNotBlank(record.dcType);
+		}
+		@Override
+		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+			return drawDetailView(R.string.record_field_dc_type, record.dcType, parent, inflater);
 		}
 	},
 	DCSUBJECT {
@@ -46,8 +60,38 @@ public enum RecordDetails implements RecordView {
 			return StringArrayUtils.isNotBlank(record.dcSubject);
 		}
 		@Override
-		public View getView(Record record, ViewGroup parent, LayoutInflater inflater) {
+		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			return drawDetailView(R.string.record_field_dc_subject, record.dcSubject, parent, inflater);
+		}
+	},
+	DCIDENTIFIER {
+		@Override
+		public boolean isVisible(Record record) {
+			return StringArrayUtils.isNotBlank(record.dcIdentifier);
+		}
+		@Override
+		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+			return drawDetailView(R.string.record_field_dc_identifier, record.dcIdentifier, parent, inflater);
+		}
+	},
+	EDMDATAPROVIDER {
+		@Override
+		public boolean isVisible(Record record) {
+			return StringArrayUtils.isNotBlank(record.edmDataProvider);
+		}
+		@Override
+		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+			return drawDetailView(R.string.record_field_edm_dataprovider, record.edmDataProvider, parent, inflater);
+		}
+	},
+	EDMPROVIDER {
+		@Override
+		public boolean isVisible(Record record) {
+			return StringArrayUtils.isNotBlank(record.edmProvider);
+		}
+		@Override
+		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+			return drawDetailView(R.string.record_field_edm_provider, record.edmProvider, parent, inflater);
 		}
 	};
 	

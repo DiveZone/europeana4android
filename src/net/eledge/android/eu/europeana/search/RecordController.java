@@ -6,6 +6,7 @@ import java.util.Map;
 import net.eledge.android.eu.europeana.search.model.record.Record;
 import net.eledge.android.eu.europeana.search.task.RecordTask;
 import net.eledge.android.eu.europeana.tools.UriHelper;
+import net.eledge.android.toolkit.async.ListenerNotifier;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.json.JsonParser;
 
@@ -34,6 +35,11 @@ public class RecordController {
 
 	public void readRecord(Activity activity, String id) {
 		if (StringUtils.isNotBlank(id)) {
+			if ( (record != null) && StringUtils.equals(id, record.id)) {
+				// don't load the same record twice but do notify listeners!;
+				activity.runOnUiThread(new ListenerNotifier<Record>(listeners.values(), record));
+				return;
+			}
 			record = null;
 			currentRecordId = id;
 			if (mRecordTask != null) {

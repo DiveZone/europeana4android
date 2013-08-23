@@ -191,7 +191,7 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 		Intent shareIntent = new Intent(Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
 		shareIntent.putExtra(Intent.EXTRA_TEXT, recordController.getPortalUrl());
-		shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this search on Europeana.eu!");
+		shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this item on Europeana.eu!");
 		return shareIntent;
 	}
 

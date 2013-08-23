@@ -22,10 +22,15 @@
     <!-- RECORD ACTIVITY -->
     <string name="record_tab_details">Details</string>
     <string name="record_tab_images">Image(s)</string>
+    <string name="record_tab_map">Map</string>
     <string name="record_tab_also">See also</string>
     
     <string name="record_field_dc_creator">Creator</string>
+    <string name="record_field_dc_identifier">Identifier</string>
     <string name="record_field_dc_subject">Subject</string>
+    <string name="record_field_dc_type">Type</string>
+    <string name="record_field_edm_dataprovider">Data provider</string>
+    <string name="record_field_edm_provider">Provider</string>
     
     <!-- ACTIONS/MENU -->
     <string name="action_about">About&#8230;</string>

@@ -4,7 +4,7 @@
     <style name="dialog_hidetitle" parent="android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
     </style>
-    
+
     <style name="griditem_suggestion">
         <item name="android:background">@color/suggestions_background</item>
         <item name="android:height">@dimen/griditem_suggestion_height</item>
@@ -13,12 +13,12 @@
     <style name="griditem_suggestion_text">
         <item name="android:textSize">@dimen/griditem_suggestion_textsize_suggestion</item>
     </style>
-    
+
     <style name="griditem_suggestion_info">
         <item name="android:textSize">@dimen/griditem_suggestion_textsize_info</item>
         <item name="android:textColor">@color/suggestions_info</item>
     </style>
-    
+
     <style name="drawerItem" parent="android:Widget.Holo.Light.TextView">
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:paddingLeft">8dp</item>
@@ -54,11 +54,37 @@
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center_vertical|right</item>
         <item name="android:paddingRight">2dp</item>
-        </style>
-    
+    </style>
+
     <style name="drawerFacetSelected" parent="drawerFacet">
         <item name="android:drawableStart">@drawable/btn_check_buttonless_on</item>
         <item name="android:textStyle">bold</item>
-	</style>
+    </style>
+
+    <style name="recordTitle">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="recordTitleIcon">
+        <item name="android:textColor">@color/emphasis</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:paddingRight">2dp</item>
+    </style>
+
+    <style name="recordDetailTitle">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:textColor">@color/emphasis</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="recordDetailContent">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 
 </resources>

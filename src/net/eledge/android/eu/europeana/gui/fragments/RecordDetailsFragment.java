@@ -25,7 +25,7 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
 	private ListView mListView;
 	
 	private RecordViewAdapter mRecordViewAdapter;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,14 +43,23 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
 	}
 	
 	@Override
+	public void onResume() {
+		if (recordController.record != null) {
+			onTaskFinished(recordController.record);
+		}
+		super.onResume();
+	}
+	
+	@Override
 	public void onDestroy() {
 		recordController.unregister(RecordDetailsFragment.class);
 		super.onDestroy();
 	}
-
+	
 	@Override
-	public void onTaskFinished(Record result) {
-		mRecordViewAdapter.addAll(RecordDetails.getVisibles(result));
+	public void onTaskFinished(final Record record) {
+		mRecordViewAdapter.clear();
+		mRecordViewAdapter.addAll(RecordDetails.getVisibles(record));
 		mRecordViewAdapter.notifyDataSetChanged();
 	}
 
