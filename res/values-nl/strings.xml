@@ -23,6 +23,7 @@
     <string name="record_tab_also">Zie ook</string>
     
     <string name="record_field_dc_creator">Maker</string>
+    <string name="record_field_dc_description">Beschrijving</string>
     <string name="record_field_dc_identifier">Identifier</string>
     <string name="record_field_dc_subject">Onderwerp</string>
     <string name="record_field_dc_type">Type</string>

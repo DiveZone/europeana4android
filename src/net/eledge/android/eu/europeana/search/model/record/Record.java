@@ -11,7 +11,7 @@ public class Record {
 	@JsonField
 	public String[] title;
 	
-	@JsonField(enumMethod="safeValueOf")
+	@JsonField(value="edmType", enumMethod="safeValueOf")
 	public DocType type;
 	
 	@JsonField
@@ -19,6 +19,9 @@ public class Record {
 	
 	@JsonField(".proxies[].dcCreator.def")
 	public String[] dcCreator;
+
+	@JsonField(".proxies[].dcDescription.en")
+	public String[] dcDescription;
 	
 	@JsonField(".proxies[].dcIdentifier.def")
 	public String[] dcIdentifier;

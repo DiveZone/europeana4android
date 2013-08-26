@@ -26,6 +26,7 @@
     <string name="record_tab_also">See also</string>
     
     <string name="record_field_dc_creator">Creator</string>
+    <string name="record_field_dc_description">Description</string>
     <string name="record_field_dc_identifier">Identifier</string>
     <string name="record_field_dc_subject">Subject</string>
     <string name="record_field_dc_type">Type</string>
