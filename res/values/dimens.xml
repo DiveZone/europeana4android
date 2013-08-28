@@ -14,5 +14,7 @@
     <dimen name="griditem_suggestion_height">60dp</dimen>
     
     <dimen name="record_map_spacing">10dp</dimen>
+
+    <dimen name="listitem_blog_spacing">6dp</dimen>
     
 </resources>

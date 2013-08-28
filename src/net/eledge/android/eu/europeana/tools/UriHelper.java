@@ -12,6 +12,7 @@ import net.eledge.android.toolkit.net.UrlBuilder;
 public class UriHelper {
 
 	private static final String URL_API = "http://europeana.eu/api/v2/";
+	public static final String URL_BLOGFEED = "http://blog.europeana.eu/feed/";
 
 	// API METHODS
 	private static final String URL_API_SEARCH = URL_API + "search.json?profile=portal";

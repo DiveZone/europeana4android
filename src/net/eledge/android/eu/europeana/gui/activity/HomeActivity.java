@@ -6,36 +6,39 @@ import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
+import net.eledge.android.eu.europeana.gui.fragments.HomeBlogFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.Suggestion;
 import net.eledge.android.toolkit.async.listener.TaskListener;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
-public class HomeActivity extends Activity implements TaskListener<Suggestion[]>, OnItemClickListener {
+public class HomeActivity extends FragmentActivity implements TaskListener<Suggestion[]>, OnItemClickListener {
 
 	private SuggestionAdapter mSuggestionsAdaptor;
 
 	private EditText mEditTextQuery;
 	private GridView mGridViewSuggestions;
+
+	private HomeBlogFragment mBlogFragment;
 
 	private SearchController searchController = SearchController._instance;
 
@@ -76,30 +79,28 @@ public class HomeActivity extends Activity implements TaskListener<Suggestion[]>
 					onTaskFinished(null);
 				}
 			}
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 				// ignore
 			}
+
 			@Override
 			public void afterTextChanged(Editable s) {
 				// ignore
 			}
 		});
-		
-//		Button button = (Button) findViewById(R.id.activity_home_button_testrecord);
-//		button.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				String recordid = "/2021604/8ACD8560BCB47678B719C23AA1CB560182917A12";
-//				final Intent intent = new Intent(HomeActivity.this, RecordActivity.class);
-//				intent.setAction(Intent.ACTION_VIEW);
-//				intent.putExtra(RecordActivity.RECORD_ID, recordid);
-//				HomeActivity.this.startActivity(intent);
-//			}
-//		});
+
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		if (mBlogFragment == null) {
+			mBlogFragment = new HomeBlogFragment();
+		}
+		fragmentTransaction.replace(R.id.activity_home_fragment_blog, mBlogFragment);
+		fragmentTransaction.commit();
 
 	}
-	
+
 	private void performSearch(String query) {
 		final Intent intent = new Intent(this, SearchActivity.class);
 		intent.setAction(Intent.ACTION_SEARCH);
@@ -125,7 +126,8 @@ public class HomeActivity extends Activity implements TaskListener<Suggestion[]>
 		switch (item.getItemId()) {
 		case R.id.action_about:
 			try {
-				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager().getPackageInfo(getPackageName(), 0));
+				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager()
+						.getPackageInfo(getPackageName(), 0));
 				dialog.show();
 			} catch (NameNotFoundException e) {
 			}
@@ -136,15 +138,27 @@ public class HomeActivity extends Activity implements TaskListener<Suggestion[]>
 		return true;
 	}
 
+	private void switchBlogSuggestions(boolean showSuggestions) {
+		mGridViewSuggestions.setVisibility(showSuggestions ? View.VISIBLE : View.GONE);
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		if (showSuggestions) {
+			fragmentTransaction.hide(mBlogFragment);
+		} else {
+			fragmentTransaction.show(mBlogFragment);
+		}
+		fragmentTransaction.commit();
+	}
+
 	@Override
 	public void onTaskFinished(Suggestion[] suggestions) {
 		mSuggestionsAdaptor.clear();
 		if ((suggestions != null) && (suggestions.length > 0)) {
 			mSuggestionsAdaptor.addAll(suggestions);
 			mSuggestionsAdaptor.notifyDataSetChanged();
-			mGridViewSuggestions.setVisibility(View.VISIBLE);
+			switchBlogSuggestions(true);
 		} else {
-			mGridViewSuggestions.setVisibility(View.GONE);
+			switchBlogSuggestions(false);
 		}
 	}
 

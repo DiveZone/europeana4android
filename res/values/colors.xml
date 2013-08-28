@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
+    <color name="background">#e5e5e5</color>
     <color name="background_drawer">#fff3f3f3</color>
     
     <color name="background_facet_divider">#eee</color>

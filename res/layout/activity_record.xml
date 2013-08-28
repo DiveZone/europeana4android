@@ -4,6 +4,7 @@
     android:id="@+id/drawerlayout_activity_record"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".gui.activity.RecordActivity" >
 
     <android.support.v4.view.ViewPager

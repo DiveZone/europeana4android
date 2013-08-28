@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/listitem_blog_spacing"
+    android:background="@drawable/background_card"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/listitem_home_blog_textview_title"
+        style="@style/homeBlogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/listitem_home_blog_textview_text"
+        style="@style/homeBlogContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/listitem_home_blog_textview_author"
+            style="@style/homeBlogAuthorDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/listitem_home_blog_textview_date"
+            style="@style/homeBlogAuthorDate"
+            android:gravity="right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>
