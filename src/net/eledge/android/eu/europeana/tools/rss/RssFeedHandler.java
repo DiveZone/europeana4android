@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import net.eledge.android.eu.europeana.db.model.Article;
+import net.eledge.android.eu.europeana.db.model.BlogArticle;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -19,16 +19,16 @@ public class RssFeedHandler extends DefaultHandler {
 	
 	SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
 
-	private Article article;
+	private BlogArticle article;
 	private StringBuilder content = new StringBuilder();
 
-	public List<Article> articles = new ArrayList<Article>();
+	public List<BlogArticle> articles = new ArrayList<BlogArticle>();
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		content = new StringBuilder();
 		if (localName.equalsIgnoreCase("item")) {
-			article = new Article();
+			article = new BlogArticle();
 		}
 	}
 
@@ -46,7 +46,7 @@ public class RssFeedHandler extends DefaultHandler {
 				article.pubDate = convertDate(content.toString());
 			} else if (localName.equalsIgnoreCase("link")) {
 				article.guid = content.toString();
-			} else if (localName.equalsIgnoreCase("dc:creator")) {
+			} else if (qName.equalsIgnoreCase("dc:creator")) {
 				article.author = content.toString();
 			}
 		}

@@ -6,8 +6,9 @@
     <string name="searchable_label">Europeana.eu</string>
 
     <!-- HOME SCREEN -->
-    <string name="activity_home_fromtheblog">Van het Europeana Blog</string>
-
+    <string name="fragment_home_blog_from">Van het Europeana Blog</string>
+    <string name="fragment_home_blog_posted">Geplaatst door %s</string>
+    
     <!-- SEARCH ACTIVITY -->
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>

@@ -8,7 +8,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import net.eledge.android.eu.europeana.db.model.Article;
+import net.eledge.android.eu.europeana.db.model.BlogArticle;
 import net.eledge.android.eu.europeana.tools.rss.RssFeedHandler;
 import net.eledge.android.toolkit.async.ListenerNotifier;
 import net.eledge.android.toolkit.async.listener.TaskListener;
@@ -21,20 +21,20 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class RssReader extends AsyncTask<String, Void, List<Article>> {
+public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
 	
 	private Activity mActivity;
 	
-	private TaskListener<List<Article>> mListener;
+	private TaskListener<List<BlogArticle>> mListener;
 	
-	public RssReader(Activity activity, TaskListener<List<Article>> listener) {
+	public RssReader(Activity activity, TaskListener<List<BlogArticle>> listener) {
 		super();
 		mActivity = activity;
 		mListener = listener;
 	}
 
 	@Override
-	protected List<Article> doInBackground(String... urls) {
+	protected List<BlogArticle> doInBackground(String... urls) {
 		String feed = urls[0];
 		URL url = null;
 		try {
@@ -62,8 +62,8 @@ public class RssReader extends AsyncTask<String, Void, List<Article>> {
 	}
 	
 	@Override
-	protected void onPostExecute(List<Article> articles) {
-		mActivity.runOnUiThread(new ListenerNotifier<List<Article>>(mListener, articles));
+	protected void onPostExecute(List<BlogArticle> articles) {
+		mActivity.runOnUiThread(new ListenerNotifier<List<BlogArticle>>(mListener, articles));
 	}
 
 }
