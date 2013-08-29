@@ -86,7 +86,7 @@
         <item name="android:paddingLeft">16dp</item>
         <item name="android:textSize">16sp</item>
     </style>
-    
+
     <style name="homeBlogSectionTitle">
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/emphasis</item>
@@ -94,7 +94,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
     </style>
-    
+
     <style name="homeBlogTitle">
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/emphasis</item>
@@ -104,9 +104,10 @@
 
     <style name="homeBlogContent">
         <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
         <item name="android:textSize">14sp</item>
     </style>
-    
+
     <style name="homeBlogAuthorDate">
         <item name="android:textColor">@color/emphasis</item>
         <item name="android:textSize">12sp</item>
