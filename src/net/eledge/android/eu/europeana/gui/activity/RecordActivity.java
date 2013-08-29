@@ -58,6 +58,7 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 		
 		mResultsList = (ListView) findViewById(R.id.drawer_items);
 		mResultAdaptor = new ResultAdapter((EuropeanaApplication) getApplication(), this, searchController.getSearchItems());
+		mResultsList.setAdapter(mResultAdaptor);
 
 		// ViewPager
 		mRecordPagerAdapter = new RecordPagerAdapter(getSupportFragmentManager(), getApplicationContext());

@@ -13,7 +13,7 @@
         android:hint="@string/action_search"
         android:ems="10" 
         android:drawableLeft="@drawable/ic_action_search"
-        android:imeOptions="actionSearch"
+        android:imeOptions="actionSearch|flagNoExtractUi"
         >
         <requestFocus />
     </EditText>

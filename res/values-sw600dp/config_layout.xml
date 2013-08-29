@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
+    <item name="home_support_landscape" type="bool">false</item>
 	<item name="home_suggestions_columns" type="integer">3</item>
     <item name="home_suggestions_pagesize" type="integer">18</item>
 		

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    tools:context=".HomeActivity" >
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2" >
+
+        <EditText
+            android:id="@+id/activity_home_edittext_query"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_action_search"
+            android:ems="10"
+            android:hint="@string/action_search"
+            android:imeOptions="actionSearch|flagNoExtractUi"
+            android:inputType="text">
+
+            <requestFocus />
+        </EditText>
+
+        <GridView
+            android:id="@+id/activity_home_gridview_suggestions"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/activity_home_edittext_query"
+            android:horizontalSpacing="3dp"
+            android:numColumns="@integer/home_suggestions_columns"
+            android:padding="3dp"
+            android:requiresFadingEdge="vertical"
+            android:verticalSpacing="3dp" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/activity_home_fragment_blog"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+</LinearLayout>

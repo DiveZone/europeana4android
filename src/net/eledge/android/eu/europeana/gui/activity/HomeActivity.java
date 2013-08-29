@@ -14,6 +14,7 @@ import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -41,6 +42,8 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Sugge
 	private HomeBlogFragment mBlogFragment;
 
 	private SearchController searchController = SearchController._instance;
+	
+	private boolean isLandscape;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Sugge
 		setContentView(R.layout.activity_home);
 
 		searchController.suggestionPagesize = getResources().getInteger(R.integer.home_suggestions_pagesize);
+		isLandscape = getResources().getBoolean(R.bool.home_support_landscape);
 
 		mSuggestionsAdaptor = new SuggestionAdapter(this, new ArrayList<Suggestion>());
 
@@ -100,6 +104,12 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Sugge
 		fragmentTransaction.commit();
 
 	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		isLandscape = getResources().getBoolean(R.bool.home_support_landscape);
+	}
 
 	private void performSearch(String query) {
 		final Intent intent = new Intent(this, SearchActivity.class);
@@ -111,6 +121,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Sugge
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Suggestion suggestion = mSuggestionsAdaptor.getItem(position);
+		searchController.suggestionPagesize = getResources().getInteger(R.integer.home_suggestions_pagesize);
 		performSearch(suggestion.query);
 	}
 
@@ -139,15 +150,17 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Sugge
 	}
 
 	private void switchBlogSuggestions(boolean showSuggestions) {
-		mGridViewSuggestions.setVisibility(showSuggestions ? View.VISIBLE : View.GONE);
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		if (showSuggestions) {
-			fragmentTransaction.hide(mBlogFragment);
-		} else {
-			fragmentTransaction.show(mBlogFragment);
+		if (!isLandscape) {
+			mGridViewSuggestions.setVisibility(showSuggestions ? View.VISIBLE : View.GONE);
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			if (showSuggestions) {
+				fragmentTransaction.hide(mBlogFragment);
+			} else {
+				fragmentTransaction.show(mBlogFragment);
+			}
+			fragmentTransaction.commit();
 		}
-		fragmentTransaction.commit();
 	}
 
 	@Override
@@ -158,6 +171,8 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Sugge
 			mSuggestionsAdaptor.notifyDataSetChanged();
 			switchBlogSuggestions(true);
 		} else {
+			mSuggestionsAdaptor.clear();
+			mSuggestionsAdaptor.notifyDataSetChanged();
 			switchBlogSuggestions(false);
 		}
 	}

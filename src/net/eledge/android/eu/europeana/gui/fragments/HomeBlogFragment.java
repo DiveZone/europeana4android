@@ -104,8 +104,9 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
 
 	private void loadFromDatabase() {
 		mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(getActivity()));
-		showArticles(mBlogArticleDao.findAll());
+		List<BlogArticle> articles = mBlogArticleDao.findAll();
 		mBlogArticleDao.close();
+		showArticles(articles);
 	}
 	
 	private void showArticles(List<BlogArticle> articles) {

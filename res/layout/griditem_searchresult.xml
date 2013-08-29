@@ -2,7 +2,10 @@
 <net.eledge.android.toolkit.gui.widget.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-	android:padding="1dp"
+	android:paddingLeft="1dp"
+	android:paddingRight="2dp"
+	android:paddingTop="1dp"
+	android:paddingBottom="3dp"
     android:background="@drawable/background_card"
     >
 
@@ -19,7 +22,8 @@
         android:layout_alignBottom="@id/griditem_searchresult_imageview_thumbnail"
         android:layout_alignLeft="@id/griditem_searchresult_imageview_thumbnail"
         android:orientation="horizontal"
-        android:background="#BF000000" >
+        android:background="@color/emphasis_transparant" >
+        <!-- android:background="#BF000000" -->
 
         <TextView
             android:id="@+id/griditem_searchresult_textview_title"
