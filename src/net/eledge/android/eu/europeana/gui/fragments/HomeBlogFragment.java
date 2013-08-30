@@ -33,6 +33,8 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
 	private BlogAdapter mBlogAdapter;
 
 	private BlogArticleDao mBlogArticleDao;
+	
+	private RssReader mRssReaderTask;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,8 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
 			}
 		}
 		if (doupdate) {
-			RssReader reader = new RssReader(getActivity(), this);
-			reader.execute(UriHelper.URL_BLOGFEED);
+			mRssReaderTask = new RssReader(getActivity(), this);
+			mRssReaderTask.execute(UriHelper.URL_BLOGFEED);
 		}
 	}
 
@@ -84,6 +86,9 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
 
 	@Override
 	public void onDestroy() {
+		if (mRssReaderTask != null) {
+			mRssReaderTask.cancel(true);
+		}
 		super.onDestroy();
 	}
 

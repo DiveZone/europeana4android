@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.toolkit.net.ImageCacheManager;
 import net.eledge.android.toolkit.net.abstracts.AsyncLoaderListener;
@@ -19,6 +20,9 @@ import android.widget.TextView;
 
 public class ResultAdapter extends ArrayAdapter<Item> {
 
+	// Controller
+	private SearchController searchController = SearchController._instance;
+	
 	private final LayoutInflater inflater;
 
 	private final ImageCacheManager manager;
@@ -46,6 +50,8 @@ public class ResultAdapter extends ArrayAdapter<Item> {
 		} else {
 			holder = (ResultViewHolder) convertView.getTag();
 		}
+		int bg = (searchController.getItemSelected() == position ? R.drawable.background_card_selected : R.drawable.background_card);
+		convertView.setBackgroundResource(bg);
 
 		Item item = getItem(position);
 

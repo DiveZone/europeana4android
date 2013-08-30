@@ -109,6 +109,9 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 		if (mDrawerLayout != null) {
 			boolean drawerOpen = mDrawerLayout.isDrawerOpen(mResultsList);
 			menu.findItem(R.id.action_share).setVisible(!drawerOpen);
+			if (drawerOpen && (searchController.getItemSelected() != -1)) {
+				mResultsList.smoothScrollToPosition(searchController.getItemSelected());
+			}
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}

@@ -35,6 +35,7 @@ public class SearchController {
 
 	private int pageLoad = 1;
 	private long totalResults;
+	private int itemSelected = -1;
 
 	private final List<Item> searchItems = new ArrayList<Item>();
 	private final List<BreadCrumb> breadcrumbs = new ArrayList<BreadCrumb>();
@@ -152,6 +153,7 @@ public class SearchController {
 		cancelSearch();
 		pageLoad = 1;
 		totalResults = 0;
+		itemSelected = -1;
 		synchronized (searchItems) {
 			searchItems.clear();
 		}
@@ -191,6 +193,14 @@ public class SearchController {
 
 	public synchronized List<Item> getSearchItems() {
 		return searchItems;
+	}
+	
+	public int getItemSelected() {
+		return itemSelected;
+	}
+	
+	public void setItemSelected(int itemSelected) {
+		this.itemSelected = itemSelected;
 	}
 	
 	public Integer size() {

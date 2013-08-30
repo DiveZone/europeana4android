@@ -3,7 +3,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/listitem_blog_spacing"
     android:background="@drawable/background_card"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="6dp" >
 
     <TextView
         android:id="@+id/listitem_home_blog_textview_title"
@@ -32,10 +33,10 @@
         <TextView
             android:id="@+id/listitem_home_blog_textview_date"
             style="@style/homeBlogAuthorDate"
-            android:gravity="right"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="right" />
     </LinearLayout>
 
 </LinearLayout>

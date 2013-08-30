@@ -63,7 +63,9 @@ public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
 	
 	@Override
 	protected void onPostExecute(List<BlogArticle> articles) {
-		mActivity.runOnUiThread(new ListenerNotifier<List<BlogArticle>>(mListener, articles));
+		if (!isCancelled()) {
+			mActivity.runOnUiThread(new ListenerNotifier<List<BlogArticle>>(mListener, articles));
+		}
 	}
 
 }

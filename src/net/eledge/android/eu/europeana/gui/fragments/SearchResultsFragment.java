@@ -55,6 +55,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				final Item selected = searchController.getSearchItems().get(position);
+				searchController.setItemSelected(position);
 				final Intent intent = new Intent(SearchResultsFragment.this.getActivity(), RecordActivity.class);
 				intent.setAction(Intent.ACTION_VIEW);
 				intent.putExtra(RecordActivity.RECORD_ID, selected.id);
