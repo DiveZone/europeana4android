@@ -37,11 +37,15 @@ public enum RecordDetails implements RecordView {
 	DCDESCRIPTION {
 		@Override
 		public boolean isVisible(Record record) {
-			return StringArrayUtils.isNotBlank(record.dcDescription);
+			return (record.dcDescription != null) && !record.dcDescription.isEmpty();
 		}
 		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			return drawDetailView(R.string.record_field_dc_description, record.dcDescription, parent, inflater);
+			String key = "def";
+			if (!record.dcDescription.containsKey(key)) {
+				key = record.dcDescription.keySet().iterator().next();
+			}
+			return drawDetailView(R.string.record_field_dc_description, record.dcDescription.get(key), parent, inflater);
 		}
 	},
 	DCCREATOR {

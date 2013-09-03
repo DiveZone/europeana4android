@@ -1,5 +1,7 @@
 package net.eledge.android.eu.europeana.search.model.record;
 
+import java.util.Map;
+
 import net.eledge.android.eu.europeana.search.model.enums.DocType;
 import net.eledge.android.toolkit.json.annotations.JsonField;
 
@@ -20,8 +22,8 @@ public class Record {
 	@JsonField(".proxies[].dcCreator.def")
 	public String[] dcCreator;
 
-	@JsonField(".proxies[].dcDescription.en")
-	public String[] dcDescription;
+	@JsonField(".proxies[].dcDescription")
+	public Map<String, String[]> dcDescription;
 	
 	@JsonField(".proxies[].dcIdentifier.def")
 	public String[] dcIdentifier;
