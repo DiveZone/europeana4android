@@ -2,7 +2,7 @@
 <resources>
 
     <!-- GENERAL -->
-    <string name="app_name" translatable="false">Europeana4Android</string>
+    <string name="app_name" translatable="false">Europeana.eu (Beta)</string>
     <string name="searchable_hint">Think culture!</string>
     <string name="searchable_label">Europeana.eu</string>
     
