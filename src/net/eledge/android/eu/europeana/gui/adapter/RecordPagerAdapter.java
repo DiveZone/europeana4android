@@ -32,22 +32,24 @@ public class RecordPagerAdapter extends FragmentStatePagerAdapter implements Tas
 	
 	@Override
 	public void onTaskFinished(Record record) {
-		// DETAIL INFO
-		labels.add(Integer.valueOf(R.string.record_tab_details));
-		fragments.add(new RecordDetailsFragment());
-		// IMAGES
-		labels.add(Integer.valueOf(R.string.record_tab_images));
-		fragments.add(new RecordImagesFragment());
-		// MAP
-		if ( (record.latitude != null) && (record.longitude != null)) {
-			labels.add(Integer.valueOf(R.string.record_tab_map));
-			fragments.add(new RecordMapFragment());
+		if (record != null) {
+			// DETAIL INFO
+			labels.add(Integer.valueOf(R.string.record_tab_details));
+			fragments.add(new RecordDetailsFragment());
+			// IMAGES
+			labels.add(Integer.valueOf(R.string.record_tab_images));
+			fragments.add(new RecordImagesFragment());
+			// MAP
+			if ( (record.latitude != null) && (record.longitude != null)) {
+				labels.add(Integer.valueOf(R.string.record_tab_map));
+				fragments.add(new RecordMapFragment());
+			}
+			// SEE ALSO
+			labels.add(Integer.valueOf(R.string.record_tab_also));
+			fragments.add(new RecordSeeAlsoFragment());
+			
+			notifyDataSetChanged();
 		}
-		// SEE ALSO
-		labels.add(Integer.valueOf(R.string.record_tab_also));
-		fragments.add(new RecordSeeAlsoFragment());
-		
-		notifyDataSetChanged();
 	}
 
 	@Override

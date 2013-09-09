@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class RecordTask extends AsyncTask<String, Void, Record>  {
 	
@@ -62,7 +63,8 @@ public class RecordTask extends AsyncTask<String, Void, Record>  {
 		} catch (JSONException e) {
 			// ignore
 		} catch (JsonParserException e) {
-			// ignore
+			Log.e(RecordTask.class.getSimpleName(), e.getMessage());
+			Log.e(RecordTask.class.getSimpleName(), e.getCause().getMessage());
 		}
 		return null;	
 	}
