@@ -167,7 +167,9 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Sugge
 	public void onTaskFinished(Suggestion[] suggestions) {
 		mSuggestionsAdaptor.clear();
 		if ((suggestions != null) && (suggestions.length > 0)) {
-			mSuggestionsAdaptor.addAll(suggestions);
+			for (Suggestion s: suggestions) {
+				mSuggestionsAdaptor.add(s);
+			}
 			mSuggestionsAdaptor.notifyDataSetChanged();
 			switchBlogSuggestions(true);
 		} else {

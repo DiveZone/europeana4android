@@ -19,8 +19,8 @@
         <item name="android:textColor">@color/suggestions_info</item>
     </style>
 
-    <style name="drawerItem" parent="android:Widget.Holo.Light.TextView">
-        <item name="android:layout_marginTop">8dp</item>
+    <style name="drawerItem"><!--  parent="android:Widget.Light.TextView"> -->
+        <item name="android:layout_marginTop">8dp</item> 
         <item name="android:paddingLeft">8dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:minHeight">?android:attr/listPreferredItemHeightSmall</item>
@@ -28,7 +28,7 @@
 
     <style name="drawerFacetHeaderOpen" parent="drawerItem">
         <item name="android:drawableTop">@drawable/shape_facet_section</item>
-        <item name="android:textAllCaps">true</item>
+        <!-- <item name="android:textAllCaps">true</item> -->
         <item name="android:textColor">@color/emphasis</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
@@ -40,7 +40,7 @@
     </style>
 
     <style name="drawerFacet" parent="drawerItem">
-        <item name="android:drawableStart">@drawable/btn_check_buttonless_off</item>
+        <item name="android:drawableLeft">@drawable/btn_check_buttonless_off</item>
         <item name="android:drawableTop">@drawable/shape_facet_divider</item>
         <item name="android:drawablePadding">2dp</item>
         <item name="android:paddingLeft">4dp</item>
@@ -57,7 +57,7 @@
     </style>
 
     <style name="drawerFacetSelected" parent="drawerFacet">
-        <item name="android:drawableStart">@drawable/btn_check_buttonless_on</item>
+        <item name="android:drawableLeft">@drawable/btn_check_buttonless_on</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -75,7 +75,7 @@
     </style>
 
     <style name="recordDetailTitle">
-        <item name="android:textAllCaps">true</item>
+        <!-- <item name="android:textAllCaps">true</item> -->
         <item name="android:paddingLeft">4dp</item>
         <item name="android:textColor">@color/emphasis</item>
         <item name="android:textSize">14sp</item>
@@ -88,7 +88,7 @@
     </style>
 
     <style name="homeBlogSectionTitle">
-        <item name="android:textAllCaps">true</item>
+        <!-- <item name="android:textAllCaps">true</item> -->
         <item name="android:textColor">@color/emphasis</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
@@ -96,7 +96,7 @@
     </style>
 
     <style name="homeBlogTitle">
-        <item name="android:textAllCaps">true</item>
+        <!-- <item name="android:textAllCaps">true</item> -->
         <item name="android:textColor">@color/emphasis</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>

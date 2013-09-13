@@ -179,15 +179,17 @@ public class SearchController {
 	}
 
 	public synchronized void onSearchFinish(SearchResult results) {
-		totalResults = results.totalResults;
-		searchItems.addAll(results.searchItems);
-		if (results.facetUpdated) {
-			facets.clear();
-			facets.addAll(results.facets);
-		}
-		if (results.breadcrumbs != null) {
-			breadcrumbs.clear();
-			breadcrumbs.addAll(results.breadcrumbs);
+		if (results != null) {
+			totalResults = results.totalResults;
+			searchItems.addAll(results.searchItems);
+			if (results.facetUpdated) {
+				facets.clear();
+				facets.addAll(results.facets);
+			}
+			if (results.breadcrumbs != null) {
+				breadcrumbs.clear();
+				breadcrumbs.addAll(results.breadcrumbs);
+			}
 		}
 	}
 

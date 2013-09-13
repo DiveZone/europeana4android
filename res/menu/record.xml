@@ -1,15 +1,15 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+      xmlns:support="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_action_share"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_share"
-        android:actionProviderClass="android.widget.ShareActionProvider"/>
+        support:showAsAction="ifRoom"
+        android:title="@string/action_share"/>
      <item
         android:id="@+id/action_about"
         android:orderInCategory="200"
-        android:showAsAction="never"
+        support:showAsAction="never"
         android:title="@string/action_about"/>
 
 </menu>

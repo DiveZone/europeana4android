@@ -23,6 +23,7 @@
     <string name="record_tab_map">Kaart</string>
     <string name="record_tab_also">Zie ook</string>
     
+    <string name="record_field_title">Titel</string>
     <string name="record_field_dc_creator">Maker</string>
     <string name="record_field_dc_description">Beschrijving</string>
     <string name="record_field_dc_identifier">Identifier</string>

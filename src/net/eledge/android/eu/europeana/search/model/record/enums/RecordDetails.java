@@ -26,11 +26,15 @@ public enum RecordDetails implements RecordView {
 		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			View view = inflater.inflate(R.layout.listitem_record_title, parent, false);
+			
 			TextView text1 = (TextView) view.findViewById(android.R.id.text1);
-			text1.setText(StringUtils.join(record.title, ";"));
+			text1.setText(R.string.record_field_title);
 			TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-			text2.setTypeface(application.getEuropeanaFont());
-			text2.setText(record.type.icon);
+			text2.setText(StringUtils.join(record.title, ";"));
+			
+			TextView icon1 = (TextView) view.findViewById(android.R.id.icon1);
+			icon1.setTypeface(application.getEuropeanaFont());
+			icon1.setText(record.type.icon);
 			return view;
 		}
 	},

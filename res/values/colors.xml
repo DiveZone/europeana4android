@@ -4,6 +4,8 @@
     <color name="background">#e5e5e5</color>
     <color name="background_drawer">#fff3f3f3</color>
     
+    <color name="actionbar_background">#d5d5d5</color>
+    
     <color name="background_facet_divider">#eee</color>
     <color name="background_facet_section">#31b6e7</color>
 

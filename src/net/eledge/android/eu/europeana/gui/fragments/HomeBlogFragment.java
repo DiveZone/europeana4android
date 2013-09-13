@@ -117,7 +117,9 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
 	private void showArticles(List<BlogArticle> articles) {
 		if (articles != null) {
 			mBlogAdapter.clear();
-			mBlogAdapter.addAll(articles);
+			for (BlogArticle article: articles) {
+				mBlogAdapter.add(article);
+			}
 			mBlogAdapter.notifyDataSetChanged();
 		}
 	}

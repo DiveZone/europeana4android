@@ -27,24 +27,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.ShareActionProvider;
 
-public class SearchActivity extends FragmentActivity implements SearchTaskListener {
+public class SearchActivity extends ActionBarActivity implements SearchTaskListener {
 	
-	private ShareActionProvider mShareActionProvider;
-
 	private SearchResultsFragment mSearchFragment;
 
 	// NavigationDrawer
@@ -73,8 +71,8 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		mFacetsList.setOnItemClickListener(new DrawerItemClickListener());
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_activity_search);
 		if (mDrawerLayout != null) {
@@ -83,12 +81,12 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 					R.string.drawer_facets_open, R.string.drawer_facets_close) {
 				public void onDrawerClosed(View view) {
 					// getActionBar().setTitle(mTitle);
-					invalidateOptionsMenu();
+					supportInvalidateOptionsMenu();
 				}
 
 				public void onDrawerOpened(View drawerView) {
 					// getActionBar().setTitle(mDrawerTitle);
-					invalidateOptionsMenu();
+					supportInvalidateOptionsMenu();
 				}
 			};
 			mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -115,15 +113,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.search, menu);
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+		
+		SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-		MenuItem share = menu.findItem(R.id.action_share);
-		// Fetch and store ShareActionProvider
-		mShareActionProvider = (ShareActionProvider) share.getActionProvider();
-		if (mShareActionProvider != null) {
-			mShareActionProvider.setShareIntent(createShareIntent());
-		}
 
 		return true;
 	}
@@ -149,6 +141,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager().getPackageInfo(getPackageName(), 0));
 				dialog.show();
 			} catch (NameNotFoundException e) {}
+			break;
+		case R.id.action_share:
+			startActivity(createShareIntent());
 			break;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -217,7 +212,9 @@ public class SearchActivity extends FragmentActivity implements SearchTaskListen
 		List<FacetItem> facetList = searchController.getFacetList(this);
 		if (facetList != null) {
 			mFacetsAdaptor.clear();
-			mFacetsAdaptor.addAll(facetList);
+			for (FacetItem item: facetList) {
+				mFacetsAdaptor.add(item);
+			}
 			mFacetsAdaptor.notifyDataSetChanged();
 			if (mDrawerLayout != null) {
 				mDrawerLayout.setEnabled(true);

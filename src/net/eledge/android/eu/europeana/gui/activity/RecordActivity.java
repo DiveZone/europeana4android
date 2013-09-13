@@ -16,29 +16,30 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBar.TabListener;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.ShareActionProvider;
 
-public class RecordActivity extends FragmentActivity implements TaskListener<Record> {
+public class RecordActivity extends ActionBarActivity implements TaskListener<Record>, TabListener {
 	
 	public static final String RECORD_ID = "RECORDID";
 	
 	// Controller
 	private SearchController searchController = SearchController._instance;
 	private RecordController recordController = RecordController._instance;
-	
-	// Share button
-	private ShareActionProvider mShareActionProvider;
 	
 	// ViewPager
 	private RecordPagerAdapter mRecordPagerAdapter;
@@ -62,13 +63,34 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 
 		// ViewPager
 		mRecordPagerAdapter = new RecordPagerAdapter(getSupportFragmentManager(), getApplicationContext());
+		mRecordPagerAdapter.registerDataSetObserver(new DataSetObserver() {
+			@Override
+			public void onChanged() {
+				super.onChanged();
+				getSupportActionBar().removeAllTabs();
+				for (int i = 0; i < mRecordPagerAdapter.getCount(); i++) {
+					getSupportActionBar().addTab(
+							getSupportActionBar().newTab()
+			                        .setText(mRecordPagerAdapter.labels.get(i).intValue())
+			                        .setTabListener(RecordActivity.this));
+			    }
+			}
+		});
         mViewPager = (ViewPager) findViewById(R.id.activity_record_pager);
         mViewPager.setAdapter(mRecordPagerAdapter);
+        mViewPager.setOnPageChangeListener(
+                new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                    	getSupportActionBar().setSelectedNavigationItem(position);
+                    }
+                });
+        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-		
+		// Drawer layout
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_activity_record);
 		if (mDrawerLayout != null) {
 			mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -76,12 +98,12 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 					R.string.drawer_facets_open, R.string.drawer_facets_close) {
 				public void onDrawerClosed(View view) {
 					// getActionBar().setTitle(mTitle);
-					invalidateOptionsMenu();
+					supportInvalidateOptionsMenu();
 				}
 
 				public void onDrawerOpened(View drawerView) {
 					// getActionBar().setTitle(mDrawerTitle);
-					invalidateOptionsMenu();
+					supportInvalidateOptionsMenu();
 				}
 			};
 			mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -93,14 +115,6 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.record, menu);
-
-		MenuItem share = menu.findItem(R.id.action_share);
-		// Fetch and store ShareActionProvider
-		mShareActionProvider = (ShareActionProvider) share.getActionProvider();
-		if (mShareActionProvider != null) {
-			mShareActionProvider.setShareIntent(createShareIntent());
-		}
-		
 		return true;
 	}
 
@@ -114,6 +128,19 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 			}
 		}
 		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+	}
+	
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		mViewPager.setCurrentItem(tab.getPosition());
+	}
+	
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 	}
 	
 	@Override
@@ -133,6 +160,9 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager().getPackageInfo(getPackageName(), 0));
 				dialog.show();
 			} catch (NameNotFoundException e) {}
+			break;
+		case R.id.action_share:
+			startActivity(createShareIntent());
 			break;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -187,8 +217,6 @@ public class RecordActivity extends FragmentActivity implements TaskListener<Rec
 	
 	@Override
 	public void onTaskFinished(Record record) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	private Intent createShareIntent() {

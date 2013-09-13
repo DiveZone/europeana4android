@@ -59,7 +59,9 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
 	@Override
 	public void onTaskFinished(final Record record) {
 		mRecordViewAdapter.clear();
-		mRecordViewAdapter.addAll(RecordDetails.getVisibles(record));
+		for (RecordDetails detail: RecordDetails.getVisibles(record)) {
+			mRecordViewAdapter.add(detail);
+		}
 		mRecordViewAdapter.notifyDataSetChanged();
 	}
 

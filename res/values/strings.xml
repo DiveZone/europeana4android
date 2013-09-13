@@ -2,7 +2,7 @@
 <resources>
 
     <!-- GENERAL -->
-    <string name="app_name" translatable="false">Europeana.eu (Beta)</string>
+    <string name="app_name" translatable="false">Europeana (Beta)</string>
     <string name="searchable_hint">Think culture!</string>
     <string name="searchable_label">Europeana.eu</string>
     
@@ -27,6 +27,7 @@
     <string name="record_tab_map">Map</string>
     <string name="record_tab_also">See also</string>
     
+    <string name="record_field_title">Title</string>
     <string name="record_field_dc_creator">Creator</string>
     <string name="record_field_dc_description">Description</string>
     <string name="record_field_dc_identifier">Identifier</string>
