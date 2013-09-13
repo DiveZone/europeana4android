@@ -6,7 +6,7 @@
     <string name="searchable_label">Europeana.eu</string>
 
     <!-- HOME SCREEN -->
-    <string name="fragment_home_blog_from">Van het Europeana Blog</string>
+    <string name="fragment_home_blog_from">VAN HET EUROPEANA BLOG</string>
     <string name="fragment_home_blog_posted">Geplaatst door %s</string>
     
     <!-- SEARCH ACTIVITY -->
@@ -23,14 +23,14 @@
     <string name="record_tab_map">Kaart</string>
     <string name="record_tab_also">Zie ook</string>
     
-    <string name="record_field_title">Titel</string>
-    <string name="record_field_dc_creator">Maker</string>
-    <string name="record_field_dc_description">Beschrijving</string>
-    <string name="record_field_dc_identifier">Identifier</string>
-    <string name="record_field_dc_subject">Onderwerp</string>
-    <string name="record_field_dc_type">Type</string>
-    <string name="record_field_edm_dataprovider">Data provider</string>
-    <string name="record_field_edm_provider">Leverancier</string>
+    <string name="record_field_title">TITEL</string>
+    <string name="record_field_dc_creator">MAKER</string>
+    <string name="record_field_dc_description">BESCHRIJVING</string>
+    <string name="record_field_dc_identifier">IDENTIFIER</string>
+    <string name="record_field_dc_subject">ONDERWERP</string>
+    <string name="record_field_dc_type">TYPE</string>
+    <string name="record_field_edm_dataprovider">DATA PROVIDER</string>
+    <string name="record_field_edm_provider">LEVERANCIER</string>
     
     <!-- ACTIONS/MENU -->
     <string name="action_about">Over&#8230;</string>
@@ -39,13 +39,13 @@
     <string name="action_share">Delen</string>
 
     <!-- FACET TYPES -->
-    <string name="facettype_type">Op mediatype</string>
-    <string name="facettype_language">Naar taal beschrijving</string>
-    <string name="facettype_year">Naar jaar</string>
-    <string name="facettype_country">Naar land</string>
-    <string name="facettype_rights">Op copyright</string>
-    <string name="facettype_provider">Op aanbieder</string>
-    <string name="facettype_dataprovider">Op data aanbieder</string>
+    <string name="facettype_type">OP MEDIATYPE</string>
+    <string name="facettype_language">NAAR TAAL BESCHRIJVING</string>
+    <string name="facettype_year">NAAR JAAR</string>
+    <string name="facettype_country">NAAR LAND</string>
+    <string name="facettype_rights">OP COPYRIGHT</string>
+    <string name="facettype_provider">OP AANBIEDER</string>
+    <string name="facettype_dataprovider">OP DATA AANBIEDER</string>
     <string name="facettype_ugc">Toevoegen van door gebruikers aangeleverde content</string>
 
     <!-- DOCTYPE -->

@@ -10,7 +10,7 @@
     <string name="dialog_about_copyright" translatable="false">&#169; The Europeana Foundation \n www.europeana.eu \n\n &#169; eLedge / GJW Boogerd \n www.eledge.net \n \n Project site \n github.com/eledge/europeana4android</string>
     
     <!-- HOME ACTIVITY -->
-    <string name="fragment_home_blog_from">From the Europeana Blog</string>
+    <string name="fragment_home_blog_from">FROM THE EUROPEANA BLOG</string>
     <string name="fragment_home_blog_posted">Posted by %s</string>
     
     <!-- SEARCH ACTIVITY -->
@@ -27,14 +27,14 @@
     <string name="record_tab_map">Map</string>
     <string name="record_tab_also">See also</string>
     
-    <string name="record_field_title">Title</string>
-    <string name="record_field_dc_creator">Creator</string>
-    <string name="record_field_dc_description">Description</string>
-    <string name="record_field_dc_identifier">Identifier</string>
-    <string name="record_field_dc_subject">Subject</string>
-    <string name="record_field_dc_type">Type</string>
-    <string name="record_field_edm_dataprovider">Data provider</string>
-    <string name="record_field_edm_provider">Provider</string>
+    <string name="record_field_title">TITLE</string>
+    <string name="record_field_dc_creator">CREATOR</string>
+    <string name="record_field_dc_description">DESCRIPTION</string>
+    <string name="record_field_dc_identifier">IDENTIFIER</string>
+    <string name="record_field_dc_subject">SUBJECT</string>
+    <string name="record_field_dc_type">TYPE</string>
+    <string name="record_field_edm_dataprovider">DATA PROVIDER</string>
+    <string name="record_field_edm_provider">PROVIDER</string>
     
     <!-- ACTIONS/MENU -->
     <string name="action_about">About&#8230;</string>
@@ -43,13 +43,13 @@
     <string name="action_share">Share</string>
     
     <!-- FACET TYPES -->
-    <string name="facettype_type">By media type</string>
-    <string name="facettype_language">By language of description</string>
-    <string name="facettype_year">By year</string>
-    <string name="facettype_country">By providing country</string>
-    <string name="facettype_rights">By copyright</string>
-    <string name="facettype_provider">By provider</string>
-    <string name="facettype_dataprovider">By data provider</string>
+    <string name="facettype_type">BY MEDIA TYPE</string>
+    <string name="facettype_language">BY LANGUAGE OF DESCRIPTION</string>
+    <string name="facettype_year">BY YEAR</string>
+    <string name="facettype_country">BY PROVIDING COUNTRY</string>
+    <string name="facettype_rights">BY COPYRIGHT</string>
+    <string name="facettype_provider">BY PROVIDER</string>
+    <string name="facettype_dataprovider">BY DATA PROVIDER</string>
     <string name="facettype_ugc">Include content contributed by users</string>
     
     <!-- DOCTYPE -->
