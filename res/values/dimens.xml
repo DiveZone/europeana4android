@@ -2,7 +2,8 @@
 
     <dimen name="drawer_facets_width">240dp</dimen>
     <dimen name="drawer_facets_category_textsize">16sp</dimen>
-
+    <dimen name="drawer_facets_minHeight">48dp</dimen>
+    
     <dimen name="drawer_items_width">200dp</dimen>
     
     <dimen name="griditem_searchresult_textsize">12sp</dimen>

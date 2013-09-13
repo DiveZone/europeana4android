@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.gui.activity.RecordActivity;
 import net.eledge.android.eu.europeana.gui.fragments.RecordDetailsFragment;
 import net.eledge.android.eu.europeana.gui.fragments.RecordImagesFragment;
 import net.eledge.android.eu.europeana.gui.fragments.RecordMapFragment;
@@ -20,13 +21,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public class RecordPagerAdapter extends FragmentStatePagerAdapter implements TaskListener<Record>  {
 	
 	private Context mContext;
+	private RecordActivity mRecordActivity;
 	
 	private List<Fragment> fragments = new ArrayList<Fragment>();
 	public List<Integer> labels = new ArrayList<Integer>();
 	
-	public RecordPagerAdapter(FragmentManager fm, Context context) {
+	public RecordPagerAdapter(RecordActivity activity, FragmentManager fm, Context context) {
 		super(fm);
 		mContext = context;
+		mRecordActivity = activity;
 		RecordController._instance.registerListener(getClass(), this);
 	}
 	
@@ -49,9 +52,10 @@ public class RecordPagerAdapter extends FragmentStatePagerAdapter implements Tas
 			fragments.add(new RecordSeeAlsoFragment());
 			
 			notifyDataSetChanged();
+			mRecordActivity.updateTabs();
 		}
 	}
-
+	
 	@Override
 	public Fragment getItem(int page) {
 		return fragments.get(page);

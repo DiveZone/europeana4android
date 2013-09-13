@@ -16,7 +16,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentTransaction;
@@ -62,20 +61,7 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 		mResultsList.setAdapter(mResultAdaptor);
 
 		// ViewPager
-		mRecordPagerAdapter = new RecordPagerAdapter(getSupportFragmentManager(), getApplicationContext());
-		mRecordPagerAdapter.registerDataSetObserver(new DataSetObserver() {
-			@Override
-			public void onChanged() {
-				super.onChanged();
-				getSupportActionBar().removeAllTabs();
-				for (int i = 0; i < mRecordPagerAdapter.getCount(); i++) {
-					getSupportActionBar().addTab(
-							getSupportActionBar().newTab()
-			                        .setText(mRecordPagerAdapter.labels.get(i).intValue())
-			                        .setTabListener(RecordActivity.this));
-			    }
-			}
-		});
+		mRecordPagerAdapter = new RecordPagerAdapter(this, getSupportFragmentManager(), getApplicationContext());
         mViewPager = (ViewPager) findViewById(R.id.activity_record_pager);
         mViewPager.setAdapter(mRecordPagerAdapter);
         mViewPager.setOnPageChangeListener(
@@ -184,6 +170,16 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 		if (mDrawerLayout != null) {
 			mDrawerToggle.syncState();
 		}
+	}
+
+	public void updateTabs() {
+		getSupportActionBar().removeAllTabs();
+		for (int i = 0; i < mRecordPagerAdapter.getCount(); i++) {
+			getSupportActionBar().addTab(
+					getSupportActionBar().newTab()
+	                        .setText(mRecordPagerAdapter.labels.get(i).intValue())
+	                        .setTabListener(RecordActivity.this));
+	    }
 	}
 
 	@Override
