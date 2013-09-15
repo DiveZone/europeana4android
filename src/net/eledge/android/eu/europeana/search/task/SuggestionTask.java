@@ -14,6 +14,7 @@ import net.eledge.android.eu.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.async.ListenerNotifier;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -22,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
@@ -41,18 +43,22 @@ public class SuggestionTask extends AsyncTask<String, Void, Suggestion[]> {
 			return null;
 		}
 		URI url = UriHelper.getSuggestionURI(params[0], searchController.suggestionPagesize);
+		InputStreamReader isr = null;
+		BufferedReader br = null;
 		try {
-			HttpResponse response = new DefaultHttpClient().execute(new HttpGet(url));
-			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(),
-					Config.JSON_CHARSET));
+			HttpGet request = new HttpGet(url);
+			AndroidHttpClient.modifyRequestToAcceptGzipResponse(request);
+			HttpResponse response = new DefaultHttpClient().execute(request);
+			isr = new InputStreamReader(AndroidHttpClient.getUngzippedContent(response.getEntity()), Config.JSON_CHARSET);
+			br = new BufferedReader(isr);
 			StringBuilder json = new StringBuilder();
-			String line = reader.readLine();
+			String line = br.readLine();
 			while (line != null) {
 				if (isCancelled()) {
 					return null;
 				}
 				json.append(line);
-				line = reader.readLine();
+				line = br.readLine();
 			}
 			JSONObject jsonObj = new JSONObject(json.toString());
 			JSONArray array = jsonObj.getJSONArray("items");
@@ -76,6 +82,9 @@ public class SuggestionTask extends AsyncTask<String, Void, Suggestion[]> {
 			// ignore
 		} catch (JSONException e) {
 			// ignore
+		} finally {
+			IOUtils.closeQuietly(br);
+			IOUtils.closeQuietly(isr);
 		}
 		return null;	
 	}

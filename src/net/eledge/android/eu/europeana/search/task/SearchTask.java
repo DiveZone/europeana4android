@@ -15,6 +15,7 @@ import net.eledge.android.eu.europeana.search.model.searchresults.Field;
 import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -22,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -53,17 +55,21 @@ public class SearchTask extends AsyncTask<String, Void, SearchResult> {
 
 	@Override
 	protected SearchResult doInBackground(String... terms) {
-		URI url = UriHelper.getSearchURI(Config._instance.getEuropeanaPublicKey(mActivity), terms, pageLoad, searchController.searchPagesize);
+		URI url = UriHelper.getSearchURI(Config._instance.getEuropeanaPublicKey(mActivity), terms, pageLoad,
+				searchController.searchPagesize);
+		InputStreamReader isr = null;
+		BufferedReader br = null;
 		try {
-			HttpResponse response = new DefaultHttpClient()
-					.execute(new HttpGet(url));
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					response.getEntity().getContent(), Config.JSON_CHARSET));
+			HttpGet request = new HttpGet(url);
+			AndroidHttpClient.modifyRequestToAcceptGzipResponse(request);
+			HttpResponse response = new DefaultHttpClient().execute(request);
+			isr = new InputStreamReader(AndroidHttpClient.getUngzippedContent(response.getEntity()), Config.JSON_CHARSET);
+			br = new BufferedReader(isr);
 			StringBuilder json = new StringBuilder();
-			String line = reader.readLine();
+			String line = br.readLine();
 			while (line != null) {
 				json.append(line);
-				line = reader.readLine();
+				line = br.readLine();
 			}
 			JSONObject jsonObj = new JSONObject(json.toString());
 			// check for error
@@ -84,13 +90,11 @@ public class SearchTask extends AsyncTask<String, Void, SearchResult> {
 							Item tmp = new Item();
 							tmp.id = item.getString("id");
 							if (item.has("title")) {
-								tmp.title = item.getJSONArray("title")
-										.getString(0);
+								tmp.title = item.getJSONArray("title").getString(0);
 							}
 							tmp.type = DocType.safeValueOf(item.getString("type"));
 							if (item.has("edmPreview")) {
-								tmp.thumbnail = item.getJSONArray("edmPreview")
-										.getString(0);
+								tmp.thumbnail = item.getJSONArray("edmPreview").getString(0);
 							}
 							result.searchItems.add(tmp);
 						}
@@ -121,14 +125,12 @@ public class SearchTask extends AsyncTask<String, Void, SearchResult> {
 							JSONObject facetObject = items.getJSONObject(i);
 							Facet facet = new Facet();
 							facet.name = facetObject.getString("name");
-							JSONArray fields = facetObject
-									.getJSONArray("fields");
+							JSONArray fields = facetObject.getJSONArray("fields");
 							for (int j = 0; j < fields.length(); j++) {
 								if (isCancelled()) {
 									return null;
 								}
-								JSONObject fieldObject = fields
-										.getJSONObject(j);
+								JSONObject fieldObject = fields.getJSONObject(j);
 								Field field = new Field();
 								field.label = fieldObject.getString("label");
 								field.count = fieldObject.getLong("count");
@@ -142,6 +144,9 @@ public class SearchTask extends AsyncTask<String, Void, SearchResult> {
 			}
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
+		} finally {
+			IOUtils.closeQuietly(br);
+			IOUtils.closeQuietly(isr);
 		}
 		return null;
 	}

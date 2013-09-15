@@ -15,7 +15,7 @@ public class UriHelper {
 	public static final String URL_BLOGFEED = "http://blog.europeana.eu/feed/";
 
 	// API METHODS
-	private static final String URL_API_SEARCH = URL_API + "search.json?profile=portal";
+	private static final String URL_API_SEARCH = URL_API + "search.json";
 	private static final String URL_API_SUGGESTIONS = URL_API + "suggestions.json?rows=%d&query=%s&phrases=false";
 	private static final String URL_API_RECORD = URL_API + "record%s.json?wskey=%s";
 
@@ -56,6 +56,7 @@ public class UriHelper {
 	private static UrlBuilder createSearchUrl(String apikey, String[] terms, int page, int pagesize)
 			throws UnsupportedEncodingException {
 		UrlBuilder builder = new UrlBuilder(URL_API_SEARCH);
+		builder.addParam("profile", page==1?"portal":"minimal", true);
 		builder.addParam("wskey", apikey, true);
 		setSearchParams(builder, terms, page, pagesize);
 		return builder;

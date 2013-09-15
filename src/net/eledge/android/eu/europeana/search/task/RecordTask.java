@@ -12,6 +12,7 @@ import net.eledge.android.eu.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.async.ListenerNotifier;
 import net.eledge.android.toolkit.json.exception.JsonParserException;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -19,39 +20,44 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
 
-public class RecordTask extends AsyncTask<String, Void, Record>  {
-	
+public class RecordTask extends AsyncTask<String, Void, Record> {
+
 	private final RecordController recordController = RecordController._instance;
-	
+
 	private Activity mActivity;
-	
+
 	public RecordTask(Activity activity) {
 		super();
 		mActivity = activity;
 	}
-	
+
 	@Override
 	protected Record doInBackground(String... params) {
 		if (TextUtils.isEmpty(params[0])) {
 			return null;
 		}
 		URI url = UriHelper.getRecordURI(Config._instance.getEuropeanaPublicKey(mActivity), params[0]);
+		InputStreamReader isr = null;
+		BufferedReader br = null;
 		try {
-			HttpResponse response = new DefaultHttpClient().execute(new HttpGet(url));
-			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(),
-					Config.JSON_CHARSET));
+			HttpGet request = new HttpGet(url);
+			AndroidHttpClient.modifyRequestToAcceptGzipResponse(request);
+			HttpResponse response = new DefaultHttpClient().execute(request);
+			isr = new InputStreamReader(AndroidHttpClient.getUngzippedContent(response.getEntity()), Config.JSON_CHARSET);
+			br = new BufferedReader(isr);
 			StringBuilder json = new StringBuilder();
-			String line = reader.readLine();
+			String line = br.readLine();
 			while (line != null) {
 				if (isCancelled()) {
 					return null;
 				}
 				json.append(line);
-				line = reader.readLine();
+				line = br.readLine();
 			}
 			JSONObject jsonObj = new JSONObject(json.toString());
 			JSONObject object = jsonObj.getJSONObject("object");
@@ -65,14 +71,17 @@ public class RecordTask extends AsyncTask<String, Void, Record>  {
 		} catch (JsonParserException e) {
 			Log.e(RecordTask.class.getSimpleName(), e.getMessage());
 			Log.e(RecordTask.class.getSimpleName(), e.getCause().getMessage());
+		} finally {
+			IOUtils.closeQuietly(br);
+			IOUtils.closeQuietly(isr);
 		}
 		return null;	
 	}
-	
+
 	@Override
 	protected void onPostExecute(Record result) {
 		recordController.record = result;
 		mActivity.runOnUiThread(new ListenerNotifier<Record>(recordController.listeners.values(), result));
 	}
-	
+
 }
