@@ -140,11 +140,13 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 	}
 
 	@Override
-	public void onSearchStart() {
-		mStatusTextView.setText(R.string.msg_searching);
-		showStatusText();
-		if (mResultAdaptor != null) {
-			mResultAdaptor.notifyDataSetChanged();
+	public void onSearchStart(boolean isFacetSearch) {
+		if (!isFacetSearch) {
+			mStatusTextView.setText(R.string.msg_searching);
+			showStatusText();
+			if (mResultAdaptor != null) {
+				mResultAdaptor.notifyDataSetChanged();
+			}
 		}
 	}
 

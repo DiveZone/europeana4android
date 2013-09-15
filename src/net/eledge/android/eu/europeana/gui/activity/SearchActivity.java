@@ -175,11 +175,13 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 	}
 
 	@Override
-	public void onSearchStart() {
-		mFacetsAdaptor.clear();
-		mFacetsAdaptor.notifyDataSetChanged();
-		if (mDrawerLayout != null) {
-			mDrawerLayout.setEnabled(false);
+	public void onSearchStart(boolean isFacetSearch) {
+		if (isFacetSearch) {
+			mFacetsAdaptor.clear();
+			mFacetsAdaptor.notifyDataSetChanged();
+			if (mDrawerLayout != null) {
+				mDrawerLayout.setEnabled(false);
+			}
 		}
 	}
 

@@ -16,6 +16,7 @@ import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import net.eledge.android.eu.europeana.search.model.searchresults.Field;
 import net.eledge.android.eu.europeana.search.model.searchresults.Item;
+import net.eledge.android.eu.europeana.search.task.SearchFacetTask;
 import net.eledge.android.eu.europeana.search.task.SearchTask;
 import net.eledge.android.eu.europeana.search.task.SuggestionTask;
 import net.eledge.android.eu.europeana.tools.UriHelper;
@@ -44,6 +45,7 @@ public class SearchController {
 	private FacetType selectedFacet = FacetType.TYPE;
 
 	private SearchTask mSearchTask;
+	private SearchFacetTask mSearchFacetTask;
 	private SuggestionTask mSuggestionTask;
 
 	private SearchController() {
@@ -147,6 +149,9 @@ public class SearchController {
 		if (mSearchTask != null) {
 			mSearchTask.cancel(true);
 		}
+		if (mSearchFacetTask != null) {
+			mSearchFacetTask.cancel(true);
+		}
 	}
 
 	public void reset() {
@@ -176,12 +181,21 @@ public class SearchController {
 		}
 		mSearchTask = new SearchTask(activity, pageLoad++);
 		mSearchTask.execute(terms.toArray(new String[terms.size()]));
+		if (facets.isEmpty()) {
+			mSearchFacetTask = new SearchFacetTask(activity);
+			mSearchFacetTask.execute(terms.toArray(new String[terms.size()]));
+		}
 	}
 
 	public synchronized void onSearchFinish(SearchResult results) {
 		if (results != null) {
 			totalResults = results.totalResults;
 			searchItems.addAll(results.searchItems);
+		}
+	}
+	
+	public synchronized void onSearchFacetFinish(SearchResult results) {
+		if (results != null) {
 			if (results.facetUpdated) {
 				facets.clear();
 				facets.addAll(results.facets);
@@ -192,6 +206,7 @@ public class SearchController {
 			}
 		}
 	}
+	
 
 	public synchronized List<Item> getSearchItems() {
 		return searchItems;

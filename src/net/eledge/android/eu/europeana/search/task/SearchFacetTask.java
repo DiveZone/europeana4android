@@ -8,8 +8,9 @@ import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
-import net.eledge.android.eu.europeana.search.model.enums.DocType;
-import net.eledge.android.eu.europeana.search.model.searchresults.Item;
+import net.eledge.android.eu.europeana.search.model.searchresults.BreadCrumb;
+import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
+import net.eledge.android.eu.europeana.search.model.searchresults.Field;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 
 import org.apache.commons.io.IOUtils;
@@ -24,18 +25,15 @@ import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class SearchTask extends AsyncTask<String, Void, SearchResult> {
-	private final static String TAG = "SearchTask";
-
-	private int pageLoad = 1;
+public class SearchFacetTask extends AsyncTask<String, Void, SearchResult> {
+	private final static String TAG = "SearchFacetTask";
 
 	private SearchController searchController = SearchController._instance;
 	private Activity mActivity;
 
-	public SearchTask(Activity activity, int pageLoad) {
+	public SearchFacetTask(Activity activity) {
 		super();
 		mActivity = activity;
-		this.pageLoad = pageLoad;
 	}
 
 	@Override
@@ -45,15 +43,14 @@ public class SearchTask extends AsyncTask<String, Void, SearchResult> {
 				return;
 			}
 			if (l != null) {
-				l.onSearchStart(false);
+				l.onSearchStart(true);
 			}
 		}
 	}
 
 	@Override
 	protected SearchResult doInBackground(String... terms) {
-		URI url = UriHelper.getSearchURI(Config._instance.getEuropeanaPublicKey(mActivity), terms, pageLoad,
-				searchController.searchPagesize);
+		URI url = UriHelper.getSearchURI(Config._instance.getEuropeanaPublicKey(mActivity), terms, 1, 1);
 		InputStreamReader isr = null;
 		BufferedReader br = null;
 		try {
@@ -78,22 +75,44 @@ public class SearchTask extends AsyncTask<String, Void, SearchResult> {
 				result.totalResults = jsonObj.getInt("totalResults");
 				if (result.totalResults > 0) {
 					JSONArray items = jsonObj.getJSONArray("items");
-					if ((items != null) && (items.length() > 0)) {
+					if (jsonObj.has("breadCrumbs")) {
+						items = jsonObj.getJSONArray("breadCrumbs");
 						for (int i = 0; i < items.length(); i++) {
 							if (isCancelled()) {
 								return null;
 							}
-							JSONObject item = items.getJSONObject(i);
-							Item tmp = new Item();
-							tmp.id = item.getString("id");
-							if (item.has("title")) {
-								tmp.title = item.getJSONArray("title").getString(0);
+							JSONObject bcObject = items.getJSONObject(i);
+							BreadCrumb bc = new BreadCrumb();
+							bc.display = bcObject.getString("display");
+							bc.href = bcObject.getString("href");
+							bc.param = bcObject.getString("param");
+							bc.value = bcObject.getString("value");
+							bc.last = bcObject.getBoolean("last");
+							result.breadcrumbs.add(bc);
+						}
+					}
+					if (jsonObj.has("facets")) {
+						result.facetUpdated = true;
+						items = jsonObj.getJSONArray("facets");
+						for (int i = 0; i < items.length(); i++) {
+							if (isCancelled()) {
+								break;
 							}
-							tmp.type = DocType.safeValueOf(item.getString("type"));
-							if (item.has("edmPreview")) {
-								tmp.thumbnail = item.getJSONArray("edmPreview").getString(0);
+							JSONObject facetObject = items.getJSONObject(i);
+							Facet facet = new Facet();
+							facet.name = facetObject.getString("name");
+							JSONArray fields = facetObject.getJSONArray("fields");
+							for (int j = 0; j < fields.length(); j++) {
+								if (isCancelled()) {
+									return null;
+								}
+								JSONObject fieldObject = fields.getJSONObject(j);
+								Field field = new Field();
+								field.label = fieldObject.getString("label");
+								field.count = fieldObject.getLong("count");
+								facet.fields.add(field);
 							}
-							result.searchItems.add(tmp);
+							result.facets.add(facet);
 						}
 					}
 				}
@@ -126,7 +145,7 @@ public class SearchTask extends AsyncTask<String, Void, SearchResult> {
 		}
 
 		public void run() {
-			searchController.onSearchFinish(result);
+			searchController.onSearchFacetFinish(result);
 			for (SearchTaskListener l : searchController.listeners.values()) {
 				if (l != null) {
 					l.onSearchFinish(result);

@@ -4,7 +4,7 @@ import net.eledge.android.eu.europeana.search.model.SearchResult;
 
 public interface SearchTaskListener {
 	
-	public void onSearchStart();
+	public void onSearchStart(boolean isFacetSearch);
 	
 	public void onSearchFinish(SearchResult results);
 	
