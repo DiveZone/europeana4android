@@ -53,7 +53,8 @@
         <activity
             android:name="net.eledge.android.eu.europeana.gui.activity.SearchActivity"
             android:label="@string/app_name"
-            android:launchMode="singleInstance" >
+            android:launchMode="singleInstance"
+            android:parentActivityName="net.eledge.android.eu.europeana.gui.activity.HomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
 
@@ -69,17 +70,25 @@
                     android:host="www.europeana.eu"
                     android:path="/portal/search.html"
                     android:scheme="http" />
+                <data
+                    android:host="europeana.eu"
+                    android:path="/portal/search.html"
+                    android:scheme="http" />
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"
                 android:value="true" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.eledge.android.eu.europeana.gui.activity.HomeActivity" />
         </activity>
         <activity
             android:name="net.eledge.android.eu.europeana.gui.activity.RecordActivity"
             android:label="@string/app_name"
-            android:launchMode="singleInstance" >
+            android:launchMode="singleInstance"
+            android:parentActivityName="net.eledge.android.eu.europeana.gui.activity.SearchActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -88,9 +97,17 @@
 
                 <data
                     android:host="www.europeana.eu"
-                    android:path="/portal/record/*"
+                    android:pathPattern="/portal/record/.*/.*"
+                    android:scheme="http" />
+                <data
+                    android:host="europeana.eu"
+                    android:pathPattern="/portal/record/.*/.*"
                     android:scheme="http" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.eledge.android.eu.europeana.gui.activity.SearchActivity" />
         </activity>
 
         <meta-data

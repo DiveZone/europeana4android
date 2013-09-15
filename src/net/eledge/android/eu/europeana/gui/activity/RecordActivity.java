@@ -1,5 +1,7 @@
 package net.eledge.android.eu.europeana.gui.activity;
 
+import java.util.List;
+
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.RecordPagerAdapter;
@@ -16,6 +18,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentTransaction;
@@ -195,7 +198,16 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 				id = intent.getDataString();
 				if (!TextUtils.isEmpty(id)) {
 					if (StringUtils.contains(id, "europeana.eu/")) {
-						// TODO
+						Uri uri = Uri.parse(id);
+						List<String> paths = uri.getPathSegments();
+						if ( (paths != null) && (paths.size() == 4)) {
+							String collectionId = paths.get(paths.size()-2);
+							String recordId = StringUtils.removeEnd(paths.get(paths.size()-1), ".html");
+							id = StringUtils.join(new String[] {"/", collectionId ,"/", recordId});
+						} else {
+							// invalid url/id, cancel opening record
+							id = null;
+						}
 					}
 				} else {
 					id = intent.getStringExtra(RECORD_ID);
