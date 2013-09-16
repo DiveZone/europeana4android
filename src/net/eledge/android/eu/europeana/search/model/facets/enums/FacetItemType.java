@@ -4,10 +4,14 @@ import net.eledge.android.eu.europeana.R;
 
 public enum FacetItemType {
 
-	CATEGORY, CATEGORY_OPENED, ITEM, ITEM_SELECTED;
+	SECTION, BREADCRUMB, CATEGORY, CATEGORY_OPENED, ITEM, ITEM_SELECTED;
 
 	public int getLayoutId(FacetType type) {
 		switch (this) {
+		case BREADCRUMB:
+			return R.layout.listitem_drawer_facet_selected;
+		case SECTION:
+			return R.layout.listitem_drawer_section;
 		case CATEGORY:
 			return R.layout.listitem_drawer_category;
 		case CATEGORY_OPENED:

@@ -16,8 +16,9 @@
     <!-- SEARCH ACTIVITY -->
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
-    <string name="drawer_facets_cat_breadcrumbs">Matches for</string>
-    <string name="drawer_facets_cat_refine">Refine your results</string>
+    <string name="drawer_facets_section_breadcrumbs">Matches for</string>
+    <string name="drawer_facets_section_refine">Refine your results</string>
+    <string name="drawer_facets_section_refine_loading">Loading refine options&#8230;</string>
     <string name="msg_searching">Searching&#8230;</string>
     <string name="msg_searchresults">Showing %1$d of %2$d results</string>
     

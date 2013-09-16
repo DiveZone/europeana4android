@@ -6,12 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.Suggestion;
 import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.facets.enums.FacetType;
-import net.eledge.android.eu.europeana.search.model.searchresults.BreadCrumb;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import net.eledge.android.eu.europeana.search.model.searchresults.Field;
@@ -21,6 +22,7 @@ import net.eledge.android.eu.europeana.search.task.SearchTask;
 import net.eledge.android.eu.europeana.search.task.SuggestionTask;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.async.listener.TaskListener;
+import net.eledge.android.toolkit.gui.GuiUtils;
 import android.app.Activity;
 import android.content.Context;
 
@@ -39,7 +41,6 @@ public class SearchController {
 	private int itemSelected = -1;
 
 	private final List<Item> searchItems = new ArrayList<Item>();
-	private final List<BreadCrumb> breadcrumbs = new ArrayList<BreadCrumb>();
 	private final List<Facet> facets = new ArrayList<Facet>();
 
 	private FacetType selectedFacet = FacetType.TYPE;
@@ -86,7 +87,7 @@ public class SearchController {
 		search(activity);
 	}
 
-	public void removeRefineSearch(Activity activity, String... qf) {
+	public boolean removeRefineSearch(Activity activity, String... qf) {
 		boolean changed = false;
 		for (String s : qf) {
 			if (terms.contains(s)) {
@@ -94,16 +95,43 @@ public class SearchController {
 				changed = true;
 			}
 		}
-		if (changed) {
+		if ((terms.size() > 0) && changed) {
 			reset();
 			search(activity);
 		}
+		return terms.size() > 0;
 	}
 
 	public void continueSearch(Activity activity) {
 		if (hasMoreResults()) {
 			search(activity);
 		}
+	}
+	
+	public List<FacetItem> getBreadcrumbs(Context context) {
+		List<FacetItem> breadcrumbs = new ArrayList<FacetItem>();
+		boolean first = true;
+		FacetItem crumb;
+		for (String term: terms) {
+			crumb = new FacetItem();
+			crumb.itemType = FacetItemType.BREADCRUMB;
+			crumb.facetType = FacetType.TEXT;
+			crumb.description = term;
+			crumb.facet = term;
+			if (StringUtils.contains(term, ":")) {
+				FacetType type = FacetType.safeValueOf(StringUtils.substringBefore(term, ":"));
+				if (type != null) {
+					crumb.facetType = type;
+					StringBuilder sb = new StringBuilder();
+					sb.append(StringUtils.capitalize(StringUtils.lowerCase(GuiUtils.getString(context, type.resId))));
+					sb.append(":").append(type.createFacetLabel(context, StringUtils.substringAfter(term, ":")));
+					crumb.description = sb.toString();
+				}
+			}
+			first = false;
+			breadcrumbs.add(crumb);
+		}
+		return breadcrumbs;
 	}
 
 	public List<FacetItem> getFacetList(Context context) {
@@ -140,6 +168,10 @@ public class SearchController {
 	public boolean hasResults() {
 		return totalResults > 0;
 	}
+	
+	public boolean hasFacets() {
+		return !facets.isEmpty();
+	}
 
 	public boolean hasMoreResults() {
 		return totalResults > searchItems.size();
@@ -162,7 +194,6 @@ public class SearchController {
 		synchronized (searchItems) {
 			searchItems.clear();
 		}
-		breadcrumbs.clear();
 		facets.clear();
 	}
 
@@ -195,15 +226,9 @@ public class SearchController {
 	}
 	
 	public synchronized void onSearchFacetFinish(SearchResult results) {
-		if (results != null) {
-			if (results.facetUpdated) {
-				facets.clear();
-				facets.addAll(results.facets);
-			}
-			if (results.breadcrumbs != null) {
-				breadcrumbs.clear();
-				breadcrumbs.addAll(results.breadcrumbs);
-			}
+		if (results != null && results.facetUpdated) {
+			facets.clear();
+			facets.addAll(results.facets);
 		}
 	}
 	

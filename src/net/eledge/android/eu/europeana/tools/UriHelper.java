@@ -56,7 +56,7 @@ public class UriHelper {
 	private static UrlBuilder createSearchUrl(String apikey, String[] terms, int page, int pagesize)
 			throws UnsupportedEncodingException {
 		UrlBuilder builder = new UrlBuilder(URL_API_SEARCH);
-		builder.addParam("profile", pagesize==1?"portal":"minimal", true);
+		builder.addParam("profile", pagesize==1?"minimal+facets":"minimal", true);
 		builder.addParam("wskey", apikey, true);
 		setSearchParams(builder, terms, page, pagesize);
 		return builder;

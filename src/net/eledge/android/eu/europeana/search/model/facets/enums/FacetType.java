@@ -12,6 +12,7 @@ import android.content.Context;
 
 public enum FacetType implements FacetConverter {
 
+	TEXT(false, -1),
 	TYPE(true, R.string.facettype_type, new DocTypes()), 
 	LANGUAGE(false, R.string.facettype_language, new Languages()), 
 	YEAR(false, R.string.facettype_year), 

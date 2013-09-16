@@ -8,7 +8,6 @@ import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
-import net.eledge.android.eu.europeana.search.model.searchresults.BreadCrumb;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import net.eledge.android.eu.europeana.search.model.searchresults.Field;
 import net.eledge.android.eu.europeana.tools.UriHelper;
@@ -75,22 +74,6 @@ public class SearchFacetTask extends AsyncTask<String, Void, SearchResult> {
 				result.totalResults = jsonObj.getInt("totalResults");
 				if (result.totalResults > 0) {
 					JSONArray items = jsonObj.getJSONArray("items");
-					if (jsonObj.has("breadCrumbs")) {
-						items = jsonObj.getJSONArray("breadCrumbs");
-						for (int i = 0; i < items.length(); i++) {
-							if (isCancelled()) {
-								return null;
-							}
-							JSONObject bcObject = items.getJSONObject(i);
-							BreadCrumb bc = new BreadCrumb();
-							bc.display = bcObject.getString("display");
-							bc.href = bcObject.getString("href");
-							bc.param = bcObject.getString("param");
-							bc.value = bcObject.getString("value");
-							bc.last = bcObject.getBoolean("last");
-							result.breadcrumbs.add(bc);
-						}
-					}
 					if (jsonObj.has("facets")) {
 						result.facetUpdated = true;
 						items = jsonObj.getJSONArray("facets");

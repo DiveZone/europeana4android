@@ -11,6 +11,7 @@ import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.record.Record;
 import net.eledge.android.toolkit.async.listener.TaskListener;
+import net.eledge.android.toolkit.gui.GuiUtils;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -22,6 +23,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -80,23 +83,25 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_activity_record);
-		if (mDrawerLayout != null) {
-			mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
-					R.string.drawer_facets_open, R.string.drawer_facets_close) {
-				public void onDrawerClosed(View view) {
-					// getActionBar().setTitle(mTitle);
-					supportInvalidateOptionsMenu();
-				}
-
-				public void onDrawerOpened(View drawerView) {
-					// getActionBar().setTitle(mDrawerTitle);
-					supportInvalidateOptionsMenu();
-				}
-			};
-			mDrawerLayout.setDrawerListener(mDrawerToggle);
-		}		
+        if (searchController.hasResults()) {
+	        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_activity_record);
+			if (mDrawerLayout != null) {
+				mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+				mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
+						R.string.drawer_facets_open, R.string.drawer_facets_close) {
+					public void onDrawerClosed(View view) {
+						// getActionBar().setTitle(mTitle);
+						supportInvalidateOptionsMenu();
+					}
+	
+					public void onDrawerOpened(View drawerView) {
+						// getActionBar().setTitle(mDrawerTitle);
+						supportInvalidateOptionsMenu();
+					}
+				};
+				mDrawerLayout.setDrawerListener(mDrawerToggle);
+			}
+        }
 		
 		handleIntent(getIntent());
 	}
@@ -153,6 +158,21 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 		case R.id.action_share:
 			startActivity(createShareIntent());
 			break;
+		case android.R.id.home:
+	        if (!searchController.hasResults()) {
+	        	GuiUtils.startTopActivity(this, HomeActivity.class);
+	        	this.finish();
+	        	return true;
+	        }
+	        Intent upIntent = NavUtils.getParentActivityIntent(this);
+	        if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+	            TaskStackBuilder.create(this)
+	                    .addNextIntentWithParentStack(upIntent)
+	                    .startActivities();
+	        } else {
+	            NavUtils.navigateUpTo(this, upIntent);
+	        }
+	        return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

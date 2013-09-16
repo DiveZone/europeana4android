@@ -17,10 +17,11 @@
     <TextView
         android:id="@+id/fragment_search_textview_status"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="#BF000000"
+        android:textStyle="bold"
+        android:background="@color/emphasis_transparant"
         android:gravity="center"
         android:text="@string/msg_searching"
         android:textColor="@android:color/white"

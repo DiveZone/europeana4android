@@ -12,8 +12,10 @@ import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
+import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import net.eledge.android.toolkit.StringArrayUtils;
+import net.eledge.android.toolkit.gui.GuiUtils;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -90,6 +92,8 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 				}
 			};
 			mDrawerLayout.setDrawerListener(mDrawerToggle);
+			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+			mDrawerToggle.setDrawerIndicatorEnabled(false);
 		}
 		if (Config.DEBUGMODE) {
 			StrictMode.enableDefaults();
@@ -178,16 +182,15 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 	public void onSearchStart(boolean isFacetSearch) {
 		if (isFacetSearch) {
 			mFacetsAdaptor.clear();
-			mFacetsAdaptor.notifyDataSetChanged();
-			if (mDrawerLayout != null) {
-				mDrawerLayout.setEnabled(false);
+			if (mFacetsAdaptor.isEmpty()) {
+				createBreadcrumbs();
 			}
 		}
 	}
 
 	@Override
 	public void onSearchError(String message) {
-		// TODO Report error
+		GuiUtils.toast(this, message);
 	}
 
 	@Override
@@ -196,6 +199,11 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 			updateFacetDrawer();
 		}
 		runningSearch = null;
+	}
+	
+	private void closeSearchActivity() {
+		GuiUtils.startTopActivity(this, HomeActivity.class);
+		finish();
 	}
 	
 	private void createResultFragment() {
@@ -210,17 +218,41 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		}
 	}
 	
+	private void createBreadcrumbs() {
+		FacetItem facetSection = new FacetItem();
+		facetSection.itemType = FacetItemType.SECTION;
+		facetSection.labelResource = R.string.drawer_facets_section_breadcrumbs;
+		mFacetsAdaptor.add(facetSection);
+		for (FacetItem item: searchController.getBreadcrumbs(this)) {
+			mFacetsAdaptor.add(item);
+		}
+		if (!searchController.hasFacets()) {
+			facetSection = new FacetItem();
+			facetSection.itemType = FacetItemType.SECTION;
+			facetSection.labelResource = R.string.drawer_facets_section_breadcrumbs;
+			facetSection.last = true;
+			mFacetsAdaptor.add(facetSection);
+		}
+		mFacetsAdaptor.notifyDataSetChanged();
+		if (mDrawerLayout != null) {
+			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+			mDrawerToggle.setDrawerIndicatorEnabled(true);
+		}
+	}
+	
 	private void updateFacetDrawer() {
 		List<FacetItem> facetList = searchController.getFacetList(this);
 		if (facetList != null) {
 			mFacetsAdaptor.clear();
+			createBreadcrumbs();
+			FacetItem facetSection = new FacetItem();
+			facetSection.itemType = FacetItemType.SECTION;
+			facetSection.labelResource = R.string.drawer_facets_section_refine;
+			mFacetsAdaptor.add(facetSection);
 			for (FacetItem item: facetList) {
 				mFacetsAdaptor.add(item);
 			}
 			mFacetsAdaptor.notifyDataSetChanged();
-			if (mDrawerLayout != null) {
-				mDrawerLayout.setEnabled(true);
-			}
 		}
 	}
 
@@ -266,8 +298,16 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			mFacetsList.setItemChecked(position, false);
-			FacetItem item = searchController.getFacetList(SearchActivity.this).get(position);
+			FacetItem item = mFacetsAdaptor.getItem(position);
 			switch (item.itemType) {
+			case SECTION:
+				// ignore, is disabled.
+				break;
+			case BREADCRUMB:
+				if (!searchController.removeRefineSearch(SearchActivity.this, item.facet)) {
+					closeSearchActivity();
+				}
+				break;
 			case CATEGORY:
 				searchController.setCurrentFacetType(item.facetType);
 				updateFacetDrawer();

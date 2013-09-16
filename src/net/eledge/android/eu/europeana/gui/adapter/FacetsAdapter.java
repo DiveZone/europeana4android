@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class FacetsAdapter extends ArrayAdapter<FacetItem> {
@@ -29,14 +30,22 @@ public class FacetsAdapter extends ArrayAdapter<FacetItem> {
 		FacetItem item = getItem(position);
 		View view = inflater.inflate(item.itemType.getLayoutId(item.facetType), parent, false);
 		try {
-			if ((item.itemType == FacetItemType.CATEGORY) || (item.itemType == FacetItemType.CATEGORY_OPENED)) {
-				TextView textTitle = (TextView) view.findViewById(android.R.id.text1);
-				textTitle.setText(item.facetType.resId);
+			TextView mTextView1 = (TextView) view.findViewById(android.R.id.text1);
+			if (item.itemType == FacetItemType.SECTION) {
+				mTextView1.setText(item.labelResource);
+				if (item.last) {
+					// enable progress bar
+					ProgressBar mProgressBar = (ProgressBar) view.findViewById(android.R.id.progress);
+					mProgressBar.setVisibility(View.VISIBLE);
+				}
+			} else if (item.itemType == FacetItemType.BREADCRUMB) {
+				mTextView1.setText(item.description);
+			} else if ((item.itemType == FacetItemType.CATEGORY) || (item.itemType == FacetItemType.CATEGORY_OPENED)) {
+				mTextView1.setText(item.facetType.resId);
 			} else {
-				TextView mTextView1 = (TextView) view.findViewById(android.R.id.text1);
 				mTextView1.setText(item.description);
 				TextView mTextView2 = (TextView) view.findViewById(android.R.id.text2);
-				if ( (mTextView2 != null) && (item.icon != null) ) {
+				if ((mTextView2 != null) && (item.icon != null)) {
 					mTextView2.setTypeface(europeanaFont);
 					mTextView2.setText(item.icon);
 				}
@@ -45,6 +54,17 @@ public class FacetsAdapter extends ArrayAdapter<FacetItem> {
 			// not gonna happen
 		}
 		return view;
+	}
+
+	@Override
+	public boolean areAllItemsEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled(int position) {
+		FacetItem item = getItem(position);
+		return item.itemType != FacetItemType.SECTION;
 	}
 
 }

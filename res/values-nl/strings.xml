@@ -12,8 +12,9 @@
     <!-- SEARCH ACTIVITY -->
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
-    <string name="drawer_facets_cat_breadcrumbs">Resultaten voor</string>
-    <string name="drawer_facets_cat_refine">Verfijn uw zoekresultaten</string>
+    <string name="drawer_facets_section_breadcrumbs">Resultaten voor</string>
+    <string name="drawer_facets_section_refine">Verfijn uw zoekresultaten</string>
+    <string name="drawer_facets_section_refine_loading">Verfijn opties worden geladen&#8230;</string>
     <string name="msg_searching">Bezig met zoeken&#8230;</string>
     <string name="msg_searchresults">Toont %1$d van %2$d resultaten</string>
 

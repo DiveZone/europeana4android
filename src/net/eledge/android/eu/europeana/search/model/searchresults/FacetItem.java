@@ -10,6 +10,8 @@ public class FacetItem {
 	public FacetType facetType;
 
 	public String label;
+	
+	public int labelResource;
 
 	public String facet;
 	
