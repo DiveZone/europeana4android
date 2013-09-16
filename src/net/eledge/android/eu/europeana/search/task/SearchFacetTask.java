@@ -10,12 +10,12 @@ import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import net.eledge.android.eu.europeana.search.model.searchresults.Field;
+import net.eledge.android.eu.europeana.tools.HttpManager;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -55,7 +55,7 @@ public class SearchFacetTask extends AsyncTask<String, Void, SearchResult> {
 		try {
 			HttpGet request = new HttpGet(url);
 			AndroidHttpClient.modifyRequestToAcceptGzipResponse(request);
-			HttpResponse response = new DefaultHttpClient().execute(request);
+			HttpResponse response = HttpManager.execute(request);
 			isr = new InputStreamReader(AndroidHttpClient.getUngzippedContent(response.getEntity()), Config.JSON_CHARSET);
 			br = new BufferedReader(isr);
 			StringBuilder json = new StringBuilder();

@@ -229,7 +229,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		if (!searchController.hasFacets()) {
 			facetSection = new FacetItem();
 			facetSection.itemType = FacetItemType.SECTION;
-			facetSection.labelResource = R.string.drawer_facets_section_breadcrumbs;
+			facetSection.labelResource = R.string.drawer_facets_section_refine_loading;
 			facetSection.last = true;
 			mFacetsAdaptor.add(facetSection);
 		}

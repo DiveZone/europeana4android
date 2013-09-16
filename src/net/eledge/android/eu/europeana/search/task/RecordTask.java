@@ -8,6 +8,7 @@ import java.net.URI;
 import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.model.record.Record;
+import net.eledge.android.eu.europeana.tools.HttpManager;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.async.ListenerNotifier;
 import net.eledge.android.toolkit.json.exception.JsonParserException;
@@ -15,7 +16,6 @@ import net.eledge.android.toolkit.json.exception.JsonParserException;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,7 +47,7 @@ public class RecordTask extends AsyncTask<String, Void, Record> {
 		try {
 			HttpGet request = new HttpGet(url);
 			AndroidHttpClient.modifyRequestToAcceptGzipResponse(request);
-			HttpResponse response = new DefaultHttpClient().execute(request);
+			HttpResponse response = HttpManager.execute(request);
 			isr = new InputStreamReader(AndroidHttpClient.getUngzippedContent(response.getEntity()), Config.JSON_CHARSET);
 			br = new BufferedReader(isr);
 			StringBuilder json = new StringBuilder();

@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.Suggestion;
@@ -23,6 +21,9 @@ import net.eledge.android.eu.europeana.search.task.SuggestionTask;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
+
+import org.apache.commons.lang.StringUtils;
+
 import android.app.Activity;
 import android.content.Context;
 
@@ -110,7 +111,6 @@ public class SearchController {
 	
 	public List<FacetItem> getBreadcrumbs(Context context) {
 		List<FacetItem> breadcrumbs = new ArrayList<FacetItem>();
-		boolean first = true;
 		FacetItem crumb;
 		for (String term: terms) {
 			crumb = new FacetItem();
@@ -128,7 +128,6 @@ public class SearchController {
 					crumb.description = sb.toString();
 				}
 			}
-			first = false;
 			breadcrumbs.add(crumb);
 		}
 		return breadcrumbs;
