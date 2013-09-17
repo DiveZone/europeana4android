@@ -28,7 +28,6 @@ import org.apache.commons.lang.WordUtils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 
 public class SearchController {
