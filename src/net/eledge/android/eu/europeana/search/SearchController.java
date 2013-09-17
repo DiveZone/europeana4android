@@ -24,9 +24,12 @@ import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 
 public class SearchController {
 
@@ -136,32 +139,34 @@ public class SearchController {
 
 	public List<FacetItem> getFacetList(Context context) {
 		List<FacetItem> facetlist = new ArrayList<FacetItem>();
-		for (Facet facet : facets) {
-			FacetType type = FacetType.safeValueOf(facet.name);
-			if (type != null) {
-				FacetItem item = new FacetItem();
-				item.itemType = type == selectedFacet ? FacetItemType.CATEGORY_OPENED: FacetItemType.CATEGORY;
-				item.facetType = type;
-				item.facet = facet.name;
-				facetlist.add(item);
-				if (type == selectedFacet) {
-					for (Field field : facet.fields) {
-						item = new FacetItem();
-						item.facetType = type;
-						item.label = field.label;
-						item.facet = facet.name + ":" + field.label;
-						item.itemType = terms.contains(item.facet) ? FacetItemType.ITEM_SELECTED
-								: FacetItemType.ITEM;
-						item.description = type.createFacetLabel(context, field.label) + " (" + field.count
-								+ ")";
-						item.icon = type.getFacetIcon(field.label);
-						facetlist.add(item);
+		if (!facets.isEmpty()) {
+			for (Facet facet : facets) {
+				FacetType type = FacetType.safeValueOf(facet.name);
+				if (type != null) {
+					FacetItem item = new FacetItem();
+					item.itemType = type == selectedFacet ? FacetItemType.CATEGORY_OPENED: FacetItemType.CATEGORY;
+					item.facetType = type;
+					item.facet = facet.name;
+					facetlist.add(item);
+					if (type == selectedFacet) {
+						for (Field field : facet.fields) {
+							item = new FacetItem();
+							item.facetType = type;
+							item.label = field.label;
+							item.facet = facet.name + ":" + field.label;
+							item.itemType = terms.contains(item.facet) ? FacetItemType.ITEM_SELECTED
+									: FacetItemType.ITEM;
+							item.description = type.createFacetLabel(context, field.label) + " (" + field.count
+									+ ")";
+							item.icon = type.getFacetIcon(field.label);
+							facetlist.add(item);
+						}
+						facetlist.get(facetlist.size()-1).last = true;
 					}
-					facetlist.get(facetlist.size()-1).last = true;
 				}
 			}
+			facetlist.get(facetlist.size()-1).last = true;
 		}
-		facetlist.get(facetlist.size()-1).last = true;
 		return facetlist;
 	}
 	
@@ -175,6 +180,13 @@ public class SearchController {
 
 	public boolean hasMoreResults() {
 		return totalResults > searchItems.size();
+	}
+	
+	public boolean isSearching() {
+		if (mSearchTask != null) {
+			return mSearchTask.getStatus() != Status.FINISHED;
+		}
+		return false;
 	}
 	
 	public void cancelSearch() {
@@ -259,11 +271,11 @@ public class SearchController {
 	public String getSearchTitle(Context context) {
 		String title = GuiUtils.getString(context, R.string.app_name);
 		if (!terms.isEmpty()) {
-			title = StringUtils.lowerCase(terms.get(0));
+			title = terms.get(0);
 			if (StringUtils.contains(title, ":")) {
 				title = StringUtils.substringAfter(title, ":");
 			}
-			title = StringUtils.capitalize(title);
+			title = WordUtils.capitalizeFully(title);
 		}
 		return title;
 	}

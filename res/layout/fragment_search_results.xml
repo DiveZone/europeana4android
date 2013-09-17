@@ -25,6 +25,6 @@
         android:gravity="center"
         android:text="@string/msg_searching"
         android:textColor="@android:color/white"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </RelativeLayout>

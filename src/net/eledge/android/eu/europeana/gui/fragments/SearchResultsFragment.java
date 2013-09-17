@@ -62,6 +62,10 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 				SearchResultsFragment.this.getActivity().startActivity(intent);
 			}
 		});
+		if (searchController.isSearching()) {
+			mStatusTextView.setText(R.string.msg_searching);
+			showStatusText();
+		}
 		return root;
 	}
 
@@ -75,6 +79,11 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 		searchController.cancelSearch();
 		searchController.unregister(SearchResultsFragment.class);
 		super.onDestroy();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
 	}
 
 	@Override
@@ -169,7 +178,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 	}
 
 	private void hideStatusText() {
-		if (!mStatusTextView.isShown()) {
+		if ((mStatusTextView == null) || !mStatusTextView.isShown()) {
 			return;
 		}
 		Animation fadeOut = new AlphaAnimation(1, 0);

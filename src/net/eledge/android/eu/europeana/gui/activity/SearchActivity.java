@@ -112,6 +112,12 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		searchController.unregister(SearchActivity.class);
 		super.onDestroy();
 	}
+	
+	@Override
+	protected void onResume() {
+		getSupportActionBar().setTitle(searchController.getSearchTitle(this));
+		super.onResume();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -289,7 +295,6 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 				} else {
 					searchController.newSearch(this, query);
 				}
-				
 				getSupportActionBar().setTitle(searchController.getSearchTitle(this));
 			}
 		}
