@@ -289,6 +289,8 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 				} else {
 					searchController.newSearch(this, query);
 				}
+				
+				getSupportActionBar().setTitle(searchController.getSearchTitle(this));
 			}
 		}
 	}
@@ -306,6 +308,9 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 			case BREADCRUMB:
 				if (!searchController.removeRefineSearch(SearchActivity.this, item.facet)) {
 					closeSearchActivity();
+				} else
+				if (mDrawerLayout != null) {
+					mDrawerLayout.closeDrawers();
 				}
 				break;
 			case CATEGORY:

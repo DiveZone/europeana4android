@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchResult;
 import net.eledge.android.eu.europeana.search.model.Suggestion;
@@ -253,6 +254,18 @@ public class SearchController {
 
 	public void setCurrentFacetType(FacetType facetType) {
 		selectedFacet = facetType;
+	}
+
+	public String getSearchTitle(Context context) {
+		String title = GuiUtils.getString(context, R.string.app_name);
+		if (!terms.isEmpty()) {
+			title = StringUtils.lowerCase(terms.get(0));
+			if (StringUtils.contains(title, ":")) {
+				title = StringUtils.substringAfter(title, ":");
+			}
+			title = StringUtils.capitalize(title);
+		}
+		return title;
 	}
 
 }

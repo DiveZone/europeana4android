@@ -16,11 +16,11 @@
     <!-- SEARCH ACTIVITY -->
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
-    <string name="drawer_facets_section_breadcrumbs">Matches for</string>
-    <string name="drawer_facets_section_refine">Refine your results</string>
-    <string name="drawer_facets_section_refine_loading">Loading refine options&#8230;</string>
-    <string name="msg_searching">Searching&#8230;</string>
-    <string name="msg_searchresults">Showing %1$d of %2$d results</string>
+    <string name="drawer_facets_section_breadcrumbs">MATCHES FOR</string>
+    <string name="drawer_facets_section_refine">FILTER ON</string>
+    <string name="drawer_facets_section_refine_loading">LOADING FILTER OPTIONS&#8230;</string>
+    <string name="msg_searching">RETRIEVING RESULTS&#8230;</string>
+    <string name="msg_searchresults">SHOWING %1$d OF %2$d RESULTS</string>
     
     <!-- RECORD ACTIVITY -->
     <string name="record_tab_details">Details</string>

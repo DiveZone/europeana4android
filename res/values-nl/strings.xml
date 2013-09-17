@@ -12,11 +12,11 @@
     <!-- SEARCH ACTIVITY -->
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
-    <string name="drawer_facets_section_breadcrumbs">Resultaten voor</string>
-    <string name="drawer_facets_section_refine">Verfijn uw zoekresultaten</string>
-    <string name="drawer_facets_section_refine_loading">Verfijn opties worden geladen&#8230;</string>
-    <string name="msg_searching">Bezig met zoeken&#8230;</string>
-    <string name="msg_searchresults">Toont %1$d van %2$d resultaten</string>
+    <string name="drawer_facets_section_breadcrumbs">RESULTATEN VOOR</string>
+    <string name="drawer_facets_section_refine">FILTER OP</string>
+    <string name="drawer_facets_section_refine_loading">LADEN FILTER OPTIES&#8230;</string>
+    <string name="msg_searching">OPHALEN RESULTATEN&#8230;</string>
+    <string name="msg_searchresults">TOONT %1$d VAN %2$d RESULTATEN</string>
 
     <!-- RECORD ACTIVITY -->
     <string name="record_tab_details">Details</string>
