@@ -19,6 +19,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.NFC" />
 
     <permission
         android:name="net.eledge.android.eu.europeana.permission.MAPS_RECEIVE"
@@ -75,7 +76,14 @@
                     android:path="/portal/search.html"
                     android:scheme="http" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/vnd.net.eledge.android.eu.europeana.search" />
+            </intent-filter>
+            
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"
@@ -104,7 +112,14 @@
                     android:pathPattern="/portal/record/.*/.*"
                     android:scheme="http" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/vnd.net.eledge.android.eu.europeana.record" />
+            </intent-filter>
+            
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.eledge.android.eu.europeana.gui.activity.SearchActivity" />

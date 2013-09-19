@@ -19,6 +19,7 @@ import net.eledge.android.toolkit.gui.GuiUtils;
 
 import org.apache.commons.lang.StringUtils;
 
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -26,7 +27,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcAdapter.CreateNdefMessageCallback;
+import android.nfc.NfcEvent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.StrictMode;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
@@ -44,25 +51,26 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class SearchActivity extends ActionBarActivity implements SearchTaskListener {
-	
+
 	private SearchResultsFragment mSearchFragment;
+	private NfcAdapter mNfcAdapter;
 
 	// NavigationDrawer
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ListView mFacetsList;
 	private FacetsAdapter mFacetsAdaptor;
-	
+
 	// Controller
 	private SearchController searchController = SearchController._instance;
-	
+
 	private String runningSearch = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
-		
+
 		searchController.registerListener(SearchActivity.class, this);
 		searchController.searchPagesize = getResources().getInteger(R.integer.search_result_pagesize);
 
@@ -103,27 +111,50 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 			updateFacetDrawer();
 			return;
 		}
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			createNdefPushMessageCallback();
+		}
 		handleIntent(getIntent());
 	}
-	
+
+	@TargetApi(14)
+	private void createNdefPushMessageCallback() {
+		mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+		if (mNfcAdapter != null) {
+			mNfcAdapter.setNdefPushMessageCallback(new CreateNdefMessageCallback() {
+				@Override
+				public NdefMessage createNdefMessage(NfcEvent event) {
+					return new NdefMessage(new NdefRecord[] {
+							new NdefRecord(NdefRecord.TNF_MIME_MEDIA,
+									"application/vnd.net.eledge.android.eu.europeana.search".getBytes(), new byte[0],
+									searchController.getPortalUrl().getBytes()),
+							NdefRecord.createApplicationRecord(getPackageName()) });
+				}
+			}, this);
+		}
+	}
+
 	@Override
 	protected void onDestroy() {
 		searchController.cancelSearch();
 		searchController.unregister(SearchActivity.class);
 		super.onDestroy();
 	}
-	
+
 	@Override
 	protected void onResume() {
-		getSupportActionBar().setTitle(searchController.getSearchTitle(this));
 		super.onResume();
+		getSupportActionBar().setTitle(searchController.getSearchTitle(this));
+		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+			handleIntent(getIntent());
+		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.search, menu);
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		
+
 		SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
@@ -148,9 +179,11 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		switch (item.getItemId()) {
 		case R.id.action_about:
 			try {
-				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager().getPackageInfo(getPackageName(), 0));
+				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager()
+						.getPackageInfo(getPackageName(), 0));
 				dialog.show();
-			} catch (NameNotFoundException e) {}
+			} catch (NameNotFoundException e) {
+			}
 			break;
 		case R.id.action_share:
 			startActivity(createShareIntent());
@@ -206,12 +239,12 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		}
 		runningSearch = null;
 	}
-	
+
 	private void closeSearchActivity() {
 		GuiUtils.startTopActivity(this, HomeActivity.class);
 		finish();
 	}
-	
+
 	private void createResultFragment() {
 		if (mSearchFragment == null) {
 			FragmentManager fragmentManager = getSupportFragmentManager();
@@ -223,13 +256,13 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 			fragmentTransaction.commit();
 		}
 	}
-	
+
 	private void createBreadcrumbs() {
 		FacetItem facetSection = new FacetItem();
 		facetSection.itemType = FacetItemType.SECTION;
 		facetSection.labelResource = R.string.drawer_facets_section_breadcrumbs;
 		mFacetsAdaptor.add(facetSection);
-		for (FacetItem item: searchController.getBreadcrumbs(this)) {
+		for (FacetItem item : searchController.getBreadcrumbs(this)) {
 			mFacetsAdaptor.add(item);
 		}
 		if (!searchController.hasFacets()) {
@@ -245,7 +278,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 			mDrawerToggle.setDrawerIndicatorEnabled(true);
 		}
 	}
-	
+
 	private void updateFacetDrawer() {
 		List<FacetItem> facetList = searchController.getFacetList(this);
 		if (facetList != null) {
@@ -255,7 +288,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 			facetSection.itemType = FacetItemType.SECTION;
 			facetSection.labelResource = R.string.drawer_facets_section_refine;
 			mFacetsAdaptor.add(facetSection);
-			for (FacetItem item: facetList) {
+			for (FacetItem item : facetList) {
 				mFacetsAdaptor.add(item);
 			}
 			mFacetsAdaptor.notifyDataSetChanged();
@@ -274,8 +307,17 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		String query = null;
 		List<String> qf = null;
 		if (intent != null) {
+
 			if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 				query = intent.getStringExtra(SearchManager.QUERY);
+			} else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+				Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+				// only one message sent during the beam
+				NdefMessage msg = (NdefMessage) rawMsgs[0];
+				// record 0 contains the MIME type, record 1 is the AAR, if present
+				Uri uri = Uri.parse(new String(msg.getRecords()[0].getPayload()));
+				query = uri.getQueryParameter("query");
+				qf = uri.getQueryParameters("qf");
 			} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 				query = intent.getDataString();
 				if (!TextUtils.isEmpty(query)) {
@@ -290,7 +332,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 			}
 			if (!TextUtils.isEmpty(query) && !TextUtils.equals(runningSearch, query)) {
 				runningSearch = query;
-				if ( (qf != null) && !qf.isEmpty()) {
+				if ((qf != null) && !qf.isEmpty()) {
 					searchController.newSearch(this, query, StringArrayUtils.toArray(qf));
 				} else {
 					searchController.newSearch(this, query);
@@ -313,8 +355,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 			case BREADCRUMB:
 				if (!searchController.removeRefineSearch(SearchActivity.this, item.facet)) {
 					closeSearchActivity();
-				} else
-				if (mDrawerLayout != null) {
+				} else if (mDrawerLayout != null) {
 					mDrawerLayout.closeDrawers();
 				}
 				break;

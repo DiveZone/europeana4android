@@ -15,12 +15,19 @@ import net.eledge.android.toolkit.gui.GuiUtils;
 
 import org.apache.commons.lang.StringUtils;
 
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcAdapter.CreateNdefMessageCallback;
+import android.nfc.NfcEvent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
@@ -39,52 +46,54 @@ import android.view.View;
 import android.widget.ListView;
 
 public class RecordActivity extends ActionBarActivity implements TaskListener<Record>, TabListener {
-	
+
 	public static final String RECORD_ID = "RECORDID";
-	
+
+	private NfcAdapter mNfcAdapter;
+
 	// Controller
 	private SearchController searchController = SearchController._instance;
 	private RecordController recordController = RecordController._instance;
-	
+
 	// ViewPager
 	private RecordPagerAdapter mRecordPagerAdapter;
-    private ViewPager mViewPager;
-	
+	private ViewPager mViewPager;
+
 	// NavigationDrawer
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ListView mResultsList;
 	private ResultAdapter mResultAdaptor;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_record);
 		recordController.registerListener(RecordActivity.class, this);
-		
+
 		mResultsList = (ListView) findViewById(R.id.drawer_items);
-		mResultAdaptor = new ResultAdapter((EuropeanaApplication) getApplication(), this, searchController.getSearchItems());
+		mResultAdaptor = new ResultAdapter((EuropeanaApplication) getApplication(), this,
+				searchController.getSearchItems());
 		mResultsList.setAdapter(mResultAdaptor);
 
 		// ViewPager
 		mRecordPagerAdapter = new RecordPagerAdapter(this, getSupportFragmentManager(), getApplicationContext());
-        mViewPager = (ViewPager) findViewById(R.id.activity_record_pager);
-        mViewPager.setAdapter(mRecordPagerAdapter);
-        mViewPager.setOnPageChangeListener(
-                new ViewPager.SimpleOnPageChangeListener() {
-                    @Override
-                    public void onPageSelected(int position) {
-                    	getSupportActionBar().setSelectedNavigationItem(position);
-                    }
-                });
-        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		mViewPager = (ViewPager) findViewById(R.id.activity_record_pager);
+		mViewPager.setAdapter(mRecordPagerAdapter);
+		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+			@Override
+			public void onPageSelected(int position) {
+				getSupportActionBar().setSelectedNavigationItem(position);
+			}
+		});
+		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		// Drawer layout
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
 
-        if (searchController.hasResults()) {
-	        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_activity_record);
+		if (searchController.hasResults()) {
+			mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_activity_record);
 			if (mDrawerLayout != null) {
 				mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 				mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
@@ -93,7 +102,7 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 						// getActionBar().setTitle(mTitle);
 						supportInvalidateOptionsMenu();
 					}
-	
+
 					public void onDrawerOpened(View drawerView) {
 						// getActionBar().setTitle(mDrawerTitle);
 						supportInvalidateOptionsMenu();
@@ -101,11 +110,30 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 				};
 				mDrawerLayout.setDrawerListener(mDrawerToggle);
 			}
-        }
-		
+		}
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			createNdefPushMessageCallback();
+		}
 		handleIntent(getIntent());
 	}
-	
+
+	@TargetApi(14)
+	private void createNdefPushMessageCallback() {
+		mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+		if (mNfcAdapter != null) {
+			mNfcAdapter.setNdefPushMessageCallback(new CreateNdefMessageCallback() {
+				@Override
+				public NdefMessage createNdefMessage(NfcEvent event) {
+					return new NdefMessage(new NdefRecord[] {
+							new NdefRecord(NdefRecord.TNF_MIME_MEDIA,
+									"application/vnd.net.eledge.android.eu.europeana.record".getBytes(), new byte[0],
+									recordController.getPortalUrl().getBytes()),
+							NdefRecord.createApplicationRecord(getPackageName()) });
+				}
+			}, this);
+		}
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.record, menu);
@@ -123,20 +151,28 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
-	
+
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 	}
-	
+
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		mViewPager.setCurrentItem(tab.getPosition());
 	}
-	
+
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 	}
-	
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+			handleIntent(getIntent());
+		}
+	}
+
 	@Override
 	protected void onDestroy() {
 		recordController.unregister(Record.class);
@@ -151,28 +187,28 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 		switch (item.getItemId()) {
 		case R.id.action_about:
 			try {
-				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager().getPackageInfo(getPackageName(), 0));
+				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager()
+						.getPackageInfo(getPackageName(), 0));
 				dialog.show();
-			} catch (NameNotFoundException e) {}
+			} catch (NameNotFoundException e) {
+			}
 			break;
 		case R.id.action_share:
 			startActivity(createShareIntent());
 			break;
 		case android.R.id.home:
-	        if (!searchController.hasResults()) {
-	        	GuiUtils.startTopActivity(this, HomeActivity.class);
-	        	this.finish();
-	        	return true;
-	        }
-	        Intent upIntent = NavUtils.getParentActivityIntent(this);
-	        if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-	            TaskStackBuilder.create(this)
-	                    .addNextIntentWithParentStack(upIntent)
-	                    .startActivities();
-	        } else {
-	            NavUtils.navigateUpTo(this, upIntent);
-	        }
-	        return true;
+			if (!searchController.hasResults()) {
+				GuiUtils.startTopActivity(this, HomeActivity.class);
+				this.finish();
+				return true;
+			}
+			Intent upIntent = NavUtils.getParentActivityIntent(this);
+			if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+				TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
+			} else {
+				NavUtils.navigateUpTo(this, upIntent);
+			}
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -199,10 +235,9 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 		getSupportActionBar().removeAllTabs();
 		for (int i = 0; i < mRecordPagerAdapter.getCount(); i++) {
 			getSupportActionBar().addTab(
-					getSupportActionBar().newTab()
-	                        .setText(mRecordPagerAdapter.labels.get(i).intValue())
-	                        .setTabListener(RecordActivity.this));
-	    }
+					getSupportActionBar().newTab().setText(mRecordPagerAdapter.labels.get(i).intValue())
+							.setTabListener(RecordActivity.this));
+		}
 	}
 
 	@Override
@@ -214,23 +249,29 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 	private void handleIntent(Intent intent) {
 		String id = null;
 		if (intent != null) {
-			if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+			if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+				Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+				// only one message sent during the beam
+				NdefMessage msg = (NdefMessage) rawMsgs[0];
+				// record 0 contains the MIME type, record 1 is the AAR, if present
+				id = new String(msg.getRecords()[0].getPayload());
+			} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 				id = intent.getDataString();
 				if (!TextUtils.isEmpty(id)) {
-					if (StringUtils.contains(id, "europeana.eu/")) {
-						Uri uri = Uri.parse(id);
-						List<String> paths = uri.getPathSegments();
-						if ( (paths != null) && (paths.size() == 4)) {
-							String collectionId = paths.get(paths.size()-2);
-							String recordId = StringUtils.removeEnd(paths.get(paths.size()-1), ".html");
-							id = StringUtils.join(new String[] {"/", collectionId ,"/", recordId});
-						} else {
-							// invalid url/id, cancel opening record
-							id = null;
-						}
-					}
 				} else {
 					id = intent.getStringExtra(RECORD_ID);
+				}
+			}
+			if (StringUtils.contains(id, "europeana.eu/")) {
+				Uri uri = Uri.parse(id);
+				List<String> paths = uri.getPathSegments();
+				if ((paths != null) && (paths.size() == 4)) {
+					String collectionId = paths.get(paths.size() - 2);
+					String recordId = StringUtils.removeEnd(paths.get(paths.size() - 1), ".html");
+					id = StringUtils.join(new String[] { "/", collectionId, "/", recordId });
+				} else {
+					// invalid url/id, cancel opening record
+					id = null;
 				}
 			}
 			if (StringUtils.isNotBlank(id)) {
@@ -238,15 +279,15 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 			}
 		}
 	}
-	
+
 	private void openRecord(String id) {
 		recordController.readRecord(this, id);
 	}
-	
+
 	@Override
 	public void onTaskFinished(Record record) {
 	}
-	
+
 	private Intent createShareIntent() {
 		Intent shareIntent = new Intent(Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
