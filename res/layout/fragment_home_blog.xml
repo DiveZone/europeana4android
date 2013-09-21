@@ -2,9 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/listitem_blog_spacing"
-    android:orientation="vertical" >
-
+    android:orientation="vertical" 
+    android:background="@drawable/background_border">
+    <!-- android:paddingTop="@dimen/listitem_blog_spacing" -->
+    
     <TextView
         android:id="@+id/fragment_home_blog_textview"
         style="@style/homeBlogSectionTitle"
@@ -17,12 +18,9 @@
         android:id="@+id/fragment_home_blog_listview"
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:paddingTop="@dimen/listitem_blog_spacing"
-        android:paddingLeft="@dimen/listitem_blog_spacing"
-        android:paddingRight="@dimen/listitem_blog_spacing"
         android:layout_weight="1"
         android:divider="@android:color/transparent"
-        android:dividerHeight="@dimen/listitem_blog_spacing"
+        android:dividerHeight="0dp"
         android:visibility="visible" />
 
 </LinearLayout>

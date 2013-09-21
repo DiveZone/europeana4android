@@ -8,7 +8,6 @@
     
     <dimen name="griditem_searchresult_textsize">12sp</dimen>
     <dimen name="griditem_searchresult_iconsize">14sp</dimen>
-    <dimen name="griditem_searchresult_spacing">6dp</dimen>
     
     <dimen name="griditem_suggestion_textsize_suggestion">16sp</dimen>
     <dimen name="griditem_suggestion_textsize_info">12sp</dimen>
@@ -16,6 +15,4 @@
     
     <dimen name="record_map_spacing">10dp</dimen>
 
-    <dimen name="listitem_blog_spacing">6dp</dimen>
-    
 </resources>

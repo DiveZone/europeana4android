@@ -7,10 +7,6 @@
         android:id="@+id/fragment_search_gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/griditem_searchresult_spacing"
-        android:layout_marginRight="@dimen/griditem_searchresult_spacing"
-        android:horizontalSpacing="@dimen/griditem_searchresult_spacing"
-        android:verticalSpacing="@dimen/griditem_searchresult_spacing"
         android:numColumns="@integer/search_results_columns"
         android:stretchMode="columnWidth" />
 
