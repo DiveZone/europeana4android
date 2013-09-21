@@ -15,6 +15,7 @@ import net.eledge.android.toolkit.async.ListenerNotifier;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -33,6 +34,8 @@ public class SuggestionTask extends AsyncTask<String, Void, Suggestion[]> {
 	
 	private TaskListener<Suggestion[]> listener;
 	
+	private String term;
+	
 	public SuggestionTask(TaskListener<Suggestion[]> listener) {
 		this.listener = listener;
 	}
@@ -42,7 +45,8 @@ public class SuggestionTask extends AsyncTask<String, Void, Suggestion[]> {
 		if (TextUtils.isEmpty(params[0])) {
 			return null;
 		}
-		URI url = UriHelper.getSuggestionURI(params[0], searchController.suggestionPagesize);
+		term = StringUtils.lowerCase(params[0]);
+		URI url = UriHelper.getSuggestionURI(term, searchController.suggestionPagesize);
 		InputStreamReader isr = null;
 		BufferedReader br = null;
 		try {
@@ -90,11 +94,12 @@ public class SuggestionTask extends AsyncTask<String, Void, Suggestion[]> {
 	}
 	
 	@Override
-	protected void onPostExecute(Suggestion[] result) {
+	protected void onPostExecute(Suggestion[] suggestions) {
+		searchController.cacheSuggestions(term, suggestions);
 		if (listener instanceof Activity) {
-			((Activity)listener).runOnUiThread(new ListenerNotifier<Suggestion[]>(listener, result));
+			((Activity)listener).runOnUiThread(new ListenerNotifier<Suggestion[]>(listener, suggestions));
 		} else {
-			listener.onTaskFinished(result);
+			listener.onTaskFinished(suggestions);
 		}
 	}
 

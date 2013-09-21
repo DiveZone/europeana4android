@@ -46,6 +46,7 @@ public class SearchController {
 
 	private final List<Item> searchItems = new ArrayList<Item>();
 	private final List<Facet> facets = new ArrayList<Facet>();
+	private final Map<String, Suggestion[]> suggestionCache = new HashMap<String, Suggestion[]>();
 
 	private FacetType selectedFacet = FacetType.TYPE;
 
@@ -64,15 +65,20 @@ public class SearchController {
 	public void unregister(Class<?> clazz) {
 		listeners.remove(clazz.getName());
 	}
-	
+
 	public void suggestions(TaskListener<Suggestion[]> listener, String query) {
 		if (mSuggestionTask != null) {
 			mSuggestionTask.cancel(true);
 		}
-		mSuggestionTask = new SuggestionTask(listener);
-		mSuggestionTask.execute(query);
+		query = StringUtils.lowerCase(StringUtils.trim(query));
+		if (suggestionCache.containsKey(query)) {
+			listener.onTaskFinished(suggestionCache.get(query));
+		} else {
+			mSuggestionTask = new SuggestionTask(listener);
+			mSuggestionTask.execute(query);
+		}
 	}
-	
+
 	public void newSearch(Activity activity, String query, String... qf) {
 		reset();
 		terms.clear();
@@ -111,11 +117,62 @@ public class SearchController {
 			search(activity);
 		}
 	}
+
+	public boolean hasResults() {
+		return totalResults > 0;
+	}
+
+	public boolean hasFacets() {
+		return !facets.isEmpty();
+	}
+
+	public boolean hasMoreResults() {
+		return totalResults > searchItems.size();
+	}
+
+	public boolean isSearching() {
+		if (mSearchTask != null) {
+			return mSearchTask.getStatus() != Status.FINISHED;
+		}
+		return false;
+	}
+
+	public void cancelSearch() {
+		if (mSearchTask != null) {
+			mSearchTask.cancel(true);
+		}
+		if (mSearchFacetTask != null) {
+			mSearchFacetTask.cancel(true);
+		}
+	}
+
+	public void reset() {
+		cancelSearch();
+		pageLoad = 1;
+		totalResults = 0;
+		itemSelected = -1;
+		synchronized (searchItems) {
+			searchItems.clear();
+		}
+		facets.clear();
+	}
+
+	private void search(Activity activity) {
+		if (mSearchTask != null) {
+			cancelSearch();
+		}
+		mSearchTask = new SearchTask(activity, pageLoad++);
+		mSearchTask.execute(terms.toArray(new String[terms.size()]));
+		if (facets.isEmpty()) {
+			mSearchFacetTask = new SearchFacetTask(activity);
+			mSearchFacetTask.execute(terms.toArray(new String[terms.size()]));
+		}
+	}
 	
 	public List<FacetItem> getBreadcrumbs(Context context) {
 		List<FacetItem> breadcrumbs = new ArrayList<FacetItem>();
 		FacetItem crumb;
-		for (String term: terms) {
+		for (String term : terms) {
 			crumb = new FacetItem();
 			crumb.itemType = FacetItemType.BREADCRUMB;
 			crumb.facetType = FacetType.TEXT;
@@ -143,7 +200,7 @@ public class SearchController {
 				FacetType type = FacetType.safeValueOf(facet.name);
 				if (type != null) {
 					FacetItem item = new FacetItem();
-					item.itemType = type == selectedFacet ? FacetItemType.CATEGORY_OPENED: FacetItemType.CATEGORY;
+					item.itemType = type == selectedFacet ? FacetItemType.CATEGORY_OPENED : FacetItemType.CATEGORY;
 					item.facetType = type;
 					item.facet = facet.name;
 					facetlist.add(item);
@@ -155,78 +212,29 @@ public class SearchController {
 							item.facet = facet.name + ":" + field.label;
 							item.itemType = terms.contains(item.facet) ? FacetItemType.ITEM_SELECTED
 									: FacetItemType.ITEM;
-							item.description = type.createFacetLabel(context, field.label) + " (" + field.count
-									+ ")";
+							item.description = type.createFacetLabel(context, field.label) + " (" + field.count + ")";
 							item.icon = type.getFacetIcon(field.label);
 							facetlist.add(item);
 						}
-						facetlist.get(facetlist.size()-1).last = true;
+						facetlist.get(facetlist.size() - 1).last = true;
 					}
 				}
 			}
-			facetlist.get(facetlist.size()-1).last = true;
+			facetlist.get(facetlist.size() - 1).last = true;
 		}
 		return facetlist;
-	}
-	
-	public boolean hasResults() {
-		return totalResults > 0;
-	}
-	
-	public boolean hasFacets() {
-		return !facets.isEmpty();
-	}
-
-	public boolean hasMoreResults() {
-		return totalResults > searchItems.size();
-	}
-	
-	public boolean isSearching() {
-		if (mSearchTask != null) {
-			return mSearchTask.getStatus() != Status.FINISHED;
-		}
-		return false;
-	}
-	
-	public void cancelSearch() {
-		if (mSearchTask != null) {
-			mSearchTask.cancel(true);
-		}
-		if (mSearchFacetTask != null) {
-			mSearchFacetTask.cancel(true);
-		}
-	}
-
-	public void reset() {
-		cancelSearch();
-		pageLoad = 1;
-		totalResults = 0;
-		itemSelected = -1;
-		synchronized (searchItems) {
-			searchItems.clear();
-		}
-		facets.clear();
 	}
 
 	public String getPortalUrl() {
 		try {
-			return UriHelper.createPortalSearchUrl(terms.toArray(new String[terms
-					.size()]));
+			return UriHelper.createPortalSearchUrl(terms.toArray(new String[terms.size()]));
 		} catch (UnsupportedEncodingException e) {
 			return "http://europeana.eu";
 		}
 	}
-
-	private void search(Activity activity) {
-		if (mSearchTask != null) {
-			cancelSearch();
-		}
-		mSearchTask = new SearchTask(activity, pageLoad++);
-		mSearchTask.execute(terms.toArray(new String[terms.size()]));
-		if (facets.isEmpty()) {
-			mSearchFacetTask = new SearchFacetTask(activity);
-			mSearchFacetTask.execute(terms.toArray(new String[terms.size()]));
-		}
+	
+	public void cacheSuggestions(String term, Suggestion[] suggestions) {
+		suggestionCache.put(term, suggestions);
 	}
 
 	public synchronized void onSearchFinish(SearchResult results) {
@@ -235,27 +243,26 @@ public class SearchController {
 			searchItems.addAll(results.searchItems);
 		}
 	}
-	
+
 	public synchronized void onSearchFacetFinish(SearchResult results) {
 		if (results != null && results.facetUpdated) {
 			facets.clear();
 			facets.addAll(results.facets);
 		}
 	}
-	
 
 	public synchronized List<Item> getSearchItems() {
 		return searchItems;
 	}
-	
+
 	public int getItemSelected() {
 		return itemSelected;
 	}
-	
+
 	public void setItemSelected(int itemSelected) {
 		this.itemSelected = itemSelected;
 	}
-	
+
 	public Integer size() {
 		if (searchItems != null) {
 			return Integer.valueOf(searchItems.size());
