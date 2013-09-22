@@ -5,6 +5,7 @@ import java.util.List;
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.RecordView;
+import net.eledge.android.eu.europeana.search.model.record.enums.RecordDetails;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,15 @@ public class RecordViewAdapter extends ArrayAdapter<RecordView> {
 			return recordView.getView(recordController.record, parent, inflater, application);
 		}
 		return null;
+	}
+	
+	@Override
+	public boolean isEnabled(int position) {
+		RecordView recordView = getItem(position);
+		if (recordView instanceof RecordDetails) {
+			return recordView.getSeeMore() != null;
+		}
+		return true;
 	}
 	
 }

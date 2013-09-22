@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 public interface RecordView {
 
 	boolean isVisible(Record record);
+	String getSeeMore();
 	View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application);
 	
 }

@@ -8,7 +8,6 @@ import net.eledge.android.eu.europeana.gui.activity.RecordActivity;
 import net.eledge.android.eu.europeana.gui.fragments.RecordDetailsFragment;
 import net.eledge.android.eu.europeana.gui.fragments.RecordImagesFragment;
 import net.eledge.android.eu.europeana.gui.fragments.RecordMapFragment;
-import net.eledge.android.eu.europeana.gui.fragments.RecordSeeAlsoFragment;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.model.record.Record;
 import net.eledge.android.toolkit.async.listener.TaskListener;
@@ -47,9 +46,6 @@ public class RecordPagerAdapter extends FragmentStatePagerAdapter implements Tas
 				labels.add(Integer.valueOf(R.string.record_tab_map));
 				fragments.add(new RecordMapFragment());
 			}
-			// SEE ALSO
-			labels.add(Integer.valueOf(R.string.record_tab_also));
-			fragments.add(new RecordSeeAlsoFragment());
 			
 			notifyDataSetChanged();
 			mRecordActivity.updateTabs();

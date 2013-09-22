@@ -24,6 +24,10 @@ public enum RecordDetails implements RecordView {
 			return true;
 		}
 		@Override
+		public String getSeeMore() {
+			return null;
+		}
+		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			View view = inflater.inflate(R.layout.listitem_record_title, parent, false);
 			
@@ -44,6 +48,10 @@ public enum RecordDetails implements RecordView {
 			return (record.dcDescription != null) && !record.dcDescription.isEmpty();
 		}
 		@Override
+		public String getSeeMore() {
+			return null;
+		}
+		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			String key = "def";
 			if (!record.dcDescription.containsKey(key)) {
@@ -58,6 +66,10 @@ public enum RecordDetails implements RecordView {
 			return StringArrayUtils.isNotBlank(record.dcCreator);
 		}
 		@Override
+		public String getSeeMore() {
+			return "who";
+		}
+		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			return drawDetailView(R.string.record_field_dc_creator, record.dcCreator, parent, inflater);
 		}
@@ -66,6 +78,10 @@ public enum RecordDetails implements RecordView {
 		@Override
 		public boolean isVisible(Record record) {
 			return StringArrayUtils.isNotBlank(record.dcType);
+		}
+		@Override
+		public String getSeeMore() {
+			return null;
 		}
 		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
@@ -78,6 +94,10 @@ public enum RecordDetails implements RecordView {
 			return StringArrayUtils.isNotBlank(record.dcSubject);
 		}
 		@Override
+		public String getSeeMore() {
+			return null;
+		}
+		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			return drawDetailView(R.string.record_field_dc_subject, record.dcSubject, parent, inflater);
 		}
@@ -86,6 +106,10 @@ public enum RecordDetails implements RecordView {
 		@Override
 		public boolean isVisible(Record record) {
 			return StringArrayUtils.isNotBlank(record.dcIdentifier);
+		}
+		@Override
+		public String getSeeMore() {
+			return null;
 		}
 		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
@@ -98,6 +122,10 @@ public enum RecordDetails implements RecordView {
 			return StringArrayUtils.isNotBlank(record.edmDataProvider);
 		}
 		@Override
+		public String getSeeMore() {
+			return "DATA_PROVIDER";
+		}
+		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			return drawDetailView(R.string.record_field_edm_dataprovider, record.edmDataProvider, parent, inflater);
 		}
@@ -108,17 +136,25 @@ public enum RecordDetails implements RecordView {
 			return StringArrayUtils.isNotBlank(record.edmProvider);
 		}
 		@Override
+		public String getSeeMore() {
+			return "PROVIDER";
+		}
+		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			return drawDetailView(R.string.record_field_edm_provider, record.edmProvider, parent, inflater);
 		}
 	};
+	
+	protected int getDetailView() {
+		return getSeeMore() != null ? R.layout.listitem_record_detail_seealso : R.layout.listitem_record_detail;
+	}
 	
 	protected View drawDetailView(int titleResId, String[] values, ViewGroup parent, LayoutInflater inflater) {
 		return drawDetailView(titleResId, StringUtils.join(values, ";"), parent, inflater);
 	}
 	
 	protected View drawDetailView(int titleResId, String value, ViewGroup parent, LayoutInflater inflater) {
-		View view = inflater.inflate(R.layout.listitem_record_detail, parent, false);
+		View view = inflater.inflate(getDetailView(), parent, false);
 		TextView textTitle = (TextView) view.findViewById(android.R.id.text1);
 		TextView textValue = (TextView) view.findViewById(android.R.id.text2);
 		textTitle.setText(titleResId);

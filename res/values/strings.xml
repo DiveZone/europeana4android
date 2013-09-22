@@ -26,7 +26,6 @@
     <string name="record_tab_details">Details</string>
     <string name="record_tab_images">Image(s)</string>
     <string name="record_tab_map">Map</string>
-    <string name="record_tab_also">See also</string>
     
     <string name="record_field_title">TITLE</string>
     <string name="record_field_dc_creator">CREATOR</string>
