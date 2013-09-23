@@ -12,7 +12,4 @@
     <color name="emphasis">#31b6e7</color>
     <color name="emphasis_transparant">#bf31b6e7</color>
     
-    <color name="suggestions_background">#ddd</color>
-    <color name="suggestions_info">#999</color>
-    
 </resources>

@@ -6,7 +6,7 @@
     </style>
 
     <style name="griditem_suggestion">
-        <item name="android:background">@color/suggestions_background</item>
+        <item name="android:background">@drawable/background_card</item>
         <item name="android:height">@dimen/griditem_suggestion_height</item>
     </style>
 
@@ -16,7 +16,7 @@
 
     <style name="griditem_suggestion_info">
         <item name="android:textSize">@dimen/griditem_suggestion_textsize_info</item>
-        <item name="android:textColor">@color/suggestions_info</item>
+        <item name="android:textColor">@color/emphasis</item>
     </style>
 
     <style name="drawerItem"><!--  parent="android:Widget.Light.TextView"> -->
@@ -95,8 +95,14 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="recordDetailSeeMore">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:drawableLeft">@drawable/ic_action_search</item>
+        
+    </style>
+    
     <style name="homeBlogSectionTitle">
-        <!-- <item name="android:textAllCaps">true</item> -->
         <item name="android:textColor">@color/emphasis</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
@@ -104,7 +110,6 @@
     </style>
 
     <style name="homeBlogTitle">
-        <!-- <item name="android:textAllCaps">true</item> -->
         <item name="android:textColor">@color/emphasis</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>

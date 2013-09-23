@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/griditem_suggestion_height"
-    android:padding="3dp" 
     style="@style/griditem_suggestion"
     >
 
@@ -21,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true" />
-
 
     <TextView
 	    style="@style/griditem_suggestion_text"

@@ -31,11 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_below="@id/activity_home_edittext_query"
-            android:horizontalSpacing="3dp"
             android:numColumns="@integer/home_suggestions_columns"
-            android:padding="3dp"
-            android:requiresFadingEdge="vertical"
-            android:verticalSpacing="3dp" />
+            android:requiresFadingEdge="vertical" />
     </RelativeLayout>
 
     <FrameLayout
