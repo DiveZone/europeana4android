@@ -13,7 +13,7 @@ public class Record {
 	@JsonField
 	public String[] title;
 	
-	@JsonField(value="edmType", enumMethod="safeValueOf")
+	@JsonField(value=".proxies[].edmType", enumMethod="safeValueOf")
 	public DocType type;
 	
 	@JsonField
@@ -34,13 +34,13 @@ public class Record {
 	@JsonField(".proxies[].dcType.def")
 	public String[] dcType;
 	
-	@JsonField
+	@JsonField("europeanaAggregation.edmPreview")
 	public String edmPreview;
 	
-	@JsonField
+	@JsonField(".aggregations[].edmIsShownBy")
 	public String edmIsShownBy;
 	
-	@JsonField
+	@JsonField(".aggregations[].edmIsShownAt")
 	public String edmIsShownAt;
 	
 	@JsonField(".aggregations[].edmDataProvider.def")
@@ -52,13 +52,10 @@ public class Record {
 //	@JsonField("aggregations[].webResources[].about")
 //	public String[] webResources;
 	
-	@JsonField
-	public Long europeanaCompleteness;
-	
-	@JsonField
+	@JsonField(".places[].longitude")
 	public Double longitude;
 
-	@JsonField
+	@JsonField(".places[].latitude")
 	public Double latitude;
 
 }
