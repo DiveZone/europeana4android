@@ -58,6 +58,46 @@
     <string name="doctype_sound">Sound</string>
     <string name="doctype_video">Video</string>
     <string name="doctype_3d">3D</string>
+
+    <!-- COUNTRIES -->
+    <string name="country_at">Austria</string>
+    <string name="country_be">Belgium</string>
+    <string name="country_bg">Bulgaria</string>
+    <string name="country_ch">Switzerland</string>
+    <string name="country_cy">Cyprus</string>
+    <string name="country_cz">Czech Republic</string>
+    <string name="country_de">Germany</string>
+    <string name="country_dk">Denmark</string>
+    <string name="country_ee">Estonia</string>
+    <string name="country_es">Spain</string>
+    <string name="country_fi">Finland</string>
+    <string name="country_fr">France</string>
+    <string name="country_gr">Greece</string>
+    <string name="country_hr">Croatia</string>
+    <string name="country_hu">Hungary</string>
+    <string name="country_ie">Ireland</string>
+    <string name="country_is">Iceland</string>
+    <string name="country_it">Italy</string>
+    <string name="country_lt">Lithuania</string>
+    <string name="country_lu">Luxembourg</string>
+    <string name="country_lv">Latvia</string>
+    <string name="country_mk">Macedonia</string>
+    <string name="country_mt">Malta</string>
+    <string name="country_nl">The Netherlands</string>
+    <string name="country_no">Norway</string>
+    <string name="country_pl">Poland</string>
+    <string name="country_pt">Portugal</string>
+    <string name="country_ro">Romania</string>
+    <string name="country_rs">Serbia</string>
+    <string name="country_ru">Russia</string>
+    <string name="country_se">Sweden</string>
+    <string name="country_si">Slovenia</string>
+    <string name="country_sk">Slovakia</string>
+    <string name="country_tr">Turkey</string>
+    <string name="country_ua">Ukraine</string>
+    <string name="country_uk">United Kingdom</string>
+    
+    <string name="country_eu">Europe</string>
     
     <!-- LANGUAGES -->
     <string name="locale_bg">Bulgarian</string>

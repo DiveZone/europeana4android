@@ -55,6 +55,46 @@
     <string name="doctype_video">Video</string>
     <string name="doctype_3d">3D</string>
 
+    <!-- COUNTRIES -->
+    <string name="country_at">Oostenrijk</string>
+    <string name="country_be">België</string>
+    <string name="country_bg">Bulgarije</string>
+    <string name="country_ch">Zwitserland</string>
+    <string name="country_cy">Cyprus</string>
+    <string name="country_cz">Tsjechië</string>
+    <string name="country_de">Duitsland</string>
+    <string name="country_dk">Denemarken</string>
+    <string name="country_ee">Estland</string>
+    <string name="country_es">Spanje</string>
+    <string name="country_fi">Finland</string>
+    <string name="country_fr">Frankrijk</string>
+    <string name="country_gr">Griekenland</string>
+    <string name="country_hr">Kroatië</string>
+    <string name="country_hu">Hongarije</string>
+    <string name="country_ie">Ierland</string>
+    <string name="country_is">Ijsland</string>
+    <string name="country_it">Italië</string>
+    <string name="country_lt">Litouwen</string>
+    <string name="country_lu">Luxemborg</string>
+    <string name="country_lv">Letland</string>
+    <string name="country_mk">Macedonië</string>
+    <string name="country_mt">Malta</string>
+    <string name="country_nl">Nederland</string>
+    <string name="country_no">Norwegen</string>
+    <string name="country_pl">Polen</string>
+    <string name="country_pt">Portugal</string>
+    <string name="country_ro">Roemenië</string>
+    <string name="country_rs">Servië</string>
+    <string name="country_ru">Rusland</string>
+    <string name="country_se">Zweden</string>
+    <string name="country_si">Slovenië</string>
+    <string name="country_sk">Slowakije</string>
+    <string name="country_tr">Turkije</string>
+    <string name="country_ua">Oekraïne</string>
+    <string name="country_uk">Verenigd Koningkrijk</string>
+    
+    <string name="country_eu">Europa</string>
+    
     <!-- LANGUAGES -->
     <string name="locale_bg">Bulgaars</string>
     <string name="locale_ca">Catalaans</string>

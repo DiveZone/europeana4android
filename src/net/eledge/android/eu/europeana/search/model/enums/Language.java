@@ -30,11 +30,11 @@ public enum Language {
 	SK(R.string.locale_sk),
 	SR(R.string.locale_sr),
 	SV(R.string.locale_sv),
-	
+
 	MUL(R.string.locale_mul);
-	
+
 	public int resourceId;
-	
+
 	private Language(int resourceId) {
 		this.resourceId = resourceId;
 	}
@@ -47,5 +47,5 @@ public enum Language {
 		}
 		return null;
 	}
-	
+
 }

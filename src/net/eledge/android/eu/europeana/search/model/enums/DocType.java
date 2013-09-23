@@ -6,10 +6,10 @@ import net.eledge.android.toolkit.StringArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 public enum DocType {
-	TEXT(R.string.doctype_text, ")"), 
-	IMAGE(R.string.doctype_image, "["), 
-	SOUND(R.string.doctype_sound, "]"), 
-	VIDEO(R.string.doctype_video, "("), 
+	TEXT(R.string.doctype_text, ")"),
+	IMAGE(R.string.doctype_image, "["),
+	SOUND(R.string.doctype_sound, "]"),
+	VIDEO(R.string.doctype_video, "("),
 	_3D(R.string.doctype_3d, "{");
 
 	public int resourceId;
