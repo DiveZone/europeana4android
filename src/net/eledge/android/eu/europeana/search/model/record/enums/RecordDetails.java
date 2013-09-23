@@ -71,7 +71,8 @@ public enum RecordDetails implements RecordView {
 		}
 		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			return drawDetailView(R.string.record_field_dc_creator, record.dcCreator, parent, inflater);
+			View view = drawDetailView(R.string.record_field_dc_creator, record.dcCreator, parent, inflater);
+			return view;
 		}
 	},
 	DCTYPE {
@@ -127,7 +128,8 @@ public enum RecordDetails implements RecordView {
 		}
 		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			return drawDetailView(R.string.record_field_edm_dataprovider, record.edmDataProvider, parent, inflater);
+			View view = drawDetailView(R.string.record_field_edm_dataprovider, record.edmDataProvider, parent, inflater);
+			return view;
 		}
 	},
 	EDMPROVIDER {
@@ -141,7 +143,8 @@ public enum RecordDetails implements RecordView {
 		}
 		@Override
 		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			return drawDetailView(R.string.record_field_edm_provider, record.edmProvider, parent, inflater);
+			View view = drawDetailView(R.string.record_field_edm_provider, record.edmProvider, parent, inflater);
+			return view;
 		}
 	};
 	
@@ -162,6 +165,17 @@ public enum RecordDetails implements RecordView {
 		return view;
 	}
 	
+//	protected void addSeeAlsoFields(View view, String[] values, LayoutInflater inflater) {
+//		LinearLayout holder = (LinearLayout) view.findViewById(R.id.listitem_record_detail_seealso_list);
+//		if ( (getSeeMore() != null) && (holder != null)) {
+//			for (String value: values) {
+//				TextView tv = (TextView) inflater.inflate(R.layout.listitem_record_seealso, null);
+//				tv.setText(value);
+//				holder.addView(tv);
+//			}
+//		}
+//	}
+//	
 	public static List<RecordDetails> getVisibles(Record record) {
 		List<RecordDetails> list = new ArrayList<RecordDetails>();
 		if (record != null) {

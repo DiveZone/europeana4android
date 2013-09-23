@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="net.eledge.android.eu.europeana"
-    android:versionCode="31"
-    android:versionName="v0.1-alpha b31" >
+    android:versionCode="32"
+    android:versionName="v0.1-alpha b32" >
 
     <uses-sdk
         android:minSdkVersion="10"
