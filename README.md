@@ -57,13 +57,15 @@ setup manually.
 ### Creating a project structure
 1. Create a main directory where you want your project, ie. EuropeanaProject.
 2. In the project dir checkout both this and AndroidToolkit
-```
+
+   ```sh
 .../EuropeanaProject$ git clone git@github.com:eLedge/AndroidToolkit.git
 .../EuropeanaProject$ git clone git@github.com:eLedge/Europeana4Android.git
 ```
 3. Create two files: build.gradle and settings.gradle. build.gradle can be left 
 empty, settings.gradle needs the following content:
-```
+
+   ```groovy
 include ':AndroidToolkit'
 include ':europeana4android'
 ```
