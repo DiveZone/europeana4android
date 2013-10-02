@@ -44,30 +44,32 @@ code quotes. A preview should look like this:
 ```
 
 ## Setup project
-... TODO ...
+This project is using the gradle building system coming with Android Studio.
+Setting up the project is relatively easy.
 
 ### Needed libraries
-The project is using two free available Android libraries which you need to 
-setup first.
+The project is using several libraries but only the following one needs to be
+setup manually.
 
-* __Google Play Services__ revision 5 or higher
 * __eLedge Android Toolkit__ (open source, master version)
 
-#### Setting up Google Play Services
 
-Google Play Services are downloadable through the 
-`Android SDK Manager`. Start the manager and select `Google Play services` on
-the `Extras` tree item.
-
-... TODO ...
-
-#### Setting up eLedge Android Toolkit
-At the moment the project depends on the master branch of eLAT but we should 
-work to a tagged version, to prevent compile errors when the library changes.
-
-<https://github.com/eLedge/AndroidToolkit>
-
-... TODO ...
+### Creating a project structure
+1. Create a main directory where you want your project, ie. EuropeanaProject.
+2. In the project dir checkout both this and AndroidToolkit
+```
+.../EuropeanaProject$ git clone git@github.com:eLedge/AndroidToolkit.git
+.../EuropeanaProject$ git clone git@github.com:eLedge/Europeana4Android.git
+```
+3. Create two files: build.gradle and settings.gradle. build.gradle can be left 
+empty, settings.gradle needs the following content:
+```
+include ':AndroidToolkit'
+include ':europeana4android'
+```
+4. Import the project folder (EuropeanaProject) into AndroidStudio using the 
+import project function. If you want to use gradle wrapper or a local gradle
+installation is up to you.
 
 ## More project information
 
