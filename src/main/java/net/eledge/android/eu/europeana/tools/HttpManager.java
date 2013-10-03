@@ -1,7 +1,5 @@
 package net.eledge.android.eu.europeana.tools;
 
-import java.io.IOException;
-
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
@@ -19,6 +17,8 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
+
+import java.io.IOException;
 
 public class HttpManager {
 	private static final DefaultHttpClient sClient;

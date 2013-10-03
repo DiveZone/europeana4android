@@ -1,7 +1,9 @@
 package net.eledge.android.eu.europeana.search.model.record.enums;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
@@ -11,10 +13,8 @@ import net.eledge.android.toolkit.StringArrayUtils;
 
 import org.apache.commons.lang.StringUtils;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
 
 public enum RecordDetails implements RecordView {
 	

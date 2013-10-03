@@ -1,14 +1,5 @@
 package net.eledge.android.eu.europeana.gui.fragments;
 
-import net.eledge.android.eu.europeana.EuropeanaApplication;
-import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.gui.activity.RecordActivity;
-import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
-import net.eledge.android.eu.europeana.search.SearchController;
-import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
-import net.eledge.android.eu.europeana.search.model.SearchResult;
-import net.eledge.android.eu.europeana.search.model.searchresults.Item;
-import net.eledge.android.toolkit.gui.GuiUtils;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,6 +17,17 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
+
+import net.eledge.android.eu.europeana.EuropeanaApplication;
+import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.gui.activity.RecordActivity;
+import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
+import net.eledge.android.eu.europeana.search.SearchController;
+import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
+import net.eledge.android.eu.europeana.search.model.SearchFacets;
+import net.eledge.android.eu.europeana.search.model.SearchItems;
+import net.eledge.android.eu.europeana.search.model.searchresults.Item;
+import net.eledge.android.toolkit.gui.GuiUtils;
 
 public class SearchResultsFragment extends Fragment implements SearchTaskListener {
 
@@ -47,7 +49,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = (ViewGroup) inflater.inflate(R.layout.fragment_search_results, null);
+		View root = inflater.inflate(R.layout.fragment_search_results, null);
 		mStatusTextView = (TextView) root.findViewById(R.id.fragment_search_textview_status);
 		mGridview = (GridView) root.findViewById(R.id.fragment_search_gridview);
 		mGridview.setAdapter(mResultAdaptor);
@@ -103,7 +105,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 					// see if we have more results
 					if ((first != priorFirst) && (searchController.hasMoreResults())) {
 						priorFirst = first;
-						onLastListItemDisplayed(total, visible);
+						onLastListItemDisplayed();
 					}
 				}
 			}
@@ -142,7 +144,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 		});
 	}
 
-	protected void onLastListItemDisplayed(int total, int visible) {
+	protected void onLastListItemDisplayed() {
 		if (searchController.hasMoreResults()) {
 			searchController.continueSearch(this.getActivity());
 		}
@@ -161,8 +163,13 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 		}
 	}
 
-	@Override
-	public void onSearchFinish(SearchResult results) {
+    @Override
+    public void onSearchFacetFinish(SearchFacets results) {
+        // ignore
+    }
+
+    @Override
+	public void onSearchItemsFinish(SearchItems results) {
 		if (mResultAdaptor != null) {
 			mResultAdaptor.notifyDataSetChanged();
 		}

@@ -1,8 +1,9 @@
 package net.eledge.android.eu.europeana;
 
-import net.eledge.android.toolkit.net.ImageCacheManager;
 import android.app.Application;
 import android.graphics.Typeface;
+
+import net.eledge.android.toolkit.net.ImageCacheManager;
 
 public class EuropeanaApplication extends Application {
 	

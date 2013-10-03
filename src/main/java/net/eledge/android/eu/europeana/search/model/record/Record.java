@@ -1,9 +1,9 @@
 package net.eledge.android.eu.europeana.search.model.record;
 
-import java.util.Map;
-
 import net.eledge.android.eu.europeana.search.model.enums.DocType;
 import net.eledge.android.toolkit.json.annotations.JsonField;
+
+import java.util.Map;
 
 public class Record {
 	

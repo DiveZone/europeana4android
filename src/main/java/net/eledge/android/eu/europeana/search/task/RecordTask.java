@@ -1,9 +1,10 @@
 package net.eledge.android.eu.europeana.search.task;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
+import android.app.Activity;
+import android.net.http.AndroidHttpClient;
+import android.os.AsyncTask;
+import android.text.TextUtils;
+import android.util.Log;
 
 import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.search.RecordController;
@@ -19,11 +20,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.net.http.AndroidHttpClient;
-import android.os.AsyncTask;
-import android.text.TextUtils;
-import android.util.Log;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
 
 public class RecordTask extends AsyncTask<String, Void, Record> {
 

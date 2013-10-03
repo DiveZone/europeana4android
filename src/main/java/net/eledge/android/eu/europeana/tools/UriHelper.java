@@ -1,13 +1,15 @@
 package net.eledge.android.eu.europeana.tools;
 
+import net.eledge.android.eu.europeana.Config;
+import net.eledge.android.toolkit.net.UrlBuilder;
+
+import org.apache.commons.lang.StringUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.Locale;
-
-import net.eledge.android.eu.europeana.Config;
-import net.eledge.android.toolkit.net.UrlBuilder;
 
 public class UriHelper {
 
@@ -24,14 +26,8 @@ public class UriHelper {
 	private static final String URL_PORTAL_SEARCH = URL_PORTAL + "search.html";
 	private static final String URL_PORTAL_RECORD = URL_PORTAL + "record%s.html";
 
-	public static URI getSearchURI(String apikey, String[] terms, int page, int pagesize) {
-		try {
-			return new URI(createSearchUrl(apikey, terms, page, pagesize).toString());
-		} catch (URISyntaxException e) {
-			return null;
-		} catch (UnsupportedEncodingException e) {
-			return null;
-		}
+	public static String getSearchUrl(String apikey, String[] terms, int page, int pagesize) {
+        return createSearchUrl(apikey, terms, page, pagesize).toString();
 	}
 
 	public static URI getRecordURI(String apikey, String id) {
@@ -43,7 +39,7 @@ public class UriHelper {
 		}
 	}
 
-	public static String createPortalSearchUrl(String[] terms) throws UnsupportedEncodingException {
+	public static String createPortalSearchUrl(String[] terms) {
 		UrlBuilder builder = new UrlBuilder(URL_PORTAL_SEARCH);
 		setSearchParams(builder, terms, -1, -1);
 		return builder.toString();
@@ -53,8 +49,7 @@ public class UriHelper {
 		return String.format(Locale.US, URL_PORTAL_RECORD, id);
 	}
 
-	private static UrlBuilder createSearchUrl(String apikey, String[] terms, int page, int pagesize)
-			throws UnsupportedEncodingException {
+	private static UrlBuilder createSearchUrl(String apikey, String[] terms, int page, int pagesize) {
 		UrlBuilder builder = new UrlBuilder(URL_API_SEARCH);
 		builder.addParam("profile", pagesize==1?"minimal+facets":"minimal", true);
 		builder.addParam("wskey", apikey, true);
@@ -62,8 +57,7 @@ public class UriHelper {
 		return builder;
 	}
 
-	private static void setSearchParams(UrlBuilder builder, String[] terms, int page, int pagesize)
-			throws UnsupportedEncodingException {
+	private static void setSearchParams(UrlBuilder builder, String[] terms, int page, int pagesize) {
 		if (pagesize > -1) {
 			if (page > -1) {
 				int start = 1 + ((page - 1) * pagesize);
@@ -72,21 +66,18 @@ public class UriHelper {
 			builder.addParam("rows", String.valueOf(pagesize), true);
 		}
 		for (int i = 0; i < terms.length; i++) {
-			String termEncoded = URLEncoder.encode(terms[i], Config.JSON_CHARSET);
 			if (i == 0) {
-				builder.addParam("query", termEncoded, true);
+				builder.addParam("query", terms[i], true);
 			} else {
-				builder.addMultiParam("qf", termEncoded);
+				builder.addMultiParam("qf", terms[i]);
 			}
 		}
 	}
 
-	public static URI getSuggestionURI(String term, int pagesize) {
+	public static String getSuggestionUrl(String term, int pagesize) {
 		try {
-			String termEncoded = URLEncoder.encode(term, Config.JSON_CHARSET);
-			return new URI(String.format(URL_API_SUGGESTIONS, Integer.valueOf(pagesize), termEncoded));
-		} catch (URISyntaxException e) {
-			return null;
+			String termEncoded = URLEncoder.encode(StringUtils.lowerCase(term), Config.JSON_CHARSET);
+			return String.format(URL_API_SUGGESTIONS, Integer.valueOf(pagesize), termEncoded);
 		} catch (UnsupportedEncodingException e) {
 			return null;
 		}

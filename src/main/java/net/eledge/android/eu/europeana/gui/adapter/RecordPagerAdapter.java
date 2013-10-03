@@ -1,7 +1,9 @@
 package net.eledge.android.eu.europeana.gui.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.activity.RecordActivity;
@@ -12,10 +14,9 @@ import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.model.record.Record;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
-import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecordPagerAdapter extends FragmentStatePagerAdapter implements TaskListener<Record>  {
 	

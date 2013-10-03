@@ -1,8 +1,9 @@
 package net.eledge.android.eu.europeana.search.model.facets.convertors;
 
+import android.content.Context;
+
 import net.eledge.android.eu.europeana.search.model.enums.Right;
 import net.eledge.android.eu.europeana.search.model.facets.abstracts.FacetConverter;
-import android.content.Context;
 
 public class Rights implements FacetConverter {
 

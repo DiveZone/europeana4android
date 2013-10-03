@@ -1,15 +1,16 @@
 package net.eledge.android.eu.europeana.gui.adapter;
 
-import java.util.List;
-
-import net.eledge.android.eu.europeana.EuropeanaApplication;
-import net.eledge.android.eu.europeana.search.RecordController;
-import net.eledge.android.eu.europeana.search.model.record.abstracts.RecordView;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+
+import net.eledge.android.eu.europeana.EuropeanaApplication;
+import net.eledge.android.eu.europeana.search.RecordController;
+import net.eledge.android.eu.europeana.search.model.record.abstracts.RecordView;
+
+import java.util.List;
 
 public class RecordViewAdapter extends ArrayAdapter<RecordView> {
 

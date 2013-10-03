@@ -1,10 +1,5 @@
 package net.eledge.android.eu.europeana.gui.adapter;
 
-import java.util.List;
-
-import net.eledge.android.eu.europeana.EuropeanaApplication;
-import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
-import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -13,6 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import net.eledge.android.eu.europeana.EuropeanaApplication;
+import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
+import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
+
+import java.util.List;
 
 public class FacetsAdapter extends ArrayAdapter<FacetItem> {
 

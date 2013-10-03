@@ -1,12 +1,12 @@
 package net.eledge.android.eu.europeana.db.model;
 
+import android.provider.BaseColumns;
+
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import android.provider.BaseColumns;
 
 @Entity(name="blog_articles")
 public class BlogArticle implements BaseColumns {

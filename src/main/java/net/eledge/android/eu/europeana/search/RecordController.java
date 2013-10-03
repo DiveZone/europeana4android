@@ -1,7 +1,6 @@
 package net.eledge.android.eu.europeana.search;
 
-import java.util.HashMap;
-import java.util.Map;
+import android.app.Activity;
 
 import net.eledge.android.eu.europeana.search.model.record.Record;
 import net.eledge.android.eu.europeana.search.task.RecordTask;
@@ -12,7 +11,8 @@ import net.eledge.android.toolkit.json.JsonParser;
 
 import org.apache.commons.lang.StringUtils;
 
-import android.app.Activity;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RecordController {
 

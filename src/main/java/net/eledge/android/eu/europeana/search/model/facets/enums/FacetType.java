@@ -1,5 +1,7 @@
 package net.eledge.android.eu.europeana.search.model.facets.enums;
 
+import android.content.Context;
+
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.search.model.facets.abstracts.FacetConverter;
 import net.eledge.android.eu.europeana.search.model.facets.convertors.Countries;
@@ -8,8 +10,6 @@ import net.eledge.android.eu.europeana.search.model.facets.convertors.Languages;
 import net.eledge.android.eu.europeana.search.model.facets.convertors.Rights;
 
 import org.apache.commons.lang.StringUtils;
-
-import android.content.Context;
 
 public enum FacetType implements FacetConverter {
 

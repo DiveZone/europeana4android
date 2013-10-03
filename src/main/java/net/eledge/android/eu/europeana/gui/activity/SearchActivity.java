@@ -1,24 +1,5 @@
 package net.eledge.android.eu.europeana.gui.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.eledge.android.eu.europeana.Config;
-import net.eledge.android.eu.europeana.EuropeanaApplication;
-import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.gui.adapter.FacetsAdapter;
-import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
-import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
-import net.eledge.android.eu.europeana.search.SearchController;
-import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
-import net.eledge.android.eu.europeana.search.model.SearchResult;
-import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
-import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
-import net.eledge.android.toolkit.StringArrayUtils;
-import net.eledge.android.toolkit.gui.GuiUtils;
-
-import org.apache.commons.lang.StringUtils;
-
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.SearchManager;
@@ -50,12 +31,31 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import net.eledge.android.eu.europeana.Config;
+import net.eledge.android.eu.europeana.EuropeanaApplication;
+import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.gui.adapter.FacetsAdapter;
+import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
+import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
+import net.eledge.android.eu.europeana.search.SearchController;
+import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
+import net.eledge.android.eu.europeana.search.model.SearchFacets;
+import net.eledge.android.eu.europeana.search.model.SearchItems;
+import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
+import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
+import net.eledge.android.toolkit.StringArrayUtils;
+import net.eledge.android.toolkit.gui.GuiUtils;
+
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchActivity extends ActionBarActivity implements SearchTaskListener {
 
 	private SearchResultsFragment mSearchFragment;
-	private NfcAdapter mNfcAdapter;
 
-	// NavigationDrawer
+    // NavigationDrawer
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ListView mFacetsList;
@@ -119,18 +119,18 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 
 	@TargetApi(14)
 	private void createNdefPushMessageCallback() {
-		mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        NfcAdapter mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 		if (mNfcAdapter != null) {
 			mNfcAdapter.setNdefPushMessageCallback(new CreateNdefMessageCallback() {
-				@Override
-				public NdefMessage createNdefMessage(NfcEvent event) {
-					return new NdefMessage(new NdefRecord[] {
-							new NdefRecord(NdefRecord.TNF_MIME_MEDIA,
-									"application/vnd.net.eledge.android.eu.europeana.search".getBytes(), new byte[0],
-									searchController.getPortalUrl().getBytes()),
-							NdefRecord.createApplicationRecord(getPackageName()) });
-				}
-			}, this);
+                @Override
+                public NdefMessage createNdefMessage(NfcEvent event) {
+                    return new NdefMessage(new NdefRecord[]{
+                            new NdefRecord(NdefRecord.TNF_MIME_MEDIA,
+                                    "application/vnd.net.eledge.android.eu.europeana.search".getBytes(), new byte[0],
+                                    searchController.getPortalUrl().getBytes()),
+                            NdefRecord.createApplicationRecord(getPackageName())});
+                }
+            }, this);
 		}
 	}
 
@@ -183,6 +183,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 						.getPackageInfo(getPackageName(), 0));
 				dialog.show();
 			} catch (NameNotFoundException e) {
+                // ignore
 			}
 			break;
 		case R.id.action_share:
@@ -232,11 +233,14 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		GuiUtils.toast(this, message);
 	}
 
-	@Override
-	public void onSearchFinish(SearchResult results) {
-		if (results.facetUpdated) {
-			updateFacetDrawer();
-		}
+    @Override
+    public void onSearchItemsFinish(SearchItems results) {
+        // ignore
+    }
+
+    @Override
+	public void onSearchFacetFinish(SearchFacets results) {
+        updateFacetDrawer();
 		runningSearch = null;
 	}
 

@@ -1,6 +1,11 @@
 package net.eledge.android.eu.europeana.gui.fragments;
 
-import java.util.ArrayList;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
@@ -10,12 +15,8 @@ import net.eledge.android.eu.europeana.search.model.record.Record;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.RecordView;
 import net.eledge.android.eu.europeana.search.model.record.enums.RecordDetails;
 import net.eledge.android.toolkit.async.listener.TaskListener;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class RecordDetailsFragment extends Fragment implements TaskListener<Record> {
 

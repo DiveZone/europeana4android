@@ -1,13 +1,14 @@
 package net.eledge.android.eu.europeana.gui.dialog;
 
-import net.eledge.android.eu.europeana.EuropeanaApplication;
-import net.eledge.android.eu.europeana.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import net.eledge.android.eu.europeana.EuropeanaApplication;
+import net.eledge.android.eu.europeana.R;
 
 public class AboutDialog extends Dialog {
 	

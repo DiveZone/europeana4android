@@ -1,13 +1,5 @@
 package net.eledge.android.eu.europeana.gui.adapter;
 
-import java.util.List;
-
-import net.eledge.android.eu.europeana.EuropeanaApplication;
-import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.search.SearchController;
-import net.eledge.android.eu.europeana.search.model.searchresults.Item;
-import net.eledge.android.toolkit.net.ImageCacheManager;
-import net.eledge.android.toolkit.net.abstracts.AsyncLoaderListener;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
@@ -17,6 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import net.eledge.android.eu.europeana.EuropeanaApplication;
+import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.search.SearchController;
+import net.eledge.android.eu.europeana.search.model.searchresults.Item;
+import net.eledge.android.toolkit.net.ImageCacheManager;
+import net.eledge.android.toolkit.net.abstracts.AsyncLoaderListener;
+
+import java.util.List;
 
 public class ResultAdapter extends ArrayAdapter<Item> {
 
@@ -39,7 +40,7 @@ public class ResultAdapter extends ArrayAdapter<Item> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ResultViewHolder holder = null;
+		ResultViewHolder holder;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.griditem_searchresult, parent, false);
 			holder = new ResultViewHolder();
@@ -55,8 +56,8 @@ public class ResultAdapter extends ArrayAdapter<Item> {
 
 		Item item = getItem(position);
 
-		if (item.thumbnail != null) {
-			manager.displayImage(item.thumbnail, holder.image, -1, new AsyncLoaderListener<Bitmap>() {
+		if ( (item.edmPreview != null) && (item.edmPreview.length > 0)) {
+			manager.displayImage(item.edmPreview[0], holder.image, -1, new AsyncLoaderListener<Bitmap>() {
 				@Override
 				public void onFinished(Bitmap result, int httpStatus) {
 					notifyDataSetChanged();
@@ -64,7 +65,7 @@ public class ResultAdapter extends ArrayAdapter<Item> {
 			});
 		}
 
-		holder.textTitle.setText(item.title);
+		holder.textTitle.setText(item.title[0]);
 		holder.icon.setText(item.type.icon);
 		holder.icon.setTypeface(europeanaFont);
 		return convertView;

@@ -1,9 +1,5 @@
 package net.eledge.android.eu.europeana.gui.fragments;
 
-import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.search.RecordController;
-import net.eledge.android.eu.europeana.search.model.record.Record;
-import net.eledge.android.toolkit.async.listener.TaskListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +12,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+
+import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.search.RecordController;
+import net.eledge.android.eu.europeana.search.model.record.Record;
+import net.eledge.android.toolkit.async.listener.TaskListener;
 
 public class RecordMapFragment extends Fragment implements TaskListener<Record> {
 	

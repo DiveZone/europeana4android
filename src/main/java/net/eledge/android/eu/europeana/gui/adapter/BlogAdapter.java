@@ -1,18 +1,19 @@
 package net.eledge.android.eu.europeana.gui.adapter;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
-
-import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.db.model.BlogArticle;
-import net.eledge.android.toolkit.gui.GuiUtils;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.db.model.BlogArticle;
+import net.eledge.android.toolkit.gui.GuiUtils;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class BlogAdapter extends ArrayAdapter<BlogArticle> {
 	

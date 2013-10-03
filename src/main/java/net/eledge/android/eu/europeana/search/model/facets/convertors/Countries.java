@@ -1,9 +1,10 @@
 package net.eledge.android.eu.europeana.search.model.facets.convertors;
 
+import android.content.Context;
+
 import net.eledge.android.eu.europeana.search.model.enums.Country;
 import net.eledge.android.eu.europeana.search.model.facets.abstracts.FacetConverter;
 import net.eledge.android.toolkit.gui.GuiUtils;
-import android.content.Context;
 
 public class Countries implements FacetConverter {
 

@@ -1,15 +1,5 @@
 package net.eledge.android.eu.europeana.gui.activity;
 
-import java.util.ArrayList;
-
-import net.eledge.android.eu.europeana.EuropeanaApplication;
-import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
-import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
-import net.eledge.android.eu.europeana.gui.fragments.HomeBlogFragment;
-import net.eledge.android.eu.europeana.search.SearchController;
-import net.eledge.android.eu.europeana.search.model.Suggestion;
-import net.eledge.android.toolkit.async.listener.TaskListener;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -32,7 +22,18 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
-public class HomeActivity extends FragmentActivity implements TaskListener<Suggestion[]>, OnItemClickListener {
+import net.eledge.android.eu.europeana.EuropeanaApplication;
+import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
+import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
+import net.eledge.android.eu.europeana.gui.fragments.HomeBlogFragment;
+import net.eledge.android.eu.europeana.search.SearchController;
+import net.eledge.android.eu.europeana.search.model.suggestion.Item;
+import net.eledge.android.toolkit.async.listener.TaskListener;
+
+import java.util.ArrayList;
+
+public class HomeActivity extends FragmentActivity implements TaskListener<Item[]>, OnItemClickListener {
 
 	private SuggestionAdapter mSuggestionsAdaptor;
 
@@ -53,7 +54,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Sugge
 		searchController.suggestionPagesize = getResources().getInteger(R.integer.home_suggestions_pagesize);
 		isLandscape = getResources().getBoolean(R.bool.home_support_landscape);
 
-		mSuggestionsAdaptor = new SuggestionAdapter(this, new ArrayList<Suggestion>());
+		mSuggestionsAdaptor = new SuggestionAdapter(this, new ArrayList<Item>());
 
 		mGridViewSuggestions = (GridView) findViewById(R.id.activity_home_gridview_suggestions);
 		mGridViewSuggestions.setAdapter(mSuggestionsAdaptor);
@@ -120,7 +121,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Sugge
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Suggestion suggestion = mSuggestionsAdaptor.getItem(position);
+		Item suggestion = mSuggestionsAdaptor.getItem(position);
 		searchController.suggestionPagesize = getResources().getInteger(R.integer.home_suggestions_pagesize);
 		performSearch(suggestion.query);
 	}
@@ -164,10 +165,10 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Sugge
 	}
 
 	@Override
-	public void onTaskFinished(Suggestion[] suggestions) {
+	public void onTaskFinished(Item[] suggestions) {
 		mSuggestionsAdaptor.clear();
 		if ((suggestions != null) && (suggestions.length > 0)) {
-			for (Suggestion s: suggestions) {
+			for (Item s: suggestions) {
 				mSuggestionsAdaptor.add(s);
 			}
 			mSuggestionsAdaptor.notifyDataSetChanged();

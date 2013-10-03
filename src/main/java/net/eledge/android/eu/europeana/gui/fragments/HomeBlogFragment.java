@@ -1,19 +1,5 @@
 package net.eledge.android.eu.europeana.gui.fragments;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import net.eledge.android.eu.europeana.Preferences;
-import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.db.dao.BlogArticleDao;
-import net.eledge.android.eu.europeana.db.model.BlogArticle;
-import net.eledge.android.eu.europeana.db.setup.DatabaseSetup;
-import net.eledge.android.eu.europeana.gui.adapter.BlogAdapter;
-import net.eledge.android.eu.europeana.tools.RssReader;
-import net.eledge.android.eu.europeana.tools.UriHelper;
-import net.eledge.android.toolkit.async.listener.TaskListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -25,6 +11,21 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+
+import net.eledge.android.eu.europeana.Preferences;
+import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.db.dao.BlogArticleDao;
+import net.eledge.android.eu.europeana.db.model.BlogArticle;
+import net.eledge.android.eu.europeana.db.setup.DatabaseSetup;
+import net.eledge.android.eu.europeana.gui.adapter.BlogAdapter;
+import net.eledge.android.eu.europeana.tools.RssReader;
+import net.eledge.android.eu.europeana.tools.UriHelper;
+import net.eledge.android.toolkit.async.listener.TaskListener;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class HomeBlogFragment extends Fragment implements TaskListener<List<BlogArticle>> {
 
@@ -41,21 +42,21 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
 		super.onCreate(savedInstanceState);
 		mBlogAdapter = new BlogAdapter(getActivity(), new ArrayList<BlogArticle>());
 
-		boolean doupdate = false;
+		boolean doUpdate = false;
 		SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);
 		long time = settings.getLong(Preferences.BLOG_LASTUPDATE, -1);
 		if (time == -1) {
-			doupdate = true;
+			doUpdate = true;
 		} else {
-			Calendar timelimit = Calendar.getInstance();
-			timelimit.add(Calendar.HOUR, -24);
+			Calendar timeLimit = Calendar.getInstance();
+			timeLimit.add(Calendar.HOUR, -24);
 			Calendar lastUpdate = Calendar.getInstance();
 			lastUpdate.setTime(new Date(time));
-			if (timelimit.after(lastUpdate)) {
-				doupdate = true;
+			if (timeLimit.after(lastUpdate)) {
+				doUpdate = true;
 			}
 		}
-		if (doupdate) {
+		if (doUpdate) {
 			mRssReaderTask = new RssReader(getActivity(), this);
 			mRssReaderTask.execute(UriHelper.URL_BLOGFEED);
 		}

@@ -1,21 +1,5 @@
 package net.eledge.android.eu.europeana.provider;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.util.Locale;
-
-import net.eledge.android.eu.europeana.Config;
-import net.eledge.android.eu.europeana.tools.UriHelper;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.SearchManager;
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -24,7 +8,16 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.text.TextUtils;
+
+import net.eledge.android.eu.europeana.search.model.Suggestions;
+import net.eledge.android.eu.europeana.search.model.suggestion.Item;
+import net.eledge.android.eu.europeana.tools.UriHelper;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Locale;
 
 public class SuggestionProvider extends ContentProvider {
 	
@@ -68,42 +61,20 @@ public class SuggestionProvider extends ContentProvider {
 	}
 
 	private Cursor getSuggestions(String query) {
-		if (TextUtils.isEmpty(query)) {
-			return null;
-		}
-		URI url = UriHelper.getSuggestionURI(query, 12);
-		try {
-			HttpResponse response = new DefaultHttpClient().execute(new HttpGet(url));
-			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(),
-					Config.JSON_CHARSET));
-			StringBuilder json = new StringBuilder();
-			String line = reader.readLine();
-			while (line != null) {
-				json.append(line);
-				line = reader.readLine();
-			}
-			JSONObject jsonObj = new JSONObject(json.toString());
-			JSONArray array = jsonObj.getJSONArray("items");
-			if ((array != null) && (array.length() > 0)) {
-				MatrixCursor cursor = new MatrixCursor(columns);
-				for (int i = 0; i < array.length(); i++) {
-					JSONObject item = array.getJSONObject(i);
-					final String term = item.getString("term");
-					final String field = item.getString("field");
-					final long freq = item.getLong("frequency");
-					StringBuilder sb = new StringBuilder(field);
-					sb.append(" (").append(freq).append(")");
-					String[] tmp = { Integer.toString(i), term, sb.toString() , term };
-					cursor.addRow(tmp);
-				}
-				return cursor;
-			}
-		} catch (IOException e) {
-			// ignore
-		} catch (JSONException e) {
-			// ignore
-		}
-		return null;
+        if (StringUtils.isBlank(query)) {
+            return null;
+        }
+        String url = UriHelper.getSuggestionUrl(query, 12);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        MatrixCursor cursor = new MatrixCursor(columns);
+        int i = 0;
+        for (Item item: restTemplate.getForObject(url, Suggestions.class).items) {
+            String[] tmp = { Integer.toString(i), item.term, item.field + " (" + item.frequency + ")", item.term };
+            cursor.addRow(tmp);
+            i++;
+        }
+        return cursor;
 	}
 
 	/**
@@ -130,4 +101,5 @@ public class SuggestionProvider extends ContentProvider {
 	public int delete(Uri arg0, String arg1, String[] arg2) {
 		throw new UnsupportedOperationException();
 	}
+
 }

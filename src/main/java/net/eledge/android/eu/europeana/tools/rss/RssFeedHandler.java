@@ -1,11 +1,6 @@
 package net.eledge.android.eu.europeana.tools.rss;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import android.text.Html;
 
 import net.eledge.android.eu.europeana.db.model.BlogArticle;
 
@@ -13,7 +8,12 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.text.Html;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class RssFeedHandler extends DefaultHandler {
 	

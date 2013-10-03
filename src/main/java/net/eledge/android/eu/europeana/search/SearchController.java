@@ -1,21 +1,19 @@
 package net.eledge.android.eu.europeana.search;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import android.app.Activity;
+import android.content.Context;
+import android.os.AsyncTask.Status;
 
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
-import net.eledge.android.eu.europeana.search.model.SearchResult;
-import net.eledge.android.eu.europeana.search.model.Suggestion;
+import net.eledge.android.eu.europeana.search.model.SearchFacets;
+import net.eledge.android.eu.europeana.search.model.SearchItems;
 import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.facets.enums.FacetType;
 import net.eledge.android.eu.europeana.search.model.searchresults.Facet;
 import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import net.eledge.android.eu.europeana.search.model.searchresults.Field;
-import net.eledge.android.eu.europeana.search.model.searchresults.Item;
+import net.eledge.android.eu.europeana.search.model.suggestion.Item;
 import net.eledge.android.eu.europeana.search.task.SearchFacetTask;
 import net.eledge.android.eu.europeana.search.task.SearchTask;
 import net.eledge.android.eu.europeana.search.task.SuggestionTask;
@@ -26,9 +24,10 @@ import net.eledge.android.toolkit.gui.GuiUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask.Status;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SearchController {
 
@@ -44,9 +43,9 @@ public class SearchController {
 	private long totalResults;
 	private int itemSelected = -1;
 
-	private final List<Item> searchItems = new ArrayList<Item>();
+	private final List<net.eledge.android.eu.europeana.search.model.searchresults.Item> searchItems = new ArrayList<net.eledge.android.eu.europeana.search.model.searchresults.Item>();
 	private final List<Facet> facets = new ArrayList<Facet>();
-	private final Map<String, Suggestion[]> suggestionCache = new HashMap<String, Suggestion[]>();
+	private final Map<String, Item[]> suggestionCache = new HashMap<String, Item[]>();
 
 	private FacetType selectedFacet = FacetType.TYPE;
 
@@ -66,7 +65,7 @@ public class SearchController {
 		listeners.remove(clazz.getName());
 	}
 
-	public void suggestions(TaskListener<Suggestion[]> listener, String query) {
+	public void suggestions(TaskListener<Item[]> listener, String query) {
 		if (mSuggestionTask != null) {
 			mSuggestionTask.cancel(true);
 		}
@@ -226,32 +225,28 @@ public class SearchController {
 	}
 
 	public String getPortalUrl() {
-		try {
-			return UriHelper.createPortalSearchUrl(terms.toArray(new String[terms.size()]));
-		} catch (UnsupportedEncodingException e) {
-			return "http://europeana.eu";
-		}
+        return UriHelper.createPortalSearchUrl(terms.toArray(new String[terms.size()]));
 	}
 	
-	public void cacheSuggestions(String term, Suggestion[] suggestions) {
+	public void cacheSuggestions(String term, Item[] suggestions) {
 		suggestionCache.put(term, suggestions);
 	}
 
-	public synchronized void onSearchFinish(SearchResult results) {
+	public synchronized void onSearchFinish(SearchItems results) {
 		if (results != null) {
 			totalResults = results.totalResults;
-			searchItems.addAll(results.searchItems);
+			searchItems.addAll(results.items);
 		}
 	}
 
-	public synchronized void onSearchFacetFinish(SearchResult results) {
-		if (results != null && results.facetUpdated) {
+	public synchronized void onSearchFacetFinish(SearchFacets results) {
+		if (results != null) {
 			facets.clear();
 			facets.addAll(results.facets);
 		}
 	}
 
-	public synchronized List<Item> getSearchItems() {
+	public synchronized List<net.eledge.android.eu.europeana.search.model.searchresults.Item> getSearchItems() {
 		return searchItems;
 	}
 

@@ -1,9 +1,5 @@
 package net.eledge.android.eu.europeana.gui.adapter;
 
-import java.util.List;
-
-import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.search.model.Suggestion;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +7,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
+import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.search.model.suggestion.Item;
+
+import java.util.List;
+
+public class SuggestionAdapter extends ArrayAdapter<Item> {
 
 	private final LayoutInflater inflater;
 	
-	public SuggestionAdapter(Context context, List<Suggestion> suggestions) {
+	public SuggestionAdapter(Context context, List<Item> suggestions) {
 		super(context, 0, suggestions);
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -33,10 +34,10 @@ public class SuggestionAdapter extends ArrayAdapter<Suggestion> {
 		} else {
 			holder = (SuggestionViewHolder) convertView.getTag();
 		}
-		Suggestion suggestion = getItem(position);
+		Item suggestion = getItem(position);
 		holder.suggestion.setText(suggestion.term);
 		holder.scope.setText(suggestion.field);
-		holder.count.setText(String.valueOf(suggestion.freq));
+		holder.count.setText(String.valueOf(suggestion.frequency));
 		return convertView;
 	}
 

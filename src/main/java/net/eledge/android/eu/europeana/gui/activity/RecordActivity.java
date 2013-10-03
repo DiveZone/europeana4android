@@ -1,20 +1,5 @@
 package net.eledge.android.eu.europeana.gui.activity;
 
-import java.util.List;
-
-import net.eledge.android.eu.europeana.EuropeanaApplication;
-import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.gui.adapter.RecordPagerAdapter;
-import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
-import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
-import net.eledge.android.eu.europeana.search.RecordController;
-import net.eledge.android.eu.europeana.search.SearchController;
-import net.eledge.android.eu.europeana.search.model.record.Record;
-import net.eledge.android.toolkit.async.listener.TaskListener;
-import net.eledge.android.toolkit.gui.GuiUtils;
-
-import org.apache.commons.lang.StringUtils;
-
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Intent;
@@ -44,6 +29,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+
+import net.eledge.android.eu.europeana.EuropeanaApplication;
+import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.gui.adapter.RecordPagerAdapter;
+import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
+import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
+import net.eledge.android.eu.europeana.search.RecordController;
+import net.eledge.android.eu.europeana.search.SearchController;
+import net.eledge.android.eu.europeana.search.model.record.Record;
+import net.eledge.android.toolkit.async.listener.TaskListener;
+import net.eledge.android.toolkit.gui.GuiUtils;
+
+import org.apache.commons.lang.StringUtils;
+
+import java.util.List;
 
 public class RecordActivity extends ActionBarActivity implements TaskListener<Record>, TabListener {
 
