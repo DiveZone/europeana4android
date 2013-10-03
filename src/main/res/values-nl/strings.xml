@@ -31,7 +31,8 @@
     <string name="record_field_dc_type">TYPE</string>
     <string name="record_field_edm_dataprovider">DATA PROVIDER</string>
     <string name="record_field_edm_provider">LEVERANCIER</string>
-    
+    <string name="record_field_edm_country">AANBIEDEND LAND</string>
+
     <!-- ACTIONS/MENU -->
     <string name="action_about">Over&#8230;</string>
     <string name="action_settings">Instellingen</string>

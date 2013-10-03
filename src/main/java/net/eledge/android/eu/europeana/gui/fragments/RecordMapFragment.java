@@ -15,10 +15,10 @@ import com.google.android.gms.maps.model.LatLng;
 
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.search.RecordController;
-import net.eledge.android.eu.europeana.search.model.record.Record;
+import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 
-public class RecordMapFragment extends Fragment implements TaskListener<Record> {
+public class RecordMapFragment extends Fragment implements TaskListener<RecordObject> {
 	
 	// Controller
 	private RecordController recordController = RecordController._instance;
@@ -48,11 +48,11 @@ public class RecordMapFragment extends Fragment implements TaskListener<Record> 
 	}
 	
 	@Override
-	public void onTaskFinished(Record record) {
+	public void onTaskFinished(RecordObject record) {
 		if (mMapView != null) {
-			if ( (record.latitude != null) && (record.longitude != null)) {
+			if ( (record.place.latitude != null) && (record.place.longitude != null)) {
 				GoogleMap map = mMapView.getMap();
-				LatLng pos = new LatLng(record.latitude.doubleValue(), record.longitude.doubleValue());
+				LatLng pos = new LatLng(record.place.latitude, record.place.longitude);
 				map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 12));
 			}
 		}

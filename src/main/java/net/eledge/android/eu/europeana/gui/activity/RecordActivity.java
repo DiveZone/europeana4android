@@ -24,7 +24,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +36,7 @@ import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
-import net.eledge.android.eu.europeana.search.model.record.Record;
+import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
 
@@ -45,13 +44,11 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 
-public class RecordActivity extends ActionBarActivity implements TaskListener<Record>, TabListener {
+public class RecordActivity extends ActionBarActivity implements TaskListener<RecordObject>, TabListener {
 
 	public static final String RECORD_ID = "RECORDID";
 
-	private NfcAdapter mNfcAdapter;
-
-	// Controller
+    // Controller
 	private SearchController searchController = SearchController._instance;
 	private RecordController recordController = RecordController._instance;
 
@@ -119,18 +116,18 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 
 	@TargetApi(14)
 	private void createNdefPushMessageCallback() {
-		mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        NfcAdapter mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 		if (mNfcAdapter != null) {
 			mNfcAdapter.setNdefPushMessageCallback(new CreateNdefMessageCallback() {
-				@Override
-				public NdefMessage createNdefMessage(NfcEvent event) {
-					return new NdefMessage(new NdefRecord[] {
-							new NdefRecord(NdefRecord.TNF_MIME_MEDIA,
-									"application/vnd.net.eledge.android.eu.europeana.record".getBytes(), new byte[0],
-									recordController.getPortalUrl().getBytes()),
-							NdefRecord.createApplicationRecord(getPackageName()) });
-				}
-			}, this);
+                @Override
+                public NdefMessage createNdefMessage(NfcEvent event) {
+                    return new NdefMessage(new NdefRecord[]{
+                            new NdefRecord(NdefRecord.TNF_MIME_MEDIA,
+                                    "application/vnd.net.eledge.android.eu.europeana.record".getBytes(), new byte[0],
+                                    recordController.getPortalUrl().getBytes()),
+                            NdefRecord.createApplicationRecord(getPackageName())});
+                }
+            }, this);
 		}
 	}
 
@@ -175,7 +172,7 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 
 	@Override
 	protected void onDestroy() {
-		recordController.unregister(Record.class);
+		recordController.unregister(RecordActivity.class);
 		super.onDestroy();
 	}
 
@@ -191,6 +188,7 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 						.getPackageInfo(getPackageName(), 0));
 				dialog.show();
 			} catch (NameNotFoundException e) {
+                // ignore
 			}
 			break;
 		case R.id.action_share:
@@ -256,11 +254,7 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 				// record 0 contains the MIME type, record 1 is the AAR, if present
 				id = new String(msg.getRecords()[0].getPayload());
 			} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-				id = intent.getDataString();
-				if (!TextUtils.isEmpty(id)) {
-				} else {
-					id = intent.getStringExtra(RECORD_ID);
-				}
+                id = StringUtils.defaultIfBlank(intent.getDataString(), intent.getStringExtra(RECORD_ID));
 			}
 			if (StringUtils.contains(id, "europeana.eu/")) {
 				Uri uri = Uri.parse(id);
@@ -285,7 +279,8 @@ public class RecordActivity extends ActionBarActivity implements TaskListener<Re
 	}
 
 	@Override
-	public void onTaskFinished(Record record) {
+	public void onTaskFinished(RecordObject record) {
+        // ignore
 	}
 
 	private Intent createShareIntent() {

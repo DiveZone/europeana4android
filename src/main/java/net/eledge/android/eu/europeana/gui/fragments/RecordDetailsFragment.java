@@ -11,14 +11,14 @@ import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.RecordViewAdapter;
 import net.eledge.android.eu.europeana.search.RecordController;
-import net.eledge.android.eu.europeana.search.model.record.Record;
+import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.RecordView;
 import net.eledge.android.eu.europeana.search.model.record.enums.RecordDetails;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 
 import java.util.ArrayList;
 
-public class RecordDetailsFragment extends Fragment implements TaskListener<Record> {
+public class RecordDetailsFragment extends Fragment implements TaskListener<RecordObject> {
 
 	// Controller
 	private RecordController recordController = RecordController._instance;
@@ -58,7 +58,7 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
 	}
 	
 	@Override
-	public void onTaskFinished(final Record record) {
+	public void onTaskFinished(final RecordObject record) {
 		mRecordViewAdapter.clear();
 		for (RecordDetails detail: RecordDetails.getVisibles(record)) {
 			mRecordViewAdapter.add(detail);

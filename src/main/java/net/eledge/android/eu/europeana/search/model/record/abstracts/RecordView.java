@@ -5,12 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
-import net.eledge.android.eu.europeana.search.model.record.Record;
+import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 
 public interface RecordView {
 
-	boolean isVisible(Record record);
+	boolean isVisible(RecordObject record);
 	String getSeeMore();
-	View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application);
+	View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application);
 	
 }

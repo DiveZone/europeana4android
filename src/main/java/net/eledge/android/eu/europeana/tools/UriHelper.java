@@ -6,8 +6,6 @@ import net.eledge.android.toolkit.net.UrlBuilder;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.Locale;
 
@@ -30,13 +28,8 @@ public class UriHelper {
         return createSearchUrl(apikey, terms, page, pagesize).toString();
 	}
 
-	public static URI getRecordURI(String apikey, String id) {
-		String url = String.format(Locale.US, URL_API_RECORD, id, apikey);
-		try {
-			return new URI(url);
-		} catch (URISyntaxException e) {
-			return null;
-		}
+	public static String getRecordUrl(String apikey, String id) {
+		return String.format(Locale.US, URL_API_RECORD, id, apikey);
 	}
 
 	public static String createPortalSearchUrl(String[] terms) {

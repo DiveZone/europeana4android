@@ -5,6 +5,8 @@ import android.graphics.Typeface;
 
 import net.eledge.android.toolkit.net.ImageCacheManager;
 
+import java.util.Locale;
+
 public class EuropeanaApplication extends Application {
 	
 	private ImageCacheManager imageCacheManager;
@@ -29,5 +31,9 @@ public class EuropeanaApplication extends Application {
 		}
 		return europeanaFont;
 	}
+
+    public String getLocale() {
+        return Locale.getDefault().getDisplayLanguage();
+    }
 	
 }

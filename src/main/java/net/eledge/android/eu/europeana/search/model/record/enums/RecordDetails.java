@@ -7,9 +7,9 @@ import android.widget.TextView;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.search.model.record.Record;
+import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.RecordView;
-import net.eledge.android.toolkit.StringArrayUtils;
+import net.eledge.android.eu.europeana.search.model.record.abstracts.Resource;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -20,7 +20,7 @@ public enum RecordDetails implements RecordView {
 	
 	TITLE {
 		@Override
-		public boolean isVisible(Record record) {
+		public boolean isVisible(RecordObject record) {
 			return true;
 		}
 		@Override
@@ -28,7 +28,7 @@ public enum RecordDetails implements RecordView {
 			return null;
 		}
 		@Override
-		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			View view = inflater.inflate(R.layout.listitem_record_title, parent, false);
 			
 			TextView text1 = (TextView) view.findViewById(android.R.id.text1);
@@ -44,109 +44,116 @@ public enum RecordDetails implements RecordView {
 	},
 	DCDESCRIPTION {
 		@Override
-		public boolean isVisible(Record record) {
-			return (record.dcDescription != null) && !record.dcDescription.isEmpty();
+		public boolean isVisible(RecordObject record) {
+			return (record.proxy.dcDescription != null) && !record.proxy.dcDescription.isEmpty();
 		}
 		@Override
 		public String getSeeMore() {
 			return null;
 		}
 		@Override
-		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			String key = "def";
-			if (!record.dcDescription.containsKey(key)) {
-				key = record.dcDescription.keySet().iterator().next();
-			}
-			return drawDetailView(R.string.record_field_dc_description, record.dcDescription.get(key), parent, inflater);
+		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+			return drawDetailView(R.string.record_field_dc_description, Resource.getPreferred(record.proxy.dcDescription, application.getLocale()), parent, inflater);
 		}
 	},
 	DCCREATOR {
 		@Override
-		public boolean isVisible(Record record) {
-			return StringArrayUtils.isNotBlank(record.dcCreator);
+		public boolean isVisible(RecordObject record) {
+            return (record.proxy.dcCreator != null) && !record.proxy.dcCreator.isEmpty();
 		}
 		@Override
 		public String getSeeMore() {
 			return "who";
 		}
 		@Override
-		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			View view = drawDetailView(R.string.record_field_dc_creator, record.dcCreator, parent, inflater);
-			return view;
+		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+			return drawDetailView(R.string.record_field_dc_creator, Resource.getPreferred(record.proxy.dcCreator, application.getLocale()), parent, inflater);
 		}
 	},
 	DCTYPE {
 		@Override
-		public boolean isVisible(Record record) {
-			return StringArrayUtils.isNotBlank(record.dcType);
+		public boolean isVisible(RecordObject record) {
+            return (record.proxy.dcType != null) && !record.proxy.dcType.isEmpty();
 		}
 		@Override
 		public String getSeeMore() {
 			return null;
 		}
 		@Override
-		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			return drawDetailView(R.string.record_field_dc_type, record.dcType, parent, inflater);
+		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+			return drawDetailView(R.string.record_field_dc_type, Resource.getPreferred(record.proxy.dcType, application.getLocale()), parent, inflater);
 		}
 	},
 	DCSUBJECT {
 		@Override
-		public boolean isVisible(Record record) {
-			return StringArrayUtils.isNotBlank(record.dcSubject);
+		public boolean isVisible(RecordObject record) {
+            return (record.proxy.dcSubject != null) && !record.proxy.dcSubject.isEmpty();
 		}
 		@Override
 		public String getSeeMore() {
 			return null;
 		}
 		@Override
-		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			return drawDetailView(R.string.record_field_dc_subject, record.dcSubject, parent, inflater);
+		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+			return drawDetailView(R.string.record_field_dc_subject, Resource.getPreferred(record.proxy.dcSubject, application.getLocale()), parent, inflater);
 		}
 	},
 	DCIDENTIFIER {
 		@Override
-		public boolean isVisible(Record record) {
-			return StringArrayUtils.isNotBlank(record.dcIdentifier);
+		public boolean isVisible(RecordObject record) {
+            return (record.proxy.dcIdentifier != null) && !record.proxy.dcIdentifier.isEmpty();
 		}
 		@Override
 		public String getSeeMore() {
 			return null;
 		}
 		@Override
-		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			return drawDetailView(R.string.record_field_dc_identifier, record.dcIdentifier, parent, inflater);
+		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+			return drawDetailView(R.string.record_field_dc_identifier, Resource.getPreferred(record.proxy.dcIdentifier, application.getLocale()), parent, inflater);
 		}
 	},
 	EDMDATAPROVIDER {
 		@Override
-		public boolean isVisible(Record record) {
-			return StringArrayUtils.isNotBlank(record.edmDataProvider);
+		public boolean isVisible(RecordObject record) {
+            return (record.aggregation.edmDataProvider != null) && !record.aggregation.edmDataProvider.isEmpty();
 		}
 		@Override
 		public String getSeeMore() {
 			return "DATA_PROVIDER";
 		}
 		@Override
-		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			View view = drawDetailView(R.string.record_field_edm_dataprovider, record.edmDataProvider, parent, inflater);
-			return view;
+		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+            return drawDetailView(R.string.record_field_edm_dataprovider, Resource.getPreferred(record.aggregation.edmDataProvider, application.getLocale()), parent, inflater);
 		}
 	},
 	EDMPROVIDER {
 		@Override
-		public boolean isVisible(Record record) {
-			return StringArrayUtils.isNotBlank(record.edmProvider);
+		public boolean isVisible(RecordObject record) {
+            return (record.aggregation.edmProvider != null) && !record.aggregation.edmProvider.isEmpty();
 		}
 		@Override
 		public String getSeeMore() {
 			return "PROVIDER";
 		}
 		@Override
-		public View getView(Record record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			View view = drawDetailView(R.string.record_field_edm_provider, record.edmProvider, parent, inflater);
-			return view;
+		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+            return drawDetailView(R.string.record_field_edm_provider, Resource.getPreferred(record.aggregation.edmProvider, application.getLocale()), parent, inflater);
 		}
-	};
+	},
+    EDMCOUNTRY {
+        @Override
+        public boolean isVisible(RecordObject record) {
+            return (record.europeanaAggregation.edmCountry != null) && !record.europeanaAggregation.edmCountry.isEmpty();
+        }
+        @Override
+        public String getSeeMore() {
+            return null;
+        }
+        @Override
+        public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+            return drawDetailView(R.string.record_field_edm_country, Resource.getPreferred(record.europeanaAggregation.edmCountry, application.getLocale()), parent, inflater);
+        }
+    };
 	
 	protected int getDetailView() {
 		return getSeeMore() != null ? R.layout.listitem_record_detail_seealso : R.layout.listitem_record_detail;
@@ -176,7 +183,7 @@ public enum RecordDetails implements RecordView {
 //		}
 //	}
 //	
-	public static List<RecordDetails> getVisibles(Record record) {
+	public static List<RecordDetails> getVisibles(RecordObject record) {
 		List<RecordDetails> list = new ArrayList<RecordDetails>();
 		if (record != null) {
 			for (RecordDetails detail: RecordDetails.values()) {

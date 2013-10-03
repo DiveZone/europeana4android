@@ -11,14 +11,14 @@ import net.eledge.android.eu.europeana.gui.fragments.RecordDetailsFragment;
 import net.eledge.android.eu.europeana.gui.fragments.RecordImagesFragment;
 import net.eledge.android.eu.europeana.gui.fragments.RecordMapFragment;
 import net.eledge.android.eu.europeana.search.RecordController;
-import net.eledge.android.eu.europeana.search.model.record.Record;
+import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecordPagerAdapter extends FragmentStatePagerAdapter implements TaskListener<Record>  {
+public class RecordPagerAdapter extends FragmentStatePagerAdapter implements TaskListener<RecordObject>  {
 	
 	private Context mContext;
 	private RecordActivity mRecordActivity;
@@ -34,7 +34,7 @@ public class RecordPagerAdapter extends FragmentStatePagerAdapter implements Tas
 	}
 	
 	@Override
-	public void onTaskFinished(Record record) {
+	public void onTaskFinished(RecordObject record) {
 		if (record != null) {
 			// DETAIL INFO
 			labels.add(Integer.valueOf(R.string.record_tab_details));
@@ -42,8 +42,7 @@ public class RecordPagerAdapter extends FragmentStatePagerAdapter implements Tas
 			// IMAGES
 			labels.add(Integer.valueOf(R.string.record_tab_images));
 			fragments.add(new RecordImagesFragment());
-			// MAP
-			if ( (record.latitude != null) && (record.longitude != null)) {
+			if ( (record.place.latitude != null) && (record.place.longitude != null)) {
 				labels.add(Integer.valueOf(R.string.record_tab_map));
 				fragments.add(new RecordMapFragment());
 			}
