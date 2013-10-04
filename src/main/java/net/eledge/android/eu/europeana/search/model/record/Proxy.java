@@ -34,6 +34,8 @@ public class Proxy extends Resource {
 
     public Map<String, String[]> dctermsCreated;
 
+    public Map<String, String[]> dctermsExtent;
+
     public Map<String, String[]> dctermsIsPartOf;
 
     public Map<String, String[]> dctermsIssued;
@@ -63,6 +65,7 @@ public class Proxy extends Resource {
                 merged.dcType = mergeMapArrays(merged.dcType, source.dcType);
 
                 merged.dctermsCreated = mergeMapArrays(merged.dctermsCreated, source.dctermsCreated);
+                merged.dctermsExtent = mergeMapArrays(merged.dctermsExtent, source.dctermsExtent);
                 merged.dctermsIsPartOf = mergeMapArrays(merged.dctermsIsPartOf, source.dctermsIsPartOf);
                 merged.dctermsIssued = mergeMapArrays(merged.dctermsIssued, source.dctermsIssued);
                 merged.dctermsMedium = mergeMapArrays(merged.dctermsMedium, source.dctermsMedium);

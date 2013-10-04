@@ -152,14 +152,10 @@ public enum RecordDetails implements RecordView {
 			return drawDetailView(R.string.record_field_dc_type, Resource.getPreferred(record.proxy.dcType, application.getLocale()), parent, inflater);
 		}
 	},
-    //    addFieldMap(fieldMap, Field.DC_FORMAT, shortcut.getList("DcFormat"),
-    //    TODO      map(Field.DCTERMS_EXTENT, shortcut.getList("DctermsExtent")),
-    //          map(Field.DCTERMS_MEDIUM, shortcut.getList("DctermsMedium"))
-    //            );
     DCFORMAT {
         @Override
         public boolean isVisible(RecordObject record) {
-            return !areAllBlank(record.proxy.dcFormat, record.proxy.dctermsMedium);
+            return !areAllBlank(record.proxy.dcFormat, record.proxy.dctermsExtent, record.proxy.dctermsMedium);
         }
         @Override
         public String getSeeMore() {
@@ -167,7 +163,8 @@ public enum RecordDetails implements RecordView {
         }
         @Override
         public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-            String[] items = Resource.mergeArray(Resource.getPreferred(record.proxy.dcFormat, application.getLocale()),  Resource.getPreferred(record.proxy.dctermsMedium, application.getLocale()));
+            String[] items = Resource.mergeArray(Resource.getPreferred(record.proxy.dcFormat, application.getLocale()),  Resource.getPreferred(record.proxy.dctermsExtent, application.getLocale()));
+            items = Resource.mergeArray(items,  Resource.getPreferred(record.proxy.dctermsMedium, application.getLocale()));
             return drawDetailView(R.string.record_field_dc_format, items, parent, inflater);
         }
     },

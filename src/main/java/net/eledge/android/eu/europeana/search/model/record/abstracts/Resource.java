@@ -36,20 +36,23 @@ public class Resource {
     }
 
     public static String[] getPreferred(Map<String, String[]> data, String locale) {
-        String key = null;
-        if ((locale != null) && data.containsKey(locale)) {
-            key = locale;
-        } else
-        if (data.containsKey("def")) {
-            key = "def";
-        } else
-        if (data.containsKey("en")) {
-            key = "en";
+        if (data != null) {
+            String key = null;
+            if ((locale != null) && data.containsKey(locale)) {
+                key = locale;
+            } else
+            if (data.containsKey("def")) {
+                key = "def";
+            } else
+            if (data.containsKey("en")) {
+                key = "en";
+            }
+            if (key == null) {
+                key = data.keySet().iterator().next();
+            }
+            return data.get(key);
         }
-        if (key == null) {
-            key = data.keySet().iterator().next();
-        }
-        return data.get(key);
+        return null;
     }
 
     public static <T> T defaultValue(T value1, T value2) {
