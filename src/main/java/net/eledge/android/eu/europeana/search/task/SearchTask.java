@@ -3,6 +3,9 @@ package net.eledge.android.eu.europeana.search.task;
 import android.app.Activity;
 import android.os.AsyncTask;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
@@ -12,9 +15,13 @@ import net.eledge.android.eu.europeana.tools.UriHelper;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
+
 public class SearchTask extends AsyncTask<String, Void, SearchItems> {
 
 	private int pageLoad = 1;
+
+    private long startTime;
 
 	private SearchController searchController = SearchController._instance;
 	private Activity mActivity;
@@ -35,6 +42,7 @@ public class SearchTask extends AsyncTask<String, Void, SearchItems> {
 				l.onSearchStart(false);
 			}
 		}
+        startTime = new Date().getTime();
 	}
 
 	@Override
@@ -48,10 +56,16 @@ public class SearchTask extends AsyncTask<String, Void, SearchItems> {
 
 	@Override
 	protected void onPostExecute(SearchItems result) {
+        EasyTracker tracker = EasyTracker.getInstance(mActivity);
+        tracker.send(MapBuilder
+                .createTiming("Tasks",
+                        new Date().getTime()-startTime,
+                        "SearchTask",
+                        null)
+                .build());
 		if (isCancelled()) {
 			return;
 		}
-
 		mActivity.runOnUiThread(new ListenerNotifier(result));
 	}
 

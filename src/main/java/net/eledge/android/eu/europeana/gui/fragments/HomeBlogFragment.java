@@ -12,6 +12,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import net.eledge.android.eu.europeana.Preferences;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.db.dao.BlogArticleDao;
@@ -29,18 +32,19 @@ import java.util.List;
 
 public class HomeBlogFragment extends Fragment implements TaskListener<List<BlogArticle>> {
 
-	private ListView mListView;
-
-	private BlogAdapter mBlogAdapter;
+    private BlogAdapter mBlogAdapter;
 
 	private BlogArticleDao mBlogArticleDao;
 	
 	private RssReader mRssReaderTask;
 
-	@Override
+    private EasyTracker mEasyTracker;
+
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mBlogAdapter = new BlogAdapter(getActivity(), new ArrayList<BlogArticle>());
+        mEasyTracker = EasyTracker.getInstance(HomeBlogFragment.this.getActivity());
 
 		boolean doUpdate = false;
 		SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);
@@ -64,17 +68,18 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = (View) inflater.inflate(R.layout.fragment_home_blog, null);
-		mListView = (ListView) root.findViewById(R.id.fragment_home_blog_listview);
+		View root = inflater.inflate(R.layout.fragment_home_blog, null);
+        ListView mListView = (ListView) root.findViewById(R.id.fragment_home_blog_listview);
 		mListView.setAdapter(mBlogAdapter);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				BlogArticle article = mBlogAdapter.getItem(position);
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.guid));
-				startActivity(browserIntent);
-			}
-		});
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BlogArticle article = mBlogAdapter.getItem(position);
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.guid));
+                mEasyTracker.send(MapBuilder.createEvent("blog", "click", article.guid, null).build());
+                startActivity(browserIntent);
+            }
+        });
 		loadFromDatabase();
 
 		return root;

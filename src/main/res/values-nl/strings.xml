@@ -25,10 +25,20 @@
     
     <string name="record_field_title">TITEL</string>
     <string name="record_field_dc_creator">MAKER</string>
+    <string name="record_field_dc_contributor">AANBIEDER</string>
+    <string name="record_field_dc_date">DATUM</string>
     <string name="record_field_dc_description">BESCHRIJVING</string>
+    <string name="record_field_dc_format">FORMAAT</string>
     <string name="record_field_dc_identifier">IDENTIFIER</string>
+    <string name="record_field_dc_rights">RECHTEN</string>
     <string name="record_field_dc_subject">ONDERWERP</string>
+    <string name="record_field_dc_source">BRON</string>
     <string name="record_field_dc_type">TYPE</string>
+
+    <string name="record_field_dcterms_created">DATUM PRODUCTIE</string>
+    <string name="record_field_dcterms_ispartof">IS ONDERDEEL VAN</string>
+    <string name="record_field_dcterms_issued">PUBLICATIEDATUM</string>
+
     <string name="record_field_edm_dataprovider">DATA PROVIDER</string>
     <string name="record_field_edm_provider">LEVERANCIER</string>
     <string name="record_field_edm_country">AANBIEDEND LAND</string>

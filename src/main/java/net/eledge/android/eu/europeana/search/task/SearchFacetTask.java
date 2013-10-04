@@ -3,6 +3,9 @@ package net.eledge.android.eu.europeana.search.task;
 import android.app.Activity;
 import android.os.AsyncTask;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
@@ -12,11 +15,14 @@ import net.eledge.android.eu.europeana.tools.UriHelper;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
+
 public class SearchFacetTask extends AsyncTask<String, Void, SearchFacets> {
-	private final static String TAG = "SearchFacetTask";
 
 	private SearchController searchController = SearchController._instance;
 	private Activity mActivity;
+
+    private long startTime;
 
 	public SearchFacetTask(Activity activity) {
 		super();
@@ -33,6 +39,7 @@ public class SearchFacetTask extends AsyncTask<String, Void, SearchFacets> {
 				l.onSearchStart(true);
 			}
 		}
+        startTime = new Date().getTime();
 	}
 
 	@Override
@@ -45,6 +52,13 @@ public class SearchFacetTask extends AsyncTask<String, Void, SearchFacets> {
 
 	@Override
 	protected void onPostExecute(SearchFacets result) {
+        EasyTracker tracker = EasyTracker.getInstance(mActivity);
+        tracker.send(MapBuilder
+                .createTiming("Tasks",
+                        new Date().getTime() - startTime,
+                        "SearchFacetTask",
+                        null)
+                .build());
 		if (isCancelled()) {
 			return;
 		}

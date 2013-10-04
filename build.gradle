@@ -21,6 +21,28 @@ android {
         minSdkVersion 10
         targetSdkVersion 10
     }
+
+    signingConfigs {
+        release {
+            keyAlias = "eledge_europeana"
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+
+    if (project.hasProperty('eledgeKeyStoreFile') &&
+            project.hasProperty('eledgeKeyStorePassword') &&
+            project.hasProperty('europeanaKeyPassword')) {
+        android.signingConfigs.release.storeFile = file(eledgeKeyStoreFile)
+        android.signingConfigs.release.storePassword = eledgeKeyStorePassword
+        android.signingConfigs.release.keyPassword = europeanaKeyPassword
+    } else {
+        buildTypes.release.signingConfig = null
+    }
 }
 
 dependencies {

@@ -29,10 +29,20 @@
     
     <string name="record_field_title">TITLE</string>
     <string name="record_field_dc_creator">CREATOR</string>
+    <string name="record_field_dc_contributor">CONTRIBUTOR</string>
+    <string name="record_field_dc_date">DATE</string>
     <string name="record_field_dc_description">DESCRIPTION</string>
+    <string name="record_field_dc_format">FORMAT</string>
     <string name="record_field_dc_identifier">IDENTIFIER</string>
+    <string name="record_field_dc_rights">RIGHTS</string>
     <string name="record_field_dc_subject">SUBJECT</string>
+    <string name="record_field_dc_source">SOURCE</string>
     <string name="record_field_dc_type">TYPE</string>
+
+    <string name="record_field_dcterms_created">DATE OF CREATION</string>
+    <string name="record_field_dcterms_ispartof">IS PART OF</string>
+    <string name="record_field_dcterms_issued">PUBLICATION DATE</string>
+
     <string name="record_field_edm_dataprovider">DATA PROVIDER</string>
     <string name="record_field_edm_provider">PROVIDER</string>
     <string name="record_field_edm_country">PROVIDING COUNTRY</string>
