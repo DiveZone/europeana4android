@@ -145,7 +145,7 @@ public enum RecordDetails implements RecordView {
 		}
 		@Override
 		public String getSeeMore() {
-			return null;
+			return "what";
 		}
 		@Override
 		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
