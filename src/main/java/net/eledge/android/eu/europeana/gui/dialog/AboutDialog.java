@@ -7,6 +7,9 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 
@@ -25,6 +28,7 @@ public class AboutDialog extends Dialog {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.dialog_about);
+        EasyTracker.getInstance(getOwnerActivity()).send(MapBuilder.createEvent("dialog", "about", "build:" + mInfo.versionCode, null).build());
 		setVersionNumber();
 	}
 	
