@@ -49,8 +49,9 @@ dependencies {
     compile project(':AndroidToolkit')
     compile 'com.android.support:support-v4:18.0.+'
     compile "com.android.support:appcompat-v7:18.0.+"
-    compile 'com.google.android.gms:play-services:3.2.65'
+    compile 'com.google.android.gms:play-services:3.2.+'
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.2.1'
+//    compile 'com.fasterxml.jackson.core:jackson-databind:2.2.+'
+    compile 'com.google.code.gson:gson:2.2.+'
     compile files('libs/libGoogleAnalyticsServices.jar')
 }

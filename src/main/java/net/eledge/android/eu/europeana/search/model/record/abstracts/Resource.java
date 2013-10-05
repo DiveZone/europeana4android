@@ -1,13 +1,10 @@
 package net.eledge.android.eu.europeana.search.model.record.abstracts;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Resource {
 
     public String about;

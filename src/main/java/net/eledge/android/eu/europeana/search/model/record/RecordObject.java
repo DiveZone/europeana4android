@@ -1,12 +1,8 @@
 package net.eledge.android.eu.europeana.search.model.record;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import net.eledge.android.eu.europeana.search.model.enums.DocType;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.Resource;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class RecordObject extends Resource {
 
     public DocType type;
@@ -15,18 +11,15 @@ public class RecordObject extends Resource {
 
     public String[] title;
 
-    @JsonIgnore
-    public Proxy proxy;
+    public transient Proxy proxy;
 
     public Proxy[] proxies;
 
-    @JsonIgnore
-    public Aggregation aggregation;
+    public transient Aggregation aggregation;
 
     public Aggregation[] aggregations;
 
-    @JsonIgnore
-    public Place place;
+    public transient Place place;
 
     public Place[] places;
 

@@ -14,7 +14,7 @@ import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.async.ListenerNotifier;
 
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
@@ -47,7 +47,7 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
         recordId = params[0];
 		String url = UriHelper.getRecordUrl(Config._instance.getEuropeanaPublicKey(mActivity), recordId);
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
         return RecordObject.normalize(restTemplate.getForObject(url, Record.class).object);
 	}
 
