@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -13,10 +14,14 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 
+import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;
+import net.eledge.android.eu.europeana.search.model.record.abstracts.Resource;
 import net.eledge.android.toolkit.async.listener.TaskListener;
+
+import org.apache.commons.lang.StringUtils;
 
 public class RecordMapFragment extends Fragment implements TaskListener<RecordObject> {
 	
@@ -43,7 +48,11 @@ public class RecordMapFragment extends Fragment implements TaskListener<RecordOb
 				R.layout.fragment_record_map, null);
 		mMapView = (MapView) root.findViewById(R.id.fragment_record_map_mapview);
 		mMapView.onCreate(savedInstanceState);
-		
+        RecordObject record = recordController.record;
+        TextView text1 = (TextView) root.findViewById(R.id.fragment_record_map_textview_prefLabel);
+        text1.setText(StringUtils.join(Resource.getPreferred(record.place.prefLabel, ((EuropeanaApplication)getActivity().getApplication()).getLocale()), ";"));
+        TextView text2 = (TextView) root.findViewById(R.id.fragment_record_map_textview_coordinates);
+        text2.setText(record.place.latitude + ";"  + record.place.longitude);
 		return root;
 	}
 	

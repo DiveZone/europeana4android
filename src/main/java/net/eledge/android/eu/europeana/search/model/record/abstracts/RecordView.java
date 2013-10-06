@@ -10,7 +10,6 @@ import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 public interface RecordView {
 
 	boolean isVisible(RecordObject record);
-	String getSeeMore();
 	View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application);
 	
 }

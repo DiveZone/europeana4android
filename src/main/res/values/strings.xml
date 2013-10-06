@@ -47,6 +47,9 @@
     <string name="record_field_edm_provider">PROVIDER</string>
     <string name="record_field_edm_country">PROVIDING COUNTRY</string>
 
+    <string name="record_field_place_label">LOCATION NAME</string>
+    <string name="record_field_place_longlat">COORDINATES</string>
+
     <!-- ACTIONS/MENU -->
     <string name="action_about">About&#8230;</string>
     <string name="action_settings">Settings</string>

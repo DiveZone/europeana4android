@@ -13,6 +13,6 @@
     <dimen name="griditem_suggestion_textsize_info">12sp</dimen>
     <dimen name="griditem_suggestion_height">68dp</dimen>
     
-    <dimen name="record_map_spacing">10dp</dimen>
+    <dimen name="record_map_spacing">8dp</dimen>
 
 </resources>

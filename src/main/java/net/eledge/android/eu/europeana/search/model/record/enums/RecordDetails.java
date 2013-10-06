@@ -27,10 +27,6 @@ public enum RecordDetails implements RecordView {
 			return true;
 		}
 		@Override
-		public String getSeeMore() {
-			return null;
-		}
-		@Override
 		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			View view = inflater.inflate(R.layout.listitem_record_title, parent, false);
 			
@@ -57,10 +53,6 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dcDescription);
 		}
 		@Override
-		public String getSeeMore() {
-			return null;
-		}
-		@Override
 		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			return drawDetailView(R.string.record_field_dc_description, Resource.getPreferred(record.proxy.dcDescription, application.getLocale()), parent, inflater);
 		}
@@ -71,10 +63,6 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dcCreator);
 		}
 		@Override
-		public String getSeeMore() {
-			return "who";
-		}
-		@Override
 		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			return drawDetailView(R.string.record_field_dc_creator, Resource.getPreferred(record.proxy.dcCreator, application.getLocale()), parent, inflater);
 		}
@@ -83,10 +71,6 @@ public enum RecordDetails implements RecordView {
         @Override
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcContributor);
-        }
-        @Override
-        public String getSeeMore() {
-            return null;
         }
         @Override
         public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
@@ -101,10 +85,6 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dcDate);
         }
         @Override
-        public String getSeeMore() {
-            return null;
-        }
-        @Override
         public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
             return drawDetailView(R.string.record_field_dc_date, Resource.getPreferred(record.proxy.dcDate, application.getLocale()), parent, inflater);
         }
@@ -114,10 +94,6 @@ public enum RecordDetails implements RecordView {
         @Override
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dctermsIssued);
-        }
-        @Override
-        public String getSeeMore() {
-            return null;
         }
         @Override
         public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
@@ -130,10 +106,6 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dctermsCreated);
         }
         @Override
-        public String getSeeMore() {
-            return null;
-        }
-        @Override
         public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
             return drawDetailView(R.string.record_field_dcterms_created, Resource.getPreferred(record.proxy.dctermsCreated, application.getLocale()), parent, inflater);
         }
@@ -144,10 +116,6 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dcType);
 		}
 		@Override
-		public String getSeeMore() {
-			return "what";
-		}
-		@Override
 		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			return drawDetailView(R.string.record_field_dc_type, Resource.getPreferred(record.proxy.dcType, application.getLocale()), parent, inflater);
 		}
@@ -156,10 +124,6 @@ public enum RecordDetails implements RecordView {
         @Override
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcFormat, record.proxy.dctermsExtent, record.proxy.dctermsMedium);
-        }
-        @Override
-        public String getSeeMore() {
-            return null;
         }
         @Override
         public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
@@ -174,10 +138,6 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dcSubject);
 		}
 		@Override
-		public String getSeeMore() {
-			return null;
-		}
-		@Override
 		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
 			return drawDetailView(R.string.record_field_dc_subject, Resource.getPreferred(record.proxy.dcSubject, application.getLocale()), parent, inflater);
 		}
@@ -186,10 +146,6 @@ public enum RecordDetails implements RecordView {
 		@Override
 		public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcIdentifier);
-		}
-		@Override
-		public String getSeeMore() {
-			return null;
 		}
 		@Override
 		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
@@ -226,10 +182,6 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dctermsIsPartOf);
         }
         @Override
-        public String getSeeMore() {
-            return null;
-        }
-        @Override
         public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
             return drawDetailView(R.string.record_field_dcterms_ispartof, Resource.getPreferred(record.proxy.dctermsIsPartOf, application.getLocale()), parent, inflater);
         }
@@ -241,10 +193,6 @@ public enum RecordDetails implements RecordView {
         @Override
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcRights);
-        }
-        @Override
-        public String getSeeMore() {
-            return null;
         }
         @Override
         public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
@@ -259,10 +207,6 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dcSource);
         }
         @Override
-        public String getSeeMore() {
-            return null;
-        }
-        @Override
         public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
             return drawDetailView(R.string.record_field_dc_source, Resource.getPreferred(record.proxy.dcSource, application.getLocale()), parent, inflater);
         }
@@ -271,10 +215,6 @@ public enum RecordDetails implements RecordView {
 		@Override
 		public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.aggregation.edmDataProvider);
-		}
-		@Override
-		public String getSeeMore() {
-			return "DATA_PROVIDER";
 		}
 		@Override
 		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
@@ -287,10 +227,6 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.aggregation.edmProvider);
 		}
 		@Override
-		public String getSeeMore() {
-			return "PROVIDER";
-		}
-		@Override
 		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
             return drawDetailView(R.string.record_field_edm_provider, Resource.getPreferred(record.aggregation.edmProvider, application.getLocale()), parent, inflater);
 		}
@@ -301,43 +237,24 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.europeanaAggregation.edmCountry);
         }
         @Override
-        public String getSeeMore() {
-            return null;
-        }
-        @Override
         public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
             return drawDetailView(R.string.record_field_edm_country, Resource.getPreferred(record.europeanaAggregation.edmCountry, application.getLocale()), parent, inflater);
         }
     };
-	
-	protected int getDetailView() {
-		return getSeeMore() != null ? R.layout.listitem_record_detail_seealso : R.layout.listitem_record_detail;
-	}
-	
+
 	protected View drawDetailView(int titleResId, String[] values, ViewGroup parent, LayoutInflater inflater) {
 		return drawDetailView(titleResId, StringUtils.join(values, ";"), parent, inflater);
 	}
 	
 	protected View drawDetailView(int titleResId, String value, ViewGroup parent, LayoutInflater inflater) {
-		View view = inflater.inflate(getDetailView(), parent, false);
+		View view = inflater.inflate(R.layout.listitem_record_detail, parent, false);
 		TextView textTitle = (TextView) view.findViewById(android.R.id.text1);
 		TextView textValue = (TextView) view.findViewById(android.R.id.text2);
 		textTitle.setText(titleResId);
 		textValue.setText(value);
 		return view;
 	}
-	
-//	protected void addSeeAlsoFields(View view, String[] values, LayoutInflater inflater) {
-//		LinearLayout holder = (LinearLayout) view.findViewById(R.id.listitem_record_detail_seealso_list);
-//		if ( (getSeeMore() != null) && (holder != null)) {
-//			for (String value: values) {
-//				TextView tv = (TextView) inflater.inflate(R.layout.listitem_record_seealso, null);
-//				tv.setText(value);
-//				holder.addView(tv);
-//			}
-//		}
-//	}
-//	
+
 	private static boolean areAllBlank(Map<?,?>... maps) {
         boolean allBlank = true;
         for (Map<?,?> map: maps) {

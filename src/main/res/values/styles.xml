@@ -84,22 +84,22 @@
 
     <style name="recordDetailTitle">
         <!-- <item name="android:textAllCaps">true</item> -->
-        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
         <item name="android:textColor">@color/emphasis</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="recordDetailContent">
-        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingLeft">20dp</item>
         <item name="android:textSize">16sp</item>
     </style>
 
     <style name="recordDetailSeeMore">
         <item name="android:paddingLeft">16dp</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:drawableLeft">@drawable/ic_action_search</item>
-        
+        <item name="android:drawableRight">@drawable/ic_action_search</item>
     </style>
     
     <style name="homeBlogSectionTitle">

@@ -4,15 +4,33 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/fragment_record_map_textview_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        style="@style/recordDetailTitle"
+        android:text="@string/record_field_place_label"
+        />
 
     <TextView
-        android:id="@+id/fragment_record_map_textview_description"
+        android:id="@+id/fragment_record_map_textview_prefLabel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    
+        android:layout_height="wrap_content"
+        style="@style/recordDetailContent"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/recordDetailTitle"
+        android:text="@string/record_field_place_longlat"
+        />
+
+    <TextView
+        android:id="@+id/fragment_record_map_textview_coordinates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/recordDetailContent"
+        />
+
     <com.google.android.gms.maps.MapView
         android:id="@+id/fragment_record_map_mapview"
         android:layout_width="match_parent"

@@ -37,7 +37,7 @@ public class RecordViewAdapter extends ArrayAdapter<RecordView> {
 	
 	@Override
 	public boolean isEnabled(int position) {
-		return getItem(position).getSeeMore() != null;
+		return false;
 	}
 	
 }
