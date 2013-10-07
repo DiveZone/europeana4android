@@ -44,8 +44,7 @@ public class RecordMapFragment extends Fragment implements TaskListener<RecordOb
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = (View) inflater.inflate(
-				R.layout.fragment_record_map, null);
+		View root = inflater.inflate(R.layout.fragment_record_map, null);
 		mMapView = (MapView) root.findViewById(R.id.fragment_record_map_mapview);
 		mMapView.onCreate(savedInstanceState);
         RecordObject record = recordController.record;
@@ -55,7 +54,12 @@ public class RecordMapFragment extends Fragment implements TaskListener<RecordOb
         text2.setText(record.place.latitude + ";"  + record.place.longitude);
 		return root;
 	}
-	
+
+    @Override
+    public void onTaskStart() {
+        // ignore
+    }
+
 	@Override
 	public void onTaskFinished(RecordObject record) {
 		if (mMapView != null) {

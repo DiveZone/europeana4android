@@ -258,6 +258,14 @@ public class SearchController {
 		this.itemSelected = itemSelected;
 	}
 
+    public boolean hasPrevious() {
+        return this.itemSelected > 0;
+    }
+
+    public boolean hasNext() {
+        return this.itemSelected < searchItems.size() -1;
+    }
+
 	public Integer size() {
 		if (searchItems != null) {
 			return Integer.valueOf(searchItems.size());

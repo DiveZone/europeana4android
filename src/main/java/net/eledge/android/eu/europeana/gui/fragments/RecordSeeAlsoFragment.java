@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import net.eledge.android.eu.europeana.R;
 
-public class RecordImagesFragment extends Fragment {
+public class RecordSeeAlsoFragment extends Fragment {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -17,7 +17,8 @@ public class RecordImagesFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = inflater.inflate(R.layout.fragment_record_images, null);
+		View root = inflater.inflate(
+				R.layout.fragment_record_seealso, null);
 		
 		
 		return root;

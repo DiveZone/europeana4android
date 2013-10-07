@@ -98,7 +98,12 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
 		super.onDestroy();
 	}
 
-	@Override
+    @Override
+    public void onTaskStart() {
+        // ignore
+    }
+
+    @Override
 	public void onTaskFinished(List<BlogArticle> articles) {
 		if (articles != null) {
 			showArticles(articles);

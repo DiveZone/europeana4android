@@ -37,7 +37,7 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = (View) inflater.inflate(R.layout.fragment_record_details, null);
+		View root = inflater.inflate(R.layout.fragment_record_details, null);
 		mListView = (ListView) root.findViewById(R.id.fragment_record_details_listview);
 		mListView.setAdapter(mRecordViewAdapter);
 		return root;
@@ -56,7 +56,12 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
 		recordController.unregister(RecordDetailsFragment.class);
 		super.onDestroy();
 	}
-	
+
+    @Override
+    public void onTaskStart() {
+        // ignore
+    }
+
 	@Override
 	public void onTaskFinished(final RecordObject record) {
 		mRecordViewAdapter.clear();

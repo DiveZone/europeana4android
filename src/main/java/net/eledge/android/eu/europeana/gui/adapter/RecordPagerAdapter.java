@@ -10,6 +10,7 @@ import net.eledge.android.eu.europeana.gui.activity.RecordActivity;
 import net.eledge.android.eu.europeana.gui.fragments.RecordDetailsFragment;
 import net.eledge.android.eu.europeana.gui.fragments.RecordImagesFragment;
 import net.eledge.android.eu.europeana.gui.fragments.RecordMapFragment;
+import net.eledge.android.eu.europeana.gui.fragments.RecordSeeAlsoFragment;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.toolkit.async.listener.TaskListener;
@@ -32,21 +33,33 @@ public class RecordPagerAdapter extends FragmentStatePagerAdapter implements Tas
 		mRecordActivity = activity;
 		RecordController._instance.registerListener(getClass(), this);
 	}
-	
-	@Override
+
+    @Override
+    public void onTaskStart() {
+        fragments.clear();
+        labels.clear();
+        mRecordActivity.updateTabs();
+        notifyDataSetChanged();
+    }
+
+    @Override
 	public void onTaskFinished(RecordObject record) {
 		if (record != null) {
 			// DETAIL INFO
-			labels.add(Integer.valueOf(R.string.record_tab_details));
+			labels.add(R.string.record_tab_details);
 			fragments.add(new RecordDetailsFragment());
 			// IMAGES
-			labels.add(Integer.valueOf(R.string.record_tab_images));
+			labels.add(R.string.record_tab_images);
 			fragments.add(new RecordImagesFragment());
+            // MAP
 			if ( (record.place.latitude != null) && (record.place.longitude != null)) {
-				labels.add(Integer.valueOf(R.string.record_tab_map));
+				labels.add(R.string.record_tab_map);
 				fragments.add(new RecordMapFragment());
 			}
-			
+            // SEE ALSO
+            labels.add(R.string.record_tab_seealso);
+            fragments.add(new RecordSeeAlsoFragment());
+
 			notifyDataSetChanged();
 			mRecordActivity.updateTabs();
 		}
@@ -64,7 +77,7 @@ public class RecordPagerAdapter extends FragmentStatePagerAdapter implements Tas
 	
 	@Override
 	public CharSequence getPageTitle(int page) {
-		return GuiUtils.getString(mContext, labels.get(page).intValue());
+		return GuiUtils.getString(mContext, labels.get(page));
 	}
 	
 }

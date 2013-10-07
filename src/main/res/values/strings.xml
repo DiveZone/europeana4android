@@ -7,7 +7,7 @@
     <string name="searchable_label">Europeana.eu</string>
     
     <!-- ABOUT -->
-    <string name="dialog_about_copyright" translatable="false">&#169; The Europeana Foundation \n www.europeana.eu \n\n &#169; eLedge / GJW Boogerd \n www.eledge.net \n \n Project site \n github.com/eledge/europeana4android</string>
+    <string name="dialog_about_copyright">&#169; The Europeana Foundation \n www.europeana.eu \n\n &#169; eLedge / GJW Boogerd \n www.eledge.net \n \n Project site \n github.com/eledge/europeana4android</string>
     
     <!-- HOME ACTIVITY -->
     <string name="fragment_home_blog_from">FROM THE EUROPEANA BLOG</string>
@@ -26,7 +26,8 @@
     <string name="record_tab_details">Details</string>
     <string name="record_tab_images">Image(s)</string>
     <string name="record_tab_map">Map</string>
-    
+    <string name="record_tab_seealso">See also</string>
+
     <string name="record_field_title">TITLE</string>
     <string name="record_field_dc_creator">CREATOR</string>
     <string name="record_field_dc_contributor">CONTRIBUTOR</string>
@@ -55,7 +56,9 @@
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="action_share">Share</string>
-    
+    <string name="action_previous">Previous item</string>
+    <string name="action_next">Next item</string>
+
     <!-- FACET TYPES -->
     <string name="facettype_type">BY MEDIA TYPE</string>
     <string name="facettype_language">BY LANGUAGE OF DESCRIPTION</string>

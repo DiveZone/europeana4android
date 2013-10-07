@@ -1,6 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" 
       xmlns:support="http://schemas.android.com/apk/res-auto">
 
+
+    <item
+        android:id="@+id/action_previous"
+        android:icon="@drawable/ic_action_previous_item"
+        support:showAsAction="ifRoom"
+        android:title="@string/action_previous"/>
+    <item
+        android:id="@+id/action_next"
+        android:icon="@drawable/ic_action_next_item"
+        support:showAsAction="always"
+        android:title="@string/action_next"/>
     <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_action_share"

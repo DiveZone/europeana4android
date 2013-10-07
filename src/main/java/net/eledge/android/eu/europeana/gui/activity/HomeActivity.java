@@ -178,7 +178,12 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 		}
 	}
 
-	@Override
+    @Override
+    public void onTaskStart() {
+        // ignore
+    }
+
+    @Override
 	public void onTaskFinished(Item[] suggestions) {
 		mSuggestionsAdaptor.clear();
 		if ((suggestions != null) && (suggestions.length > 0)) {

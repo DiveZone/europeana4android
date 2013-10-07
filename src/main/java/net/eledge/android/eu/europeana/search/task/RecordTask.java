@@ -37,6 +37,7 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
     @Override
     protected void onPreExecute() {
         startTime = new Date().getTime();
+        mActivity.runOnUiThread(new ListenerNotifier<RecordObject>(recordController.listeners.values()));
     }
 
 	@Override

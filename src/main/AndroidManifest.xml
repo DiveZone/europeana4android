@@ -95,6 +95,7 @@
             android:name="net.eledge.android.eu.europeana.gui.activity.RecordActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
+            android:noHistory="true"
             android:parentActivityName="net.eledge.android.eu.europeana.gui.activity.SearchActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
