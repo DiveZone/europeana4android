@@ -1,10 +1,15 @@
 package net.eledge.android.eu.europeana.gui.fragments;
 
+import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
@@ -15,6 +20,9 @@ import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.RecordView;
 import net.eledge.android.eu.europeana.search.model.record.enums.RecordDetails;
 import net.eledge.android.toolkit.async.listener.TaskListener;
+import net.eledge.android.toolkit.gui.GuiUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 
@@ -40,7 +48,19 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
 		View root = inflater.inflate(R.layout.fragment_record_details, null);
 		mListView = (ListView) root.findViewById(R.id.fragment_record_details_listview);
 		mListView.setAdapter(mRecordViewAdapter);
-		return root;
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                RecordView record = mRecordViewAdapter.getItem(position);
+                Activity activity = RecordDetailsFragment.this.getActivity();
+                ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboard.setPrimaryClip(ClipData.newPlainText(GuiUtils.getString(getActivity(), record.getLabel()),
+                        StringUtils.join(record.getValues(recordController.record, (EuropeanaApplication)getActivity().getApplication()), ";")));
+                GuiUtils.toast(activity, R.string.msg_copied2clipboard);
+                return true;
+            }
+        });
+        return root;
 	}
 	
 	@Override

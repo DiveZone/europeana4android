@@ -31,16 +31,24 @@ public enum RecordDetails implements RecordView {
 			View view = inflater.inflate(R.layout.listitem_record_title, parent, false);
 			
 			TextView text1 = (TextView) view.findViewById(android.R.id.text1);
-			text1.setText(R.string.record_field_title);
+			text1.setText(getLabel());
 			TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-			text2.setText(StringUtils.join(record.title, ";"));
+			text2.setText(StringUtils.join(getValues(record, application), ";"));
 			
 			TextView icon1 = (TextView) view.findViewById(android.R.id.icon1);
 			icon1.setTypeface(application.getEuropeanaFont());
 			icon1.setText(record.type.icon);
 			return view;
 		}
-	},
+        @Override
+        public int getLabel() {
+            return R.string.record_field_title;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return record.title;
+        }
+    },
     //  TODO?  addFieldMap(fieldMap, Field.DCTERMS_ALTERNATIVE, shortcut.getList("DctermsAlternative"));
 
     //    addFieldMap(fieldMap, Field.DC_DESCRIPTION,
@@ -52,20 +60,28 @@ public enum RecordDetails implements RecordView {
 		public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcDescription);
 		}
-		@Override
-		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			return drawDetailView(R.string.record_field_dc_description, Resource.getPreferred(record.proxy.dcDescription, application.getLocale()), parent, inflater);
-		}
+        @Override
+        public int getLabel() {
+            return R.string.record_field_dc_description;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.proxy.dcDescription, application.getLocale());
+        }
 	},
 	DCCREATOR {
 		@Override
 		public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcCreator);
 		}
-		@Override
-		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			return drawDetailView(R.string.record_field_dc_creator, Resource.getPreferred(record.proxy.dcCreator, application.getLocale()), parent, inflater);
-		}
+        @Override
+        public int getLabel() {
+            return R.string.record_field_dc_creator;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.proxy.dcCreator, application.getLocale());
+        }
 	},
     DCCONTRIBUTOR {
         @Override
@@ -73,8 +89,12 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dcContributor);
         }
         @Override
-        public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-            return drawDetailView(R.string.record_field_dc_contributor, Resource.getPreferred(record.proxy.dcContributor, application.getLocale()), parent, inflater);
+        public int getLabel() {
+            return R.string.record_field_dc_contributor;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.proxy.dcContributor, application.getLocale());
         }
     },
     // TODO   addFieldMap(fieldMap, Field.DC_COVERAGE, shortcut.getList("DcCoverage"));
@@ -85,8 +105,12 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dcDate);
         }
         @Override
-        public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-            return drawDetailView(R.string.record_field_dc_date, Resource.getPreferred(record.proxy.dcDate, application.getLocale()), parent, inflater);
+        public int getLabel() {
+            return R.string.record_field_dc_date;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.proxy.dcDate, application.getLocale());
         }
     },
     // TODO   addFieldMap(fieldMap, Field.DCTERMS_TEMPORAL, shortcut.getList("DctermsTemporal"));
@@ -96,8 +120,12 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dctermsIssued);
         }
         @Override
-        public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-            return drawDetailView(R.string.record_field_dcterms_issued, Resource.getPreferred(record.proxy.dctermsIssued, application.getLocale()), parent, inflater);
+        public int getLabel() {
+            return R.string.record_field_dcterms_issued;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.proxy.dctermsIssued, application.getLocale());
         }
     },
     DCTERMSCREATED {
@@ -106,8 +134,12 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dctermsCreated);
         }
         @Override
-        public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-            return drawDetailView(R.string.record_field_dcterms_created, Resource.getPreferred(record.proxy.dctermsCreated, application.getLocale()), parent, inflater);
+        public int getLabel() {
+            return R.string.record_field_dcterms_created;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.proxy.dctermsCreated, application.getLocale());
         }
     },
 	DCTYPE {
@@ -115,10 +147,14 @@ public enum RecordDetails implements RecordView {
 		public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcType);
 		}
-		@Override
-		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			return drawDetailView(R.string.record_field_dc_type, Resource.getPreferred(record.proxy.dcType, application.getLocale()), parent, inflater);
-		}
+        @Override
+        public int getLabel() {
+            return R.string.record_field_dc_type;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.proxy.dcType, application.getLocale());
+        }
 	},
     DCFORMAT {
         @Override
@@ -126,10 +162,14 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dcFormat, record.proxy.dctermsExtent, record.proxy.dctermsMedium);
         }
         @Override
-        public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+        public int getLabel() {
+            return R.string.record_field_dc_format;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
             String[] items = Resource.mergeArray(Resource.getPreferred(record.proxy.dcFormat, application.getLocale()),  Resource.getPreferred(record.proxy.dctermsExtent, application.getLocale()));
             items = Resource.mergeArray(items,  Resource.getPreferred(record.proxy.dctermsMedium, application.getLocale()));
-            return drawDetailView(R.string.record_field_dc_format, items, parent, inflater);
+            return items;
         }
     },
 	DCSUBJECT {
@@ -137,20 +177,28 @@ public enum RecordDetails implements RecordView {
 		public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcSubject);
 		}
-		@Override
-		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			return drawDetailView(R.string.record_field_dc_subject, Resource.getPreferred(record.proxy.dcSubject, application.getLocale()), parent, inflater);
-		}
+        @Override
+        public int getLabel() {
+            return R.string.record_field_dc_subject;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.proxy.dcSubject, application.getLocale());
+        }
 	},
 	DCIDENTIFIER {
 		@Override
 		public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcIdentifier);
 		}
-		@Override
-		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			return drawDetailView(R.string.record_field_dc_identifier, Resource.getPreferred(record.proxy.dcIdentifier, application.getLocale()), parent, inflater);
-		}
+        @Override
+        public int getLabel() {
+            return R.string.record_field_dc_identifier;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.proxy.dcIdentifier, application.getLocale());
+        }
 	},
     //  TODO  addFieldMap(fieldMap, Field.DC_RELATION,
     //                shortcut.getList("DcRelation"),
@@ -182,8 +230,12 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dctermsIsPartOf);
         }
         @Override
-        public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-            return drawDetailView(R.string.record_field_dcterms_ispartof, Resource.getPreferred(record.proxy.dctermsIsPartOf, application.getLocale()), parent, inflater);
+        public int getLabel() {
+            return R.string.record_field_dcterms_ispartof;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.proxy.dctermsIsPartOf, application.getLocale());
         }
     },
     //  TODO  addFieldMap(fieldMap, Field.DCTERMS_HASPART, shortcut.getList("DctermsHasPart"));
@@ -195,8 +247,12 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dcRights);
         }
         @Override
-        public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-            return drawDetailView(R.string.record_field_dc_rights, Resource.getPreferred(record.proxy.dcRights, application.getLocale()), parent, inflater);
+        public int getLabel() {
+            return R.string.record_field_dc_rights;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.proxy.dcRights, application.getLocale());
         }
     },
     //  TODO  addFieldMap(fieldMap, Field.DCTERMS_PROVENANCE, shortcut.getList("DctermsProvenance"));
@@ -207,8 +263,12 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.proxy.dcSource);
         }
         @Override
-        public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-            return drawDetailView(R.string.record_field_dc_source, Resource.getPreferred(record.proxy.dcSource, application.getLocale()), parent, inflater);
+        public int getLabel() {
+            return R.string.record_field_dc_source;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.proxy.dcSource, application.getLocale());
         }
     },
 	EDMDATAPROVIDER {
@@ -216,20 +276,28 @@ public enum RecordDetails implements RecordView {
 		public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.aggregation.edmDataProvider);
 		}
-		@Override
-		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-            return drawDetailView(R.string.record_field_edm_dataprovider, Resource.getPreferred(record.aggregation.edmDataProvider, application.getLocale()), parent, inflater);
-		}
+        @Override
+        public int getLabel() {
+            return R.string.record_field_edm_dataprovider;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.aggregation.edmDataProvider, application.getLocale());
+        }
 	},
 	EDMPROVIDER {
 		@Override
 		public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.aggregation.edmProvider);
 		}
-		@Override
-		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-            return drawDetailView(R.string.record_field_edm_provider, Resource.getPreferred(record.aggregation.edmProvider, application.getLocale()), parent, inflater);
-		}
+        @Override
+        public int getLabel() {
+            return R.string.record_field_edm_provider;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.aggregation.edmProvider, application.getLocale());
+        }
 	},
     EDMCOUNTRY {
         @Override
@@ -237,10 +305,19 @@ public enum RecordDetails implements RecordView {
             return !areAllBlank(record.europeanaAggregation.edmCountry);
         }
         @Override
-        public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-            return drawDetailView(R.string.record_field_edm_country, Resource.getPreferred(record.europeanaAggregation.edmCountry, application.getLocale()), parent, inflater);
+        public int getLabel() {
+            return R.string.record_field_edm_country;
+        }
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return Resource.getPreferred(record.europeanaAggregation.edmCountry, application.getLocale());
         }
     };
+
+    @Override
+    public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+        return drawDetailView(getLabel(), getValues(record, application), parent, inflater);
+    }
 
 	protected View drawDetailView(int titleResId, String[] values, ViewGroup parent, LayoutInflater inflater) {
 		return drawDetailView(titleResId, StringUtils.join(values, ";"), parent, inflater);

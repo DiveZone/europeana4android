@@ -11,5 +11,7 @@ public interface RecordView {
 
 	boolean isVisible(RecordObject record);
 	View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application);
+    int getLabel();
+    String[] getValues(RecordObject record, EuropeanaApplication application);
 	
 }

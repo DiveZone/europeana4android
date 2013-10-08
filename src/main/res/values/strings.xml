@@ -27,6 +27,7 @@
     <string name="record_tab_images">Image(s)</string>
     <string name="record_tab_map">Map</string>
     <string name="record_tab_seealso">See also</string>
+    <string name="msg_copied2clipboard">Value copied to clipboard&#8230;</string>
 
     <string name="record_field_title">TITLE</string>
     <string name="record_field_dc_creator">CREATOR</string>

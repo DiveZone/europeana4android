@@ -25,7 +25,8 @@
     <string name="record_tab_details">Details</string>
     <string name="record_tab_images">Afbeelding(en)</string>
     <string name="record_tab_map">Kaart</string>
-    
+    <string name="msg_copied2clipboard">Waarde gekopieerd naar clipboard&#8230;</string>
+
     <string name="record_field_title">TITEL</string>
     <string name="record_field_dc_creator">MAKER</string>
     <string name="record_field_dc_contributor">AANBIEDER</string>
