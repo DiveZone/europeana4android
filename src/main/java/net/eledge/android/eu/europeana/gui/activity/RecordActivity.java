@@ -217,6 +217,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener {
                 try {
                     Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager()
                             .getPackageInfo(getPackageName(), 0));
+                    dialog.setCanceledOnTouchOutside(true);
                     dialog.show();
                 } catch (NameNotFoundException e) {
                     // ignore

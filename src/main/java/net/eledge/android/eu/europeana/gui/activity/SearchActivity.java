@@ -195,6 +195,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 			try {
 				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager()
 						.getPackageInfo(getPackageName(), 0));
+                dialog.setCanceledOnTouchOutside(true);
 				dialog.show();
 			} catch (NameNotFoundException e) {
                 // ignore
