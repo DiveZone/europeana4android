@@ -48,6 +48,7 @@
     <string name="record_field_edm_dataprovider">DATA PROVIDER</string>
     <string name="record_field_edm_provider">PROVIDER</string>
     <string name="record_field_edm_country">PROVIDING COUNTRY</string>
+    <string name="record_field_edm_rights">COPYRIGHT</string>
 
     <string name="record_field_place_label">LOCATION NAME</string>
     <string name="record_field_place_longlat">COORDINATES</string>

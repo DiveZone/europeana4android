@@ -31,9 +31,12 @@ public class RecordObject extends Resource {
     }
 
     public static RecordObject normalize(RecordObject object) {
-        Proxy.normalize(object);
-        Aggregation.normalize(object);
-        Place.normalize(object);
+        if (object != null) {
+            Proxy.normalize(object);
+            Aggregation.normalize(object);
+            Place.normalize(object);
+            EuropeanaAggregation.normalize(object);
+        }
         return object;
     }
 

@@ -1,6 +1,8 @@
 package net.eledge.android.eu.europeana.search.model.record;
 
+import net.eledge.android.eu.europeana.search.model.enums.Right;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.Resource;
+import net.eledge.android.toolkit.StringArrayUtils;
 
 import java.util.Map;
 
@@ -20,6 +22,7 @@ public class Aggregation extends Resource {
 
     public Resource[] webResources;
 
+    public transient Right right;
 
     public static void normalize(RecordObject object) {
         Aggregation merged = new Aggregation();
@@ -35,6 +38,10 @@ public class Aggregation extends Resource {
                     merged.webResources = source.webResources;
                 } else if (source.webResources != null) {
                     merged.webResources = mergeArray(merged.webResources, source.webResources);
+                }
+                String[] rights = Resource.getPreferred(source.edmRights, "def");
+                if (StringArrayUtils.isNotBlank(rights)) {
+                    merged.right = Right.safeValueByUrl(rights[0]);
                 }
             }
         }

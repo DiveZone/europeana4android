@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,8 +63,13 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
         });
         return root;
 	}
-	
-	@Override
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
 	public void onResume() {
 		if (recordController.record != null) {
 			onTaskFinished(recordController.record);
