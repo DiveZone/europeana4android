@@ -7,5 +7,7 @@
 		
     <item name="search_results_columns" type="integer">5</item>
     <item name="search_result_pagesize" type="integer">25</item>
-    
+
+    <item name="record_tablet_landscape" type="bool">true</item>
+
 </resources>

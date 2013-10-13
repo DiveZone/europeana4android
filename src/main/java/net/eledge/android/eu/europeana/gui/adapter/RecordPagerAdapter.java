@@ -45,9 +45,11 @@ public class RecordPagerAdapter extends FragmentStatePagerAdapter implements Tas
     @Override
 	public void onTaskFinished(RecordObject record) {
 		if (record != null) {
-			// DETAIL INFO
-			labels.add(R.string.record_tab_details);
-			fragments.add(new RecordDetailsFragment());
+            if (!mRecordActivity.mTwoColumns) {
+                // DETAIL INFO
+                labels.add(R.string.record_tab_details);
+                fragments.add(new RecordDetailsFragment());
+            }
 			// IMAGES
 			labels.add(R.string.record_tab_images);
 			fragments.add(new RecordImagesFragment());

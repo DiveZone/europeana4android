@@ -14,6 +14,7 @@ import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
@@ -37,6 +38,7 @@ import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.RecordPagerAdapter;
 import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
+import net.eledge.android.eu.europeana.gui.fragments.RecordDetailsFragment;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.toolkit.gui.GuiUtils;
@@ -60,10 +62,14 @@ public class RecordActivity extends ActionBarActivity implements TabListener {
     private ListView mResultsList;
     private ResultAdapter mResultAdaptor;
 
+    private RecordDetailsFragment mDetailsFragment;
+    public boolean mTwoColumns = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+        mTwoColumns = getResources().getBoolean(R.bool.home_support_landscape);
 
         mResultsList = (ListView) findViewById(R.id.drawer_items);
         mResultAdaptor = new ResultAdapter((EuropeanaApplication) getApplication(), this,
@@ -91,6 +97,17 @@ public class RecordActivity extends ActionBarActivity implements TabListener {
             }
         });
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        if (mTwoColumns) {
+            // Record details for tablets.
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            if (mDetailsFragment == null) {
+                mDetailsFragment = new RecordDetailsFragment();
+            }
+            fragmentTransaction.replace(R.id.activity_record_fragment_details, mDetailsFragment);
+            fragmentTransaction.commit();
+        }
 
         // Drawer layout
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -256,6 +273,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        mTwoColumns = getResources().getBoolean(R.bool.home_support_landscape);
         if (mDrawerLayout != null) {
             mDrawerToggle.syncState();
         }
