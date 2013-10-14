@@ -23,7 +23,7 @@
         android:layout_below="@id/activity_home_edittext_query"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/top_shadow"
+        android:background="@drawable/bordershadow_top"
         />
 
     <GridView 

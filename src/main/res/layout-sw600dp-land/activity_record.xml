@@ -11,7 +11,7 @@
         android:layout_width="@dimen/drawer_items_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@drawable/right_shadow"
+        android:background="@drawable/bordershadow_right"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp" />
@@ -30,7 +30,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_toRightOf="@id/activity_record_fragment_details"
-        android:background="@drawable/left_shadow"
+        android:background="@drawable/bordershadow_left"
         >
 
         <android.support.v4.view.PagerTitleStrip

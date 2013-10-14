@@ -41,7 +41,7 @@
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:paddingLeft="4dp"
-        android:background="@drawable/left_shadow"
+        android:background="@drawable/bordershadow_left"
         />
 
 </LinearLayout>
