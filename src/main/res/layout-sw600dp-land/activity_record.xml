@@ -11,7 +11,7 @@
         android:layout_width="@dimen/drawer_items_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@drawable/background_border"
+        android:background="@drawable/right_shadow"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp" />
@@ -29,6 +29,18 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_toRightOf="@id/activity_record_fragment_details" />
+        android:layout_toRightOf="@id/activity_record_fragment_details">
 
+        <android.support.v4.view.PagerTitleStrip
+            android:id="@+id/pager_title_strip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/emphasis"
+            android:textColor="@android:color/white"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp" />
+
+    </android.support.v4.view.ViewPager>
+leerda
 </LinearLayout>

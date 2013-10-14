@@ -90,13 +90,6 @@ public class RecordActivity extends ActionBarActivity implements TabListener {
         mRecordPagerAdapter = new RecordPagerAdapter(this, getSupportFragmentManager(), getApplicationContext());
         mViewPager = (ViewPager) findViewById(R.id.activity_record_pager);
         mViewPager.setAdapter(mRecordPagerAdapter);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                getSupportActionBar().setSelectedNavigationItem(position);
-            }
-        });
-        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         if (mTwoColumns) {
             // Record details for tablets.
@@ -107,6 +100,14 @@ public class RecordActivity extends ActionBarActivity implements TabListener {
             }
             fragmentTransaction.replace(R.id.activity_record_fragment_details, mDetailsFragment);
             fragmentTransaction.commit();
+        } else {
+            getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                @Override
+                public void onPageSelected(int position) {
+                    getSupportActionBar().setSelectedNavigationItem(position);
+                }
+            });
         }
 
         // Drawer layout

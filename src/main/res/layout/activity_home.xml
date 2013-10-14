@@ -17,7 +17,15 @@
         >
         <requestFocus />
     </EditText>
-    
+
+    <FrameLayout
+        android:id="@+id/activity_home_fragment_blog"
+        android:layout_below="@id/activity_home_edittext_query"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/top_shadow"
+        />
+
     <GridView 
         android:id="@+id/activity_home_gridview_suggestions"
         android:layout_below="@id/activity_home_edittext_query"
@@ -26,13 +34,7 @@
         android:layout_height="fill_parent"
         android:requiresFadingEdge="vertical"
         android:numColumns="@integer/home_suggestions_columns"
-        />
-    
-    <FrameLayout
-        android:id="@+id/activity_home_fragment_blog"
-        android:layout_below="@id/activity_home_edittext_query"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:background="@color/background"
         />
 
 </RelativeLayout>

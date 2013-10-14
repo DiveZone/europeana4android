@@ -9,7 +9,7 @@
         android:id="@+id/drawer_facets"
         android:layout_width="@dimen/drawer_facets_width"
         android:layout_height="match_parent"
-        android:background="@drawable/background_border"
+        android:background="@drawable/right_shadow"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp" />
