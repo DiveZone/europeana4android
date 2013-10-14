@@ -38,7 +38,6 @@ import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.RecordPagerAdapter;
 import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
-import net.eledge.android.eu.europeana.gui.dialog.LoadingDialog;
 import net.eledge.android.eu.europeana.gui.fragments.RecordDetailsFragment;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
@@ -66,7 +65,6 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     private ResultAdapter mResultAdaptor;
 
     private RecordDetailsFragment mDetailsFragment;
-    private LoadingDialog mLoadingDialog;
     public boolean mTwoColumns = false;
 
     @Override
@@ -222,15 +220,19 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
 
     @Override
     public void onTaskStart() {
-        mLoadingDialog = new LoadingDialog(this);
-        mLoadingDialog.setCancelable(false);
-        mLoadingDialog.show();
+        switchViews(true);
     }
 
     @Override
     public void onTaskFinished(RecordObject result) {
-        if (mLoadingDialog != null) {
-            mLoadingDialog.dismiss();
+        switchViews(false);
+    }
+
+    private void switchViews(boolean showLoading) {
+        findViewById(R.id.include_record_loading).setVisibility(showLoading?View.VISIBLE:View.GONE);
+        findViewById(R.id.activity_record_pager).setVisibility(!showLoading?View.VISIBLE:View.GONE);
+        if (mTwoColumns) {
+            findViewById(R.id.activity_record_fragment_details).setVisibility(!showLoading?View.VISIBLE:View.GONE);
         }
     }
 
@@ -300,12 +302,14 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     }
 
     public void updateTabs() {
-        getSupportActionBar().removeAllTabs();
-        if (mRecordPagerAdapter.getCount() > 0) {
-            for (int i = 0; i < mRecordPagerAdapter.getCount(); i++) {
-                getSupportActionBar().addTab(
-                        getSupportActionBar().newTab().setText(mRecordPagerAdapter.labels.get(i).intValue())
-                                .setTabListener(RecordActivity.this));
+        if (!mTwoColumns) {
+            getSupportActionBar().removeAllTabs();
+            if (mRecordPagerAdapter.getCount() > 0) {
+                for (int i = 0; i < mRecordPagerAdapter.getCount(); i++) {
+                    getSupportActionBar().addTab(
+                            getSupportActionBar().newTab().setText(mRecordPagerAdapter.labels.get(i).intValue())
+                                    .setTabListener(RecordActivity.this));
+                }
             }
         }
     }

@@ -28,6 +28,7 @@ public class Resource {
         return merged;
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T[] mergeArray(T[] array1, T[] array2) {
         return (T[]) ArrayUtils.addAll(array1, array2);
     }

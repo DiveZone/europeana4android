@@ -42,4 +42,10 @@
 
     </android.support.v4.view.ViewPager>
 
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        layout="@layout/include_record_loading"
+        />
+
 </LinearLayout>

@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:text="TODO: SEE ALSO..."
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        />
+
+</LinearLayout>
+
+<!--
 <ListView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_record_seealso_listview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:choiceMode="none"
-    android:clickable="false" />
+    android:clickable="false" />-->
