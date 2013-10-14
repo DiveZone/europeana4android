@@ -29,17 +29,16 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3"
-        android:layout_toRightOf="@id/activity_record_fragment_details">
+        android:layout_toRightOf="@id/activity_record_fragment_details"
+        android:background="@drawable/left_shadow"
+        >
 
         <android.support.v4.view.PagerTitleStrip
             android:id="@+id/pager_title_strip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:background="@color/emphasis"
-            android:textColor="@android:color/white"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp" />
+            style="@style/pagerTitleStrip"/>
 
     </android.support.v4.view.ViewPager>
 

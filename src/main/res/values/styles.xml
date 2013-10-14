@@ -126,4 +126,11 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="pagerTitleStrip">
+        <item name="android:textColor">@color/background_drawer</item>
+        <item name="android:background">@color/emphasis_transparant</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
