@@ -36,15 +36,14 @@ public class RecordPagerAdapter extends FragmentStatePagerAdapter implements Tas
 
     @Override
     public void onTaskStart() {
-        fragments.clear();
-        labels.clear();
-        mRecordActivity.updateTabs();
-        notifyDataSetChanged();
+        // left empty
     }
 
     @Override
 	public void onTaskFinished(RecordObject record) {
 		if (record != null) {
+            fragments.clear();
+            labels.clear();
             if (!mRecordActivity.mTwoColumns) {
                 // DETAIL INFO
                 labels.add(R.string.record_tab_details);

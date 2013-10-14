@@ -20,6 +20,7 @@
     <string name="drawer_facets_section_refine_loading">LADEN FILTER OPTIES&#8230;</string>
     <string name="msg_searching">OPHALEN RESULTATEN&#8230;</string>
     <string name="msg_searchresults">TOONT %1$d VAN %2$d RESULTATEN</string>
+    <string name="msg_loading">OPHALEN RECORD&#8230;</string>
 
     <!-- RECORD ACTIVITY -->
     <string name="record_tab_details">Details</string>

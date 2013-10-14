@@ -38,16 +38,19 @@ import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.RecordPagerAdapter;
 import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
 import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
+import net.eledge.android.eu.europeana.gui.dialog.LoadingDialog;
 import net.eledge.android.eu.europeana.gui.fragments.RecordDetailsFragment;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
+import net.eledge.android.eu.europeana.search.model.record.RecordObject;
+import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
 
 import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 
-public class RecordActivity extends ActionBarActivity implements TabListener {
+public class RecordActivity extends ActionBarActivity implements TabListener, TaskListener<RecordObject> {
 
     public static final String RECORD_ID = "RECORDID";
     // Controller
@@ -63,6 +66,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener {
     private ResultAdapter mResultAdaptor;
 
     private RecordDetailsFragment mDetailsFragment;
+    private LoadingDialog mLoadingDialog;
     public boolean mTwoColumns = false;
 
     @Override
@@ -70,6 +74,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
         mTwoColumns = getResources().getBoolean(R.bool.home_support_landscape);
+        recordController.registerListener(RecordActivity.class, this);
 
         mResultsList = (ListView) findViewById(R.id.drawer_items);
         mResultAdaptor = new ResultAdapter((EuropeanaApplication) getApplication(), this,
@@ -213,6 +218,20 @@ public class RecordActivity extends ActionBarActivity implements TabListener {
     protected void onStop() {
         super.onStop();
         EasyTracker.getInstance(this).activityStop(this);
+    }
+
+    @Override
+    public void onTaskStart() {
+        mLoadingDialog = new LoadingDialog(this);
+        mLoadingDialog.setCancelable(false);
+        mLoadingDialog.show();
+    }
+
+    @Override
+    public void onTaskFinished(RecordObject result) {
+        if (mLoadingDialog != null) {
+            mLoadingDialog.dismiss();
+        }
     }
 
     @Override
