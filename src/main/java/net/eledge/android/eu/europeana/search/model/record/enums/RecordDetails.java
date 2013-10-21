@@ -21,29 +21,32 @@ import java.util.Map;
 public enum RecordDetails implements RecordView {
 
 
-	TITLE {
-		@Override
-		public boolean isVisible(RecordObject record) {
-			return true;
-		}
-		@Override
-		public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
-			View view = inflater.inflate(R.layout.listitem_record_title, parent, false);
-			
-			TextView text1 = (TextView) view.findViewById(android.R.id.text1);
-			text1.setText(getLabel());
-			TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-			text2.setText(StringUtils.join(getValues(record, application), ";"));
-			
-			TextView icon1 = (TextView) view.findViewById(android.R.id.icon1);
-			icon1.setTypeface(application.getEuropeanaFont());
-			icon1.setText(record.type.icon);
-			return view;
-		}
+    TITLE {
+        @Override
+        public boolean isVisible(RecordObject record) {
+            return true;
+        }
+
+        @Override
+        public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+            View view = inflater.inflate(R.layout.listitem_record_title, parent, false);
+
+            TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+            text1.setText(getLabel());
+            TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+            text2.setText(cleanCombineResults(getValues(record, application)));
+
+            TextView icon1 = (TextView) view.findViewById(android.R.id.icon1);
+            icon1.setTypeface(application.getEuropeanaFont());
+            icon1.setText(record.type.icon);
+            return view;
+        }
+
         @Override
         public int getLabel() {
             return R.string.record_field_title;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return record.title;
@@ -55,43 +58,49 @@ public enum RecordDetails implements RecordView {
     //                shortcut.getList("DcDescription"),
     //       TODO       map(Field.DCTERMS_TABLEOFCONTENTS, shortcut.getList("DctermsTableOfContents"))
     //            );
-	DCDESCRIPTION {
-		@Override
-		public boolean isVisible(RecordObject record) {
+    DCDESCRIPTION {
+        @Override
+        public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcDescription);
-		}
+        }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dc_description;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.proxy.dcDescription, application.getLocale());
         }
-	},
-	DCCREATOR {
-		@Override
-		public boolean isVisible(RecordObject record) {
+    },
+    DCCREATOR {
+        @Override
+        public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcCreator);
-		}
+        }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dc_creator;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.proxy.dcCreator, application.getLocale());
         }
-	},
+    },
     DCCONTRIBUTOR {
         @Override
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcContributor);
         }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dc_contributor;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.proxy.dcContributor, application.getLocale());
@@ -104,10 +113,12 @@ public enum RecordDetails implements RecordView {
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcDate);
         }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dc_date;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.proxy.dcDate, application.getLocale());
@@ -119,10 +130,12 @@ public enum RecordDetails implements RecordView {
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dctermsIssued);
         }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dcterms_issued;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.proxy.dctermsIssued, application.getLocale());
@@ -133,73 +146,83 @@ public enum RecordDetails implements RecordView {
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dctermsCreated);
         }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dcterms_created;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.proxy.dctermsCreated, application.getLocale());
         }
     },
-	DCTYPE {
-		@Override
-		public boolean isVisible(RecordObject record) {
+    DCTYPE {
+        @Override
+        public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcType);
-		}
+        }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dc_type;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.proxy.dcType, application.getLocale());
         }
-	},
+    },
     DCFORMAT {
         @Override
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcFormat, record.proxy.dctermsExtent, record.proxy.dctermsMedium);
         }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dc_format;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
-            String[] items = Resource.mergeArray(Resource.getPreferred(record.proxy.dcFormat, application.getLocale()),  Resource.getPreferred(record.proxy.dctermsExtent, application.getLocale()));
-            items = Resource.mergeArray(items,  Resource.getPreferred(record.proxy.dctermsMedium, application.getLocale()));
+            String[] items = Resource.mergeArray(Resource.getPreferred(record.proxy.dcFormat, application.getLocale()), Resource.getPreferred(record.proxy.dctermsExtent, application.getLocale()));
+            items = Resource.mergeArray(items, Resource.getPreferred(record.proxy.dctermsMedium, application.getLocale()));
             return items;
         }
     },
-	DCSUBJECT {
-		@Override
-		public boolean isVisible(RecordObject record) {
+    DCSUBJECT {
+        @Override
+        public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcSubject);
-		}
+        }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dc_subject;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.proxy.dcSubject, application.getLocale());
         }
-	},
-	DCIDENTIFIER {
-		@Override
-		public boolean isVisible(RecordObject record) {
+    },
+    DCIDENTIFIER {
+        @Override
+        public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcIdentifier);
-		}
+        }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dc_identifier;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.proxy.dcIdentifier, application.getLocale());
         }
-	},
+    },
     //  TODO  addFieldMap(fieldMap, Field.DC_RELATION,
     //                shortcut.getList("DcRelation"),
     //    map(Field.DCTERMS_REFERENCES, shortcut.getList("DctermsReferences")),
@@ -229,10 +252,12 @@ public enum RecordDetails implements RecordView {
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dctermsIsPartOf);
         }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dcterms_ispartof;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.proxy.dctermsIsPartOf, application.getLocale());
@@ -246,10 +271,12 @@ public enum RecordDetails implements RecordView {
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcRights);
         }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dc_rights;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.proxy.dcRights, application.getLocale());
@@ -262,52 +289,60 @@ public enum RecordDetails implements RecordView {
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.proxy.dcSource);
         }
+
         @Override
         public int getLabel() {
             return R.string.record_field_dc_source;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.proxy.dcSource, application.getLocale());
         }
     },
-	EDMDATAPROVIDER {
-		@Override
-		public boolean isVisible(RecordObject record) {
+    EDMDATAPROVIDER {
+        @Override
+        public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.aggregation.edmDataProvider);
-		}
+        }
+
         @Override
         public int getLabel() {
             return R.string.record_field_edm_dataprovider;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.aggregation.edmDataProvider, application.getLocale());
         }
-	},
-	EDMPROVIDER {
-		@Override
-		public boolean isVisible(RecordObject record) {
+    },
+    EDMPROVIDER {
+        @Override
+        public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.aggregation.edmProvider);
-		}
+        }
+
         @Override
         public int getLabel() {
             return R.string.record_field_edm_provider;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.aggregation.edmProvider, application.getLocale());
         }
-	},
+    },
     EDMCOUNTRY {
         @Override
         public boolean isVisible(RecordObject record) {
             return !areAllBlank(record.europeanaAggregation.edmCountry);
         }
+
         @Override
         public int getLabel() {
             return R.string.record_field_edm_country;
         }
+
         @Override
         public String[] getValues(RecordObject record, EuropeanaApplication application) {
             return Resource.getPreferred(record.europeanaAggregation.edmCountry, application.getLocale());
@@ -319,37 +354,48 @@ public enum RecordDetails implements RecordView {
         return drawDetailView(getLabel(), getValues(record, application), parent, inflater);
     }
 
-	protected View drawDetailView(int titleResId, String[] values, ViewGroup parent, LayoutInflater inflater) {
-		return drawDetailView(titleResId, StringUtils.join(values, ";"), parent, inflater);
-	}
-	
-	protected View drawDetailView(int titleResId, String value, ViewGroup parent, LayoutInflater inflater) {
-		View view = inflater.inflate(R.layout.listitem_record_detail, parent, false);
-		TextView textTitle = (TextView) view.findViewById(android.R.id.text1);
-		TextView textValue = (TextView) view.findViewById(android.R.id.text2);
-		textTitle.setText(titleResId);
-		textValue.setText(value);
-		return view;
-	}
+    protected View drawDetailView(int titleResId, String[] values, ViewGroup parent, LayoutInflater inflater) {
+        return drawDetailView(titleResId, cleanCombineResults(values), parent, inflater);
+    }
 
-	private static boolean areAllBlank(Map<?,?>... maps) {
+    protected View drawDetailView(int titleResId, String value, ViewGroup parent, LayoutInflater inflater) {
+        View view = inflater.inflate(R.layout.listitem_record_detail, parent, false);
+        TextView textTitle = (TextView) view.findViewById(android.R.id.text1);
+        TextView textValue = (TextView) view.findViewById(android.R.id.text2);
+        textTitle.setText(titleResId);
+        textValue.setText(value);
+        return view;
+    }
+
+    private static boolean areAllBlank(Map<?, ?>... maps) {
         boolean allBlank = true;
-        for (Map<?,?> map: maps) {
+        for (Map<?, ?> map : maps) {
             allBlank &= CollectionUtils.isEmpty(map);
         }
         return allBlank;
     }
 
+    private static String cleanCombineResults(String[] array) {
+        List<String> result = new ArrayList<String>();
+        for (String s : array) {
+            if (StringUtils.isNotBlank(s) && !StringUtils.startsWithIgnoreCase(s, "http://")
+                    && !StringUtils.startsWithIgnoreCase(s, "https://")) {
+                result.add(StringUtils.trim(s));
+            }
+        }
+        return StringUtils.join(result, "; ");
+    }
+
     public static List<RecordDetails> getVisibles(RecordObject record) {
-		List<RecordDetails> list = new ArrayList<RecordDetails>();
-		if (record != null) {
-			for (RecordDetails detail: RecordDetails.values()) {
-				if (detail.isVisible(record)) {
-					list.add(detail);
-				}
-			}
-		}
-		return list;
-	}
-	
+        List<RecordDetails> list = new ArrayList<RecordDetails>();
+        if (record != null) {
+            for (RecordDetails detail : RecordDetails.values()) {
+                if (detail.isVisible(record)) {
+                    list.add(detail);
+                }
+            }
+        }
+        return list;
+    }
+
 }
