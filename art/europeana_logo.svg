@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="drawing.png"
+   sodipodi:docname="europeana_logo.svg"
    inkscape:export-filename="/home/europeana/drawing.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="375"
-     inkscape:cy="520"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="190.50247"
+     inkscape:cy="277.10207"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -55,16 +55,25 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-540.36218)">
+    <rect
+       style="fill:#31b6e7;fill-opacity:1;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3752"
+       width="485.78235"
+       height="485.78238"
+       x="14.849242"
+       y="550.85822"
+       rx="25"
+       ry="25" />
     <text
        xml:space="preserve"
-       style="font-size:499.17929077px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:icomoon;-inkscape-font-specification:icomoon"
-       x="47.201649"
-       y="1015.6308"
+       style="font-size:517.89276123px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#0000fa;fill-opacity:0.8310502;stroke:none;font-family:icomoon;-inkscape-font-specification:icomoon"
+       x="40.46727"
+       y="1016.3995"
        id="text2985"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan2987"
-         x="47.201649"
-         y="1015.6308">a</tspan></text>
+         x="40.46727"
+         y="1016.3995">a</tspan></text>
   </g>
 </svg>
