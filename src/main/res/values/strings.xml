@@ -8,7 +8,10 @@
     
     <!-- ABOUT -->
     <string name="dialog_about_copyright">&#169; The Europeana Foundation \n www.europeana.eu \n\n &#169; eLedge / GJW Boogerd \n www.eledge.net \n \n Project site \n github.com/eledge/europeana4android</string>
-    
+
+    <!-- PREFERENCES -->
+    <string name="pref_locale">Locale</string>
+
     <!-- HOME ACTIVITY -->
     <string name="fragment_home_blog_from">FROM THE EUROPEANA BLOG</string>
     <string name="fragment_home_blog_posted">Posted by %s</string>
