@@ -16,7 +16,13 @@
         android:id="@+id/action_share"
         android:icon="@drawable/ic_action_share"
         support:showAsAction="ifRoom"
+
         android:title="@string/action_share"/>
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_action_search"
+        support:showAsAction="ifRoom"
+        android:title="@string/action_search"/>
      <item
         android:id="@+id/action_about"
         android:orderInCategory="200"

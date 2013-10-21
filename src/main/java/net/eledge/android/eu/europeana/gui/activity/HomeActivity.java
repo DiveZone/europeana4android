@@ -175,7 +175,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 			} else {
 				fragmentTransaction.show(mBlogFragment);
 			}
-			fragmentTransaction.commit();
+			fragmentTransaction.commitAllowingStateLoss();
 		}
 	}
 

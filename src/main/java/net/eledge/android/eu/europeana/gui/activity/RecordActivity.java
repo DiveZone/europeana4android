@@ -265,6 +265,9 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
             case R.id.action_share:
                 startActivity(createShareIntent());
                 break;
+            case R.id.action_search:
+                GuiUtils.startTopActivity(this, HomeActivity.class);
+                break;
             case android.R.id.home:
                 if (!searchController.hasResults()) {
                     GuiUtils.startTopActivity(this, HomeActivity.class);

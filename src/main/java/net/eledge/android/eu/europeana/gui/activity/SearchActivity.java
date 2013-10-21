@@ -3,7 +3,6 @@ package net.eledge.android.eu.europeana.gui.activity;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
@@ -20,10 +19,8 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -167,11 +164,6 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.search, menu);
-		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-		SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
 		return true;
 	}
 
@@ -204,6 +196,9 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		case R.id.action_share:
 			startActivity(createShareIntent());
 			break;
+        case R.id.action_search:
+            GuiUtils.startTopActivity(this, HomeActivity.class);
+            break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

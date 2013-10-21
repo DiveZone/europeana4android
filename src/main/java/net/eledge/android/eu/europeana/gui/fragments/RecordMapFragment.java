@@ -65,8 +65,10 @@ public class RecordMapFragment extends Fragment implements TaskListener<RecordOb
 		if (mMapView != null) {
 			if ( (record.place.latitude != null) && (record.place.longitude != null)) {
 				GoogleMap map = mMapView.getMap();
-				LatLng pos = new LatLng(record.place.latitude, record.place.longitude);
-				map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 12));
+                if (map != null) {
+                    LatLng pos = new LatLng(record.place.latitude, record.place.longitude);
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 12));
+                }
 			}
 		}
 	}

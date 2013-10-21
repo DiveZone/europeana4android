@@ -56,11 +56,6 @@
             android:launchMode="singleInstance"
             android:parentActivityName="net.eledge.android.eu.europeana.gui.activity.HomeActivity" >
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -83,10 +78,6 @@
                 <data android:mimeType="application/vnd.net.eledge.android.eu.europeana.search" />
             </intent-filter>
             
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable"
-                android:value="true" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.eledge.android.eu.europeana.gui.activity.HomeActivity" />
@@ -125,15 +116,6 @@
                 android:value="net.eledge.android.eu.europeana.gui.activity.SearchActivity" />
         </activity>
 
-        <meta-data
-            android:name="android.app.default_searchable"
-            android:value="net.eledge.android.eu.europeana.gui.activity.SearchActivity" />
-
-        <provider
-            android:name="net.eledge.android.eu.europeana.provider.SuggestionProvider"
-            android:authorities="net.eledge.android.eu.europeana.provider.SuggestionProvider"
-            android:exported="false"
-            android:syncable="false" />
     </application>
 
 </manifest>
