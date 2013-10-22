@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="512"
@@ -19,7 +20,49 @@
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
-     id="defs4" />
+     id="defs4">
+    <linearGradient
+       id="linearGradient3761">
+      <stop
+         style="stop-color:#31b6e7;stop-opacity:1;"
+         offset="0"
+         id="stop3763" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop3765" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3753">
+      <stop
+         style="stop-color:#0048ff;stop-opacity:1;"
+         offset="0"
+         id="stop3755" />
+      <stop
+         style="stop-color:#4d7ecf;stop-opacity:1;"
+         offset="1"
+         id="stop3757" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3753"
+       id="linearGradient3759"
+       x1="271.52899"
+       y1="1038.4083"
+       x2="267.28635"
+       y2="549.79755"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3761"
+       id="linearGradient3767"
+       x1="259.18839"
+       y1="1103.3741"
+       x2="258.41382"
+       y2="551.12372"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0017609,0,0,1.0017609,-0.10153629,-1.8253588)" />
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -28,7 +71,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="190.50247"
+     inkscape:cx="66.05168"
      inkscape:cy="277.10207"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -56,7 +99,7 @@
      id="layer1"
      transform="translate(0,-540.36218)">
     <rect
-       style="fill:#31b6e7;fill-opacity:1;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:url(#linearGradient3759);fill-opacity:1;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect3752"
        width="485.78235"
        height="485.78238"
@@ -66,14 +109,15 @@
        ry="25" />
     <text
        xml:space="preserve"
-       style="font-size:517.89276123px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#0000fa;fill-opacity:0.8310502;stroke:none;font-family:icomoon;-inkscape-font-specification:icomoon"
-       x="40.46727"
-       y="1016.3995"
+       style="font-size:518.8046875px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient3767);fill-opacity:1;stroke:none;font-family:icomoon;-inkscape-font-specification:icomoon"
+       x="40.436993"
+       y="1016.3638"
        id="text2985"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan2987"
-         x="40.46727"
-         y="1016.3995">a</tspan></text>
+         x="40.436993"
+         y="1016.3638"
+         style="fill:url(#linearGradient3767);fill-opacity:1">a</tspan></text>
   </g>
 </svg>

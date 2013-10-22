@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -52,6 +53,8 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+
+        PreferenceManager.setDefaultValues(this, R.xml.settings_locale, false);
 
 		searchController.suggestionPagesize = getResources().getInteger(R.integer.home_suggestions_pagesize);
 		isLandscape = getResources().getBoolean(R.bool.home_support_landscape);
@@ -159,6 +162,10 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 			} catch (NameNotFoundException e) {
 			}
 			break;
+        case R.id.action_settings:
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivityForResult(i,1);
+            break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

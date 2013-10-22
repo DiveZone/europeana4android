@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="settings_locale_app"
+        android:title="@string/settings_locale_app"
+        android:dialogTitle="@string/settings_locale_app"
+        android:entries="@array/settings_locale_app_choices"
+        android:entryValues="@array/settings_locale_app_values"
+        android:defaultValue="@string/settings_locale_app_default" />
+
+</PreferenceScreen>

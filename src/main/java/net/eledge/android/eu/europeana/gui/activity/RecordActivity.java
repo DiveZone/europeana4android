@@ -11,6 +11,7 @@ import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcAdapter.CreateNdefMessageCallback;
 import android.nfc.NfcEvent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -136,13 +137,13 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
                 mDrawerLayout.setDrawerListener(mDrawerToggle);
             }
         }
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             createNdefPushMessageCallback();
         }
         handleIntent(getIntent());
     }
 
-    @TargetApi(14)
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void createNdefPushMessageCallback() {
         NfcAdapter mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNfcAdapter != null) {
