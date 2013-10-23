@@ -6,7 +6,7 @@
     <string name="settings_header_locale_summary">Set languages for app and content</string>
 
     <!-- LANGUAGES: APPLICATION -->
-    <string name="settings_locale_app">Application languages</string>
+    <string name="settings_locale_app">Application language</string>
     <string name="settings_locale_app_default"></string>
 
     <string-array name="settings_locale_app_choices">
@@ -15,12 +15,68 @@
         <item>Dutch</item>
     </string-array>
 
-    <string-array name="settings_locale_app_values">
+    <string-array name="settings_locale_app_values" translatable="false">
         <item></item>
         <item>en</item>
         <item>nl</item>
     </string-array>
 
+    <!-- LANGUAGES: APPLICATION -->
+    <string name="settings_locale_content">Preferred content language</string>
+    <string name="settings_locale_content_default"></string>
 
+    <string-array name="settings_locale_content_choices">
+        <item>System default</item>
+        <item>Bulgarian</item>
+        <item>Catalan</item>
+        <item>Czech</item>
+        <item>Danish</item>
+        <item>German</item>
+        <item>English</item>
+        <item>Spanish</item>
+        <item>Estonian</item>
+        <item>Basque</item>
+        <item>Finnish</item>
+        <item>French</item>
+        <item>Hungarian</item>
+        <item>Italian</item>
+        <item>Greek</item>
+        <item>Dutch</item>
+        <item>Norwegian</item>
+        <item>Polish</item>
+        <item>Portuguese</item>
+        <item>Romanian</item>
+        <item>Russian</item>
+        <item>Slovak</item>
+        <item>Serbian</item>
+        <item>Swedish</item>
+    </string-array>
+
+    <string-array name="settings_locale_content_values" translatable="false">
+        <item></item>
+        <item>bg</item>
+        <item>ca</item>
+        <item>cs</item>
+        <item>da</item>
+        <item>de</item>
+        <item>en</item>
+        <item>es</item>
+        <item>et</item>
+        <item>eu</item>
+        <item>fi</item>
+        <item>fr</item>
+        <item>hu</item>
+        <item>it</item>
+        <item>le</item>
+        <item>nl</item>
+        <item>no</item>
+        <item>pl</item>
+        <item>pt</item>
+        <item>ro</item>
+        <item>ru</item>
+        <item>sk</item>
+        <item>sr</item>
+        <item>sv</item>
+    </string-array>
 
 </resources>
