@@ -47,6 +47,13 @@ code quotes. A preview should look like this:
 This project is using the gradle building system coming with Android Studio.
 Setting up the project is relatively easy.
 
+### Development Environment
+This project requires the following setup:
+
+* Android Studio 0.3.2 or higher
+* JDK 1.7 or higher
+* Gradle 1.8 or higher
+
 ### Needed libraries
 The project is using several libraries but only the following one needs to be
 setup manually.
