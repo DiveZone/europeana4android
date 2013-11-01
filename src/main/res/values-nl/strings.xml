@@ -5,9 +5,6 @@
     <string name="searchable_hint">Denk cultuur!</string>
     <string name="searchable_label">Europeana.eu</string>
 
-    <!-- ABOUT -->
-    <string name="dialog_about_copyright">&#169; Stichting Europeana \n www.europeana.eu \n\n &#169; eLedge / GJW Boogerd \n www.eledge.net \n \n Project site \n github.com/eledge/europeana4android</string>
-
     <!-- HOME SCREEN -->
     <string name="fragment_home_blog_from">VAN HET EUROPEANA BLOG</string>
     <string name="fragment_home_blog_posted">Geplaatst door %s</string>
@@ -49,7 +46,6 @@
     <string name="record_field_edm_country">AANBIEDEND LAND</string>
 
     <!-- ACTIONS/MENU -->
-    <string name="action_about">Over&#8230;</string>
     <string name="action_settings">Instellingen</string>
     <string name="action_search">Opnieuw zoeken</string>
     <string name="action_share">Delen</string>

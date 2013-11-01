@@ -29,7 +29,7 @@ public class SettingsActivity extends PreferenceActivity {
                         addPreferencesFromResource(R.xml.settings_locale);
                         break;
                     case PREFS_ABOUT:
-
+                        addPreferencesFromResource(R.xml.settings_about);
                         break;
                     default:
                         addPreferencesFromResource(R.xml.settings_legacy);

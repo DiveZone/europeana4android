@@ -1,9 +1,7 @@
 package net.eledge.android.eu.europeana.gui.activity;
 
-import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Intent;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,10 +23,8 @@ import android.widget.TextView;
 
 import com.google.analytics.tracking.android.EasyTracker;
 
-import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
-import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
 import net.eledge.android.eu.europeana.gui.fragments.HomeBlogFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
@@ -154,16 +149,6 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.action_about:
-			try {
-				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager()
-						.getPackageInfo(getPackageName(), 0));
-                dialog.setCanceledOnTouchOutside(true);
-				dialog.show();
-			} catch (NameNotFoundException e) {
-                Log.e("HomeActivity", e.getMessage(), e);
-			}
-			break;
         case R.id.action_settings:
             Intent i = new Intent(this, SettingsActivity.class);
             startActivityForResult(i,1);

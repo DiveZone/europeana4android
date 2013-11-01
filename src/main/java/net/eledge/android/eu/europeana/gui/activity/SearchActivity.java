@@ -1,10 +1,8 @@
 package net.eledge.android.eu.europeana.gui.activity;
 
 import android.annotation.TargetApi;
-import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Intent;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.nfc.NdefMessage;
@@ -34,7 +32,6 @@ import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.FacetsAdapter;
-import net.eledge.android.eu.europeana.gui.dialog.AboutDialog;
 import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
@@ -183,16 +180,6 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 			return true;
 		}
 		switch (item.getItemId()) {
-		case R.id.action_about:
-			try {
-				Dialog dialog = new AboutDialog(this, (EuropeanaApplication) getApplication(), getPackageManager()
-						.getPackageInfo(getPackageName(), 0));
-                dialog.setCanceledOnTouchOutside(true);
-				dialog.show();
-			} catch (NameNotFoundException e) {
-                // ignore
-			}
-			break;
 		case R.id.action_share:
 			startActivity(createShareIntent());
 			break;
