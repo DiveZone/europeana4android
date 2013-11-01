@@ -24,8 +24,8 @@ public class RecordPagerAdapter extends FragmentStatePagerAdapter implements Tas
 	private Context mContext;
 	private RecordActivity mRecordActivity;
 	
-	private List<Fragment> fragments = new ArrayList<Fragment>();
-	public List<Integer> labels = new ArrayList<Integer>();
+	private List<Fragment> fragments = new ArrayList<>();
+	public List<Integer> labels = new ArrayList<>();
 	
 	public RecordPagerAdapter(RecordActivity activity, FragmentManager fm, Context context) {
 		super(fm);

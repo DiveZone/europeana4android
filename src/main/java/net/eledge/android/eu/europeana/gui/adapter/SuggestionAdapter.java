@@ -23,7 +23,7 @@ public class SuggestionAdapter extends ArrayAdapter<Item> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		SuggestionViewHolder holder = null;
+		SuggestionViewHolder holder;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.griditem_suggestion, parent, false);
 			holder = new SuggestionViewHolder();

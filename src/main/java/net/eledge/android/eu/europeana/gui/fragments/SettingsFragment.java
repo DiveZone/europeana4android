@@ -15,10 +15,12 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         String settings = getArguments().getString("settings");
-        if ("locale".equals(settings)) {
-            addPreferencesFromResource(R.xml.settings_locale);
-//            } else if ("cache".equals(settings)) {
-//                addPreferencesFromResource(R.xml.settings_cache);
+        switch (settings) {
+            case "locale":
+                addPreferencesFromResource(R.xml.settings_locale);
+                break;
+            default:
+
         }
 
     }

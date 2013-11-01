@@ -37,7 +37,7 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
     @Override
     protected void onPreExecute() {
         startTime = new Date().getTime();
-        mActivity.runOnUiThread(new ListenerNotifier<RecordObject>(recordController.listeners.values()));
+        mActivity.runOnUiThread(new ListenerNotifier<>(recordController.listeners.values()));
     }
 
 	@Override
@@ -62,7 +62,7 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
                         recordId)
                 .build());
 		recordController.record = result;
-		mActivity.runOnUiThread(new ListenerNotifier<RecordObject>(recordController.listeners.values(), result));
+		mActivity.runOnUiThread(new ListenerNotifier<>(recordController.listeners.values(), result));
 	}
 
 }

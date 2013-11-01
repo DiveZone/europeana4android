@@ -36,16 +36,16 @@ public class SearchController {
 	public int searchPagesize = 12;
 	public int suggestionPagesize = 12;
 
-	public Map<String, SearchTaskListener> listeners = new HashMap<String, SearchTaskListener>();
-	public List<String> terms = new ArrayList<String>();
+	public Map<String, SearchTaskListener> listeners = new HashMap<>();
+	public List<String> terms = new ArrayList<>();
 
 	private int pageLoad = 1;
 	private long totalResults;
 	private int itemSelected = -1;
 
-	private final List<net.eledge.android.eu.europeana.search.model.searchresults.Item> searchItems = new ArrayList<net.eledge.android.eu.europeana.search.model.searchresults.Item>();
-	private final List<Facet> facets = new ArrayList<Facet>();
-	private final Map<String, Item[]> suggestionCache = new HashMap<String, Item[]>();
+	private final List<net.eledge.android.eu.europeana.search.model.searchresults.Item> searchItems = new ArrayList<>();
+	private final List<Facet> facets = new ArrayList<>();
+	private final Map<String, Item[]> suggestionCache = new HashMap<>();
 
 	private FacetType selectedFacet = FacetType.TYPE;
 
@@ -130,11 +130,8 @@ public class SearchController {
 	}
 
 	public boolean isSearching() {
-		if (mSearchTask != null) {
-			return mSearchTask.getStatus() != Status.FINISHED;
-		}
-		return false;
-	}
+        return mSearchTask != null && mSearchTask.getStatus() != Status.FINISHED;
+    }
 
 	public void cancelSearch() {
 		if (mSearchTask != null) {
@@ -169,7 +166,7 @@ public class SearchController {
 	}
 	
 	public List<FacetItem> getBreadcrumbs(Context context) {
-		List<FacetItem> breadcrumbs = new ArrayList<FacetItem>();
+		List<FacetItem> breadcrumbs = new ArrayList<>();
 		FacetItem crumb;
 		for (String term : terms) {
 			crumb = new FacetItem();
@@ -193,7 +190,7 @@ public class SearchController {
 	}
 
 	public List<FacetItem> getFacetList(Context context) {
-		List<FacetItem> facetlist = new ArrayList<FacetItem>();
+		List<FacetItem> facetlist = new ArrayList<>();
 		if (!facets.isEmpty()) {
 			for (Facet facet : facets) {
 				FacetType type = FacetType.safeValueOf(facet.name);
@@ -267,10 +264,7 @@ public class SearchController {
     }
 
 	public Integer size() {
-		if (searchItems != null) {
-			return Integer.valueOf(searchItems.size());
-		}
-		return Integer.valueOf(0);
+		return searchItems != null ? Integer.valueOf(searchItems.size()) : Integer.valueOf(0);
 	}
 
 	public void setCurrentFacetType(FacetType facetType) {

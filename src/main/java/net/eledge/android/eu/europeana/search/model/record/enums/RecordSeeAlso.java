@@ -5,6 +5,5 @@ public enum RecordSeeAlso {
     TITLE,
     WHAT,
     PROVIDER
-    ;
 
 }

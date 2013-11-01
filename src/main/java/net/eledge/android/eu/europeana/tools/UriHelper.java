@@ -70,7 +70,7 @@ public class UriHelper {
 	public static String getSuggestionUrl(String term, int pagesize) {
 		try {
 			String termEncoded = URLEncoder.encode(StringUtils.lowerCase(term), Config.JSON_CHARSET);
-			return String.format(URL_API_SUGGESTIONS, Integer.valueOf(pagesize), termEncoded);
+			return String.format(URL_API_SUGGESTIONS, pagesize, termEncoded);
 		} catch (UnsupportedEncodingException e) {
 			return null;
 		}

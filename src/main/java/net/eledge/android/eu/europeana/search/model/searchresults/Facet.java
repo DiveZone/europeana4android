@@ -6,6 +6,6 @@ import java.util.List;
 public class Facet {
 	
 	public String name;
-	public List<Field> fields = new ArrayList<Field>();
+	public List<Field> fields = new ArrayList<>();
 
 }

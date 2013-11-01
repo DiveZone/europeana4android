@@ -7,7 +7,7 @@ import java.util.List;
 
 public class SearchFacets {
 	
-	public List<Facet> facets = new ArrayList<Facet>();
+	public List<Facet> facets = new ArrayList<>();
 
 
 }

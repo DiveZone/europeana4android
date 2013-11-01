@@ -7,24 +7,37 @@ import android.preference.PreferenceActivity;
 
 import net.eledge.android.eu.europeana.R;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.List;
 
 public class SettingsActivity extends PreferenceActivity {
 
     public static final String PREFS_LOCALE = "net.eledge.android.eu.europeana.prefs.PREFS_LOCALE";
+    public static final String PREFS_ABOUT = "net.eledge.android.eu.europeana.prefs.PREFS_ABOUT";
 
     @Override
     @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String action = getIntent().getAction();
-        if (action != null && action.equals(PREFS_LOCALE)) {
-            addPreferencesFromResource(R.xml.settings_locale);
-        }
-        else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            // Load the legacy preferences headers
-            addPreferencesFromResource(R.xml.settings_legacy);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            String action = getIntent().getAction();
+            if (StringUtils.isNotBlank(action)) {
+                switch (action) {
+                    case PREFS_LOCALE:
+                        addPreferencesFromResource(R.xml.settings_locale);
+                        break;
+                    case PREFS_ABOUT:
+
+                        break;
+                    default:
+                        addPreferencesFromResource(R.xml.settings_legacy);
+                        break;
+                }
+            } else {
+                addPreferencesFromResource(R.xml.settings_legacy);
+            }
         }
     }
 

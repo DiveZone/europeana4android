@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.util.Log;
 
 public class Config {
 
@@ -26,10 +27,10 @@ public class Config {
 				ApplicationInfo ai = activity.getPackageManager().getApplicationInfo(activity.getPackageName(),
 						PackageManager.GET_META_DATA);
 				europeana_publickey = ai.metaData.getString(METADATA_EUROPEANA_API_PUBLICKEY);
-			} catch (NameNotFoundException e) {
-			} catch (NullPointerException e) {
+			} catch (NameNotFoundException | NullPointerException e) {
+                Log.e(getClass().getName(), e.getMessage(), e);
 			}
-		}
+        }
 		return europeana_publickey;
 	}
 

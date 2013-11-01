@@ -311,7 +311,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
             if (mRecordPagerAdapter.getCount() > 0) {
                 for (int i = 0; i < mRecordPagerAdapter.getCount(); i++) {
                     getSupportActionBar().addTab(
-                            getSupportActionBar().newTab().setText(mRecordPagerAdapter.labels.get(i).intValue())
+                            getSupportActionBar().newTab().setText(mRecordPagerAdapter.labels.get(i))
                                     .setTabListener(RecordActivity.this));
                 }
             }

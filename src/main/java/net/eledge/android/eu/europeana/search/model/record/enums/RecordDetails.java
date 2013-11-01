@@ -376,7 +376,7 @@ public enum RecordDetails implements RecordView {
     }
 
     private static String cleanCombineResults(String[] array) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         for (String s : array) {
             if (StringUtils.isNotBlank(s) && !StringUtils.startsWithIgnoreCase(s, "http://")
                     && !StringUtils.startsWithIgnoreCase(s, "https://")) {
@@ -387,7 +387,7 @@ public enum RecordDetails implements RecordView {
     }
 
     public static List<RecordDetails> getVisibles(RecordObject record) {
-        List<RecordDetails> list = new ArrayList<RecordDetails>();
+        List<RecordDetails> list = new ArrayList<>();
         if (record != null) {
             for (RecordDetails detail : RecordDetails.values()) {
                 if (detail.isVisible(record)) {

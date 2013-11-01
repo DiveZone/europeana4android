@@ -22,7 +22,7 @@ public class RssFeedHandler extends DefaultHandler {
 	private BlogArticle article;
 	private StringBuilder content = new StringBuilder();
 
-	public List<BlogArticle> articles = new ArrayList<BlogArticle>();
+	public List<BlogArticle> articles = new ArrayList<>();
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {

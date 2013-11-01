@@ -55,7 +55,6 @@
     <string name="record_field_place_longlat">COORDINATES</string>
 
     <!-- ACTIONS/MENU -->
-    <string name="action_about">About&#8230;</string>
     <string name="action_settings">Settings</string>
     <string name="action_search">New search</string>
     <string name="action_share">Share</string>

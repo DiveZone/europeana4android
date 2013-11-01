@@ -23,13 +23,13 @@ public class RecordController {
 
 	private RecordTask mRecordTask;
 
-	public Map<String, TaskListener<RecordObject>> listeners = new HashMap<String, TaskListener<RecordObject>>();
+	public Map<String, TaskListener<RecordObject>> listeners = new HashMap<>();
 
 	public void readRecord(Activity activity, String id) {
 		if (StringUtils.isNotBlank(id)) {
 			if ( (record != null) && StringUtils.equals(id, record.about)) {
 				// don't load the same record twice but do notify listeners!;
-				activity.runOnUiThread(new ListenerNotifier<RecordObject>(listeners.values(), record));
+				activity.runOnUiThread(new ListenerNotifier<>(listeners.values(), record));
 				return;
 			}
 			record = null;

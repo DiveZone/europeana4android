@@ -58,13 +58,8 @@ public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
 			xr.parse(new InputSource(is));
 
 			return rh.articles;
-		} catch (IOException e) {
-			Log.e("RSS Handler IO", e.getMessage() + " >> " + e.toString());
-		} catch (SAXException e) {
-			Log.e("RSS Handler SAX", e.toString());
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			Log.e("RSS Handler Parser Config", e.toString());
+		} catch (IOException | SAXException | ParserConfigurationException e) {
+			Log.e("RssReader", e.getMessage(), e);
 		} finally {
 			IOUtils.closeQuietly(is);
 		}
@@ -75,7 +70,7 @@ public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
 	@Override
 	protected void onPostExecute(List<BlogArticle> articles) {
 		if (!isCancelled()) {
-			mActivity.runOnUiThread(new ListenerNotifier<List<BlogArticle>>(mListener, articles));
+			mActivity.runOnUiThread(new ListenerNotifier<>(mListener, articles));
 		}
 	}
 

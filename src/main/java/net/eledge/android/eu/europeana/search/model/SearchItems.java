@@ -11,6 +11,6 @@ public class SearchItems {
 
 	public Integer totalResults;
 
-	public List<Item> items = new ArrayList<Item>();
+	public List<Item> items = new ArrayList<>();
 
 }

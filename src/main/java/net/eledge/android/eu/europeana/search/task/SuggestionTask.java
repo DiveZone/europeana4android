@@ -61,7 +61,7 @@ public class SuggestionTask extends AsyncTask<String, Void, Item[]> {
                             "SuggestionTask",
                             term)
                     .build());
-			((Activity)listener).runOnUiThread(new ListenerNotifier<Item[]>(listener, suggestions));
+			((Activity)listener).runOnUiThread(new ListenerNotifier<>(listener, suggestions));
 		} else {
 			listener.onTaskFinished(suggestions);
 		}

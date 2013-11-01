@@ -10,7 +10,7 @@ public class Resource {
     public String about;
 
     public static Map<String, String[]> mergeMapArrays(Map<String, String[]> source1, Map<String, String[]> source2) {
-        Map<String, String[]> merged = new HashMap<String, String[]>();
+        Map<String, String[]> merged = new HashMap<>();
         if (source1 != null) {
             merged.putAll(source1);
         } else {

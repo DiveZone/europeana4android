@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -160,6 +161,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
                 dialog.setCanceledOnTouchOutside(true);
 				dialog.show();
 			} catch (NameNotFoundException e) {
+                Log.e("HomeActivity", e.getMessage(), e);
 			}
 			break;
         case R.id.action_settings:

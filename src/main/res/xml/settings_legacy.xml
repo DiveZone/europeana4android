@@ -10,5 +10,12 @@
             android:targetClass="net.eledge.android.eu.europeana.gui.activity.SettingsActivity"
             android:action="net.eledge.android.eu.europeana.prefs.PREFS_LOCALE" />
     </Preference>
+    <Preference
+        android:title="@string/settings_header_about_title">
+        <intent
+            android:targetPackage="net.eledge.android.eu.europeana.gui.activity"
+            android:targetClass="net.eledge.android.eu.europeana.gui.activity.SettingsActivity"
+            android:action="net.eledge.android.eu.europeana.prefs.PREFS_ABOUT" />
+    </Preference>
 
 </PreferenceScreen>

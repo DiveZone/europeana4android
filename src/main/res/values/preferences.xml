@@ -79,4 +79,9 @@
         <item>sv</item>
     </string-array>
 
+    <!-- ABOUT -->
+
+    <string name="settings_header_about_title">About Europeana 4 Android</string>
+
+
 </resources>
