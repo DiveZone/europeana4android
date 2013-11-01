@@ -49,15 +49,13 @@ Setting up the project is relatively easy.
 
 ### Development Environment
 This project requires the following setup:
-
-* Android Studio 0.3.2 or higher
-* JDK 1.7 or higher
-* Gradle 1.8 or higher
+* __Android Studio 0.3.2__ or higher
+* __JDK 1.7__ or higher
+* __Gradle 1.8__ or higher
 
 ### Needed libraries
 The project is using several libraries but only the following one needs to be
 setup manually.
-
 * __eLedge Android Toolkit__ (open source, master version)
 
 
