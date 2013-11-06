@@ -15,12 +15,12 @@ import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 
 import java.util.List;
 
-public class FacetsAdapter extends ArrayAdapter<FacetItem> {
+public class FacetAdapter extends ArrayAdapter<FacetItem> {
 
 	private LayoutInflater inflater;
 	private final Typeface europeanaFont;
 
-	public FacetsAdapter(EuropeanaApplication application, Context context, List<FacetItem> facetItems) {
+	public FacetAdapter(EuropeanaApplication application, Context context, List<FacetItem> facetItems) {
 		super(context, 0, facetItems);
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.europeanaFont = application.getEuropeanaFont();

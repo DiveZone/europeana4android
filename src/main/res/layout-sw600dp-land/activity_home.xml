@@ -26,11 +26,17 @@
             <requestFocus />
         </EditText>
 
+        <Spinner
+            android:id="@+id/activity_home_spinner_profile"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_below="@id/activity_home_edittext_query" />
+
         <GridView
             android:id="@+id/activity_home_gridview_suggestions"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@id/activity_home_edittext_query"
+            android:layout_below="@id/activity_home_spinner_profile"
             android:numColumns="@integer/home_suggestions_columns"
             android:requiresFadingEdge="vertical" />
     </RelativeLayout>

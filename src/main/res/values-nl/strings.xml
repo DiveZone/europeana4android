@@ -8,7 +8,11 @@
     <!-- HOME SCREEN -->
     <string name="fragment_home_blog_from">VAN HET EUROPEANA BLOG</string>
     <string name="fragment_home_blog_posted">Geplaatst door %s</string>
-    
+
+    <!-- SEARCH FORM -->
+    <string name="form_search_query">Zoekterm(en)</string>
+    <string name="form_search_profile_default">Zonder zoekprofiel</string>
+
     <!-- SEARCH ACTIVITY -->
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
@@ -51,6 +55,7 @@
     <string name="action_share">Delen</string>
     <string name="action_previous">Vorig item</string>
     <string name="action_next">Volgend item</string>
+    <string name="action_save_profile">Profiel opslaan</string>
 
     <!-- FACET TYPES -->
     <string name="facettype_type">OP MEDIATYPE</string>

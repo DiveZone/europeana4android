@@ -17,27 +17,39 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.analytics.tracking.android.EasyTracker;
 
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.db.dao.SearchProfileDao;
+import net.eledge.android.eu.europeana.db.model.SearchProfile;
+import net.eledge.android.eu.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
 import net.eledge.android.eu.europeana.gui.fragments.HomeBlogFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
 import net.eledge.android.toolkit.async.listener.TaskListener;
+import net.eledge.android.toolkit.gui.GuiUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends FragmentActivity implements TaskListener<Item[]>, OnItemClickListener {
 
-	private SuggestionAdapter mSuggestionsAdaptor;
+    private SearchProfileDao mSearchProfileDao;
 
 	private EditText mEditTextQuery;
+
 	private GridView mGridViewSuggestions;
+    private SuggestionAdapter mSuggestionsAdaptor;
+
+    private Spinner mSpinnerProfiles;
+    private ArrayAdapter<SearchProfile> mProfilesAdapter;
 
 	private HomeBlogFragment mBlogFragment;
 
@@ -56,7 +68,6 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 		isLandscape = getResources().getBoolean(R.bool.home_support_landscape);
 
 		mSuggestionsAdaptor = new SuggestionAdapter(this, new ArrayList<Item>());
-
 		mGridViewSuggestions = (GridView) findViewById(R.id.activity_home_gridview_suggestions);
 		mGridViewSuggestions.setAdapter(mSuggestionsAdaptor);
 		mGridViewSuggestions.setOnItemClickListener(this);
@@ -97,6 +108,17 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 			}
 		});
 
+        mProfilesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
+        mProfilesAdapter.add(new SearchProfile(GuiUtils.getString(this, R.string.form_search_profile_default), null));
+        mSearchProfileDao = new SearchProfileDao(new DatabaseSetup(this));
+        List<SearchProfile> profiles = mSearchProfileDao.findAll();
+        mSearchProfileDao.close();
+        for (SearchProfile sp: profiles) {
+            mProfilesAdapter.add(sp);
+        }
+        mSpinnerProfiles = (Spinner) findViewById(R.id.activity_home_spinner_profile);
+        mSpinnerProfiles.setAdapter(mProfilesAdapter);
+
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		if (mBlogFragment == null) {
@@ -129,6 +151,10 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 		final Intent intent = new Intent(this, SearchActivity.class);
 		intent.setAction(Intent.ACTION_SEARCH);
 		intent.putExtra(SearchManager.QUERY, query);
+        SearchProfile selected = (SearchProfile) mSpinnerProfiles.getSelectedItem();
+        if ((selected != null) && (selected.facets != null)) {
+            intent.putExtra(SearchManager.USER_QUERY, selected.facets);
+        }
 		this.startActivity(intent);
 	}
 

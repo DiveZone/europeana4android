@@ -10,7 +10,11 @@
     <!-- HOME ACTIVITY -->
     <string name="fragment_home_blog_from">FROM THE EUROPEANA BLOG</string>
     <string name="fragment_home_blog_posted">Posted by %s</string>
-    
+
+    <!-- SEARCH FORM -->
+    <string name="form_search_query">Search term(s)</string>
+    <string name="form_search_profile_default">No search profile</string>
+
     <!-- SEARCH ACTIVITY -->
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
@@ -58,6 +62,7 @@
     <string name="action_share">Share</string>
     <string name="action_previous">Previous item</string>
     <string name="action_next">Next item</string>
+    <string name="action_save_profile">Save profile</string>
 
     <!-- FACET TYPES -->
     <string name="facettype_type">BY MEDIA TYPE</string>
@@ -141,7 +146,7 @@
     <string name="locale_sr">Serbian</string>
     <string name="locale_sv">Swedish</string>
     
-    <string name="locale_mul">Multilingue</string>
+    <string name="locale_mul">Multilingual</string>
     
     <!-- CONTENT DESCRIPTORS -->
     <string name="contentdescriptor_searchitem_image">Search Item image preview</string>

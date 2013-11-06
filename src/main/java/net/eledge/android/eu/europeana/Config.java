@@ -14,7 +14,7 @@ public class Config {
 	public static final String JSON_CHARSET = "UTF-8";
 
 	public final static String DB_NAME = "europeana4android";
-	public final static int DB_VERSION = 1;
+	public final static int DB_VERSION = 2;
 	
 	// META DATA
 	public static final String METADATA_EUROPEANA_API_PUBLICKEY = "eu.europeana.api.v2.API_PUBLIC_KEY";

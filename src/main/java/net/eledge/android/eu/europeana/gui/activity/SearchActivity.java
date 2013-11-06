@@ -31,7 +31,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.gui.adapter.FacetsAdapter;
+import net.eledge.android.eu.europeana.gui.adapter.FacetAdapter;
 import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
@@ -55,7 +55,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ListView mFacetsList;
-	private FacetsAdapter mFacetsAdaptor;
+	private FacetAdapter mFacetsAdaptor;
 
 	// Controller
 	private SearchController searchController = SearchController._instance;
@@ -70,7 +70,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		searchController.registerListener(SearchActivity.class, this);
 		searchController.searchPagesize = getResources().getInteger(R.integer.search_result_pagesize);
 
-		mFacetsAdaptor = new FacetsAdapter((EuropeanaApplication) getApplication(), this, new ArrayList<FacetItem>());
+		mFacetsAdaptor = new FacetAdapter((EuropeanaApplication) getApplication(), this, new ArrayList<FacetItem>());
 
 		mFacetsList = (ListView) findViewById(R.id.drawer_facets);
 		mFacetsList.setAdapter(mFacetsAdaptor);
@@ -164,7 +164,8 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		return true;
 	}
 
-	@Override
+	@SuppressWarnings("ConstantConditions")
+    @Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		if (mDrawerLayout != null) {
 			boolean drawerOpen = mDrawerLayout.isDrawerOpen(mFacetsList);
@@ -304,37 +305,45 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		return shareIntent;
 	}
 
+    private String[] splitFacets(String facets) {
+        if (StringUtils.isNotBlank(facets)) {
+            facets = StringUtils.substringAfter(facets, "qf=");
+            return StringUtils.split(facets, "&qf=");
+        }
+        return null;
+    }
+
 	private void handleIntent(Intent intent) {
 		String query = null;
-		List<String> qf = null;
+		String[] qf = null;
 		if (intent != null) {
 
 			if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 				query = intent.getStringExtra(SearchManager.QUERY);
+                qf = splitFacets(intent.getStringExtra(SearchManager.USER_QUERY));
 			} else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-				Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-				// only one message sent during the beam
-				NdefMessage msg = (NdefMessage) rawMsgs[0];
-				// record 0 contains the MIME type, record 1 is the AAR, if present
+				Parcelable[] parcelables = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+				NdefMessage msg = (NdefMessage) parcelables[0];
 				Uri uri = Uri.parse(new String(msg.getRecords()[0].getPayload()));
 				query = uri.getQueryParameter("query");
-				qf = uri.getQueryParameters("qf");
+                qf = StringArrayUtils.toArray(uri.getQueryParameters("qf"));
 			} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 				query = intent.getDataString();
 				if (!TextUtils.isEmpty(query)) {
 					if (StringUtils.contains(query, "europeana.eu/")) {
 						Uri uri = Uri.parse(query);
 						query = uri.getQueryParameter("query");
-						qf = uri.getQueryParameters("qf");
+						qf = StringArrayUtils.toArray(uri.getQueryParameters("qf"));
 					}
 				}
 			} else {
-				onSearchRequested();
+                // no search action recognized? end this activity...
+                closeSearchActivity();
 			}
 			if (!TextUtils.isEmpty(query) && !TextUtils.equals(runningSearch, query)) {
 				runningSearch = query;
-				if ((qf != null) && !qf.isEmpty()) {
-					searchController.newSearch(this, query, StringArrayUtils.toArray(qf));
+				if (StringArrayUtils.isNotBlank(qf)) {
+					searchController.newSearch(this, query, qf);
 				} else {
 					searchController.newSearch(this, query);
 				}
