@@ -1,4 +1,4 @@
-package net.eledge.android.eu.europeana.gui.fragments;
+package net.eledge.android.eu.europeana.gui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -3,6 +3,7 @@ package net.eledge.android.eu.europeana.gui.activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +32,7 @@ import net.eledge.android.eu.europeana.db.dao.SearchProfileDao;
 import net.eledge.android.eu.europeana.db.model.SearchProfile;
 import net.eledge.android.eu.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
-import net.eledge.android.eu.europeana.gui.fragments.HomeBlogFragment;
+import net.eledge.android.eu.europeana.gui.fragment.HomeBlogFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
 import net.eledge.android.toolkit.async.listener.TaskListener;
@@ -38,6 +40,7 @@ import net.eledge.android.toolkit.gui.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeActivity extends FragmentActivity implements TaskListener<Item[]>, OnItemClickListener {
 
@@ -219,5 +222,15 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 			switchBlogSuggestions(false);
 		}
 	}
+
+    public void setLocale(String lang) {
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = new Locale(lang);
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, HomeActivity.class);
+        startActivity(refresh);
+    }
 
 }

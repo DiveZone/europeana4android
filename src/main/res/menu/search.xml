@@ -12,7 +12,6 @@
         android:icon="@drawable/ic_action_save"
         android:orderInCategory="11"
         support:showAsAction="ifRoom"
-        android:enabled="false"
         android:title="@string/action_save_profile"/>
     <item
         android:id="@+id/action_search"

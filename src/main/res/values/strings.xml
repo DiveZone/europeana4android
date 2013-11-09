@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name" translatable="false">Europeana (Beta)</string>
-
-    <!-- GENERAL -->
-    <string name="searchable_hint">Think culture!</string>
-    <string name="searchable_label">Europeana.eu</string>
+    <string name="app_name" translatable="false">Europeana Search (Beta)</string>
 
     <!-- HOME ACTIVITY -->
     <string name="fragment_home_blog_from">FROM THE EUROPEANA BLOG</string>
@@ -24,6 +20,7 @@
     <string name="msg_searching">RETRIEVING RESULTS&#8230;</string>
     <string name="msg_searchresults">SHOWING %1$d OF %2$d RESULTS</string>
     <string name="msg_loading">RETRIEVING RECORD&#8230;</string>
+    <string name="msg_profile_selectfacets">Select one or more facets first&#8230;</string>
 
     <!-- RECORD ACTIVITY -->
     <string name="record_tab_details">Details</string>

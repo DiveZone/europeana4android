@@ -3,13 +3,13 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
     <header
-        android:fragment="net.eledge.android.eu.europeana.gui.fragments.SettingsFragment"
+        android:fragment="net.eledge.android.eu.europeana.gui.fragment.SettingsFragment"
         android:title="@string/settings_header_locale_title"
         android:summary="@string/settings_header_locale_summary">
         <extra android:name="settings" android:value="locale" />
     </header>
     <header
-        android:fragment="net.eledge.android.eu.europeana.gui.fragments.SettingsFragment"
+        android:fragment="net.eledge.android.eu.europeana.gui.fragment.SettingsFragment"
         android:title="@string/settings_header_about_title">
         <extra android:name="settings" android:value="about" />
     </header>

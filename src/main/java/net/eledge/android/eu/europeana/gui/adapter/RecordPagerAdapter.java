@@ -7,10 +7,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.activity.RecordActivity;
-import net.eledge.android.eu.europeana.gui.fragments.RecordDetailsFragment;
-import net.eledge.android.eu.europeana.gui.fragments.RecordImagesFragment;
-import net.eledge.android.eu.europeana.gui.fragments.RecordMapFragment;
-import net.eledge.android.eu.europeana.gui.fragments.RecordSeeAlsoFragment;
+import net.eledge.android.eu.europeana.gui.fragment.RecordDetailsFragment;
+import net.eledge.android.eu.europeana.gui.fragment.RecordImagesFragment;
+import net.eledge.android.eu.europeana.gui.fragment.RecordMapFragment;
+import net.eledge.android.eu.europeana.gui.fragment.RecordSeeAlsoFragment;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.toolkit.async.listener.TaskListener;

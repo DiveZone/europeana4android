@@ -32,7 +32,7 @@ import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.FacetAdapter;
-import net.eledge.android.eu.europeana.gui.fragments.SearchResultsFragment;
+import net.eledge.android.eu.europeana.gui.fragment.SearchResultsFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchFacets;
@@ -184,8 +184,15 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 		case R.id.action_share:
 			startActivity(createShareIntent());
 			break;
+        case R.id.action_save_profile:
+            saveProfile();
+            break;
         case R.id.action_search:
             GuiUtils.startTopActivity(this, HomeActivity.class);
+            break;
+        case R.id.action_settings:
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivityForResult(i,1);
             break;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -241,6 +248,12 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
         updateFacetDrawer();
 		runningSearch = null;
 	}
+
+    private void saveProfile() {
+        if (!searchController.hasFacets()) {
+            GuiUtils.toast(this, R.string.msg_profile_selectfacets);
+        }
+    }
 
 	private void closeSearchActivity() {
 		GuiUtils.startTopActivity(this, HomeActivity.class);

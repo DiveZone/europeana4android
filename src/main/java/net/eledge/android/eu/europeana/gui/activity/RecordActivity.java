@@ -36,7 +36,7 @@ import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.RecordPagerAdapter;
 import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
-import net.eledge.android.eu.europeana.gui.fragments.RecordDetailsFragment;
+import net.eledge.android.eu.europeana.gui.fragment.RecordDetailsFragment;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;

@@ -1,4 +1,4 @@
-package net.eledge.android.eu.europeana.gui.fragments;
+package net.eledge.android.eu.europeana.gui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;

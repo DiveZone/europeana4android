@@ -84,11 +84,11 @@
     <string name="settings_header_about_title">About&#8230;</string>
     <string name="settings_about_version">Version</string>
     <string name="settings_about_build">Build</string>
-    <string name="settings_about_copyright1">&#169; / search provider</string>
-    <string name="settings_about_copyright1_lines">The Europeana Foundation \n http://www.europeana.eu</string>
+    <string name="settings_about_copyright1">&#169; / Search engine provider</string>
+    <string name="settings_about_copyright1_lines">The Europeana Foundation\nhttp://www.europeana.eu</string>
     <string name="settings_about_copyright1_url">http://www.europeana.eu</string>
     <string name="settings_about_copyright2">&#169; / Developed by</string>
-    <string name="settings_about_copyright2_lines">eLedge / GJW Boogerd \n http://www.eledge.net</string>
+    <string name="settings_about_copyright2_lines">eLedge / GJW Boogerd\nhttp://www.eledge.net</string>
     <string name="settings_about_copyright2_url">http://www.eledge.net</string>
     <string name="settings_about_projectsite">Project site</string>
     <string name="settings_about_projectsite_url">http://github.com/eledge/europeana4android</string>

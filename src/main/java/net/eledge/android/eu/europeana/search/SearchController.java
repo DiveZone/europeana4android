@@ -224,6 +224,21 @@ public class SearchController {
 	public String getPortalUrl() {
         return UriHelper.createPortalSearchUrl(terms.toArray(new String[terms.size()]));
 	}
+
+    public String getFacetString() {
+        if (terms.size() > 1) {
+            StringBuilder sb = new StringBuilder();
+            for (int i=1; i<terms.size(); i++) {
+                // skipping 0 on purpose, is the search term 'query'
+                if (sb.length() > 0) {
+                    sb.append("&");
+                }
+                sb.append("qf=").append(terms.get(i));
+            }
+            return sb.toString();
+        }
+        return null;
+    }
 	
 	public void cacheSuggestions(String term, Item[] suggestions) {
 		suggestionCache.put(term, suggestions);
