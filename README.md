@@ -74,13 +74,15 @@ empty, settings.gradle needs the following content:
 include ':AndroidToolkit'
 include ':europeana4android'
 ```
-4. Import the project folder (EuropeanaProject) into AndroidStudio using the 
+
+4. In the europeana4android project, copy the src/main/AndroidManifest.xml.template
+to AndroidManifest.xml in the same folder. The copied file is configured to be
+ignored by GIT.
+5. Import the project folder (EuropeanaProject) into AndroidStudio using the
 import project function. If you want to use gradle wrapper or a local gradle
 installation is up to you.
-
-5. In the Europeana4Android project, copy the src/main/AndroidManifest.xml.template
-to AndroidManifest.xml in the same folder and configure your Europeana and Google Maps
-API keys. The copied file is configured to be ignored by GIT.
+6. Before testing you are required to have a Google Maps API key and combination
+of Europeana API public and private key.
 
 ## More project information
 
