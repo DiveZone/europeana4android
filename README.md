@@ -78,6 +78,10 @@ include ':europeana4android'
 import project function. If you want to use gradle wrapper or a local gradle
 installation is up to you.
 
+5. In the Europeana4Android project, copy the src/main/AndroidManifest.xml.template
+to AndroidManifest.xml in the same folder and configure your Europeana and Google Maps
+API keys. The copied file is configured to be ignored by GIT.
+
 ## More project information
 
 For more detailed project documentation, visit the WIKI pages on:
