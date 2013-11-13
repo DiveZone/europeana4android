@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
 
-import net.eledge.android.eu.europeana.Config;
+import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchFacets;
@@ -44,7 +44,7 @@ public class SearchFacetTask extends AsyncTask<String, Void, SearchFacets> {
 
 	@Override
 	protected SearchFacets doInBackground(String... terms) {
-        String url = UriHelper.getSearchUrl(Config._instance.getEuropeanaPublicKey(mActivity), terms, 1, 1);
+        String url = UriHelper.getSearchUrl(((EuropeanaApplication)mActivity.getApplication()).getEuropeanaPublicKey(), terms, 1, 1);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
         return restTemplate.getForObject(url, SearchFacets.class);

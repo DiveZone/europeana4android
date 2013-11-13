@@ -10,6 +10,9 @@ apply plugin: 'android'
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
 }
 
 android {
@@ -56,6 +59,10 @@ dependencies {
     compile "com.android.support:appcompat-v7:19.0.+"
     compile 'com.google.android.gms:play-services:4.0.+'
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    compile 'org.springframework.android:spring-android-auth:1.0.1.RELEASE'
     compile 'com.google.code.gson:gson:2.2.+'
+    compile ('net.eledge:spring-social-europeana:0.0.1-SNAPSHOT') {
+        exclude module: 'spring-web'
+    }
     compile files('libs/libGoogleAnalyticsServices.jar')
 }

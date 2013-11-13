@@ -60,6 +60,7 @@
     <string name="action_previous">Previous item</string>
     <string name="action_next">Next item</string>
     <string name="action_save_profile">Save profile</string>
+    <string name="action_myeuropeana">My Europeana</string>
 
     <!-- FACET TYPES -->
     <string name="facettype_type">BY MEDIA TYPE</string>

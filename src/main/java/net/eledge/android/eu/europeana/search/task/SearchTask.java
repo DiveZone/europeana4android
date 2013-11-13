@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
 
-import net.eledge.android.eu.europeana.Config;
+import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchItems;
@@ -47,7 +47,7 @@ public class SearchTask extends AsyncTask<String, Void, SearchItems> {
 
 	@Override
 	protected SearchItems doInBackground(String... terms) {
-		String url = UriHelper.getSearchUrl(Config._instance.getEuropeanaPublicKey(mActivity), terms, pageLoad,
+		String url = UriHelper.getSearchUrl(((EuropeanaApplication)mActivity.getApplication()).getEuropeanaPublicKey(), terms, pageLoad,
                 searchController.searchPagesize);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());

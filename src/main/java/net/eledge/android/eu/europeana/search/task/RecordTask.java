@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
 
-import net.eledge.android.eu.europeana.Config;
+import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.model.Record;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;
@@ -46,7 +46,7 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
 			return null;
 		}
         recordId = params[0];
-		String url = UriHelper.getRecordUrl(Config._instance.getEuropeanaPublicKey(mActivity), recordId);
+		String url = UriHelper.getRecordUrl(((EuropeanaApplication)mActivity.getApplication()).getEuropeanaPublicKey(), recordId);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
         return RecordObject.normalize(restTemplate.getForObject(url, Record.class).object);
