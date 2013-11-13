@@ -50,6 +50,7 @@ import java.util.List;
 public class RecordActivity extends ActionBarActivity implements TabListener, TaskListener<RecordObject> {
 
     public static final String RECORD_ID = "RECORDID";
+    private EuropeanaApplication mApplication;
     // Controller
     private SearchController searchController = SearchController._instance;
     private RecordController recordController = RecordController._instance;
@@ -68,6 +69,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mApplication = (EuropeanaApplication) getApplication();
         setContentView(R.layout.activity_record);
         mTwoColumns = getResources().getBoolean(R.bool.home_support_landscape);
         recordController.registerListener(RecordActivity.class, this);
@@ -174,6 +176,9 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         }
         menu.findItem(R.id.action_previous).setVisible(searchController.hasPrevious());
         menu.findItem(R.id.action_next).setVisible(searchController.hasNext());
+        menu.findItem(R.id.action_new_label).setVisible(mApplication.isMyEuropeanaConnected());
+        menu.findItem(R.id.action_save_item).setVisible(mApplication.isMyEuropeanaConnected());
+
         return super.onPrepareOptionsMenu(menu);
     }
 

@@ -377,13 +377,16 @@ public enum RecordDetails implements RecordView {
 
     private static String cleanCombineResults(String[] array) {
         List<String> result = new ArrayList<>();
-        for (String s : array) {
-            if (StringUtils.isNotBlank(s) && !StringUtils.startsWithIgnoreCase(s, "http://")
-                    && !StringUtils.startsWithIgnoreCase(s, "https://")) {
-                result.add(StringUtils.trim(s));
+        if (array != null) {
+            for (String s : array) {
+                if (StringUtils.isNotBlank(s) && !StringUtils.startsWithIgnoreCase(s, "http://")
+                        && !StringUtils.startsWithIgnoreCase(s, "https://")) {
+                    result.add(StringUtils.trim(s));
+                }
             }
+            return StringUtils.join(result, "; ");
         }
-        return StringUtils.join(result, "; ");
+        return null;
     }
 
     public static List<RecordDetails> getVisibles(RecordObject record) {

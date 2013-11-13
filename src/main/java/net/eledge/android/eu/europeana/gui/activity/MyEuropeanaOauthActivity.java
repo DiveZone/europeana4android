@@ -12,6 +12,7 @@ import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.view.EuropeanaOAuthWebViewClient;
 
 import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Parameters;
 
 public class MyEuropeanaOauthActivity extends ActionBarActivity {
 
@@ -46,7 +47,9 @@ public class MyEuropeanaOauthActivity extends ActionBarActivity {
     @Override
     public void onStart() {
         super.onStart();
-        this.webView.loadUrl(mApplication.getEuropeanaConnectionFactory().getOAuthOperations().buildAuthorizeUrl(GrantType.IMPLICIT_GRANT, null));
+        OAuth2Parameters params = new OAuth2Parameters();
+        params.setRedirectUri("http://android.europeana.eu/confirm");
+        this.webView.loadUrl(mApplication.getEuropeanaConnectionFactory().getOAuthOperations().buildAuthorizeUrl(GrantType.IMPLICIT_GRANT, params));
     }
 
     @Override

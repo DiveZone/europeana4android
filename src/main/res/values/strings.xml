@@ -11,6 +11,14 @@
     <string name="form_search_query">Search term(s)</string>
     <string name="form_search_profile_default">No search profile</string>
 
+    <!-- MYEUROPEANA ACTIVITY -->
+    <string name="activity_myeuropeana_email">Login / Email address</string>
+    <string name="activity_myeuropeana_username">MyEuropeana username</string>
+    <string name="activity_myeuropeana_saveditem">Nr of saved items</string>
+    <string name="activity_myeuropeana_savedsearch">Nr of saved searches</string>
+    <string name="activity_myeuropeana_tags">Nr of social tags</string>
+
+
     <!-- SEARCH ACTIVITY -->
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
@@ -61,6 +69,8 @@
     <string name="action_next">Next item</string>
     <string name="action_save_profile">Save profile</string>
     <string name="action_myeuropeana">My Europeana</string>
+    <string name="action_save_item">Save item</string>
+    <string name="action_new_label">Add label</string>
 
     <!-- FACET TYPES -->
     <string name="facettype_type">BY MEDIA TYPE</string>

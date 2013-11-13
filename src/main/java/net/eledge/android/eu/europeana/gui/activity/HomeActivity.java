@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.google.analytics.tracking.android.EasyTracker;
 
+import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.db.dao.SearchProfileDao;
 import net.eledge.android.eu.europeana.db.model.SearchProfile;
@@ -44,6 +45,7 @@ import java.util.Locale;
 
 public class HomeActivity extends FragmentActivity implements TaskListener<Item[]>, OnItemClickListener {
 
+    private EuropeanaApplication mApplication;
     private SearchProfileDao mSearchProfileDao;
 
 	private EditText mEditTextQuery;
@@ -63,6 +65,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        mApplication = (EuropeanaApplication) getApplication();
 		setContentView(R.layout.activity_home);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings_locale, false);
@@ -178,6 +181,14 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+        case R.id.action_myeuropeana:
+            if (!mApplication.isMyEuropeanaConnected()) {
+                Intent intent = new Intent(this, MyEuropeanaOauthActivity.class);
+                startActivityForResult(intent, 1);
+            } else {
+                startActivity(new Intent(this, MyEuropeanaActivity.class));
+            }
+            break;
         case R.id.action_settings:
             Intent i = new Intent(this, SettingsActivity.class);
             startActivityForResult(i,1);

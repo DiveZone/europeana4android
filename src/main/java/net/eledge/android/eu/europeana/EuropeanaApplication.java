@@ -1,8 +1,10 @@
 package net.eledge.android.eu.europeana;
 
 import android.app.Application;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
+import android.os.Bundle;
 
 import net.eledge.android.toolkit.net.ImageCacheManager;
 
@@ -30,29 +32,38 @@ public class EuropeanaApplication extends Application {
 
     private Typeface europeanaFont;
 
+    private Bundle metaData;
+
     public EuropeanaApplication() {
         super();
     }
 
     @Override
     public void onCreate() {
-        // create a new ConnectionFactoryLocator and populate it with Facebook ConnectionFactory
-        this.connectionFactoryRegistry = new ConnectionFactoryRegistry();
-        this.connectionFactoryRegistry.addConnectionFactory(new EuropeanaConnectionFactory(getEuropeanaPublicKey(),
-                getEuropeanaPrivateKey()));
+        try {
+            metaData = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES | PackageManager.GET_META_DATA).applicationInfo.metaData;
+            // create a new ConnectionFactoryLocator and populate it with Facebook ConnectionFactory
+            this.connectionFactoryRegistry = new ConnectionFactoryRegistry();
+            this.connectionFactoryRegistry.addConnectionFactory(new EuropeanaConnectionFactory(getEuropeanaPublicKey(),
+                    getEuropeanaPrivateKey()));
 
-        // set up the database and encryption
-        this.repositoryHelper = new SQLiteConnectionRepositoryHelper(this);
-        this.connectionRepository = new SQLiteConnectionRepository(this.repositoryHelper,
-                this.connectionFactoryRegistry, AndroidEncryptors.text("password", "5c0744940b5c369b"));
+            // set up the database and encryption
+            this.repositoryHelper = new SQLiteConnectionRepositoryHelper(this);
+            this.connectionRepository = new SQLiteConnectionRepository(this.repositoryHelper,
+                    this.connectionFactoryRegistry, AndroidEncryptors.text("password", "5c0744940b5c369b"));
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+
+        }
     }
 
     public String getEuropeanaPublicKey() {
-        return getApplicationInfo().metaData.getString(METADATA_EUROPEANA_API_PUBLICKEY);
+        return metaData.getString(METADATA_EUROPEANA_API_PUBLICKEY);
     }
 
     private String getEuropeanaPrivateKey() {
-        return getApplicationInfo().metaData.getString(METADATA_EUROPEANA_API_PRIVATEKEY);
+        return metaData.getString(METADATA_EUROPEANA_API_PRIVATEKEY);
     }
 
     public ImageCacheManager getImageCacheManager() {
@@ -82,7 +93,11 @@ public class EuropeanaApplication extends Application {
         return (EuropeanaConnectionFactory) this.connectionFactoryRegistry.getConnectionFactory(Europeana.class);
     }
 
+    public Europeana getMyEuropeanaApi() {
+        return connectionRepository.findPrimaryConnection(Europeana.class).getApi();
+    }
+
     public boolean isMyEuropeanaConnected() {
-        return connectionRepository.findPrimaryConnection(Europeana.class) != null;
+        return (connectionRepository != null) && (connectionRepository.findPrimaryConnection(Europeana.class) != null);
     }
 }
