@@ -7,8 +7,10 @@ import android.util.Log;
 import net.eledge.android.toolkit.async.ListenerNotifier;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.social.europeana.api.Europeana;
 import org.springframework.social.europeana.api.model.Profile;
+import org.springframework.web.client.HttpClientErrorException;
 
 public class GetProfileTask extends AsyncTask<Void, Void, Profile> {
     private static final String TAG = GetProfileTask.class.getSimpleName();
@@ -32,6 +34,10 @@ public class GetProfileTask extends AsyncTask<Void, Void, Profile> {
     protected Profile doInBackground(Void... params) {
         try {
             return mEuropeanaApi.profileOperations().getProfile();
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+                
+            }
         } catch (Exception e) {
             Log.e(TAG, e.getLocalizedMessage(), e);
         }

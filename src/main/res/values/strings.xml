@@ -11,13 +11,14 @@
     <string name="form_search_query">Search term(s)</string>
     <string name="form_search_profile_default">No search profile</string>
 
-    <!-- MYEUROPEANA ACTIVITY -->
-    <string name="activity_myeuropeana_email">Login / Email address</string>
-    <string name="activity_myeuropeana_username">MyEuropeana username</string>
-    <string name="activity_myeuropeana_saveditem">Nr of saved items</string>
-    <string name="activity_myeuropeana_savedsearch">Nr of saved searches</string>
-    <string name="activity_myeuropeana_tags">Nr of social tags</string>
-
+    <!-- MYEUROPEANA DIALOG -->
+    <string name="dialog_myeuropeana_email">Login / Email address</string>
+    <string name="dialog_myeuropeana_username">MyEuropeana username</string>
+    <string name="dialog_myeuropeana_saveditem">Nr of saved items</string>
+    <string name="dialog_myeuropeana_savedsearch">Nr of saved searches</string>
+    <string name="dialog_myeuropeana_tags">Nr of social tags</string>
+    <string name="dialog_myeuropeana_button_close">Close</string>
+    <string name="dialog_myeuropeana_button_logoff">Disconnect</string>
 
     <!-- SEARCH ACTIVITY -->
     <string name="drawer_facets_open">Open facets drawer</string>

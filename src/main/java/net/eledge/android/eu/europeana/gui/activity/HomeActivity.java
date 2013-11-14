@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -33,6 +34,7 @@ import net.eledge.android.eu.europeana.db.dao.SearchProfileDao;
 import net.eledge.android.eu.europeana.db.model.SearchProfile;
 import net.eledge.android.eu.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
+import net.eledge.android.eu.europeana.gui.dialog.MyEuropeanaDialog;
 import net.eledge.android.eu.europeana.gui.fragment.HomeBlogFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
@@ -186,7 +188,8 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
                 Intent intent = new Intent(this, MyEuropeanaOauthActivity.class);
                 startActivityForResult(intent, 1);
             } else {
-                startActivity(new Intent(this, MyEuropeanaActivity.class));
+                DialogFragment newFragment = new MyEuropeanaDialog(mApplication);
+                newFragment.show(getSupportFragmentManager(), "profile");
             }
             break;
         case R.id.action_settings:

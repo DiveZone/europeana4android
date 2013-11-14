@@ -8,71 +8,66 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/activity_myeuropeana_email"
+        android:text="@string/dialog_myeuropeana_email"
         style="@style/recordDetailTitle"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/activity_myeuropeana_textview_email"
+        android:id="@+id/dialog_myeuropeana_textview_email"
         style="@style/recordDetailContent"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/activity_myeuropeana_username"
+        android:text="@string/dialog_myeuropeana_username"
         style="@style/recordDetailTitle"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/activity_myeuropeana_textview_username"
+        android:id="@+id/dialog_myeuropeana_textview_username"
         style="@style/recordDetailContent"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/activity_myeuropeana_saveditem"
+        android:text="@string/dialog_myeuropeana_saveditem"
         style="@style/recordDetailTitle"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/activity_myeuropeana_textview_saveditem"
+        android:id="@+id/dialog_myeuropeana_textview_saveditem"
         style="@style/recordDetailContent"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/activity_myeuropeana_savedsearch"
+        android:text="@string/dialog_myeuropeana_savedsearch"
         style="@style/recordDetailTitle"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/activity_myeuropeana_textview_savedsearch"
+        android:id="@+id/dialog_myeuropeana_textview_savedsearch"
         style="@style/recordDetailContent"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/activity_myeuropeana_tags"
+        android:text="@string/dialog_myeuropeana_tags"
         style="@style/recordDetailTitle"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/activity_myeuropeana_textview_tags"
+        android:id="@+id/dialog_myeuropeana_textview_tags"
         style="@style/recordDetailContent"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Disconnect from MyEuropeana"
-        android:id="@+id/activity_myeuropeana_button_disconnect" />
 </LinearLayout>
