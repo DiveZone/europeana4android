@@ -37,6 +37,9 @@ import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.RecordPagerAdapter;
 import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
 import net.eledge.android.eu.europeana.gui.fragment.RecordDetailsFragment;
+import net.eledge.android.eu.europeana.myeuropeana.task.CheckItemTask;
+import net.eledge.android.eu.europeana.myeuropeana.task.RemoveItemTask;
+import net.eledge.android.eu.europeana.myeuropeana.task.SaveItemTask;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;
@@ -44,6 +47,7 @@ import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.social.europeana.api.Europeana;
 
 import java.util.List;
 
@@ -51,6 +55,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
 
     public static final String RECORD_ID = "RECORDID";
     private EuropeanaApplication mApplication;
+    private Europeana mEuropeanaApi;
     // Controller
     private SearchController searchController = SearchController._instance;
     private RecordController recordController = RecordController._instance;
@@ -70,6 +75,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApplication = (EuropeanaApplication) getApplication();
+        mEuropeanaApi = mApplication.getMyEuropeanaApi();
         setContentView(R.layout.activity_record);
         mTwoColumns = getResources().getBoolean(R.bool.home_support_landscape);
         recordController.registerListener(RecordActivity.class, this);
@@ -177,8 +183,10 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         menu.findItem(R.id.action_previous).setVisible(searchController.hasPrevious());
         menu.findItem(R.id.action_next).setVisible(searchController.hasNext());
         menu.findItem(R.id.action_new_label).setVisible(mApplication.isMyEuropeanaConnected());
-        menu.findItem(R.id.action_save_item).setVisible(mApplication.isMyEuropeanaConnected());
-
+        MenuItem item = menu.findItem(R.id.action_save_item);
+        item.setVisible(mApplication.isMyEuropeanaConnected());
+        item.setIcon(recordController.isCurrentRecordSelected()?R.drawable.ic_action_important:R.drawable.ic_action_not_important);
+        item.setTitle(recordController.isCurrentRecordSelected()?R.string.action_remove_item:R.string.action_save_item);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -257,6 +265,15 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
                 break;
             case R.id.action_share:
                 startActivity(createShareIntent());
+                break;
+            case R.id.action_save_item:
+                if (recordController.isCurrentRecordSelected()) {
+                    new RemoveItemTask(mEuropeanaApi).execute();
+                } else {
+                    new SaveItemTask(this, mEuropeanaApi, null).execute();
+                }
+                recordController.setCurrentRecordSelected(!recordController.isCurrentRecordSelected());
+                supportInvalidateOptionsMenu();
                 break;
             case R.id.action_search:
                 GuiUtils.startTopActivity(this, HomeActivity.class);
@@ -349,6 +366,19 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     private void openRecord(String id) {
         supportInvalidateOptionsMenu();
         recordController.readRecord(this, id);
+        if (mEuropeanaApi != null) {
+            new CheckItemTask(this, mEuropeanaApi, new TaskListener<Boolean>() {
+                @Override
+                public void onTaskStart() {
+                    // ignore
+                }
+                @Override
+                public void onTaskFinished(Boolean result) {
+                    recordController.setCurrentRecordSelected(result);
+                    RecordActivity.this.supportInvalidateOptionsMenu();
+                }
+            }).execute();
+        }
     }
 
     private Intent createShareIntent() {

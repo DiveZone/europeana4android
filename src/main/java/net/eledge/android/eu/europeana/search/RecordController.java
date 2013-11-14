@@ -18,6 +18,7 @@ public class RecordController {
 	public final static RecordController _instance = new RecordController();
 
 	private String currentRecordId;
+    private boolean currentRecordSelected = false;
 
 	public RecordObject record;
 
@@ -34,6 +35,7 @@ public class RecordController {
 			}
 			record = null;
 			currentRecordId = id;
+            currentRecordSelected = false;
 			if (mRecordTask != null) {
 				mRecordTask.cancel(true);
 			}
@@ -45,6 +47,14 @@ public class RecordController {
 	public String getCurrentRecordId() {
 		return currentRecordId;
 	}
+
+    public boolean isCurrentRecordSelected() {
+        return currentRecordSelected;
+    }
+
+    public void setCurrentRecordSelected(boolean selected) {
+        currentRecordSelected = selected;
+    }
 
 	public void registerListener(Class<?> clazz, TaskListener<RecordObject> listener) {
 		listeners.put(clazz.getName(), listener);

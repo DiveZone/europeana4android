@@ -68,14 +68,9 @@ dependencies {
     }
     compile ('org.springframework.social:spring-social-core:1.0.3.RELEASE') {
         exclude group: 'org.springframework'
-//        exclude module: 'spring-asm'
-//        exclude module: 'spring-web'
     }
-    compile ('net.eledge:spring-social-europeana:0.0.1-SNAPSHOT') {
+    compile ('net.eledge:spring-social-europeana:0.0.3-SNAPSHOT') {
         exclude group: 'org.springframework'
-//        exclude group: 'spring-core'
-//        exclude module: 'spring-asm'
-//        exclude module: 'spring-web'
     }
     compile files('libs/libGoogleAnalyticsServices.jar')
 

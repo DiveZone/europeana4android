@@ -1,24 +1,23 @@
 package net.eledge.android.eu.europeana.gui.activity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.myeuropeana.task.GetProfileTask;
+import net.eledge.android.toolkit.async.listener.TaskListener;
 
 import org.springframework.social.europeana.api.Europeana;
 import org.springframework.social.europeana.api.model.Profile;
 
-public class MyEuropeanaActivity extends ActionBarActivity {
+public class MyEuropeanaActivity extends ActionBarActivity implements TaskListener<Profile> {
     private static final String TAG = MyEuropeanaActivity.class.getSimpleName();
 
     private EuropeanaApplication mApplication;
-
     private Europeana mEuropeanaApi;
 
     @Override
@@ -46,10 +45,16 @@ public class MyEuropeanaActivity extends ActionBarActivity {
     @Override
     public void onStart() {
         super.onStart();
-        new FetchProfileTask().execute();
+        new GetProfileTask(this, mEuropeanaApi, this).execute();
     }
 
-    public void showProfile(Profile profile) {
+    @Override
+    public void onTaskStart() {
+
+    }
+
+    @Override
+    public void onTaskFinished(Profile profile) {
         if (profile != null) {
             TextView email = (TextView) findViewById(R.id.activity_myeuropeana_textview_email);
             email.setText(profile.getEmail());
@@ -64,28 +69,4 @@ public class MyEuropeanaActivity extends ActionBarActivity {
         }
     }
 
-    private class FetchProfileTask extends AsyncTask<Void, Void, Profile> {
-
-        @Override
-        protected void onPreExecute() {
-//            showProgressDialog("Fetching profile...");
-        }
-
-        @Override
-        protected Profile doInBackground(Void... params) {
-            try {
-                return mEuropeanaApi.profileOperations().getProfile();
-            } catch (Exception e) {
-                Log.e(TAG, e.getLocalizedMessage(), e);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Profile profile) {
-//            dismissProgressDialog();
-            showProfile(profile);
-        }
-
-    }
 }

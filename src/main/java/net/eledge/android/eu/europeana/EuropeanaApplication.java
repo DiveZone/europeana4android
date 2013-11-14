@@ -94,7 +94,7 @@ public class EuropeanaApplication extends Application {
     }
 
     public Europeana getMyEuropeanaApi() {
-        return connectionRepository.findPrimaryConnection(Europeana.class).getApi();
+        return isMyEuropeanaConnected() ? connectionRepository.findPrimaryConnection(Europeana.class).getApi() : null;
     }
 
     public boolean isMyEuropeanaConnected() {

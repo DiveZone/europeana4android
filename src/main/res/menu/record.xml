@@ -18,7 +18,7 @@
         android:id="@+id/action_save_item"
         android:icon="@drawable/ic_action_not_important"
         android:orderInCategory="10"
-        support:showAsAction="ifRoom"
+        support:showAsAction="always"
         android:title="@string/action_save_item"
         android:visible="false"/>
     <item
