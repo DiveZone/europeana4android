@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.eledge.android.eu.europeana"
     android:versionCode="35"
-    android:versionName="v0.1-alpha b35">
+    android:versionName="v0.2-beta b35">
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -26,7 +26,8 @@
 
     <uses-permission android:name="net.eledge.android.eu.europeana.permission.MAPS_RECEIVE" />
 
-    <supports-screens android:anyDensity="true"
+    <supports-screens
+        android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:smallScreens="true" />
@@ -127,7 +128,8 @@
                 android:value="net.eledge.android.eu.europeana.gui.activity.SearchActivity" />
         </activity>
 
-        <activity android:label="@string/app_name"
+        <activity
+            android:label="@string/app_name"
             android:name="net.eledge.android.eu.europeana.gui.activity.SettingsActivity" />
         <activity android:name="net.eledge.android.eu.europeana.gui.activity.MyEuropeanaActivity" />
         <activity
