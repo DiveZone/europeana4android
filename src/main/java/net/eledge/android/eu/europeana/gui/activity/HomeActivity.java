@@ -35,6 +35,7 @@ import net.eledge.android.eu.europeana.db.model.SearchProfile;
 import net.eledge.android.eu.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
 import net.eledge.android.eu.europeana.gui.dialog.MyEuropeanaDialog;
+import net.eledge.android.eu.europeana.gui.dialog.MyEuropeanaOauthDialog;
 import net.eledge.android.eu.europeana.gui.fragment.HomeBlogFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
@@ -185,8 +186,8 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 		switch (item.getItemId()) {
         case R.id.action_myeuropeana:
             if (!mApplication.isMyEuropeanaConnected()) {
-                Intent intent = new Intent(this, MyEuropeanaOauthActivity.class);
-                startActivityForResult(intent, 1);
+                DialogFragment newFragment = new MyEuropeanaOauthDialog();
+                newFragment.show(getSupportFragmentManager(), "login");
             } else {
                 DialogFragment newFragment = new MyEuropeanaDialog(mApplication);
                 newFragment.show(getSupportFragmentManager(), "profile");

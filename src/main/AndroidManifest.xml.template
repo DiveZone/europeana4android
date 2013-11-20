@@ -131,11 +131,6 @@
         <activity
             android:label="@string/app_name"
             android:name="net.eledge.android.eu.europeana.gui.activity.SettingsActivity" />
-        <activity android:name="net.eledge.android.eu.europeana.gui.dialog.MyEuropeanaDialog" />
-        <activity
-            android:name="net.eledge.android.eu.europeana.gui.activity.MyEuropeanaOauthActivity"
-            android:excludeFromRecents="true"
-            android:noHistory="true" />
 
     </application>
 

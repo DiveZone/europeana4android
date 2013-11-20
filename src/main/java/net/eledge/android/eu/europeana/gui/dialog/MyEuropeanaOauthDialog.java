@@ -1,0 +1,74 @@
+package net.eledge.android.eu.europeana.gui.dialog;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.webkit.CookieManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+
+import net.eledge.android.eu.europeana.EuropeanaApplication;
+import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.gui.view.EuropeanaOAuthWebViewClient;
+import net.eledge.android.eu.europeana.gui.view.FocusableWebView;
+
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Parameters;
+
+public class MyEuropeanaOauthDialog extends DialogFragment {
+
+    private EuropeanaApplication mApplication;
+    private WebView webView;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mApplication = (EuropeanaApplication) getActivity().getApplication();
+        webView = new FocusableWebView(getActivity());
+        webView.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+                if (progress == 100) {
+                    MyEuropeanaOauthDialog.this.getDialog().setTitle(R.string.app_name);
+                } else {
+                    MyEuropeanaOauthDialog.this.getDialog().setTitle("Loading...");
+                }
+            }
+        });
+        this.webView.setWebViewClient(new EuropeanaOAuthWebViewClient(getActivity()));
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(webView);
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MyEuropeanaOauthDialog.this.webView.stopLoading();
+                dialog.dismiss();
+            }
+        });
+        Dialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        return dialog;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        OAuth2Parameters params = new OAuth2Parameters();
+        params.setRedirectUri("http://www.europeana.eu/api/index.html");
+        this.webView.loadUrl(mApplication.getEuropeanaConnectionFactory().getOAuthOperations().buildAuthorizeUrl(GrantType.IMPLICIT_GRANT, params));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        CookieManager.getInstance().removeAllCookie();
+    }
+
+
+}
