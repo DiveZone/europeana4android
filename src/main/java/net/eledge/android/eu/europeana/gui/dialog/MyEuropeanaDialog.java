@@ -22,6 +22,10 @@ public class MyEuropeanaDialog extends DialogFragment implements TaskListener<Pr
     private EuropeanaApplication mApplication;
     private Europeana mEuropeanaApi;
 
+    public MyEuropeanaDialog() {
+        super();
+    }
+
     public MyEuropeanaDialog(EuropeanaApplication application) {
         super();
         mApplication = application;
