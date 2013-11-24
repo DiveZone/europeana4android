@@ -42,6 +42,7 @@ public class MyEuropeanaDialog extends DialogFragment implements TaskListener<Pr
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.dialog_myeuropeana_title);
         builder.setView(inflater.inflate(R.layout.dialog_myeuropeana, null));
         builder.setPositiveButton(R.string.dialog_myeuropeana_button_close, new DialogInterface.OnClickListener() {
             @Override
@@ -83,6 +84,9 @@ public class MyEuropeanaDialog extends DialogFragment implements TaskListener<Pr
             savedsearch.setText(String.valueOf(profile.getNrOfSavedSearches()));
             TextView tags = (TextView) getDialog().findViewById(R.id.dialog_myeuropeana_textview_tags);
             tags.setText(String.valueOf(profile.getNrOfSocialTags()));
+        } else {
+            mApplication.getConnectionRepository().removeConnections(mApplication.getEuropeanaConnectionFactory().getProviderId());
+            MyEuropeanaDialog.this.dismiss();
         }
     }
 

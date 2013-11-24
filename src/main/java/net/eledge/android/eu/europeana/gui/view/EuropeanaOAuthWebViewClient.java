@@ -24,9 +24,12 @@ public class EuropeanaOAuthWebViewClient extends WebViewClient {
 
     private EuropeanaApplication mApplication;
 
-    public EuropeanaOAuthWebViewClient(Activity activity) {
+    private AuthorisationListener mListener;
+
+    public EuropeanaOAuthWebViewClient(Activity activity, AuthorisationListener listener) {
         super();
         mActivity = activity;
+        mListener = listener;
         mApplication = (EuropeanaApplication) mActivity.getApplication();
     }
 
@@ -41,7 +44,6 @@ public class EuropeanaOAuthWebViewClient extends WebViewClient {
         if (uri.getQueryParameter("error") != null) {
             CharSequence errorReason = uri.getQueryParameter("error_description").replace("+", " ");
             Toast.makeText(mActivity.getApplicationContext(), errorReason, Toast.LENGTH_LONG).show();
-            //displayFacebookMenuOptions();
         }
     }
 
@@ -84,9 +86,12 @@ public class EuropeanaOAuthWebViewClient extends WebViewClient {
 
         @Override
         protected void onPostExecute(Void result) {
-            mActivity.finish();
-            //displayFacebookMenuOptions();
+            mListener.finished();
         }
 
+    }
+
+    public interface AuthorisationListener {
+        void finished();
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.eledge.android.eu.europeana"
-    android:versionCode="35"
-    android:versionName="v0.2-beta b35">
+    android:versionCode="36"
+    android:versionName="v0.2-beta b36">
 
     <uses-sdk
         android:minSdkVersion="10"

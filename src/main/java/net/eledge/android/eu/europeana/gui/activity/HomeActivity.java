@@ -49,7 +49,6 @@ import java.util.Locale;
 public class HomeActivity extends FragmentActivity implements TaskListener<Item[]>, OnItemClickListener {
 
     private EuropeanaApplication mApplication;
-    private SearchProfileDao mSearchProfileDao;
 
 	private EditText mEditTextQuery;
 
@@ -118,13 +117,6 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 		});
 
         mProfilesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
-        mProfilesAdapter.add(new SearchProfile(GuiUtils.getString(this, R.string.form_search_profile_default), null));
-        mSearchProfileDao = new SearchProfileDao(new DatabaseSetup(this));
-        List<SearchProfile> profiles = mSearchProfileDao.findAll();
-        mSearchProfileDao.close();
-        for (SearchProfile sp: profiles) {
-            mProfilesAdapter.add(sp);
-        }
         mSpinnerProfiles = (Spinner) findViewById(R.id.activity_home_spinner_profile);
         mSpinnerProfiles.setAdapter(mProfilesAdapter);
 
@@ -142,6 +134,21 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
     protected void onStart() {
         super.onStart();
         EasyTracker.getInstance(this).activityStart(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // load/refresh search profiles...
+        mProfilesAdapter.clear();
+        SearchProfileDao searchProfileDao = new SearchProfileDao(new DatabaseSetup(this));
+        List<SearchProfile> profiles = searchProfileDao.findAll();
+        searchProfileDao.close();
+        mProfilesAdapter.add(new SearchProfile(GuiUtils.getString(this, R.string.form_search_profile_default), null));
+        for (SearchProfile sp: profiles) {
+            mProfilesAdapter.add(sp);
+        }
+        mProfilesAdapter.notifyDataSetChanged();
     }
 
     @Override

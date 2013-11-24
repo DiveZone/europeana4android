@@ -36,10 +36,12 @@ import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.RecordPagerAdapter;
 import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
+import net.eledge.android.eu.europeana.gui.dialog.NameInputDialog;
 import net.eledge.android.eu.europeana.gui.fragment.RecordDetailsFragment;
 import net.eledge.android.eu.europeana.myeuropeana.task.CheckItemTask;
 import net.eledge.android.eu.europeana.myeuropeana.task.RemoveItemTask;
 import net.eledge.android.eu.europeana.myeuropeana.task.SaveItemTask;
+import net.eledge.android.eu.europeana.myeuropeana.task.SaveTagTask;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;
@@ -48,6 +50,7 @@ import net.eledge.android.toolkit.gui.GuiUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.social.europeana.api.Europeana;
+import org.springframework.social.europeana.api.model.UserModification;
 
 import java.util.List;
 
@@ -266,6 +269,9 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
             case R.id.action_share:
                 startActivity(createShareIntent());
                 break;
+            case R.id.action_new_label:
+                saveLabel();
+                break;
             case R.id.action_save_item:
                 if (recordController.isCurrentRecordSelected()) {
                     new RemoveItemTask(mEuropeanaApi).execute();
@@ -387,6 +393,41 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         shareIntent.putExtra(Intent.EXTRA_TEXT, recordController.getPortalUrl());
         shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this item on Europeana.eu!");
         return shareIntent;
+    }
+
+    private void saveLabel() {
+        if (mApplication.isMyEuropeanaConnected()) {
+            NameInputDialog dialog = new NameInputDialog(R.string.action_new_label, R.string.dialog_tag_saveas_text, R.string.dialog_tag_saveas_input, R.string.action_new_label, new NameInputDialog.NameInputDialogResponse() {
+                @Override
+                public void positiveResponse(String input) {
+                    if (StringUtils.isNotBlank(input)) {
+                        new SaveTagTask(RecordActivity.this, mEuropeanaApi, new TaskListener<UserModification>() {
+                            @Override
+                            public void onTaskStart() {
+                                // ignore
+                            }
+                            @Override
+                            public void onTaskFinished(UserModification result) {
+                                if (result != null) {
+                                    if (result.isSuccess()) {
+                                        GuiUtils.toast(RecordActivity.this, R.string.msg_tag_saved);
+                                    } else {
+                                        GuiUtils.toast(RecordActivity.this, result.getError());
+                                    }
+                                } else {
+                                    GuiUtils.toast(RecordActivity.this, R.string.msg_unknown_error);
+                                }
+                            }
+                        }).execute(input);
+                    }
+                }
+                @Override
+                public void negativeResponse() {
+                    // ignore
+                }
+            });
+            dialog.show(getSupportFragmentManager(), "SaveAs");
+        }
     }
 
 }

@@ -21,6 +21,7 @@ public class MyEuropeanaOauthDialog extends DialogFragment {
 
     private EuropeanaApplication mApplication;
     private WebView webView;
+    private Dialog mDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,12 +37,18 @@ public class MyEuropeanaOauthDialog extends DialogFragment {
                 }
             }
         });
-        this.webView.setWebViewClient(new EuropeanaOAuthWebViewClient(getActivity()));
+        this.webView.setWebViewClient(new EuropeanaOAuthWebViewClient(getActivity(), new EuropeanaOAuthWebViewClient.AuthorisationListener() {
+            @Override
+            public void finished() {
+                mDialog.dismiss();
+            }
+        }));
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.dialog_myeuropeana_title);
         builder.setView(webView);
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -50,10 +57,10 @@ public class MyEuropeanaOauthDialog extends DialogFragment {
                 dialog.dismiss();
             }
         });
-        Dialog dialog = builder.create();
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(false);
-        return dialog;
+        mDialog = builder.create();
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.setCancelable(false);
+        return mDialog;
     }
 
     @Override

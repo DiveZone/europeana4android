@@ -69,7 +69,7 @@ dependencies {
     compile ('org.springframework.social:spring-social-core:1.0.3.RELEASE') {
         exclude group: 'org.springframework'
     }
-    compile ('net.eledge:spring-social-europeana:0.0.3-SNAPSHOT') {
+    compile ('net.eledge:spring-social-europeana:0.0.4-SNAPSHOT') {
         exclude group: 'org.springframework'
     }
     compile files('libs/libGoogleAnalyticsServices.jar')

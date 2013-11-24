@@ -225,8 +225,12 @@ public class SearchController {
         return UriHelper.createPortalSearchUrl(terms.toArray(new String[terms.size()]));
 	}
 
+    public boolean hasFacetsSelected() {
+        return (terms.size() > 1);
+    }
+
     public String getFacetString() {
-        if (terms.size() > 1) {
+        if (hasFacetsSelected()) {
             StringBuilder sb = new StringBuilder();
             for (int i=1; i<terms.size(); i++) {
                 // skipping 0 on purpose, is the search term 'query'

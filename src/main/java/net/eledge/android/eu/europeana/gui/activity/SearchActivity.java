@@ -31,7 +31,11 @@ import com.google.analytics.tracking.android.EasyTracker;
 import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.db.dao.SearchProfileDao;
+import net.eledge.android.eu.europeana.db.model.SearchProfile;
+import net.eledge.android.eu.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.eu.europeana.gui.adapter.FacetAdapter;
+import net.eledge.android.eu.europeana.gui.dialog.NameInputDialog;
 import net.eledge.android.eu.europeana.gui.fragment.SearchResultsFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
@@ -49,75 +53,75 @@ import java.util.List;
 
 public class SearchActivity extends ActionBarActivity implements SearchTaskListener {
 
-	private SearchResultsFragment mSearchFragment;
+    private SearchResultsFragment mSearchFragment;
 
     // NavigationDrawer
-	private DrawerLayout mDrawerLayout;
-	private ActionBarDrawerToggle mDrawerToggle;
-	private ListView mFacetsList;
-	private FacetAdapter mFacetsAdaptor;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private ListView mFacetsList;
+    private FacetAdapter mFacetsAdaptor;
 
-	// Controller
-	private SearchController searchController = SearchController._instance;
+    // Controller
+    private SearchController searchController = SearchController._instance;
 
-	private String runningSearch = null;
+    private String runningSearch = null;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_search);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
 
-		searchController.registerListener(SearchActivity.class, this);
-		searchController.searchPagesize = getResources().getInteger(R.integer.search_result_pagesize);
+        searchController.registerListener(SearchActivity.class, this);
+        searchController.searchPagesize = getResources().getInteger(R.integer.search_result_pagesize);
 
-		mFacetsAdaptor = new FacetAdapter((EuropeanaApplication) getApplication(), this, new ArrayList<FacetItem>());
+        mFacetsAdaptor = new FacetAdapter((EuropeanaApplication) getApplication(), this, new ArrayList<FacetItem>());
 
-		mFacetsList = (ListView) findViewById(R.id.drawer_facets);
-		mFacetsList.setAdapter(mFacetsAdaptor);
-		mFacetsList.setOnItemClickListener(new DrawerItemClickListener());
+        mFacetsList = (ListView) findViewById(R.id.drawer_facets);
+        mFacetsList.setAdapter(mFacetsAdaptor);
+        mFacetsList.setOnItemClickListener(new DrawerItemClickListener());
 
-		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_activity_search);
-		if (mDrawerLayout != null) {
-			mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
-					R.string.drawer_facets_open, R.string.drawer_facets_close) {
-				public void onDrawerClosed(View view) {
-					// getActionBar().setTitle(mTitle);
-					supportInvalidateOptionsMenu();
-				}
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_activity_search);
+        if (mDrawerLayout != null) {
+            mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
+                    R.string.drawer_facets_open, R.string.drawer_facets_close) {
+                public void onDrawerClosed(View view) {
+                    // getActionBar().setTitle(mTitle);
+                    supportInvalidateOptionsMenu();
+                }
 
-				public void onDrawerOpened(View drawerView) {
-					// getActionBar().setTitle(mDrawerTitle);
-					supportInvalidateOptionsMenu();
-				}
-			};
-			mDrawerLayout.setDrawerListener(mDrawerToggle);
-			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-			mDrawerToggle.setDrawerIndicatorEnabled(false);
-		}
-		if (Config.DEBUGMODE) {
-			StrictMode.enableDefaults();
-		}
-		createResultFragment();
-		if (savedInstanceState != null && searchController.hasResults()) {
-			updateFacetDrawer();
-			return;
-		}
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			createNdefPushMessageCallback();
-		}
-		handleIntent(getIntent());
-	}
+                public void onDrawerOpened(View drawerView) {
+                    // getActionBar().setTitle(mDrawerTitle);
+                    supportInvalidateOptionsMenu();
+                }
+            };
+            mDrawerLayout.setDrawerListener(mDrawerToggle);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            mDrawerToggle.setDrawerIndicatorEnabled(false);
+        }
+        if (Config.DEBUGMODE) {
+            StrictMode.enableDefaults();
+        }
+        createResultFragment();
+        if (savedInstanceState != null && searchController.hasResults()) {
+            updateFacetDrawer();
+            return;
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            createNdefPushMessageCallback();
+        }
+        handleIntent(getIntent());
+    }
 
-	@TargetApi(14)
-	private void createNdefPushMessageCallback() {
+    @TargetApi(14)
+    private void createNdefPushMessageCallback() {
         NfcAdapter mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-		if (mNfcAdapter != null) {
-			mNfcAdapter.setNdefPushMessageCallback(new CreateNdefMessageCallback() {
+        if (mNfcAdapter != null) {
+            mNfcAdapter.setNdefPushMessageCallback(new CreateNdefMessageCallback() {
                 @Override
                 public NdefMessage createNdefMessage(NfcEvent event) {
                     return new NdefMessage(new NdefRecord[]{
@@ -127,24 +131,24 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
                             NdefRecord.createApplicationRecord(getPackageName())});
                 }
             }, this);
-		}
-	}
+        }
+    }
 
-	@Override
-	protected void onDestroy() {
-		searchController.cancelSearch();
-		searchController.unregister(SearchActivity.class);
-		super.onDestroy();
-	}
+    @Override
+    protected void onDestroy() {
+        searchController.cancelSearch();
+        searchController.unregister(SearchActivity.class);
+        super.onDestroy();
+    }
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		getSupportActionBar().setTitle(searchController.getSearchTitle(this));
-		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-			handleIntent(getIntent());
-		}
-	}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportActionBar().setTitle(searchController.getSearchTitle(this));
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+            handleIntent(getIntent());
+        }
+    }
 
     @Override
     protected void onStart() {
@@ -158,85 +162,85 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
         EasyTracker.getInstance(this).activityStop(this);
     }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.search, menu);
-		return true;
-	}
-
-	@SuppressWarnings("ConstantConditions")
     @Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		if (mDrawerLayout != null) {
-			boolean drawerOpen = mDrawerLayout.isDrawerOpen(mFacetsList);
-			menu.findItem(R.id.action_search).setVisible(!drawerOpen);
-			menu.findItem(R.id.action_share).setVisible(!drawerOpen);
-		}
-		return super.onPrepareOptionsMenu(menu);
-	}
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search, menu);
+        return true;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if ((mDrawerLayout != null) && mDrawerToggle.onOptionsItemSelected(item)) {
-			return true;
-		}
-		switch (item.getItemId()) {
-		case R.id.action_share:
-			startActivity(createShareIntent());
-			break;
-        case R.id.action_save_profile:
-            saveProfile();
-            break;
-        case R.id.action_search:
-            GuiUtils.startTopActivity(this, HomeActivity.class);
-            break;
-        case R.id.action_settings:
-            Intent i = new Intent(this, SettingsActivity.class);
-            startActivityForResult(i,1);
-            break;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-		return true;
-	}
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (mDrawerLayout != null) {
+            boolean drawerOpen = mDrawerLayout.isDrawerOpen(mFacetsList);
+            menu.findItem(R.id.action_search).setVisible(!drawerOpen);
+            menu.findItem(R.id.action_share).setVisible(!drawerOpen);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
 
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		if (mDrawerLayout != null) {
-			mDrawerToggle.syncState();
-		}
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if ((mDrawerLayout != null) && mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        switch (item.getItemId()) {
+            case R.id.action_share:
+                startActivity(createShareIntent());
+                break;
+            case R.id.action_save_profile:
+                saveProfile();
+                break;
+            case R.id.action_search:
+                GuiUtils.startTopActivity(this, HomeActivity.class);
+                break;
+            case R.id.action_settings:
+                Intent i = new Intent(this, SettingsActivity.class);
+                startActivityForResult(i, 1);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
 
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		searchController.searchPagesize = getResources().getInteger(R.integer.search_result_pagesize);
-		if (mDrawerLayout != null) {
-			mDrawerToggle.syncState();
-		}
-	}
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        if (mDrawerLayout != null) {
+            mDrawerToggle.syncState();
+        }
+    }
 
-	@Override
-	protected void onNewIntent(Intent intent) {
-		setIntent(intent);
-		handleIntent(intent);
-	}
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        searchController.searchPagesize = getResources().getInteger(R.integer.search_result_pagesize);
+        if (mDrawerLayout != null) {
+            mDrawerToggle.syncState();
+        }
+    }
 
-	@Override
-	public void onSearchStart(boolean isFacetSearch) {
-		if (isFacetSearch) {
-			mFacetsAdaptor.clear();
-			if (mFacetsAdaptor.isEmpty()) {
-				createBreadcrumbs();
-			}
-		}
-	}
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        handleIntent(intent);
+    }
 
-	@Override
-	public void onSearchError(String message) {
-		GuiUtils.toast(this, message);
-	}
+    @Override
+    public void onSearchStart(boolean isFacetSearch) {
+        if (isFacetSearch) {
+            mFacetsAdaptor.clear();
+            if (mFacetsAdaptor.isEmpty()) {
+                createBreadcrumbs();
+            }
+        }
+    }
+
+    @Override
+    public void onSearchError(String message) {
+        GuiUtils.toast(this, message);
+    }
 
     @Override
     public void onSearchItemsFinish(SearchItems results) {
@@ -244,79 +248,95 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
     }
 
     @Override
-	public void onSearchFacetFinish(SearchFacets results) {
+    public void onSearchFacetFinish(SearchFacets results) {
         updateFacetDrawer();
-		runningSearch = null;
-	}
+        runningSearch = null;
+    }
 
     private void saveProfile() {
-        if (!searchController.hasFacets()) {
+        if (!searchController.hasFacetsSelected()) {
             GuiUtils.toast(this, R.string.msg_profile_selectfacets);
+            return;
+        }
+        NameInputDialog dialog = new NameInputDialog(R.string.dialog_profile_saveas_title, R.string.dialog_profile_saveas_text, R.string.dialog_profile_saveas_title, R.string.action_save_profile, new NameInputDialog.NameInputDialogResponse() {
+            @Override
+            public void positiveResponse(String input) {
+                SearchProfile profile = new SearchProfile(input, searchController.getFacetString());
+                SearchProfileDao dao = new SearchProfileDao(new DatabaseSetup(SearchActivity.this));
+                dao.store(profile);
+                dao.close();
+                GuiUtils.toast(SearchActivity.this, R.string.msg_profile_saved);
+            }
+            @Override
+            public void negativeResponse() {
+                // ignore
+            }
+        });
+        dialog.show(getSupportFragmentManager(), "SaveAs");
+    }
+
+    private void closeSearchActivity() {
+        GuiUtils.startTopActivity(this, HomeActivity.class);
+        finish();
+    }
+
+    private void createResultFragment() {
+        if (mSearchFragment == null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            if (mSearchFragment == null) {
+                mSearchFragment = new SearchResultsFragment();
+            }
+            fragmentTransaction.replace(R.id.content_frame_searchgrid, mSearchFragment);
+            fragmentTransaction.commit();
         }
     }
 
-	private void closeSearchActivity() {
-		GuiUtils.startTopActivity(this, HomeActivity.class);
-		finish();
-	}
+    private void createBreadcrumbs() {
+        FacetItem facetSection = new FacetItem();
+        facetSection.itemType = FacetItemType.SECTION;
+        facetSection.labelResource = R.string.drawer_facets_section_breadcrumbs;
+        mFacetsAdaptor.add(facetSection);
+        for (FacetItem item : searchController.getBreadcrumbs(this)) {
+            mFacetsAdaptor.add(item);
+        }
+        if (!searchController.hasFacets()) {
+            facetSection = new FacetItem();
+            facetSection.itemType = FacetItemType.SECTION;
+            facetSection.labelResource = R.string.drawer_facets_section_refine_loading;
+            facetSection.last = true;
+            mFacetsAdaptor.add(facetSection);
+        }
+        mFacetsAdaptor.notifyDataSetChanged();
+        if (mDrawerLayout != null) {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+        }
+    }
 
-	private void createResultFragment() {
-		if (mSearchFragment == null) {
-			FragmentManager fragmentManager = getSupportFragmentManager();
-			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-			if (mSearchFragment == null) {
-				mSearchFragment = new SearchResultsFragment();
-			}
-			fragmentTransaction.replace(R.id.content_frame_searchgrid, mSearchFragment);
-			fragmentTransaction.commit();
-		}
-	}
+    private void updateFacetDrawer() {
+        List<FacetItem> facetList = searchController.getFacetList(this);
+        if (facetList != null) {
+            mFacetsAdaptor.clear();
+            createBreadcrumbs();
+            FacetItem facetSection = new FacetItem();
+            facetSection.itemType = FacetItemType.SECTION;
+            facetSection.labelResource = R.string.drawer_facets_section_refine;
+            mFacetsAdaptor.add(facetSection);
+            for (FacetItem item : facetList) {
+                mFacetsAdaptor.add(item);
+            }
+            mFacetsAdaptor.notifyDataSetChanged();
+        }
+    }
 
-	private void createBreadcrumbs() {
-		FacetItem facetSection = new FacetItem();
-		facetSection.itemType = FacetItemType.SECTION;
-		facetSection.labelResource = R.string.drawer_facets_section_breadcrumbs;
-		mFacetsAdaptor.add(facetSection);
-		for (FacetItem item : searchController.getBreadcrumbs(this)) {
-			mFacetsAdaptor.add(item);
-		}
-		if (!searchController.hasFacets()) {
-			facetSection = new FacetItem();
-			facetSection.itemType = FacetItemType.SECTION;
-			facetSection.labelResource = R.string.drawer_facets_section_refine_loading;
-			facetSection.last = true;
-			mFacetsAdaptor.add(facetSection);
-		}
-		mFacetsAdaptor.notifyDataSetChanged();
-		if (mDrawerLayout != null) {
-			mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-			mDrawerToggle.setDrawerIndicatorEnabled(true);
-		}
-	}
-
-	private void updateFacetDrawer() {
-		List<FacetItem> facetList = searchController.getFacetList(this);
-		if (facetList != null) {
-			mFacetsAdaptor.clear();
-			createBreadcrumbs();
-			FacetItem facetSection = new FacetItem();
-			facetSection.itemType = FacetItemType.SECTION;
-			facetSection.labelResource = R.string.drawer_facets_section_refine;
-			mFacetsAdaptor.add(facetSection);
-			for (FacetItem item : facetList) {
-				mFacetsAdaptor.add(item);
-			}
-			mFacetsAdaptor.notifyDataSetChanged();
-		}
-	}
-
-	private Intent createShareIntent() {
-		Intent shareIntent = new Intent(Intent.ACTION_SEND);
-		shareIntent.setType("text/plain");
-		shareIntent.putExtra(Intent.EXTRA_TEXT, searchController.getPortalUrl());
-		shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this search on Europeana.eu!");
-		return shareIntent;
-	}
+    private Intent createShareIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, searchController.getPortalUrl());
+        shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this search on Europeana.eu!");
+        return shareIntent;
+    }
 
     private String[] splitFacets(String facets) {
         if (StringUtils.isNotBlank(facets)) {
@@ -326,84 +346,84 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
         return null;
     }
 
-	private void handleIntent(Intent intent) {
-		String query = null;
-		String[] qf = null;
-		if (intent != null) {
+    private void handleIntent(Intent intent) {
+        String query = null;
+        String[] qf = null;
+        if (intent != null) {
 
-			if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-				query = intent.getStringExtra(SearchManager.QUERY);
+            if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+                query = intent.getStringExtra(SearchManager.QUERY);
                 qf = splitFacets(intent.getStringExtra(SearchManager.USER_QUERY));
-			} else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-				Parcelable[] parcelables = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-				NdefMessage msg = (NdefMessage) parcelables[0];
-				Uri uri = Uri.parse(new String(msg.getRecords()[0].getPayload()));
-				query = uri.getQueryParameter("query");
+            } else if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+                Parcelable[] parcelables = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+                NdefMessage msg = (NdefMessage) parcelables[0];
+                Uri uri = Uri.parse(new String(msg.getRecords()[0].getPayload()));
+                query = uri.getQueryParameter("query");
                 qf = StringArrayUtils.toArray(uri.getQueryParameters("qf"));
-			} else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-				query = intent.getDataString();
-				if (!TextUtils.isEmpty(query)) {
-					if (StringUtils.contains(query, "europeana.eu/")) {
-						Uri uri = Uri.parse(query);
-						query = uri.getQueryParameter("query");
-						qf = StringArrayUtils.toArray(uri.getQueryParameters("qf"));
-					}
-				}
-			} else {
+            } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+                query = intent.getDataString();
+                if (!TextUtils.isEmpty(query)) {
+                    if (StringUtils.contains(query, "europeana.eu/")) {
+                        Uri uri = Uri.parse(query);
+                        query = uri.getQueryParameter("query");
+                        qf = StringArrayUtils.toArray(uri.getQueryParameters("qf"));
+                    }
+                }
+            } else {
                 // no search action recognized? end this activity...
                 closeSearchActivity();
-			}
-			if (!TextUtils.isEmpty(query) && !TextUtils.equals(runningSearch, query)) {
-				runningSearch = query;
-				if (StringArrayUtils.isNotBlank(qf)) {
-					searchController.newSearch(this, query, qf);
-				} else {
-					searchController.newSearch(this, query);
-				}
-				getSupportActionBar().setTitle(searchController.getSearchTitle(this));
-			}
-		}
-	}
+            }
+            if (!TextUtils.isEmpty(query) && !TextUtils.equals(runningSearch, query)) {
+                runningSearch = query;
+                if (StringArrayUtils.isNotBlank(qf)) {
+                    searchController.newSearch(this, query, qf);
+                } else {
+                    searchController.newSearch(this, query);
+                }
+                getSupportActionBar().setTitle(searchController.getSearchTitle(this));
+            }
+        }
+    }
 
-	/* The click listener for ListView in the navigation drawer */
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			mFacetsList.setItemChecked(position, false);
-			FacetItem item = mFacetsAdaptor.getItem(position);
-			switch (item.itemType) {
-			case SECTION:
-				// ignore, is disabled.
-				break;
-			case BREADCRUMB:
-				if (!searchController.removeRefineSearch(SearchActivity.this, item.facet)) {
-					closeSearchActivity();
-				} else if (mDrawerLayout != null) {
-					mDrawerLayout.closeDrawers();
-				}
-				break;
-			case CATEGORY:
-				searchController.setCurrentFacetType(item.facetType);
-				updateFacetDrawer();
-				break;
-			case CATEGORY_OPENED:
-				searchController.setCurrentFacetType(null);
-				updateFacetDrawer();
-				break;
-			case ITEM:
-				searchController.refineSearch(SearchActivity.this, item.facet);
-				if (mDrawerLayout != null) {
-					mDrawerLayout.closeDrawers();
-				}
-				break;
-			case ITEM_SELECTED:
-				searchController.removeRefineSearch(SearchActivity.this, item.facet);
-				if (mDrawerLayout != null) {
-					mDrawerLayout.closeDrawers();
-				}
-				break;
-			}
-		}
-	}
+    /* The click listener for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            mFacetsList.setItemChecked(position, false);
+            FacetItem item = mFacetsAdaptor.getItem(position);
+            switch (item.itemType) {
+                case SECTION:
+                    // ignore, is disabled.
+                    break;
+                case BREADCRUMB:
+                    if (!searchController.removeRefineSearch(SearchActivity.this, item.facet)) {
+                        closeSearchActivity();
+                    } else if (mDrawerLayout != null) {
+                        mDrawerLayout.closeDrawers();
+                    }
+                    break;
+                case CATEGORY:
+                    searchController.setCurrentFacetType(item.facetType);
+                    updateFacetDrawer();
+                    break;
+                case CATEGORY_OPENED:
+                    searchController.setCurrentFacetType(null);
+                    updateFacetDrawer();
+                    break;
+                case ITEM:
+                    searchController.refineSearch(SearchActivity.this, item.facet);
+                    if (mDrawerLayout != null) {
+                        mDrawerLayout.closeDrawers();
+                    }
+                    break;
+                case ITEM_SELECTED:
+                    searchController.removeRefineSearch(SearchActivity.this, item.facet);
+                    if (mDrawerLayout != null) {
+                        mDrawerLayout.closeDrawers();
+                    }
+                    break;
+            }
+        }
+    }
 
 }

@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name" translatable="false">Europeana Search (Beta)</string>
+    <string name="msg_unknown_error">Unknown error occurred&#8230;</string>
 
     <!-- HOME ACTIVITY -->
     <string name="fragment_home_blog_from">FROM THE EUROPEANA BLOG</string>
@@ -12,6 +13,7 @@
     <string name="form_search_profile_default">No search profile</string>
 
     <!-- MYEUROPEANA DIALOG -->
+    <string name="dialog_myeuropeana_title">MyEuropeana profile</string>
     <string name="dialog_myeuropeana_email">Login / Email address</string>
     <string name="dialog_myeuropeana_username">MyEuropeana username</string>
     <string name="dialog_myeuropeana_saveditem">Nr of saved items</string>
@@ -21,6 +23,8 @@
     <string name="dialog_myeuropeana_button_logoff">Disconnect</string>
 
     <!-- SEARCH ACTIVITY -->
+    <string name="dialog_profile_saveas_title">Profile title</string>
+    <string name="dialog_profile_saveas_text">Give a short descriptive name for your search profile:</string>
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
     <string name="drawer_facets_section_breadcrumbs">MATCHES FOR</string>
@@ -30,13 +34,20 @@
     <string name="msg_searchresults">SHOWING %1$d OF %2$d RESULTS</string>
     <string name="msg_loading">RETRIEVING RECORD&#8230;</string>
     <string name="msg_profile_selectfacets">Select one or more facets first&#8230;</string>
+    <string name="msg_profile_saved">Search profile created</string>
+
 
     <!-- RECORD ACTIVITY -->
+    <string name="dialog_tag_saveas_text">Create a new social tag:</string>
+    <string name="dialog_tag_saveas_input">tag name</string>
     <string name="record_tab_details">Details</string>
     <string name="record_tab_images">Image(s)</string>
     <string name="record_tab_map">Map</string>
     <string name="record_tab_seealso">See also</string>
     <string name="msg_copied2clipboard">Value copied to clipboard&#8230;</string>
+    <string name="msg_tag_saved">Social tag created</string>
+    <string name="msg_item_saved">MyEuropeana Item saved</string>
+    <string name="msg_item_removed">MyEuropeana Item removed</string>
 
     <string name="record_field_title">TITLE</string>
     <string name="record_field_dc_creator">CREATOR</string>
