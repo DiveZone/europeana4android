@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.gui.fragment.SettingsFragment;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -47,4 +48,8 @@ public class SettingsActivity extends PreferenceActivity {
         loadHeadersFromResource(R.xml.settings, target);
     }
 
+    @Override
+    protected boolean isValidFragment(String fragmentName) {
+        return StringUtils.equals(SettingsFragment.class.getName(), fragmentName);
+    }
 }
