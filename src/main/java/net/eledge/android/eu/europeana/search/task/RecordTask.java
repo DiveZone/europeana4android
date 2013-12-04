@@ -23,7 +23,7 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
 
 	private final RecordController recordController = RecordController._instance;
 
-	private Activity mActivity;
+	private final Activity mActivity;
 
     private String recordId;
 

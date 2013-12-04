@@ -22,8 +22,8 @@ public enum FacetType implements FacetConverter {
 	PROVIDER(false, R.string.facettype_provider), 
 	DATA_PROVIDER(false, R.string.facettype_dataprovider);
 	
-	public int resId;
-	public boolean hasIcon;
+	public final int resId;
+	public final boolean hasIcon;
 	
 	private FacetConverter facetConverter = new FacetConverter() {
 		@Override

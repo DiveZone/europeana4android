@@ -17,7 +17,7 @@ import java.util.Locale;
 
 public class RssFeedHandler extends DefaultHandler {
 	
-	SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
+	private final SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
 
 	private BlogArticle article;
 	private StringBuilder content = new StringBuilder();

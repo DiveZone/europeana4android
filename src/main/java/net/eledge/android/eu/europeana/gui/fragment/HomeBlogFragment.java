@@ -85,12 +85,7 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
 		return root;
 	}
 
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
-
-	@Override
+    @Override
 	public void onDestroy() {
 		if (mRssReaderTask != null) {
 			mRssReaderTask.cancel(true);

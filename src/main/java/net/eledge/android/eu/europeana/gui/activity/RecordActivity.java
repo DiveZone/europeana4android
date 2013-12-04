@@ -60,8 +60,8 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     private EuropeanaApplication mApplication;
     private Europeana mEuropeanaApi;
     // Controller
-    private SearchController searchController = SearchController._instance;
-    private RecordController recordController = RecordController._instance;
+    private final SearchController searchController = SearchController._instance;
+    private final RecordController recordController = RecordController._instance;
     // ViewPager
     private RecordPagerAdapter mRecordPagerAdapter;
     private ViewPager mViewPager;
@@ -69,7 +69,6 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mResultsList;
-    private ResultAdapter mResultAdaptor;
 
     private RecordDetailsFragment mDetailsFragment;
     public boolean mTwoColumns = false;
@@ -84,7 +83,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         recordController.registerListener(RecordActivity.class, this);
 
         mResultsList = (ListView) findViewById(R.id.drawer_items);
-        mResultAdaptor = new ResultAdapter((EuropeanaApplication) getApplication(), this,
+        ResultAdapter mResultAdaptor = new ResultAdapter((EuropeanaApplication) getApplication(), this,
                 searchController.getSearchItems());
         mResultsList.setAdapter(mResultAdaptor);
         mResultsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

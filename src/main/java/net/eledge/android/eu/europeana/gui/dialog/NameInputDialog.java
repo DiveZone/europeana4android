@@ -18,11 +18,11 @@ import org.apache.commons.lang.StringUtils;
 
 public class NameInputDialog extends DialogFragment {
 
-    private int resTitle;
-    private int resText;
-    private int resInput;
-    private int resPositiveButton;
-    private NameInputDialogResponse response;
+    private final int resTitle;
+    private final int resText;
+    private final int resInput;
+    private final int resPositiveButton;
+    private final NameInputDialogResponse response;
     private AlertDialog mDialog;
 
     private EditText mInput;

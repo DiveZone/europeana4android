@@ -28,9 +28,9 @@ import javax.xml.parsers.SAXParserFactory;
 
 public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
 	
-	private Activity mActivity;
+	private final Activity mActivity;
 	
-	private TaskListener<List<BlogArticle>> mListener;
+	private final TaskListener<List<BlogArticle>> mListener;
 	
 	public RssReader(Activity activity, TaskListener<List<BlogArticle>> listener) {
 		super();

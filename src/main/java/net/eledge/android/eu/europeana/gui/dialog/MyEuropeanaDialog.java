@@ -17,12 +17,11 @@ import org.springframework.social.europeana.api.Europeana;
 import org.springframework.social.europeana.api.model.Profile;
 
 public class MyEuropeanaDialog extends DialogFragment implements TaskListener<Profile> {
-    private static final String TAG = MyEuropeanaDialog.class.getSimpleName();
 
     private EuropeanaApplication mApplication;
     private Europeana mEuropeanaApi;
 
-    public MyEuropeanaDialog() {
+    private MyEuropeanaDialog() {
         super();
     }
 
@@ -30,11 +29,6 @@ public class MyEuropeanaDialog extends DialogFragment implements TaskListener<Pr
         super();
         mApplication = application;
         mEuropeanaApi = application.getMyEuropeanaApi();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override

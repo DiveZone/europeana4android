@@ -33,7 +33,7 @@ public enum Language {
 
 	MUL(R.string.locale_mul);
 
-	public int resourceId;
+	public final int resourceId;
 
 	private Language(int resourceId) {
 		this.resourceId = resourceId;

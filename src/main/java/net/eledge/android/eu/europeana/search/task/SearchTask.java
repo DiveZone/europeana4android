@@ -23,8 +23,8 @@ public class SearchTask extends AsyncTask<String, Void, SearchItems> {
 
     private long startTime;
 
-	private SearchController searchController = SearchController._instance;
-	private Activity mActivity;
+	private final SearchController searchController = SearchController._instance;
+	private final Activity mActivity;
 
 	public SearchTask(Activity activity, int pageLoad) {
 		super();
@@ -71,7 +71,7 @@ public class SearchTask extends AsyncTask<String, Void, SearchItems> {
 
 	private class ListenerNotifier implements Runnable {
 
-		private SearchItems result;
+		private final SearchItems result;
 
 		public ListenerNotifier(SearchItems result) {
 			this.result = result;

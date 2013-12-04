@@ -26,7 +26,7 @@ import org.apache.commons.lang.StringUtils;
 public class RecordMapFragment extends Fragment implements TaskListener<RecordObject> {
 	
 	// Controller
-	private RecordController recordController = RecordController._instance;
+	private final RecordController recordController = RecordController._instance;
 	
 	private MapView mMapView;
 	

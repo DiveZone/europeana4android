@@ -21,9 +21,9 @@ import java.util.Date;
 
 public class SuggestionTask extends AsyncTask<String, Void, Item[]> {
 	
-	private SearchController searchController = SearchController._instance;
+	private final SearchController searchController = SearchController._instance;
 
-	private TaskListener<Item[]> listener;
+	private final TaskListener<Item[]> listener;
 	
 	private String term;
 

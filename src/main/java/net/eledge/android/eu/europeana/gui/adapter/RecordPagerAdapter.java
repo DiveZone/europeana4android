@@ -21,11 +21,11 @@ import java.util.List;
 
 public class RecordPagerAdapter extends FragmentStatePagerAdapter implements TaskListener<RecordObject>  {
 	
-	private Context mContext;
-	private RecordActivity mRecordActivity;
+	private final Context mContext;
+	private final RecordActivity mRecordActivity;
 	
-	private List<Fragment> fragments = new ArrayList<>();
-	public List<Integer> labels = new ArrayList<>();
+	private final List<Fragment> fragments = new ArrayList<>();
+	public final List<Integer> labels = new ArrayList<>();
 	
 	public RecordPagerAdapter(RecordActivity activity, FragmentManager fm, Context context) {
 		super(fm);

@@ -48,8 +48,8 @@ public enum Country {
 	
 	EU(R.string.country_eu, "europe");
 
-	private String hardcoded;
-	public int resourceId;
+	private final String hardcoded;
+	public final int resourceId;
 
 	private Country(int resource, String hardcoded) {
 		this.hardcoded = hardcoded;

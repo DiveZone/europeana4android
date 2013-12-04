@@ -19,8 +19,8 @@ import java.util.Date;
 
 public class SearchFacetTask extends AsyncTask<String, Void, SearchFacets> {
 
-	private SearchController searchController = SearchController._instance;
-	private Activity mActivity;
+	private final SearchController searchController = SearchController._instance;
+	private final Activity mActivity;
 
     private long startTime;
 
@@ -68,7 +68,7 @@ public class SearchFacetTask extends AsyncTask<String, Void, SearchFacets> {
 
 	private class ListenerNotifier implements Runnable {
 
-		private SearchFacets result;
+		private final SearchFacets result;
 
 		public ListenerNotifier(SearchFacets result) {
 			this.result = result;
@@ -78,7 +78,7 @@ public class SearchFacetTask extends AsyncTask<String, Void, SearchFacets> {
 			searchController.onSearchFacetFinish(result);
 			for (SearchTaskListener l : searchController.listeners.values()) {
 				if (l != null) {
-					l.onSearchFacetFinish(result);
+					l.onSearchFacetFinish();
 				}
 			}
 		}

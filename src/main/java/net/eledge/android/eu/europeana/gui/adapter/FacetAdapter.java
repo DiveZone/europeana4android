@@ -17,7 +17,7 @@ import java.util.List;
 
 public class FacetAdapter extends ArrayAdapter<FacetItem> {
 
-	private LayoutInflater inflater;
+	private final LayoutInflater inflater;
 	private final Typeface europeanaFont;
 
 	public FacetAdapter(EuropeanaApplication application, Context context, List<FacetItem> facetItems) {

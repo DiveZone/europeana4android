@@ -4,7 +4,7 @@
         android:id="@+id/action_myeuropeana"
         android:icon="@drawable/ic_action_person"
         android:orderInCategory="100"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/action_myeuropeana"/>
     <item
         android:id="@+id/action_settings"

@@ -24,7 +24,6 @@ import net.eledge.android.eu.europeana.gui.activity.RecordActivity;
 import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
-import net.eledge.android.eu.europeana.search.model.SearchFacets;
 import net.eledge.android.eu.europeana.search.model.SearchItems;
 import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.toolkit.gui.GuiUtils;
@@ -37,7 +36,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 
 	private TextView mStatusTextView;
 
-	private SearchController searchController = SearchController._instance;
+	private final SearchController searchController = SearchController._instance;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -71,24 +70,14 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 		return root;
 	}
 
-	@Override
-	public void onStart() {
-		super.onStart();
-	}
-
-	@Override
+    @Override
 	public void onDestroy() {
 		searchController.cancelSearch();
 		searchController.unregister(SearchResultsFragment.class);
 		super.onDestroy();
 	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
 
-	@Override
+    @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		mGridview.setOnScrollListener(new OnScrollListener() {
@@ -144,7 +133,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 		});
 	}
 
-	protected void onLastListItemDisplayed() {
+	void onLastListItemDisplayed() {
 		if (searchController.hasMoreResults()) {
 			searchController.continueSearch(this.getActivity());
 		}
@@ -164,7 +153,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 	}
 
     @Override
-    public void onSearchFacetFinish(SearchFacets results) {
+    public void onSearchFacetFinish() {
         // ignore
     }
 
@@ -178,13 +167,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 		showStatusText();
 	}
 
-	@Override
-	public void onSearchError(String message) {
-		mStatusTextView.setText(message);
-		showStatusText();
-	}
-
-	private void hideStatusText() {
+    private void hideStatusText() {
 		if ((mStatusTextView == null) || !mStatusTextView.isShown()) {
 			return;
 		}

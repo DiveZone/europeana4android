@@ -9,13 +9,8 @@ import android.view.ViewGroup;
 import net.eledge.android.eu.europeana.R;
 
 public class RecordSeeAlsoFragment extends Fragment {
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-	
-	@Override
+
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = inflater.inflate(
 				R.layout.fragment_record_seealso, null);

@@ -9,7 +9,7 @@ public class Resource {
 
     public String about;
 
-    public static Map<String, String[]> mergeMapArrays(Map<String, String[]> source1, Map<String, String[]> source2) {
+    protected static Map<String, String[]> mergeMapArrays(Map<String, String[]> source1, Map<String, String[]> source2) {
         Map<String, String[]> merged = new HashMap<>();
         if (source1 != null) {
             merged.putAll(source1);
@@ -53,7 +53,7 @@ public class Resource {
         return null;
     }
 
-    public static <T> T defaultValue(T value1, T value2) {
+    protected static <T> T defaultValue(T value1, T value2) {
         if (value1 != null) {
             return value1;
         }

@@ -16,14 +16,9 @@ import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 public class RecordImagesFragment extends Fragment {
 
     // Controller
-    private RecordController recordController = RecordController._instance;
+    private final RecordController recordController = RecordController._instance;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-	
-	@Override
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = inflater.inflate(R.layout.fragment_record_images, null);
         RecordObject record = recordController.record;

@@ -52,7 +52,7 @@ public enum Right {
      *
      * @return Full url associated with the rights
      */
-    public String getUrl() {
+    String getUrl() {
         return url;
     }
 

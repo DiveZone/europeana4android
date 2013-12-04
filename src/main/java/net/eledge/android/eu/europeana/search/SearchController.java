@@ -36,8 +36,8 @@ public class SearchController {
 	public int searchPagesize = 12;
 	public int suggestionPagesize = 12;
 
-	public Map<String, SearchTaskListener> listeners = new HashMap<>();
-	public List<String> terms = new ArrayList<>();
+	public final Map<String, SearchTaskListener> listeners = new HashMap<>();
+	private final List<String> terms = new ArrayList<>();
 
 	private int pageLoad = 1;
 	private long totalResults;
@@ -142,7 +142,7 @@ public class SearchController {
 		}
 	}
 
-	public void reset() {
+	void reset() {
 		cancelSearch();
 		pageLoad = 1;
 		totalResults = 0;

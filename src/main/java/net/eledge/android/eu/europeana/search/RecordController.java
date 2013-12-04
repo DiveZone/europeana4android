@@ -24,7 +24,7 @@ public class RecordController {
 
 	private RecordTask mRecordTask;
 
-	public Map<String, TaskListener<RecordObject>> listeners = new HashMap<>();
+	public final Map<String, TaskListener<RecordObject>> listeners = new HashMap<>();
 
 	public void readRecord(Activity activity, String id) {
 		if (StringUtils.isNotBlank(id)) {

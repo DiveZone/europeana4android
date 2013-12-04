@@ -1,12 +1,13 @@
 package net.eledge.android.eu.europeana.gui.fragment;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,9 @@ import java.util.ArrayList;
 public class RecordDetailsFragment extends Fragment implements TaskListener<RecordObject> {
 
 	// Controller
-	private RecordController recordController = RecordController._instance;
+	private final RecordController recordController = RecordController._instance;
 
-	private ListView mListView;
-	
-	private RecordViewAdapter mRecordViewAdapter;
+    private RecordViewAdapter mRecordViewAdapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -47,27 +46,13 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = inflater.inflate(R.layout.fragment_record_details, null);
-		mListView = (ListView) root.findViewById(R.id.fragment_record_details_listview);
+        ListView mListView = (ListView) root.findViewById(R.id.fragment_record_details_listview);
 		mListView.setAdapter(mRecordViewAdapter);
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                RecordView record = mRecordViewAdapter.getItem(position);
-                Activity activity = RecordDetailsFragment.this.getActivity();
-                ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-                clipboard.setPrimaryClip(ClipData.newPlainText(GuiUtils.getString(getActivity(), record.getLabel()),
-                        StringUtils.join(record.getValues(recordController.record, (EuropeanaApplication)getActivity().getApplication()), ";")));
-                GuiUtils.toast(activity, R.string.msg_copied2clipboard);
-                return true;
-            }
-        });
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            setupClipboardAction(mListView);
+        }
         return root;
 	}
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }
 
     @Override
 	public void onResume() {
@@ -96,5 +81,21 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
 		}
 		mRecordViewAdapter.notifyDataSetChanged();
 	}
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private void setupClipboardAction(ListView mListView) {
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                RecordView record = mRecordViewAdapter.getItem(position);
+                Activity activity = RecordDetailsFragment.this.getActivity();
+                ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboard.setPrimaryClip(ClipData.newPlainText(GuiUtils.getString(getActivity(), record.getLabel()),
+                        StringUtils.join(record.getValues(recordController.record, (EuropeanaApplication) getActivity().getApplication()), ";")));
+                GuiUtils.toast(activity, R.string.msg_copied2clipboard);
+                return true;
+            }
+        });
+    }
 
 }

@@ -25,7 +25,6 @@ public class EuropeanaApplication extends Application {
     public static final String METADATA_EUROPEANA_API_PRIVATEKEY = "eu.europeana.api.v2.API_PRIVATE_KEY";
 
     private ConnectionFactoryRegistry connectionFactoryRegistry;
-    private SQLiteOpenHelper repositoryHelper;
     private ConnectionRepository connectionRepository;
 
     private ImageCacheManager imageCacheManager;
@@ -48,13 +47,11 @@ public class EuropeanaApplication extends Application {
                     getEuropeanaPrivateKey()));
 
             // set up the database and encryption
-            this.repositoryHelper = new SQLiteConnectionRepositoryHelper(this);
-            this.connectionRepository = new SQLiteConnectionRepository(this.repositoryHelper,
+            SQLiteOpenHelper repositoryHelper = new SQLiteConnectionRepositoryHelper(this);
+            this.connectionRepository = new SQLiteConnectionRepository(repositoryHelper,
                     this.connectionFactoryRegistry, AndroidEncryptors.text("password", "5c0744940b5c369b"));
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-        } finally {
-
         }
     }
 

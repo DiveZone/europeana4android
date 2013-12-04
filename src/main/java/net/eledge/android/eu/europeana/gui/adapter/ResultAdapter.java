@@ -22,7 +22,7 @@ import java.util.List;
 public class ResultAdapter extends ArrayAdapter<Item> {
 
 	// Controller
-	private SearchController searchController = SearchController._instance;
+	private final SearchController searchController = SearchController._instance;
 	
 	private final LayoutInflater inflater;
 

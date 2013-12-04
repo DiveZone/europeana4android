@@ -36,7 +36,7 @@ public class GetProfileTask extends AsyncTask<Void, Void, Profile> {
             return mEuropeanaApi.profileOperations().getProfile();
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
-                
+                // TODO: what??
             }
         } catch (Exception e) {
             Log.e(TAG, e.getLocalizedMessage(), e);

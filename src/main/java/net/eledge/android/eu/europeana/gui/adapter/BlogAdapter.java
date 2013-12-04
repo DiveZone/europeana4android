@@ -17,9 +17,9 @@ import java.util.List;
 
 public class BlogAdapter extends ArrayAdapter<BlogArticle> {
 	
-	private LayoutInflater inflater;
+	private final LayoutInflater inflater;
 	
-	DateFormat formatter = SimpleDateFormat.getDateTimeInstance();
+	private final DateFormat formatter = SimpleDateFormat.getDateTimeInstance();
 	
 	public BlogAdapter(Context context, List<BlogArticle> articles) {
 		super(context, 0, articles);
@@ -28,7 +28,7 @@ public class BlogAdapter extends ArrayAdapter<BlogArticle> {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ArticleViewHolder holder = null;
+		ArticleViewHolder holder;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.listitem_home_blog, parent, false);
 			holder = new ArticleViewHolder();

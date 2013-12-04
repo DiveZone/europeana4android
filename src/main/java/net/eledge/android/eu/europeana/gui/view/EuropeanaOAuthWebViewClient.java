@@ -20,11 +20,11 @@ public class EuropeanaOAuthWebViewClient extends WebViewClient {
 
     private static final String TAG = EuropeanaOAuthWebViewClient.class.getSimpleName();
 
-    private Activity mActivity;
+    private final Activity mActivity;
 
-    private EuropeanaApplication mApplication;
+    private final EuropeanaApplication mApplication;
 
-    private AuthorisationListener mListener;
+    private final AuthorisationListener mListener;
 
     public EuropeanaOAuthWebViewClient(Activity activity, AuthorisationListener listener) {
         super();

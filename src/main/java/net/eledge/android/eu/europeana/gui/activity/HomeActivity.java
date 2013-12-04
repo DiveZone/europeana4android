@@ -50,9 +50,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 
     private EuropeanaApplication mApplication;
 
-	private EditText mEditTextQuery;
-
-	private GridView mGridViewSuggestions;
+    private GridView mGridViewSuggestions;
     private SuggestionAdapter mSuggestionsAdaptor;
 
     private Spinner mSpinnerProfiles;
@@ -60,7 +58,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 
 	private HomeBlogFragment mBlogFragment;
 
-	private SearchController searchController = SearchController._instance;
+	private final SearchController searchController = SearchController._instance;
 	
 	private boolean isLandscape;
 
@@ -80,41 +78,41 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 		mGridViewSuggestions.setAdapter(mSuggestionsAdaptor);
 		mGridViewSuggestions.setOnItemClickListener(this);
 
-		mEditTextQuery = (EditText) findViewById(R.id.activity_home_edittext_query);
+        EditText mEditTextQuery = (EditText) findViewById(R.id.activity_home_edittext_query);
 		mEditTextQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if ((actionId == EditorInfo.IME_ACTION_SEARCH) || (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-					performSearch(v.getText().toString());
-					return true;
-				}
-				return false;
-			}
-		});
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((actionId == EditorInfo.IME_ACTION_SEARCH) || (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    performSearch(v.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
 		mEditTextQuery.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if (s.length() > 2) {
-					if (mGridViewSuggestions.isShown()) {
-						mSuggestionsAdaptor.clear();
-						mSuggestionsAdaptor.notifyDataSetChanged();
-					}
-					searchController.suggestions(HomeActivity.this, s.toString());
-				} else {
-					onTaskFinished(null);
-				}
-			}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 2) {
+                    if (mGridViewSuggestions.isShown()) {
+                        mSuggestionsAdaptor.clear();
+                        mSuggestionsAdaptor.notifyDataSetChanged();
+                    }
+                    searchController.suggestions(HomeActivity.this, s.toString());
+                } else {
+                    onTaskFinished(null);
+                }
+            }
 
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				// ignore
-			}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // ignore
+            }
 
-			@Override
-			public void afterTextChanged(Editable s) {
-				// ignore
-			}
-		});
+            @Override
+            public void afterTextChanged(Editable s) {
+                // ignore
+            }
+        });
 
         mProfilesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
         mSpinnerProfiles = (Spinner) findViewById(R.id.activity_home_spinner_profile);

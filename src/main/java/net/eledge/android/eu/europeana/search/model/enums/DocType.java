@@ -12,8 +12,8 @@ public enum DocType {
 	VIDEO(R.string.doctype_video, "("),
 	_3D(R.string.doctype_3d, "{");
 
-	public int resourceId;
-	public String icon;
+	public final int resourceId;
+	public final String icon;
 
 	private DocType(int resourceId, String icon) {
 		this.resourceId = resourceId;

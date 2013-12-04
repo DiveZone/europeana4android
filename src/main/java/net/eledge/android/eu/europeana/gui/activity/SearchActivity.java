@@ -39,7 +39,6 @@ import net.eledge.android.eu.europeana.gui.dialog.NameInputDialog;
 import net.eledge.android.eu.europeana.gui.fragment.SearchResultsFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
-import net.eledge.android.eu.europeana.search.model.SearchFacets;
 import net.eledge.android.eu.europeana.search.model.SearchItems;
 import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
@@ -62,7 +61,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
     private FacetAdapter mFacetsAdaptor;
 
     // Controller
-    private SearchController searchController = SearchController._instance;
+    private final SearchController searchController = SearchController._instance;
 
     private String runningSearch = null;
 
@@ -238,17 +237,12 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
     }
 
     @Override
-    public void onSearchError(String message) {
-        GuiUtils.toast(this, message);
-    }
-
-    @Override
     public void onSearchItemsFinish(SearchItems results) {
         // ignore
     }
 
     @Override
-    public void onSearchFacetFinish(SearchFacets results) {
+    public void onSearchFacetFinish() {
         updateFacetDrawer();
         runningSearch = null;
     }

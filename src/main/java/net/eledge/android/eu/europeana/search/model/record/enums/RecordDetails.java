@@ -354,11 +354,11 @@ public enum RecordDetails implements RecordView {
         return drawDetailView(getLabel(), getValues(record, application), parent, inflater);
     }
 
-    protected View drawDetailView(int titleResId, String[] values, ViewGroup parent, LayoutInflater inflater) {
+    View drawDetailView(int titleResId, String[] values, ViewGroup parent, LayoutInflater inflater) {
         return drawDetailView(titleResId, cleanCombineResults(values), parent, inflater);
     }
 
-    protected View drawDetailView(int titleResId, String value, ViewGroup parent, LayoutInflater inflater) {
+    View drawDetailView(int titleResId, String value, ViewGroup parent, LayoutInflater inflater) {
         View view = inflater.inflate(R.layout.listitem_record_detail, parent, false);
         TextView textTitle = (TextView) view.findViewById(android.R.id.text1);
         TextView textValue = (TextView) view.findViewById(android.R.id.text2);
