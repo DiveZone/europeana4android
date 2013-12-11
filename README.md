@@ -86,6 +86,12 @@ installation is up to you.
 6. Before testing you are required to have a Google Maps API key and combination
 of Europeana API public and private key.
 
+## Project planning
+
+We have our todo list on a trello scrum board (although we don't do sprints (yet))
+
+<https://trello.com/b/AykTks3F/europeana-4-android>
+
 ## More project information
 
 For more detailed project documentation, visit the WIKI pages on:
