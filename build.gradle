@@ -57,7 +57,7 @@ dependencies {
     compile project(':AndroidToolkit')
     compile 'com.android.support:support-v4:19.0.+'
     compile "com.android.support:appcompat-v7:19.0.+"
-    compile 'com.google.android.gms:play-services:4.0.+'
+    compile 'com.google.android.gms:play-services:4.1.+'
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     compile ('org.springframework.android:spring-android-auth:1.0.1.RELEASE') {
         exclude group: 'org.springframework'
