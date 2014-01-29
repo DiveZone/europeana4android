@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2014 eLedge.net and the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package net.eledge.android.eu.europeana.gui.activity;
 
 import android.annotation.TargetApi;
@@ -44,6 +59,8 @@ import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import net.eledge.android.toolkit.StringArrayUtils;
 import net.eledge.android.toolkit.gui.GuiUtils;
+import net.eledge.android.toolkit.gui.ViewInjector;
+import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -52,16 +69,22 @@ import java.util.List;
 
 public class SearchActivity extends ActionBarActivity implements SearchTaskListener {
 
-    private SearchResultsFragment mSearchFragment;
-
-    // NavigationDrawer
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private ListView mFacetsList;
-    private FacetAdapter mFacetsAdaptor;
-
     // Controller
     private final SearchController searchController = SearchController._instance;
+
+    // Fragments
+    private SearchResultsFragment mSearchFragment;
+
+    // Views
+    @ViewResource(value = R.id.drawerlayout_activity_search, optional = true)
+    public DrawerLayout mDrawerLayout;
+    @ViewResource(R.id.drawer_facets)
+    public ListView mFacetsList;
+
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    // Adapters
+    private FacetAdapter mFacetsAdaptor;
 
     private String runningSearch = null;
 
@@ -69,13 +92,13 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        ViewInjector.inject(this);
 
         searchController.registerListener(SearchActivity.class, this);
         searchController.searchPagesize = getResources().getInteger(R.integer.search_result_pagesize);
 
         mFacetsAdaptor = new FacetAdapter((EuropeanaApplication) getApplication(), this, new ArrayList<FacetItem>());
 
-        mFacetsList = (ListView) findViewById(R.id.drawer_facets);
         mFacetsList.setAdapter(mFacetsAdaptor);
         mFacetsList.setOnItemClickListener(new DrawerItemClickListener());
 
@@ -83,7 +106,6 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_activity_search);
         if (mDrawerLayout != null) {
             mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
             mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
@@ -261,6 +283,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
                 dao.close();
                 GuiUtils.toast(SearchActivity.this, R.string.msg_profile_saved);
             }
+
             @Override
             public void negativeResponse() {
                 // ignore

@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2014 eLedge.net and the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
 buildscript {
     repositories {
         mavenCentral()
@@ -51,6 +68,14 @@ android {
     } else {
         buildTypes.release.signingConfig = null
     }
+
+    packagingOptions {
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 dependencies {
@@ -59,17 +84,17 @@ dependencies {
     compile "com.android.support:appcompat-v7:19.0.+"
     compile 'com.google.android.gms:play-services:4.1.+'
     compile 'org.springframework.android:spring-android-rest-template:1.0.+'
-    compile ('org.springframework.android:spring-android-auth:1.0.+') {
+    compile('org.springframework.android:spring-android-auth:1.0.+') {
         exclude group: 'org.springframework'
     }
     compile 'com.google.code.gson:gson:2.2.+'
-    compile ('org.springframework.security:spring-security-crypto:3.1.+') {
+    compile('org.springframework.security:spring-security-crypto:3.1.+') {
         exclude group: 'org.springframework'
     }
-    compile ('org.springframework.social:spring-social-core:1.0.+') {
+    compile('org.springframework.social:spring-social-core:1.0.+') {
         exclude group: 'org.springframework'
     }
-    compile ('net.eledge:spring-social-europeana:0.0.4-SNAPSHOT') {
+    compile('net.eledge:spring-social-europeana:0.0.4-SNAPSHOT') {
         exclude group: 'org.springframework'
     }
     compile files('libs/libGoogleAnalyticsServices.jar')

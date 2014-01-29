@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2014 eLedge.net and the original author or authors.
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <resources>
 
     <string name="app_name" translatable="false">Europeana Search (Beta)</string>
@@ -94,7 +109,7 @@
     <string name="facettype_provider">BY PROVIDER</string>
     <string name="facettype_dataprovider">BY DATA PROVIDER</string>
     <string name="facettype_ugc">Include content contributed by users</string>
-    
+
     <!-- DOCTYPE -->
     <string name="doctype_image">Image</string>
     <string name="doctype_text">Text</string>
@@ -139,9 +154,9 @@
     <string name="country_tr">Turkey</string>
     <string name="country_ua">Ukraine</string>
     <string name="country_uk">United Kingdom</string>
-    
+
     <string name="country_eu">Europe</string>
-    
+
     <!-- LANGUAGES -->
     <string name="locale_bg">Bulgarian</string>
     <string name="locale_ca">Catalan</string>
@@ -166,10 +181,10 @@
     <string name="locale_sk">Slovak</string>
     <string name="locale_sr">Serbian</string>
     <string name="locale_sv">Swedish</string>
-    
+
     <string name="locale_mul">Multilingual</string>
-    
+
     <!-- CONTENT DESCRIPTORS -->
     <string name="contentdescriptor_searchitem_image">Search Item image preview</string>
-    
+
 </resources>

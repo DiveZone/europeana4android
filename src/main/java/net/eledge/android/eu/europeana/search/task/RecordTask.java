@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2014 eLedge.net and the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package net.eledge.android.eu.europeana.search.task;
 
 import android.app.Activity;
@@ -21,18 +36,18 @@ import java.util.Date;
 
 public class RecordTask extends AsyncTask<String, Void, RecordObject> {
 
-	private final RecordController recordController = RecordController._instance;
+    private final RecordController recordController = RecordController._instance;
 
-	private final Activity mActivity;
+    private final Activity mActivity;
 
     private String recordId;
 
     private long startTime;
 
-	public RecordTask(Activity activity) {
-		super();
-		mActivity = activity;
-	}
+    public RecordTask(Activity activity) {
+        super();
+        mActivity = activity;
+    }
 
     @Override
     protected void onPreExecute() {
@@ -40,20 +55,20 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
         mActivity.runOnUiThread(new ListenerNotifier<>(recordController.listeners.values()));
     }
 
-	@Override
-	protected RecordObject doInBackground(String... params) {
-		if (TextUtils.isEmpty(params[0])) {
-			return null;
-		}
+    @Override
+    protected RecordObject doInBackground(String... params) {
+        if (TextUtils.isEmpty(params[0])) {
+            return null;
+        }
         recordId = params[0];
-		String url = UriHelper.getRecordUrl(((EuropeanaApplication)mActivity.getApplication()).getEuropeanaPublicKey(), recordId);
+        String url = UriHelper.getRecordUrl(((EuropeanaApplication) mActivity.getApplication()).getEuropeanaPublicKey(), recordId);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
         return RecordObject.normalize(restTemplate.getForObject(url, Record.class).object);
-	}
+    }
 
-	@Override
-	protected void onPostExecute(RecordObject result) {
+    @Override
+    protected void onPostExecute(RecordObject result) {
         EasyTracker tracker = EasyTracker.getInstance(mActivity);
         tracker.send(MapBuilder
                 .createTiming("Tasks",
@@ -61,8 +76,8 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
                         "RecordTask",
                         recordId)
                 .build());
-		recordController.record = result;
-		mActivity.runOnUiThread(new ListenerNotifier<>(recordController.listeners.values(), result));
-	}
+        recordController.record = result;
+        mActivity.runOnUiThread(new ListenerNotifier<>(recordController.listeners.values(), result));
+    }
 
 }

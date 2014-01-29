@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2014 eLedge.net and the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package net.eledge.android.eu.europeana.gui.activity;
 
 import android.annotation.TargetApi;
@@ -187,8 +202,8 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         menu.findItem(R.id.action_new_label).setVisible(mApplication.isMyEuropeanaConnected());
         MenuItem item = menu.findItem(R.id.action_save_item);
         item.setVisible(mApplication.isMyEuropeanaConnected());
-        item.setIcon(recordController.isCurrentRecordSelected()?R.drawable.ic_action_important:R.drawable.ic_action_not_important);
-        item.setTitle(recordController.isCurrentRecordSelected()?R.string.action_remove_item:R.string.action_save_item);
+        item.setIcon(recordController.isCurrentRecordSelected() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important);
+        item.setTitle(recordController.isCurrentRecordSelected() ? R.string.action_remove_item : R.string.action_save_item);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -242,10 +257,10 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     }
 
     private void switchViews(boolean showLoading) {
-        findViewById(R.id.include_record_loading).setVisibility(showLoading?View.VISIBLE:View.GONE);
-        findViewById(R.id.activity_record_pager).setVisibility(!showLoading?View.VISIBLE:View.GONE);
+        findViewById(R.id.include_record_loading).setVisibility(showLoading ? View.VISIBLE : View.GONE);
+        findViewById(R.id.activity_record_pager).setVisibility(!showLoading ? View.VISIBLE : View.GONE);
         if (mTwoColumns) {
-            findViewById(R.id.activity_record_fragment_details).setVisibility(!showLoading?View.VISIBLE:View.GONE);
+            findViewById(R.id.activity_record_fragment_details).setVisibility(!showLoading ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -377,6 +392,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
                 public void onTaskStart() {
                     // ignore
                 }
+
                 @Override
                 public void onTaskFinished(Boolean result) {
                     recordController.setCurrentRecordSelected(result);
@@ -405,6 +421,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
                             public void onTaskStart() {
                                 // ignore
                             }
+
                             @Override
                             public void onTaskFinished(UserModification result) {
                                 if (result != null) {
@@ -420,6 +437,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
                         }).execute(input);
                     }
                 }
+
                 @Override
                 public void negativeResponse() {
                     // ignore

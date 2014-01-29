@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  ~ Copyright (c) 2014 eLedge.net and the original author or authors.
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
         android:key="settings_about_version"
         android:title="@string/settings_about_version"
-        android:editable="false" />
+        android:editable="false"/>
     <Preference
         android:key="settings_about_build"
         android:title="@string/settings_about_build"
-        android:editable="false" />
+        android:editable="false"/>
     <Preference
         android:key="settings_about_copyright1"
         android:title="@string/settings_about_copyright1"
@@ -17,7 +32,7 @@
         android:editable="false">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="@string/settings_about_copyright1_url" />
+            android:data="@string/settings_about_copyright1_url"/>
     </Preference>
     <Preference
         android:key="settings_about_copyright2"
@@ -26,7 +41,7 @@
         android:editable="false">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="@string/settings_about_copyright2_url" />
+            android:data="@string/settings_about_copyright2_url"/>
     </Preference>
     <Preference
         android:key="settings_about_projectsite"
@@ -35,7 +50,7 @@
         android:editable="false">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="@string/settings_about_projectsite_url" />
+            android:data="@string/settings_about_projectsite_url"/>
     </Preference>
 
 </PreferenceScreen>

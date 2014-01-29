@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2014 eLedge.net and the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package net.eledge.android.eu.europeana.tools;
 
 import android.app.Activity;
@@ -27,51 +42,51 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
-	
-	private final Activity mActivity;
-	
-	private final TaskListener<List<BlogArticle>> mListener;
-	
-	public RssReader(Activity activity, TaskListener<List<BlogArticle>> listener) {
-		super();
-		mActivity = activity;
-		mListener = listener;
-	}
 
-	@Override
-	protected List<BlogArticle> doInBackground(String... urls) {
-		String feed = urls[0];
-		InputStream is = null;
-		try {
-			HttpGet request = new HttpGet(feed);
-			AndroidHttpClient.modifyRequestToAcceptGzipResponse(request);
-			HttpResponse response = new DefaultHttpClient().execute(request);
-			is = AndroidHttpClient.getUngzippedContent(response.getEntity());
+    private final Activity mActivity;
 
-			SAXParserFactory spf = SAXParserFactory.newInstance();
-			SAXParser sp = spf.newSAXParser();
-			XMLReader xr = sp.getXMLReader();
+    private final TaskListener<List<BlogArticle>> mListener;
 
-			RssFeedHandler rh = new RssFeedHandler();
+    public RssReader(Activity activity, TaskListener<List<BlogArticle>> listener) {
+        super();
+        mActivity = activity;
+        mListener = listener;
+    }
 
-			xr.setContentHandler(rh);
-			xr.parse(new InputSource(is));
+    @Override
+    protected List<BlogArticle> doInBackground(String... urls) {
+        String feed = urls[0];
+        InputStream is = null;
+        try {
+            HttpGet request = new HttpGet(feed);
+            AndroidHttpClient.modifyRequestToAcceptGzipResponse(request);
+            HttpResponse response = new DefaultHttpClient().execute(request);
+            is = AndroidHttpClient.getUngzippedContent(response.getEntity());
 
-			return rh.articles;
-		} catch (IOException | SAXException | ParserConfigurationException e) {
-			Log.e("RssReader", e.getMessage(), e);
-		} finally {
-			IOUtils.closeQuietly(is);
-		}
+            SAXParserFactory spf = SAXParserFactory.newInstance();
+            SAXParser sp = spf.newSAXParser();
+            XMLReader xr = sp.getXMLReader();
 
-		return null;
-	}
-	
-	@Override
-	protected void onPostExecute(List<BlogArticle> articles) {
-		if (!isCancelled()) {
-			mActivity.runOnUiThread(new ListenerNotifier<>(mListener, articles));
-		}
-	}
+            RssFeedHandler rh = new RssFeedHandler();
+
+            xr.setContentHandler(rh);
+            xr.parse(new InputSource(is));
+
+            return rh.articles;
+        } catch (IOException | SAXException | ParserConfigurationException e) {
+            Log.e("RssReader", e.getMessage(), e);
+        } finally {
+            IOUtils.closeQuietly(is);
+        }
+
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(List<BlogArticle> articles) {
+        if (!isCancelled()) {
+            mActivity.runOnUiThread(new ListenerNotifier<>(mListener, articles));
+        }
+    }
 
 }

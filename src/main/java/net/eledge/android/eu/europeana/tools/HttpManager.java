@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2014 eLedge.net and the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package net.eledge.android.eu.europeana.tools;
 
 import org.apache.http.HttpHost;
@@ -21,42 +36,43 @@ import org.apache.http.params.HttpProtocolParams;
 import java.io.IOException;
 
 public class HttpManager {
-	private static final DefaultHttpClient sClient;
-	static {
-		final HttpParams params = new BasicHttpParams();
-		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-		HttpProtocolParams.setContentCharset(params, "UTF-8");
+    private static final DefaultHttpClient sClient;
 
-		HttpConnectionParams.setStaleCheckingEnabled(params, false);
-		HttpConnectionParams.setConnectionTimeout(params, 20 * 1000);
-		HttpConnectionParams.setSoTimeout(params, 20 * 1000);
-		HttpConnectionParams.setSocketBufferSize(params, 8192);
+    static {
+        final HttpParams params = new BasicHttpParams();
+        HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+        HttpProtocolParams.setContentCharset(params, "UTF-8");
 
-		HttpClientParams.setRedirecting(params, false);
+        HttpConnectionParams.setStaleCheckingEnabled(params, false);
+        HttpConnectionParams.setConnectionTimeout(params, 20 * 1000);
+        HttpConnectionParams.setSoTimeout(params, 20 * 1000);
+        HttpConnectionParams.setSocketBufferSize(params, 8192);
 
-		HttpProtocolParams.setUserAgent(params, "Europeana4Android/0.1");
+        HttpClientParams.setRedirecting(params, false);
 
-		SchemeRegistry schemeRegistry = new SchemeRegistry();
-		schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-		schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+        HttpProtocolParams.setUserAgent(params, "Europeana4Android/0.1");
 
-		ClientConnectionManager manager = new ThreadSafeClientConnManager(params, schemeRegistry);
-		sClient = new DefaultHttpClient(manager, params);
-	}
+        SchemeRegistry schemeRegistry = new SchemeRegistry();
+        schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+        schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
 
-	private HttpManager() {
-	}
+        ClientConnectionManager manager = new ThreadSafeClientConnManager(params, schemeRegistry);
+        sClient = new DefaultHttpClient(manager, params);
+    }
 
-	public static HttpResponse execute(HttpHead head) throws IOException {
-		return sClient.execute(head);
-	}
+    private HttpManager() {
+    }
 
-	public static HttpResponse execute(HttpHost host, HttpGet get) throws IOException {
-		return sClient.execute(host, get);
-	}
+    public static HttpResponse execute(HttpHead head) throws IOException {
+        return sClient.execute(head);
+    }
 
-	public static HttpResponse execute(HttpGet get) throws IOException {
-		return sClient.execute(get);
-	}
+    public static HttpResponse execute(HttpHost host, HttpGet get) throws IOException {
+        return sClient.execute(host, get);
+    }
+
+    public static HttpResponse execute(HttpGet get) throws IOException {
+        return sClient.execute(get);
+    }
 
 }

@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2014 eLedge.net and the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package net.eledge.android.eu.europeana.search.model.record.abstracts;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -17,7 +32,7 @@ public class Resource {
             return source2;
         }
         if (source2 != null) {
-            for (String key: source2.keySet()) {
+            for (String key : source2.keySet()) {
                 if (merged.containsKey(key)) {
                     merged.put(key, mergeArray(merged.get(key), source2.get(key)));
                 } else {
@@ -38,11 +53,9 @@ public class Resource {
             String key = null;
             if ((locale != null) && data.containsKey(locale)) {
                 key = locale;
-            } else
-            if (data.containsKey("def")) {
+            } else if (data.containsKey("def")) {
                 key = "def";
-            } else
-            if (data.containsKey("en")) {
+            } else if (data.containsKey("en")) {
                 key = "en";
             }
             if (key == null) {

@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2014 eLedge.net and the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package net.eledge.android.eu.europeana.gui.fragment;
 
 import android.content.Intent;
@@ -34,44 +49,44 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
 
     private BlogAdapter mBlogAdapter;
 
-	private BlogArticleDao mBlogArticleDao;
-	
-	private RssReader mRssReaderTask;
+    private BlogArticleDao mBlogArticleDao;
+
+    private RssReader mRssReaderTask;
 
     private EasyTracker mEasyTracker;
 
     @Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		mBlogAdapter = new BlogAdapter(getActivity(), new ArrayList<BlogArticle>());
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBlogAdapter = new BlogAdapter(getActivity(), new ArrayList<BlogArticle>());
         mEasyTracker = EasyTracker.getInstance(HomeBlogFragment.this.getActivity());
 
-		boolean doUpdate = false;
-		SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);
-		long time = settings.getLong(Preferences.BLOG_LASTUPDATE, -1);
-		if (time == -1) {
-			doUpdate = true;
-		} else {
-			Calendar timeLimit = Calendar.getInstance();
-			timeLimit.add(Calendar.HOUR, -24);
-			Calendar lastUpdate = Calendar.getInstance();
-			lastUpdate.setTime(new Date(time));
-			if (timeLimit.after(lastUpdate)) {
-				doUpdate = true;
-			}
-		}
-		if (doUpdate) {
-			mRssReaderTask = new RssReader(getActivity(), this);
-			mRssReaderTask.execute(UriHelper.URL_BLOGFEED);
-		}
-	}
+        boolean doUpdate = false;
+        SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);
+        long time = settings.getLong(Preferences.BLOG_LASTUPDATE, -1);
+        if (time == -1) {
+            doUpdate = true;
+        } else {
+            Calendar timeLimit = Calendar.getInstance();
+            timeLimit.add(Calendar.HOUR, -24);
+            Calendar lastUpdate = Calendar.getInstance();
+            lastUpdate.setTime(new Date(time));
+            if (timeLimit.after(lastUpdate)) {
+                doUpdate = true;
+            }
+        }
+        if (doUpdate) {
+            mRssReaderTask = new RssReader(getActivity(), this);
+            mRssReaderTask.execute(UriHelper.URL_BLOGFEED);
+        }
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = inflater.inflate(R.layout.fragment_home_blog, null);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_home_blog, null);
         ListView mListView = (ListView) root.findViewById(R.id.fragment_home_blog_listview);
-		mListView.setAdapter(mBlogAdapter);
-		mListView.setOnItemClickListener(new OnItemClickListener() {
+        mListView.setAdapter(mBlogAdapter);
+        mListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BlogArticle article = mBlogAdapter.getItem(position);
@@ -80,18 +95,18 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
                 startActivity(browserIntent);
             }
         });
-		loadFromDatabase();
+        loadFromDatabase();
 
-		return root;
-	}
+        return root;
+    }
 
     @Override
-	public void onDestroy() {
-		if (mRssReaderTask != null) {
-			mRssReaderTask.cancel(true);
-		}
-		super.onDestroy();
-	}
+    public void onDestroy() {
+        if (mRssReaderTask != null) {
+            mRssReaderTask.cancel(true);
+        }
+        super.onDestroy();
+    }
 
     @Override
     public void onTaskStart() {
@@ -99,34 +114,34 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
     }
 
     @Override
-	public void onTaskFinished(List<BlogArticle> articles) {
-		if (articles != null) {
-			showArticles(articles);
-			mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(getActivity()));
-			mBlogArticleDao.deleteAll();
-			mBlogArticleDao.store(articles);
-			mBlogArticleDao.close();
-			SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);
-			SharedPreferences.Editor editor = settings.edit();
-			editor.putLong(Preferences.BLOG_LASTUPDATE, new Date().getTime());
-			editor.commit();
-		}
-	}
+    public void onTaskFinished(List<BlogArticle> articles) {
+        if (articles != null) {
+            showArticles(articles);
+            mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(getActivity()));
+            mBlogArticleDao.deleteAll();
+            mBlogArticleDao.store(articles);
+            mBlogArticleDao.close();
+            SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putLong(Preferences.BLOG_LASTUPDATE, new Date().getTime());
+            editor.commit();
+        }
+    }
 
-	private void loadFromDatabase() {
-		mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(getActivity()));
-		List<BlogArticle> articles = mBlogArticleDao.findAll();
-		mBlogArticleDao.close();
-		showArticles(articles);
-	}
-	
-	private void showArticles(List<BlogArticle> articles) {
-		if (articles != null) {
-			mBlogAdapter.clear();
-			for (BlogArticle article: articles) {
-				mBlogAdapter.add(article);
-			}
-			mBlogAdapter.notifyDataSetChanged();
-		}
-	}
+    private void loadFromDatabase() {
+        mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(getActivity()));
+        List<BlogArticle> articles = mBlogArticleDao.findAll();
+        mBlogArticleDao.close();
+        showArticles(articles);
+    }
+
+    private void showArticles(List<BlogArticle> articles) {
+        if (articles != null) {
+            mBlogAdapter.clear();
+            for (BlogArticle article : articles) {
+                mBlogAdapter.add(article);
+            }
+            mBlogAdapter.notifyDataSetChanged();
+        }
+    }
 }

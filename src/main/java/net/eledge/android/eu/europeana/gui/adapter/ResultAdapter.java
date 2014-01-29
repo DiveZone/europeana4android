@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2014 eLedge.net and the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package net.eledge.android.eu.europeana.gui.adapter;
 
 import android.content.Context;
@@ -21,66 +36,66 @@ import java.util.List;
 
 public class ResultAdapter extends ArrayAdapter<Item> {
 
-	// Controller
-	private final SearchController searchController = SearchController._instance;
-	
-	private final LayoutInflater inflater;
+    // Controller
+    private final SearchController searchController = SearchController._instance;
 
-	private final ImageCacheManager manager;
+    private final LayoutInflater inflater;
 
-	private final Typeface europeanaFont;
+    private final ImageCacheManager manager;
 
-	public ResultAdapter(EuropeanaApplication application, Context context, List<Item> resultItems) {
-		super(context, 0, resultItems);
-		this.manager = application.getImageCacheManager();
-		this.europeanaFont = application.getEuropeanaFont();
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.manager.clearQueue();
-	}
+    private final Typeface europeanaFont;
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		ResultViewHolder holder;
-		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.griditem_searchresult, parent, false);
-			holder = new ResultViewHolder();
-			holder.textTitle = (TextView) convertView.findViewById(R.id.griditem_searchresult_textview_title);
-			holder.image = (ImageView) convertView.findViewById(R.id.griditem_searchresult_imageview_thumbnail);
-			holder.icon = (TextView) convertView.findViewById(R.id.griditem_searchresult_textview_type);
-			convertView.setTag(holder);
-		} else {
-			holder = (ResultViewHolder) convertView.getTag();
-		}
-		int bg = (searchController.getItemSelected() == position ? R.drawable.background_card_selected : R.drawable.background_card);
-		convertView.setBackgroundResource(bg);
+    public ResultAdapter(EuropeanaApplication application, Context context, List<Item> resultItems) {
+        super(context, 0, resultItems);
+        this.manager = application.getImageCacheManager();
+        this.europeanaFont = application.getEuropeanaFont();
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.manager.clearQueue();
+    }
 
-		Item item = getItem(position);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ResultViewHolder holder;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.griditem_searchresult, parent, false);
+            holder = new ResultViewHolder();
+            holder.textTitle = (TextView) convertView.findViewById(R.id.griditem_searchresult_textview_title);
+            holder.image = (ImageView) convertView.findViewById(R.id.griditem_searchresult_imageview_thumbnail);
+            holder.icon = (TextView) convertView.findViewById(R.id.griditem_searchresult_textview_type);
+            convertView.setTag(holder);
+        } else {
+            holder = (ResultViewHolder) convertView.getTag();
+        }
+        int bg = (searchController.getItemSelected() == position ? R.drawable.background_card_selected : R.drawable.background_card);
+        convertView.setBackgroundResource(bg);
 
-		if ( (item.edmPreview != null) && (item.edmPreview.length > 0)) {
-			manager.displayImage(item.edmPreview[0], holder.image, -1, new AsyncLoaderListener<Bitmap>() {
-				@Override
-				public void onFinished(Bitmap result, int httpStatus) {
-					notifyDataSetChanged();
-				}
-			});
-		}
+        Item item = getItem(position);
 
-		holder.textTitle.setText(item.title[0]);
-		holder.icon.setText(item.type.icon);
-		holder.icon.setTypeface(europeanaFont);
-		return convertView;
-	}
+        if ((item.edmPreview != null) && (item.edmPreview.length > 0)) {
+            manager.displayImage(item.edmPreview[0], holder.image, -1, new AsyncLoaderListener<Bitmap>() {
+                @Override
+                public void onFinished(Bitmap result, int httpStatus) {
+                    notifyDataSetChanged();
+                }
+            });
+        }
 
-	public void add(List<Item> newData) {
-		for (Item searchResult : newData) {
-			add(searchResult);
-		}
-	}
+        holder.textTitle.setText(item.title[0]);
+        holder.icon.setText(item.type.icon);
+        holder.icon.setTypeface(europeanaFont);
+        return convertView;
+    }
 
-	private class ResultViewHolder {
-		TextView textTitle = null;
-		ImageView image = null;
-		TextView icon = null;
-	}
+    public void add(List<Item> newData) {
+        for (Item searchResult : newData) {
+            add(searchResult);
+        }
+    }
+
+    private class ResultViewHolder {
+        TextView textTitle = null;
+        ImageView image = null;
+        TextView icon = null;
+    }
 
 }
