@@ -62,6 +62,7 @@ import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
+import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.social.europeana.api.Europeana;
@@ -72,20 +73,30 @@ import java.util.List;
 public class RecordActivity extends ActionBarActivity implements TabListener, TaskListener<RecordObject> {
 
     public static final String RECORD_ID = "RECORDID";
+
     private EuropeanaApplication mApplication;
     private Europeana mEuropeanaApi;
+
     // Controller
     private final SearchController searchController = SearchController._instance;
     private final RecordController recordController = RecordController._instance;
-    // ViewPager
-    private RecordPagerAdapter mRecordPagerAdapter;
+
+    // Fragments
+    private RecordDetailsFragment mDetailsFragment;
+
+    // Views
+    @ViewResource(R.id.drawer_items)
+    public ListView mResultsList;
+    @ViewResource(value = R.id.drawerlayout_activity_record, optional = true)
+    public DrawerLayout mDrawerLayout;
+    @ViewResource(R.id.activity_record_pager)
     private ViewPager mViewPager;
     // NavigationDrawer
-    private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private ListView mResultsList;
 
-    private RecordDetailsFragment mDetailsFragment;
+    // ViewPager
+    private RecordPagerAdapter mRecordPagerAdapter;
+
     public boolean mTwoColumns = false;
 
     @Override
@@ -97,7 +108,6 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         mTwoColumns = getResources().getBoolean(R.bool.home_support_landscape);
         recordController.registerListener(RecordActivity.class, this);
 
-        mResultsList = (ListView) findViewById(R.id.drawer_items);
         ResultAdapter mResultAdaptor = new ResultAdapter((EuropeanaApplication) getApplication(), this,
                 searchController.getSearchItems());
         mResultsList.setAdapter(mResultAdaptor);
@@ -114,7 +124,6 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
 
         // ViewPager
         mRecordPagerAdapter = new RecordPagerAdapter(this, getSupportFragmentManager(), getApplicationContext());
-        mViewPager = (ViewPager) findViewById(R.id.activity_record_pager);
         mViewPager.setAdapter(mRecordPagerAdapter);
 
         if (mTwoColumns) {
@@ -141,7 +150,6 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         getSupportActionBar().setHomeButtonEnabled(true);
 
         if (searchController.hasResults()) {
-            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_activity_record);
             if (mDrawerLayout != null) {
                 mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
                 mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,

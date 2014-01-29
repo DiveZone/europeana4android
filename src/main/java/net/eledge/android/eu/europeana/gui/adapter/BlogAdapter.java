@@ -25,6 +25,8 @@ import android.widget.TextView;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.db.model.BlogArticle;
 import net.eledge.android.toolkit.gui.GuiUtils;
+import net.eledge.android.toolkit.gui.ViewInjector;
+import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -47,11 +49,7 @@ public class BlogAdapter extends ArrayAdapter<BlogArticle> {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listitem_home_blog, parent, false);
             holder = new ArticleViewHolder();
-            holder.title = (TextView) convertView.findViewById(R.id.listitem_home_blog_textview_title);
-            holder.content = (TextView) convertView.findViewById(R.id.listitem_home_blog_textview_text);
-            holder.author = (TextView) convertView.findViewById(R.id.listitem_home_blog_textview_author);
-            holder.date = (TextView) convertView.findViewById(R.id.listitem_home_blog_textview_date);
-
+            ViewInjector.inject(holder, convertView);
             convertView.setTag(holder);
         } else {
             holder = (ArticleViewHolder) convertView.getTag();
@@ -67,10 +65,14 @@ public class BlogAdapter extends ArrayAdapter<BlogArticle> {
     }
 
     private class ArticleViewHolder {
-        TextView title = null;
-        TextView content = null;
-        TextView author = null;
-        TextView date = null;
+        @ViewResource(R.id.listitem_home_blog_textview_title)
+        public TextView title = null;
+        @ViewResource(R.id.listitem_home_blog_textview_text)
+        public TextView content = null;
+        @ViewResource(R.id.listitem_home_blog_textview_author)
+        public TextView author = null;
+        @ViewResource(R.id.listitem_home_blog_textview_date)
+        public TextView date = null;
     }
 
 }

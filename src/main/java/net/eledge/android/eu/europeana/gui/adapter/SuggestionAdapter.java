@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
+import net.eledge.android.toolkit.gui.ViewInjector;
+import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import java.util.List;
 
@@ -42,9 +44,7 @@ public class SuggestionAdapter extends ArrayAdapter<Item> {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.griditem_suggestion, parent, false);
             holder = new SuggestionViewHolder();
-            holder.suggestion = (TextView) convertView.findViewById(R.id.griditem_suggestion_textview_suggestion);
-            holder.scope = (TextView) convertView.findViewById(R.id.griditem_suggestion_textview_scope);
-            holder.count = (TextView) convertView.findViewById(R.id.griditem_suggestion_textview_count);
+            ViewInjector.inject(holder, convertView);
             convertView.setTag(holder);
         } else {
             holder = (SuggestionViewHolder) convertView.getTag();
@@ -57,9 +57,12 @@ public class SuggestionAdapter extends ArrayAdapter<Item> {
     }
 
     private class SuggestionViewHolder {
-        TextView suggestion = null;
-        TextView scope = null;
-        TextView count = null;
+        @ViewResource(R.id.griditem_suggestion_textview_suggestion)
+        public TextView suggestion = null;
+        @ViewResource(R.id.griditem_suggestion_textview_scope)
+        public TextView scope = null;
+        @ViewResource(R.id.griditem_suggestion_textview_count)
+        public TextView count = null;
     }
 
 }

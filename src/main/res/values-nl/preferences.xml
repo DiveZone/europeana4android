@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2014 eLedge.net and the original author or authors.
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+
+    <!-- LANGUAGES -->
+    <string name="settings_header_locale_title">Talen</string>
+    <string name="settings_header_locale_summary">Kies taal voor app en content</string>
+
+    <!-- LANGUAGES: APPLICATION -->
+    <string name="settings_locale_app">Applicatie taal</string>
+    <string name="settings_locale_app_default"></string>
+
+    <string-array name="settings_locale_app_choices">
+        <item>Systeem standaard</item>
+        <item>Engels</item>
+        <item>Nederlands</item>
+    </string-array>
+
+    <!-- LANGUAGES: APPLICATION -->
+    <string name="settings_locale_content">Voorkeur content taal</string>
+    <string name="settings_locale_content_default"></string>
+
+    <string-array name="settings_locale_content_choices">
+        <item>Systeem standaard</item>
+        <item>Bulgaars</item>
+        <item>Catalaans</item>
+        <item>Czech</item>
+        <item>Deens</item>
+        <item>Duits</item>
+        <item>Engels</item>
+        <item>Spaans</item>
+        <item>Estonian</item>
+        <item>Basque</item>
+        <item>Fins</item>
+        <item>Frans</item>
+        <item>Hungarian</item>
+        <item>Italiaans</item>
+        <item>Grieks</item>
+        <item>Nederlands</item>
+        <item>Noors</item>
+        <item>Pools</item>
+        <item>Portugees</item>
+        <item>Romanian</item>
+        <item>Russisch</item>
+        <item>Slovak</item>
+        <item>Serbian</item>
+        <item>Zweeds</item>
+    </string-array>
+
+    <!-- ABOUT -->
+
+    <string name="settings_header_about_title">Over&#8230;</string>
+    <string name="settings_about_version">Versie</string>
+    <string name="settings_about_build">Build</string>
+    <string name="settings_about_copyright1">&#169; zoekmachine/Data aanbieder</string>
+    <string name="settings_about_copyright1_lines">Stichting Europeana \nhttp://www.europeana.eu</string>
+    <string name="settings_about_copyright1_url">http://www.europeana.eu</string>
+    <string name="settings_about_copyright2">&#169; en ontwikkeld door</string>
+    <string name="settings_about_copyright2_lines">eLedge / GJW Boogerd\nhttp://www.eledge.net</string>
+    <string name="settings_about_copyright2_url">http://www.eledge.net</string>
+    <string name="settings_about_projectsite">Project site</string>
+    <string name="settings_about_projectsite_url">http://github.com/eledge/europeana4android</string>
+
+
+</resources>

@@ -29,6 +29,8 @@ import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.searchresults.Item;
+import net.eledge.android.toolkit.gui.ViewInjector;
+import net.eledge.android.toolkit.gui.annotations.ViewResource;
 import net.eledge.android.toolkit.net.ImageCacheManager;
 import net.eledge.android.toolkit.net.abstracts.AsyncLoaderListener;
 
@@ -59,9 +61,7 @@ public class ResultAdapter extends ArrayAdapter<Item> {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.griditem_searchresult, parent, false);
             holder = new ResultViewHolder();
-            holder.textTitle = (TextView) convertView.findViewById(R.id.griditem_searchresult_textview_title);
-            holder.image = (ImageView) convertView.findViewById(R.id.griditem_searchresult_imageview_thumbnail);
-            holder.icon = (TextView) convertView.findViewById(R.id.griditem_searchresult_textview_type);
+            ViewInjector.inject(holder, convertView);
             convertView.setTag(holder);
         } else {
             holder = (ResultViewHolder) convertView.getTag();
@@ -93,9 +93,12 @@ public class ResultAdapter extends ArrayAdapter<Item> {
     }
 
     private class ResultViewHolder {
-        TextView textTitle = null;
-        ImageView image = null;
-        TextView icon = null;
+        @ViewResource(R.id.griditem_searchresult_textview_title)
+        public TextView textTitle = null;
+        @ViewResource(R.id.griditem_searchresult_imageview_thumbnail)
+        public ImageView image = null;
+        @ViewResource(R.id.griditem_searchresult_textview_type)
+        public TextView icon = null;
     }
 
 }
