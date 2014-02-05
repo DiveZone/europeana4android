@@ -29,5 +29,6 @@
     <dimen name="griditem_suggestion_height">68dp</dimen>
 
     <dimen name="record_map_spacing">8dp</dimen>
+    <dimen name="record_media_height">100dp</dimen>
 
 </resources>

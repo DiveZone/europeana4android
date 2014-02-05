@@ -94,11 +94,11 @@ public class ResultAdapter extends ArrayAdapter<Item> {
 
     private class ResultViewHolder {
         @ViewResource(R.id.griditem_searchresult_textview_title)
-        public TextView textTitle = null;
+        TextView textTitle = null;
         @ViewResource(R.id.griditem_searchresult_imageview_thumbnail)
-        public ImageView image = null;
+        ImageView image = null;
         @ViewResource(R.id.griditem_searchresult_textview_type)
-        public TextView icon = null;
+        TextView icon = null;
     }
 
 }

@@ -59,7 +59,7 @@ public class SuggestionTask extends AsyncTask<String, Void, Item[]> {
             return null;
         }
         term = params[0];
-        String url = UriHelper.getSuggestionUrl(term, searchController.suggestionPagesize);
+        String url = UriHelper.getSuggestionUrl(term, searchController.suggestionPageSize);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
         return restTemplate.getForObject(url, Suggestions.class).items;

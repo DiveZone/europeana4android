@@ -27,11 +27,8 @@ public class RecordSeeAlsoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(
+        return inflater.inflate(
                 R.layout.fragment_record_seealso, null);
-
-
-        return root;
     }
 
 }

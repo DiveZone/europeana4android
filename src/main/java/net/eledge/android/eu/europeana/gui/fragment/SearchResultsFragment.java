@@ -47,7 +47,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 
     private ResultAdapter mResultAdaptor;
 
-    private GridView mGridview;
+    private GridView mGridView;
 
     private TextView mStatusTextView;
 
@@ -65,9 +65,9 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_search_results, null);
         mStatusTextView = (TextView) root.findViewById(R.id.fragment_search_textview_status);
-        mGridview = (GridView) root.findViewById(R.id.fragment_search_gridview);
-        mGridview.setAdapter(mResultAdaptor);
-        mGridview.setOnItemClickListener(new OnItemClickListener() {
+        mGridView = (GridView) root.findViewById(R.id.fragment_search_gridview);
+        mGridView.setAdapter(mResultAdaptor);
+        mGridView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Item selected = searchController.getSearchItems().get(position);
@@ -95,7 +95,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mGridview.setOnScrollListener(new OnScrollListener() {
+        mGridView.setOnScrollListener(new OnScrollListener() {
 
             private int priorFirst = -1;
 
@@ -114,7 +114,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
                 }
             }
         });
-        mGridview.setOnTouchListener(new OnTouchListener() {
+        mGridView.setOnTouchListener(new OnTouchListener() {
 
             private static final int MIN_MOVE = 150;
             private float downY = -1;

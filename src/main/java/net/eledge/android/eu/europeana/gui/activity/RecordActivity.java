@@ -62,6 +62,7 @@ import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
+import net.eledge.android.toolkit.gui.ViewInjector;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang.StringUtils;
@@ -86,9 +87,9 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
 
     // Views
     @ViewResource(R.id.drawer_items)
-    public ListView mResultsList;
+    private ListView mResultsList;
     @ViewResource(value = R.id.drawerlayout_activity_record, optional = true)
-    public DrawerLayout mDrawerLayout;
+    private DrawerLayout mDrawerLayout;
     @ViewResource(R.id.activity_record_pager)
     private ViewPager mViewPager;
     // NavigationDrawer
@@ -102,9 +103,11 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_record);
+        ViewInjector.inject(this);
+
         mApplication = (EuropeanaApplication) getApplication();
         mEuropeanaApi = mApplication.getMyEuropeanaApi();
-        setContentView(R.layout.activity_record);
         mTwoColumns = getResources().getBoolean(R.bool.home_support_landscape);
         recordController.registerListener(RecordActivity.class, this);
 

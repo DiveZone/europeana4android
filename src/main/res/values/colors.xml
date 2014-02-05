@@ -27,4 +27,7 @@
     <color name="emphasis">#31b6e7</color>
     <color name="emphasis_transparant">#bf31b6e7</color>
 
+    <color name="warning">#ffff4444</color>
+
+
 </resources>

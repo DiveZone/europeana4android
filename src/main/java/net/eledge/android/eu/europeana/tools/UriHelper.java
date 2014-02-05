@@ -39,12 +39,12 @@ public class UriHelper {
     private static final String URL_PORTAL_SEARCH = URL_PORTAL + "search.html";
     private static final String URL_PORTAL_RECORD = URL_PORTAL + "record%s.html";
 
-    public static String getSearchUrl(String apikey, String[] terms, int page, int pagesize) {
-        return createSearchUrl(apikey, terms, page, pagesize).toString();
+    public static String getSearchUrl(String apiKey, String[] terms, int page, int pageSize) {
+        return createSearchUrl(apiKey, terms, page, pageSize).toString();
     }
 
-    public static String getRecordUrl(String apikey, String id) {
-        return String.format(Locale.US, URL_API_RECORD, id, apikey);
+    public static String getRecordUrl(String apiKey, String id) {
+        return String.format(Locale.US, URL_API_RECORD, id, apiKey);
     }
 
     public static String createPortalSearchUrl(String[] terms) {
@@ -57,21 +57,21 @@ public class UriHelper {
         return String.format(Locale.US, URL_PORTAL_RECORD, id);
     }
 
-    private static UrlBuilder createSearchUrl(String apikey, String[] terms, int page, int pagesize) {
+    private static UrlBuilder createSearchUrl(String apiKey, String[] terms, int page, int pageSize) {
         UrlBuilder builder = new UrlBuilder(URL_API_SEARCH);
-        builder.addParam("profile", pagesize == 1 ? "minimal+facets" : "minimal", true);
-        builder.addParam("wskey", apikey, true);
-        setSearchParams(builder, terms, page, pagesize);
+        builder.addParam("profile", pageSize == 1 ? "minimal+facets" : "minimal", true);
+        builder.addParam("wskey", apiKey, true);
+        setSearchParams(builder, terms, page, pageSize);
         return builder;
     }
 
-    private static void setSearchParams(UrlBuilder builder, String[] terms, int page, int pagesize) {
-        if (pagesize > -1) {
+    private static void setSearchParams(UrlBuilder builder, String[] terms, int page, int pageSize) {
+        if (pageSize > -1) {
             if (page > -1) {
-                int start = 1 + ((page - 1) * pagesize);
+                int start = 1 + ((page - 1) * pageSize);
                 builder.addParam("start", String.valueOf(start), true);
             }
-            builder.addParam("rows", String.valueOf(pagesize), true);
+            builder.addParam("rows", String.valueOf(pageSize), true);
         }
         for (int i = 0; i < terms.length; i++) {
             if (i == 0) {
@@ -82,10 +82,10 @@ public class UriHelper {
         }
     }
 
-    public static String getSuggestionUrl(String term, int pagesize) {
+    public static String getSuggestionUrl(String term, int pageSize) {
         try {
             String termEncoded = URLEncoder.encode(StringUtils.lowerCase(term), Config.JSON_CHARSET);
-            return String.format(URL_API_SUGGESTIONS, pagesize, termEncoded);
+            return String.format(URL_API_SUGGESTIONS, pageSize, termEncoded);
         } catch (UnsupportedEncodingException e) {
             return null;
         }

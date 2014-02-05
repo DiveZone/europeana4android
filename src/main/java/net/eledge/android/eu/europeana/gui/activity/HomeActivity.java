@@ -75,11 +75,11 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 
     // Views
     @ViewResource(R.id.activity_home_gridview_suggestions)
-    public GridView mGridViewSuggestions;
+    private GridView mGridViewSuggestions;
     @ViewResource(R.id.activity_home_edittext_query)
-    public EditText mEditTextQuery;
+    private EditText mEditTextQuery;
     @ViewResource(R.id.activity_home_spinner_profile)
-    public Spinner mSpinnerProfiles;
+    private Spinner mSpinnerProfiles;
 
     // adapters
     private SuggestionAdapter mSuggestionsAdaptor;
@@ -96,7 +96,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 
         PreferenceManager.setDefaultValues(this, R.xml.settings_locale, false);
 
-        searchController.suggestionPagesize = getResources().getInteger(R.integer.home_suggestions_pagesize);
+        searchController.suggestionPageSize = getResources().getInteger(R.integer.home_suggestions_pagesize);
         isLandscape = getResources().getBoolean(R.bool.home_support_landscape);
 
         mSuggestionsAdaptor = new SuggestionAdapter(this, new ArrayList<Item>());
@@ -198,7 +198,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Item suggestion = mSuggestionsAdaptor.getItem(position);
-        searchController.suggestionPagesize = getResources().getInteger(R.integer.home_suggestions_pagesize);
+        searchController.suggestionPageSize = getResources().getInteger(R.integer.home_suggestions_pagesize);
         performSearch(suggestion.query);
     }
 

@@ -56,7 +56,6 @@
     <string name="dialog_tag_saveas_text">Create a new social tag:</string>
     <string name="dialog_tag_saveas_input">tag name</string>
     <string name="record_tab_details">Details</string>
-    <string name="record_tab_images">Image(s)</string>
     <string name="record_tab_map">Map</string>
     <string name="record_tab_seealso">See also</string>
     <string name="msg_copied2clipboard">Value copied to clipboard&#8230;</string>
@@ -65,6 +64,8 @@
     <string name="msg_item_removed">MyEuropeana Item removed</string>
 
     <string name="record_field_title">TITLE</string>
+    <string name="record_field_media">MEDIA</string>
+    <string name="record_field_media_warning">Opening media on mobile connections can lead to extra costs!</string>
     <string name="record_field_dc_creator">CREATOR</string>
     <string name="record_field_dc_contributor">CONTRIBUTOR</string>
     <string name="record_field_dc_date">DATE</string>

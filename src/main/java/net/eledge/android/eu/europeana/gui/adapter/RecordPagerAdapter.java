@@ -23,7 +23,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.activity.RecordActivity;
 import net.eledge.android.eu.europeana.gui.fragment.RecordDetailsFragment;
-import net.eledge.android.eu.europeana.gui.fragment.RecordImagesFragment;
 import net.eledge.android.eu.europeana.gui.fragment.RecordMapFragment;
 import net.eledge.android.eu.europeana.gui.fragment.RecordSeeAlsoFragment;
 import net.eledge.android.eu.europeana.search.RecordController;
@@ -64,9 +63,6 @@ public class RecordPagerAdapter extends FragmentStatePagerAdapter implements Tas
                 labels.add(R.string.record_tab_details);
                 fragments.add(new RecordDetailsFragment());
             }
-            // IMAGES
-            labels.add(R.string.record_tab_images);
-            fragments.add(new RecordImagesFragment());
             // MAP
             if ((record.place.latitude != null) && (record.place.longitude != null)) {
                 labels.add(R.string.record_tab_map);

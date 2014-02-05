@@ -58,11 +58,11 @@ public class SuggestionAdapter extends ArrayAdapter<Item> {
 
     private class SuggestionViewHolder {
         @ViewResource(R.id.griditem_suggestion_textview_suggestion)
-        public TextView suggestion = null;
+        TextView suggestion = null;
         @ViewResource(R.id.griditem_suggestion_textview_scope)
-        public TextView scope = null;
+        TextView scope = null;
         @ViewResource(R.id.griditem_suggestion_textview_count)
-        public TextView count = null;
+        TextView count = null;
     }
 
 }

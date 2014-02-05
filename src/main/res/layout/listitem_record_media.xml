@@ -15,43 +15,31 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <TextView
+        android:id="@android:id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/record_field_media"
         style="@style/recordDetailTitle"
-        android:text="@string/record_field_edm_rights"
+        />
+
+    <TextView
+        android:id="@android:id/text2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/record_field_media_warning"
+        android:visibility="gone"
+        style="@style/recordDetailWarning"
         />
 
     <LinearLayout
+        android:id="@+id/record_media_items"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/fragment_record_images_textview_copyright_icons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/recordDetailContent"
-            />
-
-        <TextView
-            android:id="@+id/fragment_record_images_textview_copyright_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            style="@style/recordDetailContent"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
-
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@android:id/text1"
-              android:text="TODO: IMAGES..."
-              android:layout_width="match_parent"
-              android:layout_height="fill_parent"
-              android:gravity="center"
+        android:layout_height="@dimen/record_media_height"
+        android:orientation="horizontal"
         />
 
 </LinearLayout>

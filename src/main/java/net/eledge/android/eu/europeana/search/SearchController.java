@@ -48,8 +48,8 @@ public class SearchController {
 
     public final static SearchController _instance = new SearchController();
 
-    public int searchPagesize = 12;
-    public int suggestionPagesize = 12;
+    public int searchPageSize = 12;
+    public int suggestionPageSize = 12;
 
     public final Map<String, SearchTaskListener> listeners = new HashMap<>();
     private final List<String> terms = new ArrayList<>();
@@ -93,6 +93,7 @@ public class SearchController {
         }
     }
 
+    @SuppressWarnings("ManualArrayToCollectionCopy")
     public void newSearch(Activity activity, String query, String... qf) {
         reset();
         terms.clear();
@@ -103,6 +104,7 @@ public class SearchController {
         search(activity);
     }
 
+    @SuppressWarnings("ManualArrayToCollectionCopy")
     public void refineSearch(Activity activity, String... qf) {
         reset();
         for (String s : qf) {
@@ -193,10 +195,7 @@ public class SearchController {
                 FacetType type = FacetType.safeValueOf(StringUtils.substringBefore(term, ":"));
                 if (type != null) {
                     crumb.facetType = type;
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(StringUtils.capitalize(StringUtils.lowerCase(GuiUtils.getString(context, type.resId))));
-                    sb.append(":").append(type.createFacetLabel(context, StringUtils.substringAfter(term, ":")));
-                    crumb.description = sb.toString();
+                    crumb.description = StringUtils.capitalize(StringUtils.lowerCase(GuiUtils.getString(context, type.resId))) + ":" + type.createFacetLabel(context, StringUtils.substringAfter(term, ":"));
                 }
             }
             breadcrumbs.add(crumb);
@@ -205,7 +204,7 @@ public class SearchController {
     }
 
     public List<FacetItem> getFacetList(Context context) {
-        List<FacetItem> facetlist = new ArrayList<>();
+        List<FacetItem> facetList = new ArrayList<>();
         if (!facets.isEmpty()) {
             for (Facet facet : facets) {
                 FacetType type = FacetType.safeValueOf(facet.name);
@@ -214,7 +213,7 @@ public class SearchController {
                     item.itemType = type == selectedFacet ? FacetItemType.CATEGORY_OPENED : FacetItemType.CATEGORY;
                     item.facetType = type;
                     item.facet = facet.name;
-                    facetlist.add(item);
+                    facetList.add(item);
                     if (type == selectedFacet) {
                         for (Field field : facet.fields) {
                             item = new FacetItem();
@@ -225,15 +224,15 @@ public class SearchController {
                                     : FacetItemType.ITEM;
                             item.description = type.createFacetLabel(context, field.label) + " (" + field.count + ")";
                             item.icon = type.getFacetIcon(field.label);
-                            facetlist.add(item);
+                            facetList.add(item);
                         }
-                        facetlist.get(facetlist.size() - 1).last = true;
+                        facetList.get(facetList.size() - 1).last = true;
                     }
                 }
             }
-            facetlist.get(facetlist.size() - 1).last = true;
+            facetList.get(facetList.size() - 1).last = true;
         }
-        return facetlist;
+        return facetList;
     }
 
     public String getPortalUrl() {

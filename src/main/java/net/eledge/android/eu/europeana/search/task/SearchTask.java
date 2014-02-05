@@ -63,7 +63,7 @@ public class SearchTask extends AsyncTask<String, Void, SearchItems> {
     @Override
     protected SearchItems doInBackground(String... terms) {
         String url = UriHelper.getSearchUrl(((EuropeanaApplication) mActivity.getApplication()).getEuropeanaPublicKey(), terms, pageLoad,
-                searchController.searchPagesize);
+                searchController.searchPageSize);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
         return restTemplate.getForObject(url, SearchItems.class);

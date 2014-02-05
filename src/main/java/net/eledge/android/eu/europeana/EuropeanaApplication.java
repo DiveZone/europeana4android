@@ -16,9 +16,12 @@
 package net.eledge.android.eu.europeana;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import net.eledge.android.toolkit.net.ImageCacheManager;
@@ -95,6 +98,19 @@ public class EuropeanaApplication extends Application {
 
     public String getLocale() {
         return Locale.getDefault().getDisplayLanguage();
+    }
+
+    public boolean isConnected() {
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
+
+
+    public boolean isWifiConnected() {
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
     }
 
     public ConnectionRepository getConnectionRepository() {

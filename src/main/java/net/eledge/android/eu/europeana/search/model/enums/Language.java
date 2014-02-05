@@ -55,9 +55,9 @@ public enum Language {
     }
 
     public static Language safeValueOf(String name) {
-        for (Language langauge : values()) {
-            if (StringUtils.equalsIgnoreCase(langauge.toString(), name)) {
-                return langauge;
+        for (Language language : values()) {
+            if (StringUtils.equalsIgnoreCase(language.toString(), name)) {
+                return language;
             }
         }
         return null;

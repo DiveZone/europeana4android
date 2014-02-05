@@ -56,7 +56,7 @@ public class RssFeedHandler extends DefaultHandler {
             if (localName.equalsIgnoreCase("title")) {
                 article.title = content.toString();
             } else if (localName.equalsIgnoreCase("description")) {
-                article.description = Html.fromHtml(content.toString().replaceAll("\\<.*?>", "")).toString();
+                article.description = Html.fromHtml(content.toString().replaceAll("<.*?>", "")).toString();
             } else if (localName.equalsIgnoreCase("pubDate")) {
                 article.pubDate = convertDate(content.toString());
             } else if (localName.equalsIgnoreCase("link")) {

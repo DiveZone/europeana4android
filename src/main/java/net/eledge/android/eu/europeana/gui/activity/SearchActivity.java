@@ -77,9 +77,9 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
 
     // Views
     @ViewResource(value = R.id.drawerlayout_activity_search, optional = true)
-    public DrawerLayout mDrawerLayout;
+    private DrawerLayout mDrawerLayout;
     @ViewResource(R.id.drawer_facets)
-    public ListView mFacetsList;
+    private ListView mFacetsList;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -95,7 +95,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
         ViewInjector.inject(this);
 
         searchController.registerListener(SearchActivity.class, this);
-        searchController.searchPagesize = getResources().getInteger(R.integer.search_result_pagesize);
+        searchController.searchPageSize = getResources().getInteger(R.integer.search_result_pagesize);
 
         mFacetsAdaptor = new FacetAdapter((EuropeanaApplication) getApplication(), this, new ArrayList<FacetItem>());
 
@@ -236,7 +236,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        searchController.searchPagesize = getResources().getInteger(R.integer.search_result_pagesize);
+        searchController.searchPageSize = getResources().getInteger(R.integer.search_result_pagesize);
         if (mDrawerLayout != null) {
             mDrawerToggle.syncState();
         }

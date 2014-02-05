@@ -67,6 +67,33 @@ public enum RecordDetails implements RecordView {
             return record.title;
         }
     },
+    MEDIA {
+        @Override
+        public boolean isVisible(RecordObject record) {
+            return true;
+        }
+
+        @Override
+        public View getView(RecordObject record, ViewGroup parent, LayoutInflater inflater, EuropeanaApplication application) {
+            View view = inflater.inflate(R.layout.listitem_record_media, parent, false);
+            TextView textWarning = (TextView) view.findViewById(android.R.id.text2);
+            if (!application.isWifiConnected()) {
+                textWarning.setVisibility(View.VISIBLE);
+            }
+
+            return view;
+        }
+
+        @Override
+        public int getLabel() {
+            return R.string.record_field_media;
+        }
+
+        @Override
+        public String[] getValues(RecordObject record, EuropeanaApplication application) {
+            return new String[0];
+        }
+    },
     //  TODO?  addFieldMap(fieldMap, Field.DCTERMS_ALTERNATIVE, shortcut.getList("DctermsAlternative"));
 
     //    addFieldMap(fieldMap, Field.DC_DESCRIPTION,

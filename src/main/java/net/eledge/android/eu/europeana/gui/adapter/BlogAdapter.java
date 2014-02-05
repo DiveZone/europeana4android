@@ -66,13 +66,13 @@ public class BlogAdapter extends ArrayAdapter<BlogArticle> {
 
     private class ArticleViewHolder {
         @ViewResource(R.id.listitem_home_blog_textview_title)
-        public TextView title = null;
+        TextView title = null;
         @ViewResource(R.id.listitem_home_blog_textview_text)
-        public TextView content = null;
+        TextView content = null;
         @ViewResource(R.id.listitem_home_blog_textview_author)
-        public TextView author = null;
+        TextView author = null;
         @ViewResource(R.id.listitem_home_blog_textview_date)
-        public TextView date = null;
+        TextView date = null;
     }
 
 }
