@@ -21,7 +21,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -49,8 +48,6 @@ import net.eledge.android.eu.europeana.db.dao.SearchProfileDao;
 import net.eledge.android.eu.europeana.db.model.SearchProfile;
 import net.eledge.android.eu.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
-import net.eledge.android.eu.europeana.gui.dialog.MyEuropeanaDialog;
-import net.eledge.android.eu.europeana.gui.dialog.MyEuropeanaOauthDialog;
 import net.eledge.android.eu.europeana.gui.fragment.HomeBlogFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
@@ -94,7 +91,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
         setContentView(R.layout.activity_home);
         ViewInjector.inject(this);
 
-        PreferenceManager.setDefaultValues(this, R.xml.settings_locale, false);
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
         searchController.suggestionPageSize = getResources().getInteger(R.integer.home_suggestions_pagesize);
         isLandscape = getResources().getBoolean(R.bool.home_support_landscape);
@@ -148,7 +145,6 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
         }
         fragmentTransaction.replace(R.id.activity_home_fragment_blog, mBlogFragment);
         fragmentTransaction.commit();
-
     }
 
     @Override
@@ -212,15 +208,15 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_myeuropeana:
-                if (!mApplication.isMyEuropeanaConnected()) {
-                    DialogFragment newFragment = new MyEuropeanaOauthDialog();
-                    newFragment.show(getSupportFragmentManager(), "login");
-                } else {
-                    DialogFragment newFragment = new MyEuropeanaDialog(mApplication);
-                    newFragment.show(getSupportFragmentManager(), "profile");
-                }
-                break;
+//            case R.id.action_myeuropeana:
+//                if (!mApplication.isMyEuropeanaConnected()) {
+//                    DialogFragment newFragment = new MyEuropeanaOauthDialog();
+//                    newFragment.show(getSupportFragmentManager(), "login");
+//                } else {
+//                    DialogFragment newFragment = new MyEuropeanaDialog(mApplication);
+//                    newFragment.show(getSupportFragmentManager(), "profile");
+//                }
+//                break;
             case R.id.action_settings:
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivityForResult(i, 1);

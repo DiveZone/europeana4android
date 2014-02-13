@@ -15,56 +15,42 @@
 
 package net.eledge.android.eu.europeana.gui.activity;
 
-import android.annotation.TargetApi;
-import android.os.Build;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.util.Log;
 
 import net.eledge.android.eu.europeana.R;
-import net.eledge.android.eu.europeana.gui.fragment.SettingsFragment;
-
-import org.apache.commons.lang.StringUtils;
-
-import java.util.List;
 
 public class SettingsActivity extends PreferenceActivity {
 
-    public static final String PREFS_LOCALE = "net.eledge.android.eu.europeana.prefs.PREFS_LOCALE";
-    public static final String PREFS_ABOUT = "net.eledge.android.eu.europeana.prefs.PREFS_ABOUT";
+    private PackageInfo mInfo;
 
     @Override
     @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.settings);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            String action = getIntent().getAction();
-            if (StringUtils.isNotBlank(action)) {
-                switch (action) {
-                    case PREFS_LOCALE:
-                        addPreferencesFromResource(R.xml.settings_locale);
-                        break;
-                    case PREFS_ABOUT:
-                        addPreferencesFromResource(R.xml.settings_about);
-                        break;
-                    default:
-                        addPreferencesFromResource(R.xml.settings_legacy);
-                        break;
-                }
-            } else {
-                addPreferencesFromResource(R.xml.settings_legacy);
-            }
+        try {
+            mInfo = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(getClass().getName(), e.getMessage(), e);
+        }
+
+        setVersionNumber();
+    }
+
+    @SuppressWarnings("deprecation")
+    private void setVersionNumber() {
+        if (mInfo != null) {
+            Preference p = findPreference("settings_about_version");
+            p.setSummary(mInfo.versionName);
+            p = findPreference("settings_about_build");
+            p.setSummary(String.valueOf(mInfo.versionCode));
         }
     }
 
-    @Override
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.settings, target);
-    }
-
-    @Override
-    protected boolean isValidFragment(String fragmentName) {
-        return StringUtils.equals(SettingsFragment.class.getName(), fragmentName);
-    }
 }

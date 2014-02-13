@@ -15,22 +15,68 @@
   ~ limitations under the License.
   -->
 
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <header
-        android:fragment="net.eledge.android.eu.europeana.gui.fragment.SettingsFragment"
+    <PreferenceCategory
         android:title="@string/settings_header_locale_title"
         android:summary="@string/settings_header_locale_summary">
-        <extra
-            android:name="settings"
-            android:value="locale"/>
-    </header>
-    <header
-        android:fragment="net.eledge.android.eu.europeana.gui.fragment.SettingsFragment"
-        android:title="@string/settings_header_about_title">
-        <extra
-            android:name="settings"
-            android:value="about"/>
-    </header>
 
-</preference-headers>
+        <ListPreference
+            android:key="settings_locale_app"
+            android:title="@string/settings_locale_app"
+            android:dialogTitle="@string/settings_locale_app"
+            android:entries="@array/settings_locale_app_choices"
+            android:entryValues="@array/settings_locale_app_values"
+            android:defaultValue="@string/settings_locale_app_default"/>
+        <ListPreference
+            android:key="settings_locale_content"
+            android:title="@string/settings_locale_content"
+            android:dialogTitle="@string/settings_locale_content"
+            android:entries="@array/settings_locale_content_choices"
+            android:entryValues="@array/settings_locale_content_values"
+            android:defaultValue="@string/settings_locale_content_default"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_header_about_title">
+
+        <Preference
+            android:key="settings_about_version"
+            android:title="@string/settings_about_version"
+            android:editable="false"/>
+        <Preference
+            android:key="settings_about_build"
+            android:title="@string/settings_about_build"
+            android:editable="false"/>
+        <Preference
+            android:key="settings_about_copyright1"
+            android:title="@string/settings_about_copyright1"
+            android:summary="@string/settings_about_copyright1_lines"
+            android:editable="false">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/settings_about_copyright1_url"/>
+        </Preference>
+        <Preference
+            android:key="settings_about_copyright2"
+            android:title="@string/settings_about_copyright2"
+            android:summary="@string/settings_about_copyright2_lines"
+            android:editable="false">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/settings_about_copyright2_url"/>
+        </Preference>
+        <Preference
+            android:key="settings_about_projectsite"
+            android:title="@string/settings_about_projectsite"
+            android:summary="@string/settings_about_projectsite_url"
+            android:editable="false">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/settings_about_projectsite_url"/>
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
