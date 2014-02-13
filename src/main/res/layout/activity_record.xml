@@ -14,33 +14,41 @@
   ~ limitations under the License.
   -->
 
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                        xmlns:tools="http://schemas.android.com/tools"
-                                        android:id="@+id/drawerlayout_activity_record"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:background="@color/background"
-                                        tools:context=".gui.activity.RecordActivity">
+<FrameLayout
+    android:id="@+id/kitKatFrameLayout_activity_record"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/activity_record_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
-
-    <ListView
-        android:id="@+id/drawer_items"
-        android:layout_width="@dimen/drawer_items_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/background_drawer"
-        android:choiceMode="singleChoice"
-        android:dividerHeight="0dp"/>
-
-    <include
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerlayout_activity_record"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        layout="@layout/include_record_loading"
-        />
+        android:background="@color/background"
+        tools:context=".gui.activity.RecordActivity">
 
-</android.support.v4.widget.DrawerLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/activity_record_pager"
+            android:background="@color/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ListView
+            android:id="@+id/drawer_items"
+            android:layout_width="@dimen/drawer_items_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/background_drawer"
+            android:choiceMode="singleChoice"
+            android:dividerHeight="0dp"/>
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/include_record_loading"
+            />
+
+    </android.support.v4.widget.DrawerLayout>
+</FrameLayout>

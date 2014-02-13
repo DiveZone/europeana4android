@@ -34,6 +34,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <permission
         android:name="net.eledge.android.eu.europeana.permission.MAPS_RECEIVE"
@@ -146,6 +147,7 @@
         <activity
             android:label="@string/app_name"
             android:name="net.eledge.android.eu.europeana.gui.activity.SettingsActivity" />
+
 
     </application>
 

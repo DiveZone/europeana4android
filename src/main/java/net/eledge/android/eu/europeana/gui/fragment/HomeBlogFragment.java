@@ -55,6 +55,8 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
 
     private EasyTracker mEasyTracker;
 
+    private ListView mListView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +86,7 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home_blog, null);
-        ListView mListView = (ListView) root.findViewById(R.id.fragment_home_blog_listview);
+        mListView = (ListView) root.findViewById(R.id.fragment_home_blog_listview);
         mListView.setAdapter(mBlogAdapter);
         mListView.setOnItemClickListener(new OnItemClickListener() {
             @Override

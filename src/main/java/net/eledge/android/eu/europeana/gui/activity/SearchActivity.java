@@ -124,6 +124,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             mDrawerToggle.setDrawerIndicatorEnabled(false);
         }
+
         if (Config.DEBUGMODE) {
             StrictMode.enableDefaults();
         }
