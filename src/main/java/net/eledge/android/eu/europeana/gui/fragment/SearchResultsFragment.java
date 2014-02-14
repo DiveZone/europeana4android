@@ -42,13 +42,17 @@ import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchItems;
 import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.toolkit.gui.GuiUtils;
+import net.eledge.android.toolkit.gui.ViewInjector;
+import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 public class SearchResultsFragment extends Fragment implements SearchTaskListener {
 
     private ResultAdapter mResultAdaptor;
 
+    @ViewResource(R.id.fragment_search_gridview)
     private GridView mGridView;
 
+    @ViewResource(R.id.fragment_search_textview_status)
     private TextView mStatusTextView;
 
     private final SearchController searchController = SearchController._instance;
@@ -64,8 +68,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_search_results, null);
-        mStatusTextView = (TextView) root.findViewById(R.id.fragment_search_textview_status);
-        mGridView = (GridView) root.findViewById(R.id.fragment_search_gridview);
+        ViewInjector.inject(this, root);
         mGridView.setAdapter(mResultAdaptor);
         mGridView.setOnItemClickListener(new OnItemClickListener() {
             @Override

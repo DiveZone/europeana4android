@@ -22,7 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -35,6 +34,8 @@ import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.Resource;
 import net.eledge.android.toolkit.async.listener.TaskListener;
+import net.eledge.android.toolkit.gui.ViewInjector;
+import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -43,29 +44,29 @@ public class RecordMapFragment extends Fragment implements TaskListener<RecordOb
     // Controller
     private final RecordController recordController = RecordController._instance;
 
+    @ViewResource(R.id.fragment_record_map_mapview)
     private MapView mMapView;
+
+    @ViewResource(R.id.fragment_record_map_textview_prefLabel)
+    private TextView text1;
+
+    @ViewResource(R.id.fragment_record_map_textview_coordinates)
+    private TextView text2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         recordController.registerListener(RecordMapFragment.class, this);
-
-        try {
-            MapsInitializer.initialize(this.getActivity().getBaseContext());
-        } catch (GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
-        }
+        MapsInitializer.initialize(this.getActivity().getBaseContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_record_map, null);
-        mMapView = (MapView) root.findViewById(R.id.fragment_record_map_mapview);
+        ViewInjector.inject(this, root);
         mMapView.onCreate(savedInstanceState);
         RecordObject record = recordController.record;
-        TextView text1 = (TextView) root.findViewById(R.id.fragment_record_map_textview_prefLabel);
         text1.setText(StringUtils.join(Resource.getPreferred(record.place.prefLabel, ((EuropeanaApplication) getActivity().getApplication()).getLocale()), ";"));
-        TextView text2 = (TextView) root.findViewById(R.id.fragment_record_map_textview_coordinates);
         text2.setText(record.place.latitude + ";" + record.place.longitude);
         return root;
     }
