@@ -24,7 +24,7 @@ import net.eledge.android.eu.europeana.search.model.facets.convertors.DocTypes;
 import net.eledge.android.eu.europeana.search.model.facets.convertors.Languages;
 import net.eledge.android.eu.europeana.search.model.facets.convertors.Rights;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public enum FacetType implements FacetConverter {
 

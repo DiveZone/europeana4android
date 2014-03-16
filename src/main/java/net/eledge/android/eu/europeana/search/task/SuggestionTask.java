@@ -28,7 +28,7 @@ import net.eledge.android.eu.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.async.ListenerNotifier;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 

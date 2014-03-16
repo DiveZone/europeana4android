@@ -26,7 +26,7 @@ import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.RecordView;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.Resource;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;

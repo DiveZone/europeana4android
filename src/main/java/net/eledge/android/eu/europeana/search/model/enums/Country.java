@@ -17,7 +17,7 @@ package net.eledge.android.eu.europeana.search.model.enums;
 
 import net.eledge.android.eu.europeana.R;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * using http://en.wikipedia.org/wiki/ISO_3166-2

@@ -29,7 +29,7 @@ import android.widget.TextView;
 
 import net.eledge.android.eu.europeana.R;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class NameInputDialog extends DialogFragment {
 

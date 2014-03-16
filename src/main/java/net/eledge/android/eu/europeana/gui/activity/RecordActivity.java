@@ -65,7 +65,7 @@ import net.eledge.android.toolkit.gui.GuiUtils;
 import net.eledge.android.toolkit.gui.ViewInjector;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.social.europeana.api.Europeana;
 import org.springframework.social.europeana.api.model.UserModification;
 

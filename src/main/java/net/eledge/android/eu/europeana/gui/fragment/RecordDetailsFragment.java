@@ -39,7 +39,7 @@ import net.eledge.android.eu.europeana.search.model.record.enums.RecordDetails;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 

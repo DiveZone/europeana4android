@@ -15,7 +15,7 @@
 
 package net.eledge.android.eu.europeana.search.model.record.abstracts;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.HashMap;
 import java.util.Map;

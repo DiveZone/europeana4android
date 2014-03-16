@@ -16,9 +16,9 @@
 package net.eledge.android.eu.europeana.tools;
 
 import net.eledge.android.eu.europeana.Config;
-import net.eledge.android.toolkit.net.UrlBuilder;
+import net.eledge.urlbuilder.UrlBuilder;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

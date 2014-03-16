@@ -37,7 +37,7 @@ import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.ViewInjector;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class RecordMapFragment extends Fragment implements TaskListener<RecordObject> {
 

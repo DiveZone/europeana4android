@@ -18,7 +18,7 @@ package net.eledge.android.eu.europeana.search.model.enums;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.toolkit.StringArrayUtils;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public enum DocType {
     TEXT(R.string.doctype_text, ")"),
