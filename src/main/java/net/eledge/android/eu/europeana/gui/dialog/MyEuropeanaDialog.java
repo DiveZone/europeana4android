@@ -28,27 +28,16 @@ import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.myeuropeana.task.GetProfileTask;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 
-import org.springframework.social.europeana.api.Europeana;
 import org.springframework.social.europeana.api.model.Profile;
 
 public class MyEuropeanaDialog extends DialogFragment implements TaskListener<Profile> {
 
     private EuropeanaApplication mApplication;
-    private Europeana mEuropeanaApi;
-
-    private MyEuropeanaDialog() {
-        super();
-    }
-
-    public MyEuropeanaDialog(EuropeanaApplication application) {
-        super();
-        mApplication = application;
-        mEuropeanaApi = application.getMyEuropeanaApi();
-    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
+        mApplication = (EuropeanaApplication) getActivity().getApplication();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.dialog_myeuropeana_title);
@@ -72,7 +61,7 @@ public class MyEuropeanaDialog extends DialogFragment implements TaskListener<Pr
     @Override
     public void onStart() {
         super.onStart();
-        new GetProfileTask(getActivity(), mEuropeanaApi, this).execute();
+        new GetProfileTask(getActivity(), mApplication.getMyEuropeanaApi(), this).execute();
     }
 
     @Override

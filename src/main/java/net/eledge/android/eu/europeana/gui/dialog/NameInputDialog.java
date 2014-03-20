@@ -15,6 +15,7 @@
 
 package net.eledge.android.eu.europeana.gui.dialog;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -31,23 +32,42 @@ import net.eledge.android.eu.europeana.R;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
+
 public class NameInputDialog extends DialogFragment {
 
-    private final int resTitle;
-    private final int resText;
-    private final int resInput;
-    private final int resPositiveButton;
-    private final NameInputDialogResponse response;
+    public static final String KEY_RESTITLE_INT = "resTitle";
+    public static final String KEY_RESTEXT_INT = "resText";
+    public static final String KEY_RESINPUT_INT = "resInput";
+    public static final String KEY_RESPOSBUTTON_INT = "resPosButton";
+
+    private int resTitle;
+    private int resText;
+    private int resInput;
+    private int resPositiveButton;
+    private NameInputDialogListener mListener;
     private AlertDialog mDialog;
 
     private EditText mInput;
 
-    public NameInputDialog(int resTitle, int resText, int resInput, int resPositiveButton, NameInputDialogResponse response) {
-        this.resTitle = resTitle;
-        this.resText = resText;
-        this.resInput = resInput;
-        this.resPositiveButton = resPositiveButton;
-        this.response = response;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.resTitle = savedInstanceState.getInt(KEY_RESTITLE_INT);
+        this.resText = savedInstanceState.getInt(KEY_RESTEXT_INT);
+        this.resInput = savedInstanceState.getInt(KEY_RESINPUT_INT);
+        this.resPositiveButton = savedInstanceState.getInt(KEY_RESPOSBUTTON_INT);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (NameInputDialogListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement NameInputDialogListener");
+        }
     }
 
     @Override
@@ -90,7 +110,7 @@ public class NameInputDialog extends DialogFragment {
             public void onClick(DialogInterface dialog, int id) {
                 String input = mInput.getText().toString();
                 if (StringUtils.isNotBlank(input)) {
-                    response.positiveResponse(input);
+                    mListener.positiveResponse(input);
                     NameInputDialog.this.dismiss();
                 }
             }
@@ -98,7 +118,7 @@ public class NameInputDialog extends DialogFragment {
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                response.negativeResponse();
+                mListener.negativeResponse();
                 mDialog.dismiss();
             }
         });
@@ -114,9 +134,8 @@ public class NameInputDialog extends DialogFragment {
         mDialog.getButton(Dialog.BUTTON_POSITIVE).setEnabled(false);
     }
 
-    public interface NameInputDialogResponse {
+    public interface NameInputDialogListener extends Serializable {
         void positiveResponse(String input);
-
         void negativeResponse();
     }
 }

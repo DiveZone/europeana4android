@@ -110,7 +110,7 @@ public class EuropeanaApplication extends Application {
     public boolean isWifiConnected() {
         ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+        return (activeNetwork != null) && (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI);
     }
 
     public ConnectionRepository getConnectionRepository() {

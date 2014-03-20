@@ -45,7 +45,7 @@ public class Resource {
 
     @SuppressWarnings("unchecked")
     public static <T> T[] mergeArray(T[] array1, T[] array2) {
-        return (T[]) ArrayUtils.addAll(array1, array2);
+        return ArrayUtils.addAll(array1, array2);
     }
 
     public static String[] getPreferred(Map<String, String[]> data, String locale) {

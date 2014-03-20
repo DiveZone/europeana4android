@@ -71,7 +71,7 @@ import org.springframework.social.europeana.api.model.UserModification;
 
 import java.util.List;
 
-public class RecordActivity extends ActionBarActivity implements TabListener, TaskListener<RecordObject> {
+public class RecordActivity extends ActionBarActivity implements TabListener, TaskListener<RecordObject>, NameInputDialog.NameInputDialogListener {
 
     public static final String RECORD_ID = "RECORDID";
 
@@ -352,7 +352,8 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
                 for (int i = 0; i < mRecordPagerAdapter.getCount(); i++) {
                     getSupportActionBar().addTab(
                             getSupportActionBar().newTab().setText(mRecordPagerAdapter.labels.get(i))
-                                    .setTabListener(RecordActivity.this));
+                                    .setTabListener(RecordActivity.this)
+                    );
                 }
             }
         }
@@ -382,7 +383,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
                 if ((paths != null) && (paths.size() == 4)) {
                     String collectionId = paths.get(paths.size() - 2);
                     String recordId = StringUtils.removeEnd(paths.get(paths.size() - 1), ".html");
-                    id = StringUtils.join(new String[]{"/", collectionId, "/", recordId});
+                    id = StringUtils.join("/", collectionId, "/", recordId);
                 } else {
                     // invalid url/id, cancel opening record
                     id = null;
@@ -423,39 +424,44 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
 
     private void saveLabel() {
         if (mApplication.isMyEuropeanaConnected()) {
-            NameInputDialog dialog = new NameInputDialog(R.string.action_new_label, R.string.dialog_tag_saveas_text, R.string.dialog_tag_saveas_input, R.string.action_new_label, new NameInputDialog.NameInputDialogResponse() {
-                @Override
-                public void positiveResponse(String input) {
-                    if (StringUtils.isNotBlank(input)) {
-                        new SaveTagTask(RecordActivity.this, mEuropeanaApi, new TaskListener<UserModification>() {
-                            @Override
-                            public void onTaskStart() {
-                                // ignore
-                            }
-
-                            @Override
-                            public void onTaskFinished(UserModification result) {
-                                if (result != null) {
-                                    if (result.isSuccess()) {
-                                        GuiUtils.toast(RecordActivity.this, R.string.msg_tag_saved);
-                                    } else {
-                                        GuiUtils.toast(RecordActivity.this, result.getError());
-                                    }
-                                } else {
-                                    GuiUtils.toast(RecordActivity.this, R.string.msg_unknown_error);
-                                }
-                            }
-                        }).execute(input);
-                    }
-                }
-
-                @Override
-                public void negativeResponse() {
-                    // ignore
-                }
-            });
+            Bundle bundle = new Bundle();
+            bundle.putInt(NameInputDialog.KEY_RESTITLE_INT, R.string.action_new_label);
+            bundle.putInt(NameInputDialog.KEY_RESTEXT_INT, R.string.dialog_tag_saveas_text);
+            bundle.putInt(NameInputDialog.KEY_RESINPUT_INT, R.string.dialog_tag_saveas_input);
+            bundle.putInt(NameInputDialog.KEY_RESPOSBUTTON_INT, R.string.action_new_label);
+            NameInputDialog dialog = new NameInputDialog();
+            dialog.setArguments(bundle);
             dialog.show(getSupportFragmentManager(), "SaveAs");
         }
     }
 
+    @Override
+    public void positiveResponse(String input) {
+        if (StringUtils.isNotBlank(input)) {
+            new SaveTagTask(RecordActivity.this, mEuropeanaApi, new TaskListener<UserModification>() {
+                @Override
+                public void onTaskStart() {
+                    // ignore
+                }
+
+                @Override
+                public void onTaskFinished(UserModification result) {
+                    if (result != null) {
+                        if (result.isSuccess()) {
+                            GuiUtils.toast(RecordActivity.this, R.string.msg_tag_saved);
+                        } else {
+                            GuiUtils.toast(RecordActivity.this, result.getError());
+                        }
+                    } else {
+                        GuiUtils.toast(RecordActivity.this, R.string.msg_unknown_error);
+                    }
+                }
+            }).execute(input);
+        }
+    }
+
+    @Override
+    public void negativeResponse() {
+        // ignore
+    }
 }

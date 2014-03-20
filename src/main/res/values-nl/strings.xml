@@ -16,6 +16,8 @@
 
 <resources>
 
+    <string name="msg_unknown_error">Onverwachte fout opgetreden…</string>
+
     <!-- HOME SCREEN -->
     <string name="fragment_home_blog_from">VAN HET EUROPEANA BLOG</string>
     <string name="fragment_home_blog_posted">Geplaatst door %s</string>
@@ -24,7 +26,19 @@
     <string name="form_search_query">Zoekterm(en)</string>
     <string name="form_search_profile_default">Zonder zoekprofiel</string>
 
+    <!-- MYEUROPEANA DIALOG -->
+    <string name="dialog_myeuropeana_title">MyEuropeana profiel</string>
+    <string name="dialog_myeuropeana_email">Login / Email adres</string>
+    <string name="dialog_myeuropeana_username">MyEuropeana gebruikersnaam</string>
+    <string name="dialog_myeuropeana_saveditem">Aantal bewaarde items</string>
+    <string name="dialog_myeuropeana_savedsearch">Aantal bewaarde zoekopdrachten</string>
+    <string name="dialog_myeuropeana_tags">Aantal bewaarde tags</string>
+    <string name="dialog_myeuropeana_button_close">Sluiten</string>
+    <string name="dialog_myeuropeana_button_logoff">Uitloggen</string>
+
     <!-- SEARCH ACTIVITY -->
+    <string name="dialog_profile_saveas_title">Profiel titel</string>
+    <string name="dialog_profile_saveas_text">Geef een korte beschrijvende naam voor zoek profiel:</string>
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
     <string name="drawer_facets_section_breadcrumbs">RESULTATEN VOOR</string>
@@ -33,14 +47,23 @@
     <string name="msg_searching">OPHALEN RESULTATEN&#8230;</string>
     <string name="msg_searchresults">TOONT %1$d VAN %2$d RESULTATEN</string>
     <string name="msg_loading">OPHALEN RECORD&#8230;</string>
+    <string name="msg_profile_selectfacets">Selecteer eerst 1 of meerdere facetten…</string>
+    <string name="msg_profile_saved">Zoek profiel aangemaakt</string>
 
     <!-- RECORD ACTIVITY -->
+    <string name="dialog_tag_saveas_text">Maak een sociale tag:</string>
+    <string name="dialog_tag_saveas_input">tag naam</string>
     <string name="record_tab_details">Details</string>
     <string name="record_tab_map">Kaart</string>
+    <string name="record_tab_seealso">Zie ook</string>
     <string name="msg_copied2clipboard">Waarde gekopieerd naar clipboard&#8230;</string>
+    <string name="msg_tag_saved">Sociale tag gemaakt</string>
+    <string name="msg_item_saved">MyEuropeana Item opgeslagen</string>
+    <string name="msg_item_removed">MyEuropeana Item verwijderd</string>
 
     <string name="record_field_title">TITEL</string>
     <string name="record_field_media">MEDIA</string>
+    <string name="record_field_media_warning">Openen van media op een mobiele connectie can leiden tot extra kosten!</string>
     <string name="record_field_dc_creator">MAKER</string>
     <string name="record_field_dc_contributor">AANBIEDER</string>
     <string name="record_field_dc_date">DATUM</string>
@@ -59,6 +82,9 @@
     <string name="record_field_edm_dataprovider">DATA PROVIDER</string>
     <string name="record_field_edm_provider">LEVERANCIER</string>
     <string name="record_field_edm_country">AANBIEDEND LAND</string>
+    <string name="record_field_edm_rights">COPYRIGHT</string>
+    <string name="record_field_place_label">LOCATIE NAAM</string>
+    <string name="record_field_place_longlat">COORDINATEN</string>
 
     <!-- ACTIONS/MENU -->
     <string name="action_settings">Instellingen</string>
@@ -67,6 +93,12 @@
     <string name="action_previous">Vorig item</string>
     <string name="action_next">Volgend item</string>
     <string name="action_save_profile">Profiel opslaan</string>
+    <string name="action_myeuropeana">My Europeana</string>
+    <string name="action_save_item">Opslaan item</string>
+    <string name="action_remove_item">Verwijderen item</string>
+    <string name="action_new_label">Nieuwe label</string>
+    <string name="action_open_browser">Openen in browser</string>
+    <string name="action_open_app">Start Europeana</string>
 
     <!-- FACET TYPES -->
     <string name="facettype_type">OP MEDIATYPE</string>
@@ -154,5 +186,8 @@
 
     <!-- CONTENT DESCRIPTORS -->
     <string name="contentdescriptor_searchitem_image">zoekresultaat voorbeeld afbeelding</string>
+
+    <!-- NOTIFICATIONS -->
+    <string name="new_blog_notification_title_template">Nieuwe blog: %1$s</string>
 
 </resources>

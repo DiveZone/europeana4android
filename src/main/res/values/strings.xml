@@ -60,6 +60,7 @@
     <string name="msg_tag_saved">Social tag created</string>
     <string name="msg_item_saved">MyEuropeana Item saved</string>
     <string name="msg_item_removed">MyEuropeana Item removed</string>
+
     <string name="record_field_title">TITLE</string>
     <string name="record_field_media">MEDIA</string>
     <string name="record_field_media_warning">Opening media on mobile connections can lead to extra costs!</string>
@@ -73,9 +74,11 @@
     <string name="record_field_dc_subject">SUBJECT</string>
     <string name="record_field_dc_source">SOURCE</string>
     <string name="record_field_dc_type">TYPE</string>
+
     <string name="record_field_dcterms_created">DATE OF CREATION</string>
     <string name="record_field_dcterms_ispartof">IS PART OF</string>
     <string name="record_field_dcterms_issued">PUBLICATION DATE</string>
+
     <string name="record_field_edm_dataprovider">DATA PROVIDER</string>
     <string name="record_field_edm_provider">PROVIDER</string>
     <string name="record_field_edm_country">PROVIDING COUNTRY</string>
@@ -151,6 +154,7 @@
     <string name="country_tr">Turkey</string>
     <string name="country_ua">Ukraine</string>
     <string name="country_uk">United Kingdom</string>
+
     <string name="country_eu">Europe</string>
 
     <!-- LANGUAGES -->
@@ -177,11 +181,13 @@
     <string name="locale_sk">Slovak</string>
     <string name="locale_sr">Serbian</string>
     <string name="locale_sv">Swedish</string>
+
     <string name="locale_mul">Multilingual</string>
 
     <!-- CONTENT DESCRIPTORS -->
     <string name="contentdescriptor_searchitem_image">Search Item image preview</string>
+
+    <!-- NOTIFICATIONS -->
     <string name="new_blog_notification_title_template">New blog: %1$s</string>
-    <string name="new_blog_notification_placeholder_text_template">You said %1$s and lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non enim magna. Morbi dictum, velit vel semper venenatis, magna odio volutpat velit, at ullamcorper nulla lacus sed turpis. Pellentesque vitae metus elit, nec tincidunt tellus. Integer sed nisl sem, ullamcorper ornare lacus. Duis ac mauris sed massa congue volutpat. Donec sed erat sit amet turpis viverra rhoncus sit amet nec magna. Donec lacinia ligula at libero volutpat volutpat nec nec tortor.</string>
 
 </resources>

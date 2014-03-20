@@ -67,7 +67,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends ActionBarActivity implements SearchTaskListener {
+public class SearchActivity extends ActionBarActivity implements SearchTaskListener, NameInputDialog.NameInputDialogListener {
 
     // Controller
     private final SearchController searchController = SearchController._instance;
@@ -275,22 +275,28 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
             GuiUtils.toast(this, R.string.msg_profile_selectfacets);
             return;
         }
-        NameInputDialog dialog = new NameInputDialog(R.string.dialog_profile_saveas_title, R.string.dialog_profile_saveas_text, R.string.dialog_profile_saveas_title, R.string.action_save_profile, new NameInputDialog.NameInputDialogResponse() {
-            @Override
-            public void positiveResponse(String input) {
-                SearchProfile profile = new SearchProfile(input, searchController.getFacetString());
-                SearchProfileDao dao = new SearchProfileDao(new DatabaseSetup(SearchActivity.this));
-                dao.store(profile);
-                dao.close();
-                GuiUtils.toast(SearchActivity.this, R.string.msg_profile_saved);
-            }
-
-            @Override
-            public void negativeResponse() {
-                // ignore
-            }
-        });
+        Bundle bundle = new Bundle();
+        bundle.putInt(NameInputDialog.KEY_RESTITLE_INT, R.string.dialog_profile_saveas_title);
+        bundle.putInt(NameInputDialog.KEY_RESTEXT_INT, R.string.dialog_profile_saveas_text);
+        bundle.putInt(NameInputDialog.KEY_RESINPUT_INT, R.string.dialog_profile_saveas_title);
+        bundle.putInt(NameInputDialog.KEY_RESPOSBUTTON_INT, R.string.action_save_profile);
+        NameInputDialog dialog = new NameInputDialog();
+        dialog.setArguments(bundle);
         dialog.show(getSupportFragmentManager(), "SaveAs");
+    }
+
+    @Override
+    public void positiveResponse(String input) {
+        SearchProfile profile = new SearchProfile(input, searchController.getFacetString());
+        SearchProfileDao dao = new SearchProfileDao(new DatabaseSetup(SearchActivity.this));
+        dao.store(profile);
+        dao.close();
+        GuiUtils.toast(SearchActivity.this, R.string.msg_profile_saved);
+    }
+
+    @Override
+    public void negativeResponse() {
+        // ignore
     }
 
     private void closeSearchActivity() {
