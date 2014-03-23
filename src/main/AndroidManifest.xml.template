@@ -16,8 +16,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.eledge.android.eu.europeana"
-    android:versionCode="36"
-    android:versionName="v0.2-beta b36">
+    android:versionCode="37"
+    android:versionName="v0.2-beta b37">
 
     <uses-sdk
         android:minSdkVersion="10"

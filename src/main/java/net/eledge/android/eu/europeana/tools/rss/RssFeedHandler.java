@@ -39,6 +39,13 @@ public class RssFeedHandler extends DefaultHandler {
 
     public List<BlogArticle> articles = new ArrayList<>();
 
+    private final Date mLastViewed;
+
+    public RssFeedHandler(Date lastViewed) {
+        super();
+        mLastViewed = lastViewed;
+    }
+
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         content = new StringBuilder();
@@ -51,6 +58,7 @@ public class RssFeedHandler extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
         if (localName.equalsIgnoreCase("item")) {
+            article.markedNew = mLastViewed.before(article.pubDate);
             articles.add(article);
         } else if (article != null) {
             if (localName.equalsIgnoreCase("title")) {

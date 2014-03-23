@@ -59,8 +59,8 @@ public class UriHelper {
 
     private static UrlBuilder createSearchUrl(String apiKey, String[] terms, int page, int pageSize) {
         UrlBuilder builder = new UrlBuilder(URL_API_SEARCH);
-        builder.addParam("profile", pageSize == 1 ? "minimal+facets" : "minimal", true);
-        builder.addParam("wskey", apiKey, true);
+        builder.overrideParam("profile", pageSize == 1 ? "minimal+facets" : "minimal");
+        builder.overrideParam("wskey", apiKey);
         setSearchParams(builder, terms, page, pageSize);
         return builder;
     }
@@ -69,15 +69,15 @@ public class UriHelper {
         if (pageSize > -1) {
             if (page > -1) {
                 int start = 1 + ((page - 1) * pageSize);
-                builder.addParam("start", String.valueOf(start), true);
+                builder.overrideParam("start", String.valueOf(start));
             }
-            builder.addParam("rows", String.valueOf(pageSize), true);
+            builder.addParam("rows", String.valueOf(pageSize));
         }
         for (int i = 0; i < terms.length; i++) {
             if (i == 0) {
-                builder.addParam("query", terms[i], true);
+                builder.overrideParam("query", terms[i]);
             } else {
-                builder.addMultiParam("qf", terms[i]);
+                builder.addParam("qf", terms[i]);
             }
         }
     }

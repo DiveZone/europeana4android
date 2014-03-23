@@ -19,6 +19,7 @@ public class Preferences {
 
     public static final String BLOG = "BLOG";
 
-    public static final String BLOG_LASTUPDATE = "lastupdate";
+    public static final String BLOG_LAST_VIEW = "lastViewed";
+    public static final String BLOG_LAST_UPDATE = "lastUpdate";
 
 }

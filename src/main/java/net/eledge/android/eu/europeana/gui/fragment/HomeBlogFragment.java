@@ -36,22 +36,17 @@ import net.eledge.android.eu.europeana.db.dao.BlogArticleDao;
 import net.eledge.android.eu.europeana.db.model.BlogArticle;
 import net.eledge.android.eu.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.eu.europeana.gui.adapter.BlogAdapter;
-import net.eledge.android.eu.europeana.tools.RssReader;
-import net.eledge.android.eu.europeana.tools.UriHelper;
-import net.eledge.android.toolkit.async.listener.TaskListener;
+import net.eledge.android.eu.europeana.service.BlogCheckerService;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class HomeBlogFragment extends Fragment implements TaskListener<List<BlogArticle>> {
+public class HomeBlogFragment extends Fragment implements BlogCheckerService.BlogCheckerListener {
 
     private BlogAdapter mBlogAdapter;
 
     private BlogArticleDao mBlogArticleDao;
-
-    private RssReader mRssReaderTask;
 
     private EasyTracker mEasyTracker;
 
@@ -62,25 +57,7 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
         super.onCreate(savedInstanceState);
         mBlogAdapter = new BlogAdapter(getActivity(), new ArrayList<BlogArticle>());
         mEasyTracker = EasyTracker.getInstance(HomeBlogFragment.this.getActivity());
-
-        boolean doUpdate = false;
-        SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);
-        long time = settings.getLong(Preferences.BLOG_LASTUPDATE, -1);
-        if (time == -1) {
-            doUpdate = true;
-        } else {
-            Calendar timeLimit = Calendar.getInstance();
-            timeLimit.add(Calendar.HOUR, -24);
-            Calendar lastUpdate = Calendar.getInstance();
-            lastUpdate.setTime(new Date(time));
-            if (timeLimit.after(lastUpdate)) {
-                doUpdate = true;
-            }
-        }
-        if (doUpdate) {
-            mRssReaderTask = new RssReader(getActivity(), this);
-            mRssReaderTask.execute(UriHelper.URL_BLOGFEED);
-        }
+        BlogCheckerService.listener = this;
     }
 
     @Override
@@ -104,40 +81,19 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
 
     @Override
     public void onDestroy() {
-        if (mRssReaderTask != null) {
-            mRssReaderTask.cancel(true);
-        }
+        BlogCheckerService.listener = null;
         super.onDestroy();
-    }
-
-    @Override
-    public void onTaskStart() {
-        // ignore
-    }
-
-    @Override
-    public void onTaskFinished(List<BlogArticle> articles) {
-        if (articles != null) {
-            showArticles(articles);
-            mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(getActivity()));
-            mBlogArticleDao.deleteAll();
-            mBlogArticleDao.store(articles);
-            mBlogArticleDao.close();
-            SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putLong(Preferences.BLOG_LASTUPDATE, new Date().getTime());
-            editor.commit();
-        }
     }
 
     private void loadFromDatabase() {
         mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(getActivity()));
         List<BlogArticle> articles = mBlogArticleDao.findAll();
         mBlogArticleDao.close();
-        showArticles(articles);
+        updatedArticles(articles);
     }
 
-    private void showArticles(List<BlogArticle> articles) {
+    @Override
+    public void updatedArticles(List<BlogArticle> articles) {
         if (articles != null) {
             mBlogAdapter.clear();
             for (BlogArticle article : articles) {
@@ -145,5 +101,8 @@ public class HomeBlogFragment extends Fragment implements TaskListener<List<Blog
             }
             mBlogAdapter.notifyDataSetChanged();
         }
+        SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putLong(Preferences.BLOG_LAST_VIEW, new Date().getTime());
     }
 }

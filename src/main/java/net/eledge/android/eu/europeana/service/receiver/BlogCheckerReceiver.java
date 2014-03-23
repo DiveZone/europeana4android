@@ -44,7 +44,7 @@ public class BlogCheckerReceiver extends WakefulBroadcastReceiver {
         blogCheckerIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                new Date().getTime(), AlarmManager.INTERVAL_HOUR * 2, blogCheckerIntent);
+                new Date().getTime(), AlarmManager.INTERVAL_HOUR * 4, blogCheckerIntent);
 
         ComponentName receiver = new ComponentName(context, BootReceiver.class);
         PackageManager pm = context.getPackageManager();

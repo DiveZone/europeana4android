@@ -57,7 +57,7 @@ public class NewBlogNotification {
      * @see #cancel(Context)
      */
     public static void notify(final Context context,
-                              final String blogTitle, final String blogText, final String blogUrl, final int number) {
+                              final String blogTitle, final String blogText, final String blogUrl) {
         final Resources res = context.getResources();
 
         final String title = res.getString(
@@ -70,13 +70,14 @@ public class NewBlogNotification {
                 .setContentText(blogText)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setTicker(title)
-                .setNumber(number)
+                        //.setNumber(number)
                 .setContentIntent(
                         PendingIntent.getActivity(
                                 context,
                                 0,
                                 new Intent(Intent.ACTION_VIEW, Uri.parse(blogUrl)),
-                                PendingIntent.FLAG_UPDATE_CURRENT))
+                                PendingIntent.FLAG_UPDATE_CURRENT)
+                )
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(blogText)
                         .setBigContentTitle(title)
@@ -88,7 +89,8 @@ public class NewBlogNotification {
                                 context,
                                 0,
                                 new Intent(Intent.ACTION_VIEW, Uri.parse(blogUrl)),
-                                PendingIntent.FLAG_UPDATE_CURRENT))
+                                PendingIntent.FLAG_UPDATE_CURRENT)
+                )
                 .addAction(
                         0,
                         res.getString(R.string.action_open_app),

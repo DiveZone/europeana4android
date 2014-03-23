@@ -15,14 +15,12 @@
 
 package net.eledge.android.eu.europeana.tools;
 
-import android.app.Activity;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import net.eledge.android.eu.europeana.db.model.BlogArticle;
 import net.eledge.android.eu.europeana.tools.rss.RssFeedHandler;
-import net.eledge.android.toolkit.async.ListenerNotifier;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 
 import org.apache.commons.io.IOUtils;
@@ -35,6 +33,7 @@ import org.xml.sax.XMLReader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -43,14 +42,14 @@ import javax.xml.parsers.SAXParserFactory;
 
 public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
 
-    private final Activity mActivity;
-
     private final TaskListener<List<BlogArticle>> mListener;
 
-    public RssReader(Activity activity, TaskListener<List<BlogArticle>> listener) {
+    private final Date mLastViewed;
+
+    public RssReader(Date lastViewed, TaskListener<List<BlogArticle>> listener) {
         super();
-        mActivity = activity;
         mListener = listener;
+        mLastViewed = lastViewed;
     }
 
     @Override
@@ -67,7 +66,7 @@ public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
             SAXParser sp = spf.newSAXParser();
             XMLReader xr = sp.getXMLReader();
 
-            RssFeedHandler rh = new RssFeedHandler();
+            RssFeedHandler rh = new RssFeedHandler(mLastViewed);
 
             xr.setContentHandler(rh);
             xr.parse(new InputSource(is));
@@ -85,7 +84,7 @@ public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
     @Override
     protected void onPostExecute(List<BlogArticle> articles) {
         if (!isCancelled()) {
-            mActivity.runOnUiThread(new ListenerNotifier<>(mListener, articles));
+            mListener.onTaskFinished(articles);
         }
     }
 

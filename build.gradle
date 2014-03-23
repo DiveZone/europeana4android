@@ -85,7 +85,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:4.+'
     compile 'org.springframework.android:spring-android-rest-template:1.0.+'
     compile 'com.google.code.gson:gson:2.2.+'
-    compile 'net.eledge:urlbuilder:1.0.+'
+    compile 'net.eledge:urlbuilder:1.1.+'
     compile project(':AndroidToolkit')
 
     compile "com.android.support:appcompat-v7:19.0.+"
