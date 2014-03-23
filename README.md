@@ -49,9 +49,9 @@ Setting up the project is relatively easy.
 
 ### Development Environment
 This project requires the following setup:
-* __Android Studio 0.3.4__ or higher
+* __Android Studio 0.5.2__ or higher
 * __JDK 1.7__ or higher
-* __Gradle 1.8__ or higher
+* __Gradle 1.10__ or higher
 
 Check **build.gradle** which SDK and build tools are required via the SDK manager.
 
