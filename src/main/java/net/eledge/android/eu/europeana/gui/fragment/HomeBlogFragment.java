@@ -36,13 +36,13 @@ import net.eledge.android.eu.europeana.db.dao.BlogArticleDao;
 import net.eledge.android.eu.europeana.db.model.BlogArticle;
 import net.eledge.android.eu.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.eu.europeana.gui.adapter.BlogAdapter;
-import net.eledge.android.eu.europeana.service.BlogCheckerService;
+import net.eledge.android.eu.europeana.service.task.BlogDownloadTask;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class HomeBlogFragment extends Fragment implements BlogCheckerService.BlogCheckerListener {
+public class HomeBlogFragment extends Fragment implements BlogDownloadTask.BlogCheckerListener {
 
     private BlogAdapter mBlogAdapter;
 
@@ -57,7 +57,7 @@ public class HomeBlogFragment extends Fragment implements BlogCheckerService.Blo
         super.onCreate(savedInstanceState);
         mBlogAdapter = new BlogAdapter(getActivity(), new ArrayList<BlogArticle>());
         mEasyTracker = EasyTracker.getInstance(HomeBlogFragment.this.getActivity());
-        BlogCheckerService.listener = this;
+        BlogDownloadTask.listener = this;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class HomeBlogFragment extends Fragment implements BlogCheckerService.Blo
 
     @Override
     public void onDestroy() {
-        BlogCheckerService.listener = null;
+        BlogDownloadTask.listener = null;
         super.onDestroy();
     }
 
@@ -89,7 +89,11 @@ public class HomeBlogFragment extends Fragment implements BlogCheckerService.Blo
         mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(getActivity()));
         List<BlogArticle> articles = mBlogArticleDao.findAll();
         mBlogArticleDao.close();
-        updatedArticles(articles);
+        if ((articles == null) || articles.isEmpty()) {
+            BlogDownloadTask.getInstance(this.getActivity()).execute();
+        } else {
+            updatedArticles(articles);
+        }
     }
 
     @Override

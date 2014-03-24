@@ -51,7 +51,6 @@ import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
 import net.eledge.android.eu.europeana.gui.fragment.HomeBlogFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
-import net.eledge.android.eu.europeana.service.receiver.BlogCheckerReceiver;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
 import net.eledge.android.toolkit.gui.ViewInjector;
@@ -91,9 +90,6 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
         mApplication = (EuropeanaApplication) getApplication();
         setContentView(R.layout.activity_home);
         ViewInjector.inject(this);
-
-        BlogCheckerReceiver receiver = new BlogCheckerReceiver();
-        receiver.enableBlogChecker(this);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 

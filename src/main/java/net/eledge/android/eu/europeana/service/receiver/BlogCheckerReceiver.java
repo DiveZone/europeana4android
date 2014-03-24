@@ -39,22 +39,23 @@ public class BlogCheckerReceiver extends WakefulBroadcastReceiver {
     }
 
     public void enableBlogChecker(Context context) {
-        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, BlogCheckerReceiver.class);
-        blogCheckerIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        if (alarmManager == null) {
+            alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(context, BlogCheckerReceiver.class);
+            blogCheckerIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                new Date().getTime(), AlarmManager.INTERVAL_HOUR * 4, blogCheckerIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+                    new Date().getTime(), AlarmManager.INTERVAL_HOUR * 4, blogCheckerIntent);
 
-        ComponentName receiver = new ComponentName(context, BootReceiver.class);
-        PackageManager pm = context.getPackageManager();
+            ComponentName receiver = new ComponentName(context, BootReceiver.class);
+            PackageManager pm = context.getPackageManager();
 
-        if (pm != null) {
-            pm.setComponentEnabledSetting(receiver,
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                    PackageManager.DONT_KILL_APP);
+            if (pm != null) {
+                pm.setComponentEnabledSetting(receiver,
+                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                        PackageManager.DONT_KILL_APP);
+            }
         }
-
     }
 
     public void disableBlogChecker(Context context) {
