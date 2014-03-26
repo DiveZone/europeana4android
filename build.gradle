@@ -81,7 +81,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.0.+'
+    compile 'com.android.support:support-v4:19.+'
     compile 'com.google.android.gms:play-services:4.+'
     compile 'org.springframework.android:spring-android-rest-template:1.0.+'
     compile 'com.google.code.gson:gson:2.2.+'
@@ -104,5 +104,4 @@ dependencies {
     compile('net.eledge:spring-social-europeana:0.0.4-SNAPSHOT') {
         exclude group: 'org.springframework'
     }
-    compile files('libs/libGoogleAnalyticsServices.jar')
 }

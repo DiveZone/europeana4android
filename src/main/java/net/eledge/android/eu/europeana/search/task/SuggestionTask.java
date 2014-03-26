@@ -18,9 +18,10 @@ package net.eledge.android.eu.europeana.search.task;
 import android.app.Activity;
 import android.os.AsyncTask;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
+import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.Suggestions;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
@@ -69,13 +70,12 @@ public class SuggestionTask extends AsyncTask<String, Void, Item[]> {
     protected void onPostExecute(Item[] suggestions) {
         searchController.cacheSuggestions(term, suggestions);
         if (listener instanceof Activity) {
-            EasyTracker tracker = EasyTracker.getInstance((Activity) listener);
-            tracker.send(MapBuilder
-                    .createTiming("Tasks",
-                            new Date().getTime() - startTime,
-                            "SuggestionTask",
-                            term)
-                    .build());
+            Tracker tracker = ((EuropeanaApplication) ((Activity) listener).getApplication()).getAnalyticsTracker();
+            tracker.send(new HitBuilders.TimingBuilder()
+                    .setCategory("Tasks")
+                    .setValue(new Date().getTime() - startTime)
+                    .setVariable("SuggestionTask")
+                    .setLabel(term).build());
             ((Activity) listener).runOnUiThread(new ListenerNotifier<>(listener, suggestions));
         } else {
             listener.onTaskFinished(suggestions);

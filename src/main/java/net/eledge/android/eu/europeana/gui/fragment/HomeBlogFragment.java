@@ -27,9 +27,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
+import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.Preferences;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.db.dao.BlogArticleDao;
@@ -48,15 +49,12 @@ public class HomeBlogFragment extends Fragment implements BlogDownloadTask.BlogC
 
     private BlogArticleDao mBlogArticleDao;
 
-    private EasyTracker mEasyTracker;
-
     private ListView mListView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBlogAdapter = new BlogAdapter(getActivity(), new ArrayList<BlogArticle>());
-        mEasyTracker = EasyTracker.getInstance(HomeBlogFragment.this.getActivity());
         BlogDownloadTask.listener = this;
     }
 
@@ -70,7 +68,8 @@ public class HomeBlogFragment extends Fragment implements BlogDownloadTask.BlogC
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BlogArticle article = mBlogAdapter.getItem(position);
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.guid));
-                mEasyTracker.send(MapBuilder.createEvent("blog", "click", article.guid, null).build());
+                Tracker tracker = ((EuropeanaApplication) getActivity().getApplication()).getAnalyticsTracker();
+                tracker.send(new HitBuilders.EventBuilder().setCategory("blog").setAction("click").setLabel(article.guid).build());
                 startActivity(browserIntent);
             }
         });

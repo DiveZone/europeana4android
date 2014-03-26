@@ -19,8 +19,8 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.search.RecordController;
@@ -69,13 +69,12 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
 
     @Override
     protected void onPostExecute(RecordObject result) {
-        EasyTracker tracker = EasyTracker.getInstance(mActivity);
-        tracker.send(MapBuilder
-                .createTiming("Tasks",
-                        new Date().getTime() - startTime,
-                        "RecordTask",
-                        recordId)
-                .build());
+        Tracker tracker = ((EuropeanaApplication) mActivity.getApplication()).getAnalyticsTracker();
+        tracker.send(new HitBuilders.TimingBuilder()
+                .setCategory("Tasks")
+                .setValue(new Date().getTime() - startTime)
+                .setVariable("RecordTask")
+                .setLabel(recordId).build());
         recordController.record = result;
         mActivity.runOnUiThread(new ListenerNotifier<>(recordController.listeners.values(), result));
     }

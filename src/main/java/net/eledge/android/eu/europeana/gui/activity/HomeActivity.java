@@ -40,8 +40,6 @@ import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.db.dao.SearchProfileDao;
@@ -150,7 +148,6 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
     @Override
     protected void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
     }
 
     @Override
@@ -166,12 +163,6 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
             mProfilesAdapter.add(sp);
         }
         mProfilesAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
     @Override

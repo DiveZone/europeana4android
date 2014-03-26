@@ -18,8 +18,8 @@ package net.eledge.android.eu.europeana.search.task;
 import android.app.Activity;
 import android.os.AsyncTask;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.search.SearchController;
@@ -67,13 +67,8 @@ public class SearchFacetTask extends AsyncTask<String, Void, SearchFacets> {
 
     @Override
     protected void onPostExecute(SearchFacets result) {
-        EasyTracker tracker = EasyTracker.getInstance(mActivity);
-        tracker.send(MapBuilder
-                .createTiming("Tasks",
-                        new Date().getTime() - startTime,
-                        "SearchFacetTask",
-                        null)
-                .build());
+        Tracker tracker = ((EuropeanaApplication) mActivity.getApplication()).getAnalyticsTracker();
+        tracker.send(new HitBuilders.TimingBuilder().setCategory("Tasks").setValue(new Date().getTime() - startTime).setVariable("SearchFacetTask").build());
         if (isCancelled()) {
             return;
         }

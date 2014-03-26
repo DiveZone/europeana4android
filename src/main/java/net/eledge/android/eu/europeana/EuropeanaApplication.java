@@ -24,6 +24,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
 import net.eledge.android.eu.europeana.service.receiver.BlogCheckerReceiver;
 import net.eledge.android.toolkit.net.ImageCacheManager;
 
@@ -46,11 +49,13 @@ public class EuropeanaApplication extends Application {
     private ConnectionFactoryRegistry connectionFactoryRegistry;
     private ConnectionRepository connectionRepository;
 
-    private ImageCacheManager imageCacheManager;
+    private ImageCacheManager mImageCacheManager;
 
     private Typeface europeanaFont;
 
     private Bundle metaData;
+
+    private Tracker mTracker;
 
     public EuropeanaApplication() {
         super();
@@ -73,6 +78,8 @@ public class EuropeanaApplication extends Application {
             BlogCheckerReceiver receiver = new BlogCheckerReceiver();
             receiver.enableBlogChecker(this);
 
+            //activate auto tracking
+            getAnalyticsTracker();
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -86,12 +93,20 @@ public class EuropeanaApplication extends Application {
         return metaData.getString(METADATA_EUROPEANA_API_PRIVATEKEY);
     }
 
-    public ImageCacheManager getImageCacheManager() {
-        if (imageCacheManager == null) {
-            imageCacheManager = new ImageCacheManager(getApplicationContext(), 60 * 60 * 60 * 24);
-            imageCacheManager.clearCache();
+    public synchronized Tracker getAnalyticsTracker() {
+        if (mTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            mTracker = analytics.newTracker(R.xml.app_tracker);
         }
-        return imageCacheManager;
+        return mTracker;
+    }
+
+    public ImageCacheManager getImageCacheManager() {
+        if (mImageCacheManager == null) {
+            mImageCacheManager = new ImageCacheManager(getApplicationContext(), 60 * 60 * 60 * 24);
+            mImageCacheManager.clearCache();
+        }
+        return mImageCacheManager;
     }
 
     public Typeface getEuropeanaFont() {
