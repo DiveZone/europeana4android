@@ -17,13 +17,9 @@ package net.eledge.android.eu.europeana.service;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.SharedPreferences;
 
-import net.eledge.android.eu.europeana.Preferences;
 import net.eledge.android.eu.europeana.service.receiver.BlogCheckerReceiver;
 import net.eledge.android.eu.europeana.service.task.BlogDownloadTask;
-
-import java.util.Date;
 
 public class BlogCheckerService extends IntentService {
 
@@ -35,14 +31,6 @@ public class BlogCheckerService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Date lastViewed = new Date();
-
-        SharedPreferences settings = this.getSharedPreferences(Preferences.BLOG, 0);
-        long time = settings.getLong(Preferences.BLOG_LAST_VIEW, -1);
-        if (time != -1) {
-            lastViewed.setTime(time);
-        }
-
         if (mTask == null) {
             mTask = BlogDownloadTask.getInstance(this);
         }
