@@ -13,10 +13,6 @@
  * limitations under the License.
  */
 
-
-
-
-
 buildscript {
     repositories {
         mavenCentral()
@@ -82,14 +78,12 @@ android {
 
 dependencies {
     compile 'com.android.support:support-v4:19.+'
+    compile "com.android.support:appcompat-v7:19.+"
     compile 'com.google.android.gms:play-services:4.+'
     compile 'org.springframework.android:spring-android-rest-template:1.0.+'
     compile 'com.google.code.gson:gson:2.2.+'
     compile 'net.eledge:urlbuilder:1.1.+'
     compile project(':AndroidToolkit')
-
-    compile "com.android.support:appcompat-v7:19.0.+"
-
 
     compile('org.springframework.android:spring-android-auth:1.0.+') {
         exclude group: 'org.springframework'
