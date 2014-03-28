@@ -27,7 +27,6 @@ import android.os.Bundle;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
-import net.eledge.android.eu.europeana.service.receiver.BlogCheckerReceiver;
 import net.eledge.android.toolkit.net.ImageCacheManager;
 
 import org.springframework.security.crypto.encrypt.AndroidEncryptors;
@@ -74,9 +73,6 @@ public class EuropeanaApplication extends Application {
             SQLiteOpenHelper repositoryHelper = new SQLiteConnectionRepositoryHelper(this);
             this.connectionRepository = new SQLiteConnectionRepository(repositoryHelper,
                     this.connectionFactoryRegistry, AndroidEncryptors.text("password", "5c0744940b5c369b"));
-
-            BlogCheckerReceiver receiver = new BlogCheckerReceiver();
-            receiver.enableBlogChecker(this);
 
             //activate auto tracking
             getAnalyticsTracker();

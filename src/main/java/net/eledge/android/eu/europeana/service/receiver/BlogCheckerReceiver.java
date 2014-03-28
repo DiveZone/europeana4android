@@ -25,7 +25,7 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 
 import net.eledge.android.eu.europeana.service.BlogCheckerService;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class BlogCheckerReceiver extends WakefulBroadcastReceiver {
 
@@ -39,22 +39,22 @@ public class BlogCheckerReceiver extends WakefulBroadcastReceiver {
     }
 
     public void enableBlogChecker(Context context) {
-        if (alarmManager == null) {
-            alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(context, BlogCheckerReceiver.class);
-            blogCheckerIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, BlogCheckerReceiver.class);
+        blogCheckerIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
-            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    new Date().getTime(), AlarmManager.INTERVAL_HOUR * 4, blogCheckerIntent);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, 1);
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                calendar.getTimeInMillis(), AlarmManager.INTERVAL_HOUR * 2, blogCheckerIntent);
 
-            ComponentName receiver = new ComponentName(context, BootReceiver.class);
-            PackageManager pm = context.getPackageManager();
+        ComponentName receiver = new ComponentName(context, BootReceiver.class);
+        PackageManager pm = context.getPackageManager();
 
-            if (pm != null) {
-                pm.setComponentEnabledSetting(receiver,
-                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                        PackageManager.DONT_KILL_APP);
-            }
+        if (pm != null) {
+            pm.setComponentEnabledSetting(receiver,
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
         }
     }
 

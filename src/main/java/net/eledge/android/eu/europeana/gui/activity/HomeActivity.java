@@ -15,6 +15,7 @@
 
 package net.eledge.android.eu.europeana.gui.activity;
 
+import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -49,6 +50,7 @@ import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
 import net.eledge.android.eu.europeana.gui.fragment.HomeBlogFragment;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
+import net.eledge.android.eu.europeana.service.receiver.BlogCheckerReceiver;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
 import net.eledge.android.toolkit.gui.ViewInjector;
@@ -143,6 +145,13 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
         }
         fragmentTransaction.replace(R.id.activity_home_fragment_blog, mBlogFragment);
         fragmentTransaction.commit();
+
+        if (PendingIntent.getBroadcast(this, 0,
+                new Intent(new Intent(this, BlogCheckerReceiver.class)),
+                PendingIntent.FLAG_NO_CREATE) == null) {
+            new BlogCheckerReceiver().enableBlogChecker(this);
+        }
+
     }
 
     @Override

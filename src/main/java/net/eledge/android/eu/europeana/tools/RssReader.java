@@ -55,9 +55,20 @@ public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
     @Override
     protected List<BlogArticle> doInBackground(String... urls) {
         String feed = urls[0];
+        return RssReader.readFeed(feed, mLastViewed);
+    }
+
+    @Override
+    protected void onPostExecute(List<BlogArticle> articles) {
+        if (!isCancelled()) {
+            mListener.onTaskFinished(articles);
+        }
+    }
+
+    public static List<BlogArticle> readFeed(String url, Date lastViewed) {
         InputStream is = null;
         try {
-            HttpGet request = new HttpGet(feed);
+            HttpGet request = new HttpGet(url);
             AndroidHttpClient.modifyRequestToAcceptGzipResponse(request);
             HttpResponse response = new DefaultHttpClient().execute(request);
             is = AndroidHttpClient.getUngzippedContent(response.getEntity());
@@ -66,7 +77,7 @@ public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
             SAXParser sp = spf.newSAXParser();
             XMLReader xr = sp.getXMLReader();
 
-            RssFeedHandler rh = new RssFeedHandler(mLastViewed);
+            RssFeedHandler rh = new RssFeedHandler(lastViewed);
 
             xr.setContentHandler(rh);
             xr.parse(new InputSource(is));
@@ -79,13 +90,6 @@ public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
         }
 
         return null;
-    }
-
-    @Override
-    protected void onPostExecute(List<BlogArticle> articles) {
-        if (!isCancelled()) {
-            mListener.onTaskFinished(articles);
-        }
     }
 
 }

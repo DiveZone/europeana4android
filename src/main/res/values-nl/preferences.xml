@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2014 eLedge.net and the original author or authors.
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -61,16 +60,21 @@
         <item>Zweeds</item>
     </string-array>
 
+    <!-- NOTIFICATION -->
+
+    <string name="settings_header_notification_title">Notificaties</string>
+    <string name="settings_notification_enable">Notify new blog posts</string>
+
     <!-- ABOUT -->
 
     <string name="settings_header_about_title">Over&#8230;</string>
     <string name="settings_about_version">Versie</string>
     <string name="settings_about_build">Build</string>
-    <string name="settings_about_copyright1">&#169; zoekmachine/Data aanbieder</string>
-    <string name="settings_about_copyright1_lines">Stichting Europeana \nhttp://www.europeana.eu</string>
+    <string name="settings_about_copyright1">Zoekmachine/Data aanbieder</string>
+    <string name="settings_about_copyright1_lines">&#169; Stichting Europeana \nhttp://www.europeana.eu</string>
     <string name="settings_about_copyright1_url">http://www.europeana.eu</string>
-    <string name="settings_about_copyright2">&#169; en ontwikkeld door</string>
-    <string name="settings_about_copyright2_lines">eLedge / GJW Boogerd\nhttp://www.eledge.net</string>
+    <string name="settings_about_copyright2">Ontwikkeld door</string>
+    <string name="settings_about_copyright2_lines">&#169; eLedge / GJW Boogerd\nhttp://www.eledge.net</string>
     <string name="settings_about_copyright2_url">http://www.eledge.net</string>
     <string name="settings_about_projectsite">Project site</string>
     <string name="settings_about_projectsite_url">http://github.com/eledge/europeana4android</string>

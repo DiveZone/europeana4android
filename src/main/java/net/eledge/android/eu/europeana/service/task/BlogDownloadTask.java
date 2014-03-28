@@ -61,12 +61,16 @@ public class BlogDownloadTask implements TaskListener<List<BlogArticle>> {
 
     @Override
     public void onTaskFinished(List<BlogArticle> articles) {
+        processArticles(articles, mContext);
+    }
+
+    public static void processArticles(List<BlogArticle> articles, Context context) {
         if (articles != null) {
-            BlogArticleDao mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(mContext));
+            BlogArticleDao mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(context));
             mBlogArticleDao.deleteAll();
             mBlogArticleDao.store(articles);
             mBlogArticleDao.close();
-            SharedPreferences settings = mContext.getSharedPreferences(Preferences.BLOG, 0);
+            SharedPreferences settings = context.getSharedPreferences(Preferences.BLOG, 0);
             SharedPreferences.Editor editor = settings.edit();
             editor.putLong(Preferences.BLOG_LAST_UPDATE, new Date().getTime());
             editor.commit();
@@ -74,9 +78,11 @@ public class BlogDownloadTask implements TaskListener<List<BlogArticle>> {
             if (listener != null) {
                 listener.updatedArticles(articles);
             } else {
-                for (BlogArticle item : articles) {
-                    if (item.markedNew) {
-                        NewBlogNotification.notify(mContext, item.title, item.description, item.guid);
+                if (settings.getBoolean(Preferences.BLOG_NOTIFICATION_ENABLE, true)) {
+                    for (BlogArticle item : articles) {
+                        if (item.markedNew) {
+                            NewBlogNotification.notify(context, item.title, item.description, item.guid);
+                        }
                     }
                 }
             }

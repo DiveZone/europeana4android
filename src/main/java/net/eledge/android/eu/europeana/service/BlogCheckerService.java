@@ -17,9 +17,16 @@ package net.eledge.android.eu.europeana.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
-import net.eledge.android.eu.europeana.service.receiver.BlogCheckerReceiver;
+import net.eledge.android.eu.europeana.Preferences;
+import net.eledge.android.eu.europeana.db.model.BlogArticle;
 import net.eledge.android.eu.europeana.service.task.BlogDownloadTask;
+import net.eledge.android.eu.europeana.tools.RssReader;
+import net.eledge.android.eu.europeana.tools.UriHelper;
+
+import java.util.Date;
+import java.util.List;
 
 public class BlogCheckerService extends IntentService {
 
@@ -27,23 +34,20 @@ public class BlogCheckerService extends IntentService {
         super("BlogCheckerService");
     }
 
-    BlogDownloadTask mTask;
-
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (mTask == null) {
-            mTask = BlogDownloadTask.getInstance(this);
+        Date lastViewed = new Date();
+        SharedPreferences settings = this.getSharedPreferences(Preferences.BLOG, 0);
+        long time = settings.getLong(Preferences.BLOG_LAST_VIEW, -1);
+        if (time != -1) {
+            lastViewed.setTime(time);
         }
-        mTask.execute();
-
-        BlogCheckerReceiver.completeWakefulIntent(intent);
+        List<BlogArticle> articles = RssReader.readFeed(UriHelper.URL_BLOGFEED, lastViewed);
+        BlogDownloadTask.processArticles(articles, this);
     }
 
     @Override
     public void onDestroy() {
-        if (mTask != null) {
-            mTask.cancel();
-        }
         super.onDestroy();
     }
 
