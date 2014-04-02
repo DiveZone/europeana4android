@@ -15,111 +15,87 @@
 
 package net.eledge.android.eu.europeana.gui.notification;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
-import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
+import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.db.model.BlogArticle;
+import net.eledge.android.eu.europeana.gui.activity.HomeActivity;
+import net.eledge.android.eu.europeana.gui.notification.receiver.UrlButtonReceiver;
+import net.eledge.android.eu.europeana.tools.UriHelper;
 
-/**
- * Helper class for showing and canceling new blog
- * notifications.
- * <p/>
- * This class makes heavy use of the {@link NotificationCompat.Builder} helper
- * class to create notifications in a backward-compatible way.
- */
+import java.util.List;
+
 public class NewBlogNotification {
-    /**
-     * The unique identifier for this type of notification.
-     */
-    private static final String NOTIFICATION_TAG = "NewBlog";
 
-    /**
-     * Shows the notification, or updates a previously shown notification of
-     * this type, with the given parameters.
-     * <p/>
-     * TODO: Customize this method's arguments to present relevant content in
-     * the notification.
-     * <p/>
-     * TODO: Customize the contents of this method to tweak the behavior and
-     * presentation of new blog notifications. Make
-     * sure to follow the
-     * <a href="https://developer.android.com/design/patterns/notifications.html">
-     * Notification design guidelines</a> when doing so.
-     *
-     * @see #cancel(Context)
-     */
-    public static void notify(final Context context,
-                              final String blogTitle, final String blogText, final String blogUrl) {
+    public static void notify(final Context context, List<BlogArticle> articles) {
+        if ((articles == null) || articles.isEmpty()) {
+            return;
+        }
+        // cancel earlier notification
+        cancel(context);
         final Resources res = context.getResources();
 
-        final String title = res.getString(
-                R.string.new_blog_notification_title_template, blogTitle);
+        String blogUrl = UriHelper.URL_BLOG;
+        String title = res.getString(
+                R.string.new_blog_notification_title_multiple, articles.size());
 
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_stat_new_blog)
-                .setContentTitle(title)
-                .setContentText(blogText)
+                .setContentText(res.getText(R.string.app_name))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setTicker(title)
-                        //.setNumber(number)
-                .setContentIntent(
-                        PendingIntent.getActivity(
-                                context,
-                                0,
-                                new Intent(Intent.ACTION_VIEW, Uri.parse(blogUrl)),
-                                PendingIntent.FLAG_UPDATE_CURRENT)
-                )
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(blogText)
-                        .setBigContentTitle(title)
-                        .setSummaryText("Dummy summary text"))
-                .addAction(
-                        0,
-                        res.getString(R.string.action_open_browser),
-                        PendingIntent.getActivity(
-                                context,
-                                0,
-                                new Intent(Intent.ACTION_VIEW, Uri.parse(blogUrl)),
-                                PendingIntent.FLAG_UPDATE_CURRENT)
-                )
-                .addAction(
-                        0,
-                        res.getString(R.string.action_open_app),
-                        null)
-
                 .setAutoCancel(true);
+        if (articles.size() == 1) {
+            BlogArticle item = articles.get(0);
+            blogUrl = item.guid;
+            title = res.getString(
+                    R.string.new_blog_notification_title_single, item.title);
+
+        } else {
+            NotificationCompat.InboxStyle inboxStyle =
+                    new NotificationCompat.InboxStyle();
+            for (BlogArticle item : articles) {
+                inboxStyle.addLine(item.title);
+            }
+            builder.setStyle(inboxStyle);
+        }
+
+        Intent buttonIntent = new Intent(context, UrlButtonReceiver.class);
+        buttonIntent.putExtra(UrlButtonReceiver.PARAM_NOTIFICATIONID, Config.NOTIFICATION_NEWBLOG);
+        buttonIntent.putExtra(UrlButtonReceiver.PARAM_URL, blogUrl);
+        PendingIntent openUrl = PendingIntent.getBroadcast(context, 0, buttonIntent, 0);
+
+        PendingIntent openApp = PendingIntent.getActivity(
+                context,
+                0,
+                new Intent(context, HomeActivity.class),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.setContentIntent(openApp)
+                .addAction(0, res.getString(R.string.action_open_browser), openUrl)
+                .addAction(0, res.getString(R.string.action_open_app), openApp)
+                .setContentTitle(title);
 
         notify(context, builder.build());
     }
 
-    @TargetApi(Build.VERSION_CODES.ECLAIR)
     private static void notify(final Context context, final Notification notification) {
         final NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-            nm.notify(NOTIFICATION_TAG, 0, notification);
-        } else {
-            nm.notify(NOTIFICATION_TAG.hashCode(), notification);
-        }
+        nm.notify(Config.NOTIFICATION_NEWBLOG, notification);
     }
 
-    @TargetApi(Build.VERSION_CODES.ECLAIR)
     public static void cancel(final Context context) {
         final NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-            nm.cancel(NOTIFICATION_TAG, 0);
-        } else {
-            nm.cancel(NOTIFICATION_TAG.hashCode());
-        }
+        nm.cancel(Config.NOTIFICATION_NEWBLOG);
     }
 }

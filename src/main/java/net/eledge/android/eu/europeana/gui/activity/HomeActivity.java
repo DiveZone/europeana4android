@@ -47,6 +47,7 @@ import net.eledge.android.eu.europeana.db.model.SearchProfile;
 import net.eledge.android.eu.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.eu.europeana.gui.adapter.SuggestionAdapter;
 import net.eledge.android.eu.europeana.gui.fragment.HomeBlogFragment;
+import net.eledge.android.eu.europeana.gui.notification.NewBlogNotification;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
 import net.eledge.android.toolkit.async.listener.TaskListener;
@@ -88,6 +89,7 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
         mApplication = (EuropeanaApplication) getApplication();
         setContentView(R.layout.activity_home);
         ViewInjector.inject(this);
+        NewBlogNotification.cancel(this);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 

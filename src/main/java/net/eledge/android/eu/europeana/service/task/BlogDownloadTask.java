@@ -13,6 +13,7 @@ import net.eledge.android.eu.europeana.tools.RssReader;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -85,11 +86,13 @@ public class BlogDownloadTask implements TaskListener<List<BlogArticle>> {
                 });
             } else {
                 if (settings.getBoolean(Preferences.BLOG_NOTIFICATION_ENABLE, true)) {
+                    List<BlogArticle> newArticles = new ArrayList<>();
                     for (BlogArticle item : articles) {
                         if (item.markedNew) {
-                            NewBlogNotification.notify(context, item.title, item.description, item.guid);
+                            newArticles.add(item);
                         }
                     }
+                    NewBlogNotification.notify(context, newArticles);
                 }
             }
         }

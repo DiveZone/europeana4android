@@ -149,16 +149,17 @@
             android:name="net.eledge.android.eu.europeana.gui.activity.SettingsActivity"
             android:label="@string/app_name" />
 
-        <receiver android:name="net.eledge.android.eu.europeana.service.receiver.BlogCheckerReceiver" />
+        <receiver android:name="net.eledge.android.eu.europeana.service.receiver.BlogCheckerReceiver" android:enabled="true"/>
+        <receiver android:name="net.eledge.android.eu.europeana.gui.notification.receiver.UrlButtonReceiver" android:enabled="true"/>
         <receiver
             android:name="net.eledge.android.eu.europeana.service.receiver.BootReceiver"
-            android:enabled="true" >
+            android:enabled="false" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <service android:name="net.eledge.android.eu.europeana.service.BlogCheckerService" />
+        <service android:enabled="true" android:name="net.eledge.android.eu.europeana.service.BlogCheckerService" />
     </application>
 
 </manifest>

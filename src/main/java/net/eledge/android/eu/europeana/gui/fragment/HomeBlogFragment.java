@@ -112,9 +112,10 @@ public class HomeBlogFragment extends Fragment implements BlogDownloadTask.BlogC
                 mBlogAdapter.add(article);
             }
             mBlogAdapter.notifyDataSetChanged();
+
+            SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putLong(Preferences.BLOG_LAST_VIEW, new Date().getTime());
         }
-        SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putLong(Preferences.BLOG_LAST_VIEW, new Date().getTime());
     }
 }

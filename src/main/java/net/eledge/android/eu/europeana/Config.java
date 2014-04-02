@@ -17,6 +17,8 @@ package net.eledge.android.eu.europeana;
 
 public class Config {
 
+    public static final int NOTIFICATION_NEWBLOG = 1;
+
     public static final boolean DEBUGMODE = true;
     public static final String JSON_CHARSET = "UTF-8";
 
