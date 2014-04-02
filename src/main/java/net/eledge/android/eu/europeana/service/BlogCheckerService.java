@@ -19,6 +19,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.Preferences;
 import net.eledge.android.eu.europeana.db.model.BlogArticle;
 import net.eledge.android.eu.europeana.service.task.BlogDownloadTask;
@@ -36,14 +37,17 @@ public class BlogCheckerService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Date lastViewed = new Date();
-        SharedPreferences settings = this.getSharedPreferences(Preferences.BLOG, 0);
-        long time = settings.getLong(Preferences.BLOG_LAST_VIEW, -1);
-        if (time != -1) {
-            lastViewed.setTime(time);
+        EuropeanaApplication application = (EuropeanaApplication) getApplication();
+        if (application.isConnected()) {
+            Date lastViewed = new Date();
+            SharedPreferences settings = this.getSharedPreferences(Preferences.BLOG, 0);
+            long time = settings.getLong(Preferences.BLOG_LAST_VIEW, -1);
+            if (time != -1) {
+                lastViewed.setTime(time);
+            }
+            List<BlogArticle> articles = RssReader.readFeed(UriHelper.URL_BLOGFEED, lastViewed);
+            BlogDownloadTask.processArticles(articles, this);
         }
-        List<BlogArticle> articles = RssReader.readFeed(UriHelper.URL_BLOGFEED, lastViewed);
-        BlogDownloadTask.processArticles(articles, this);
     }
 
     @Override

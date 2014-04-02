@@ -31,6 +31,7 @@ public class BlogCheckerReceiver extends WakefulBroadcastReceiver {
 
     private AlarmManager alarmManager;
     private PendingIntent blogCheckerIntent;
+    private static final long INTERVAL = AlarmManager.INTERVAL_HOUR * 2;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -44,9 +45,8 @@ public class BlogCheckerReceiver extends WakefulBroadcastReceiver {
         blogCheckerIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, 1);
         alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                calendar.getTimeInMillis(), AlarmManager.INTERVAL_HOUR * 2, blogCheckerIntent);
+                INTERVAL, INTERVAL, blogCheckerIntent);
 
         ComponentName receiver = new ComponentName(context, BootReceiver.class);
         PackageManager pm = context.getPackageManager();

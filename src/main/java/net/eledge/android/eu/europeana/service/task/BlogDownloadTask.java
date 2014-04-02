@@ -2,6 +2,7 @@ package net.eledge.android.eu.europeana.service.task;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 
 import net.eledge.android.eu.europeana.Preferences;
 import net.eledge.android.eu.europeana.db.dao.BlogArticleDao;
@@ -64,7 +65,7 @@ public class BlogDownloadTask implements TaskListener<List<BlogArticle>> {
         processArticles(articles, mContext);
     }
 
-    public static void processArticles(List<BlogArticle> articles, Context context) {
+    public static void processArticles(final List<BlogArticle> articles, Context context) {
         if (articles != null) {
             BlogArticleDao mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(context));
             mBlogArticleDao.deleteAll();
@@ -75,8 +76,13 @@ public class BlogDownloadTask implements TaskListener<List<BlogArticle>> {
             editor.putLong(Preferences.BLOG_LAST_UPDATE, new Date().getTime());
             editor.commit();
 
-            if (listener != null) {
-                listener.updatedArticles(articles);
+            if ((listener != null) && listener instanceof Fragment) {
+                ((Fragment) listener).getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.updatedArticles(articles);
+                    }
+                });
             } else {
                 if (settings.getBoolean(Preferences.BLOG_NOTIFICATION_ENABLE, true)) {
                     for (BlogArticle item : articles) {
