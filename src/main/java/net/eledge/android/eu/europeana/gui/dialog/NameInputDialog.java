@@ -136,6 +136,7 @@ public class NameInputDialog extends DialogFragment {
 
     public interface NameInputDialogListener extends Serializable {
         void positiveResponse(String input);
+
         void negativeResponse();
     }
 }
