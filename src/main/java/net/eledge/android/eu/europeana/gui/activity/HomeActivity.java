@@ -55,6 +55,8 @@ import net.eledge.android.toolkit.gui.GuiUtils;
 import net.eledge.android.toolkit.gui.ViewInjector;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -171,6 +173,17 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         isLandscape = getResources().getBoolean(R.bool.home_support_landscape);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            if (StringUtils.isNoneEmpty(mEditTextQuery.getText())) {
+                mEditTextQuery.setText(null);
+                return false;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void performSearch(String query) {

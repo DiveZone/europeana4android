@@ -63,6 +63,7 @@ public class UriHelper {
         builder.overrideParam("profile", pageSize == 1 ? "minimal+facets" : "minimal");
         builder.overrideParam("wskey", apiKey);
         setSearchParams(builder, terms, page, pageSize);
+        builder.disableEncoding();
         return builder;
     }
 
