@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2014 eLedge.net and the original author or authors.
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -15,13 +14,13 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/background"
-              android:baselineAligned="false"
-              android:orientation="horizontal"
-              tools:context=".HomeActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    tools:context=".HomeActivity">
 
     <RelativeLayout
         android:layout_width="0dp"
@@ -32,20 +31,20 @@
             android:id="@+id/activity_home_edittext_query"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_action_search"
+            android:drawableLeft="@drawable/ic_edittext_search"
             android:ems="10"
             android:hint="@string/action_search"
             android:imeOptions="actionSearch|flagNoExtractUi"
             android:inputType="text">
 
-            <requestFocus/>
+            <requestFocus />
         </EditText>
 
         <Spinner
             android:id="@+id/activity_home_spinner_profile"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:layout_below="@id/activity_home_edittext_query"/>
+            android:layout_below="@id/activity_home_edittext_query" />
 
         <GridView
             android:id="@+id/activity_home_gridview_suggestions"
@@ -53,7 +52,7 @@
             android:layout_height="fill_parent"
             android:layout_below="@id/activity_home_spinner_profile"
             android:numColumns="@integer/home_suggestions_columns"
-            android:requiresFadingEdge="vertical"/>
+            android:requiresFadingEdge="vertical" />
     </RelativeLayout>
 
     <FrameLayout
@@ -62,7 +61,6 @@
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:paddingLeft="4dp"
-        android:background="@drawable/bordershadow_left"
-        />
+        android:background="@drawable/bordershadow_left" />
 
 </LinearLayout>
