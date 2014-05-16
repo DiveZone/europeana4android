@@ -105,12 +105,12 @@
     <string name="settings_about_build">Build</string>
     <string name="settings_about_copyright1">Search engine/Data provider</string>
     <string name="settings_about_copyright1_lines">&#169; The Europeana Foundation\nhttp://www.europeana.eu</string>
-    <string name="settings_about_copyright1_url"  translatable="false">http://www.europeana.eu</string>
+    <string name="settings_about_copyright1_url"translatable="false">http://www.europeana.eu</string>
     <string name="settings_about_copyright2">Developed by</string>
     <string name="settings_about_copyright2_lines">&#169; eLedge / GJW Boogerd\nhttp://www.eledge.net</string>
-    <string name="settings_about_copyright2_url"  translatable="false">http://www.eledge.net</string>
+    <string name="settings_about_copyright2_url"translatable="false">http://www.eledge.net</string>
     <string name="settings_about_projectsite">Project site</string>
-    <string name="settings_about_projectsite_url"  translatable="false">http://github.com/eledge/europeana4android</string>
+    <string name="settings_about_projectsite_url" translatable="false">http://github.com/eledge/europeana4android</string>
 
 
 </resources>
