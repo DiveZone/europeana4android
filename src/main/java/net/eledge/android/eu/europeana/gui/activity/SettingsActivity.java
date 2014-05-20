@@ -18,11 +18,18 @@ package net.eledge.android.eu.europeana.gui.activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 
 import net.eledge.android.eu.europeana.R;
+import net.eledge.android.eu.europeana.search.model.enums.Language;
+import net.eledge.android.toolkit.gui.GuiUtils;
+
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class SettingsActivity extends PreferenceActivity {
 
@@ -41,6 +48,8 @@ public class SettingsActivity extends PreferenceActivity {
         }
 
         setVersionNumber();
+        fillLocaleListApplication();
+        fillLocaleListData();
     }
 
     @SuppressWarnings("deprecation")
@@ -51,6 +60,48 @@ public class SettingsActivity extends PreferenceActivity {
             p = findPreference("settings_about_build");
             p.setSummary(String.valueOf(mInfo.versionCode));
         }
+    }
+
+
+    @SuppressWarnings("deprecation")
+    private void fillLocaleListApplication() {
+        if (mInfo != null) {
+            ListPreference p = (ListPreference) findPreference("settings_locale_app");
+            String[] choices = getResources().getStringArray(R.array.settings_locale_app_choices);
+            setSortedLocales(p, choices);
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private void fillLocaleListData() {
+        if (mInfo != null) {
+            ListPreference p = (ListPreference) findPreference("settings_locale_content");
+            String[] choices = getResources().getStringArray(R.array.settings_locale_content_choices);
+            setSortedLocales(p, choices);
+        }
+    }
+
+    private void setSortedLocales(ListPreference p, String[] choices) {
+        String[] entries = new String[choices.length + 1];
+        String[] values = new String[choices.length + 1];
+        entries[0] = GuiUtils.getString(this, R.string.settings_locale_def);
+        values[0] = "def";
+        SortedMap<String, String> map = new TreeMap<>();
+        for (String choice : choices) {
+            map.put(getLocaleResource(choice), choice);
+        }
+        int i = 1;
+        for (Map.Entry<String, String> e : map.entrySet()) {
+            entries[i] = e.getKey();
+            values[i] = e.getValue();
+            i++;
+        }
+        p.setEntries(entries);
+        p.setEntryValues(values);
+    }
+
+    private String getLocaleResource(String localeCode) {
+        return getResources().getString(Language.safeValueOf(localeCode).resourceId);
     }
 
 }

@@ -21,53 +21,14 @@
 
     <!-- LANGUAGES: APPLICATION -->
     <string name="settings_locale_app">Application language</string>
-    <string name="settings_locale_app_default"></string>
+    <string name="settings_locale_app_default">def</string>
 
-    <string-array name="settings_locale_app_choices">
-        <item>System default</item>
-        <item>English</item>
-        <item>Dutch</item>
-    </string-array>
-
-    <string-array name="settings_locale_app_values" translatable="false">
-        <item></item>
+    <string-array name="settings_locale_app_choices" translatable="false">
         <item>en</item>
         <item>nl</item>
     </string-array>
 
-    <!-- LANGUAGES: APPLICATION -->
-    <string name="settings_locale_content">Preferred content language</string>
-    <string name="settings_locale_content_default"></string>
-
-    <string-array name="settings_locale_content_choices">
-        <item>System default</item>
-        <item>Bulgarian</item>
-        <item>Catalan</item>
-        <item>Czech</item>
-        <item>Danish</item>
-        <item>German</item>
-        <item>English</item>
-        <item>Spanish</item>
-        <item>Estonian</item>
-        <item>Basque</item>
-        <item>Finnish</item>
-        <item>French</item>
-        <item>Hungarian</item>
-        <item>Italian</item>
-        <item>Greek</item>
-        <item>Dutch</item>
-        <item>Norwegian</item>
-        <item>Polish</item>
-        <item>Portuguese</item>
-        <item>Romanian</item>
-        <item>Russian</item>
-        <item>Slovak</item>
-        <item>Serbian</item>
-        <item>Swedish</item>
-    </string-array>
-
-    <string-array name="settings_locale_content_values" translatable="false">
-        <item></item>
+    <string-array name="settings_locale_content_choices" translatable="false">
         <item>bg</item>
         <item>ca</item>
         <item>cs</item>
@@ -92,6 +53,12 @@
         <item>sr</item>
         <item>sv</item>
     </string-array>
+
+    <!-- LANGUAGES: APPLICATION -->
+    <string name="settings_locale_content">Preferred content language</string>
+    <string name="settings_locale_content_default">def</string>
+
+    <string name="settings_locale_def">System default</string>
 
     <!-- NOTIFICATION -->
 
