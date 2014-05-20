@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
   ~ Copyright (c) 2014 eLedge.net and the original author or authors.
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,18 +15,14 @@
   -->
 
 <resources>
-
     <string name="msg_unknown_error">Onverwachte fout opgetreden…</string>
-
-    <!-- HOME SCREEN -->
+    <!--HOME ACTIVITY-->
     <string name="fragment_home_blog_from">VAN HET EUROPEANA BLOG</string>
     <string name="fragment_home_blog_posted">Geplaatst door %s</string>
-
-    <!-- SEARCH FORM -->
+    <!--SEARCH FORM-->
     <string name="form_search_query">Zoekterm(en)</string>
     <string name="form_search_profile_default">Zonder zoekprofiel</string>
-
-    <!-- MYEUROPEANA DIALOG -->
+    <!--MYEUROPEANA DIALOG-->
     <string name="dialog_myeuropeana_title">MyEuropeana profiel</string>
     <string name="dialog_myeuropeana_email">Login / Email adres</string>
     <string name="dialog_myeuropeana_username">MyEuropeana gebruikersnaam</string>
@@ -34,35 +31,32 @@
     <string name="dialog_myeuropeana_tags">Aantal bewaarde tags</string>
     <string name="dialog_myeuropeana_button_close">Sluiten</string>
     <string name="dialog_myeuropeana_button_logoff">Uitloggen</string>
-
-    <!-- SEARCH ACTIVITY -->
+    <!--SEARCH ACTIVITY-->
     <string name="dialog_profile_saveas_title">Profiel titel</string>
     <string name="dialog_profile_saveas_text">Geef een korte beschrijvende naam voor zoek profiel:</string>
-    <string name="drawer_facets_open">Open facets drawer</string>
-    <string name="drawer_facets_close">Close facets drawer</string>
+    <string name="drawer_facets_open">Open facetten lade</string>
+    <string name="drawer_facets_close">Sluit facetten lade</string>
     <string name="drawer_facets_section_breadcrumbs">RESULTATEN VOOR</string>
     <string name="drawer_facets_section_refine">FILTER OP</string>
-    <string name="drawer_facets_section_refine_loading">LADEN FILTER OPTIES&#8230;</string>
-    <string name="msg_searching">OPHALEN RESULTATEN&#8230;</string>
+    <string name="drawer_facets_section_refine_loading">LADEN FILTER OPTIES…</string>
+    <string name="msg_searching">OPHALEN RESULTATEN…</string>
     <string name="msg_searchresults">TOONT %1$d VAN %2$d RESULTATEN</string>
-    <string name="msg_loading">OPHALEN RECORD&#8230;</string>
+    <string name="msg_loading">OPHALEN RECORD…</string>
     <string name="msg_profile_selectfacets">Selecteer eerst 1 of meerdere facetten…</string>
     <string name="msg_profile_saved">Zoek profiel aangemaakt</string>
-
-    <!-- RECORD ACTIVITY -->
+    <!--RECORD ACTIVITY-->
     <string name="dialog_tag_saveas_text">Maak een sociale tag:</string>
     <string name="dialog_tag_saveas_input">tag naam</string>
     <string name="record_tab_details">Details</string>
     <string name="record_tab_map">Kaart</string>
     <string name="record_tab_seealso">Zie ook</string>
-    <string name="msg_copied2clipboard">Waarde gekopieerd naar clipboard&#8230;</string>
+    <string name="msg_copied2clipboard">Waarde gekopieerd naar clipboard…</string>
     <string name="msg_tag_saved">Sociale tag gemaakt</string>
     <string name="msg_item_saved">MyEuropeana Item opgeslagen</string>
     <string name="msg_item_removed">MyEuropeana Item verwijderd</string>
-
     <string name="record_field_title">TITEL</string>
     <string name="record_field_media">MEDIA</string>
-    <string name="record_field_media_warning">Openen van media op een mobiele connectie can leiden tot extra kosten!</string>
+    <string name="record_field_media_warning">Openen van media op een mobiele connectie kan leiden tot extra kosten!</string>
     <string name="record_field_dc_creator">MAKER</string>
     <string name="record_field_dc_contributor">AANBIEDER</string>
     <string name="record_field_dc_date">DATUM</string>
@@ -73,19 +67,16 @@
     <string name="record_field_dc_subject">ONDERWERP</string>
     <string name="record_field_dc_source">BRON</string>
     <string name="record_field_dc_type">TYPE</string>
-
     <string name="record_field_dcterms_created">DATUM PRODUCTIE</string>
     <string name="record_field_dcterms_ispartof">IS ONDERDEEL VAN</string>
     <string name="record_field_dcterms_issued">PUBLICATIEDATUM</string>
-
-    <string name="record_field_edm_dataprovider">DATA PROVIDER</string>
+    <string name="record_field_edm_dataprovider">DATA LEVERANCIER</string>
     <string name="record_field_edm_provider">LEVERANCIER</string>
     <string name="record_field_edm_country">AANBIEDEND LAND</string>
     <string name="record_field_edm_rights">COPYRIGHT</string>
     <string name="record_field_place_label">LOCATIE NAAM</string>
     <string name="record_field_place_longlat">COORDINATEN</string>
-
-    <!-- ACTIONS/MENU -->
+    <!--ACTIONS/MENU-->
     <string name="action_settings">Instellingen</string>
     <string name="action_search">Opnieuw zoeken</string>
     <string name="action_share">Delen</string>
@@ -98,8 +89,7 @@
     <string name="action_new_label">Nieuwe label</string>
     <string name="action_open_browser">Openen in browser</string>
     <string name="action_open_app">Start Europeana</string>
-
-    <!-- FACET TYPES -->
+    <!--FACET TYPES-->
     <string name="facettype_type">OP MEDIATYPE</string>
     <string name="facettype_language">NAAR TAAL BESCHRIJVING</string>
     <string name="facettype_year">NAAR JAAR</string>
@@ -108,15 +98,13 @@
     <string name="facettype_provider">OP AANBIEDER</string>
     <string name="facettype_dataprovider">OP DATA AANBIEDER</string>
     <string name="facettype_ugc">Toevoegen van door gebruikers aangeleverde content</string>
-
-    <!-- DOCTYPE -->
+    <!--DOCTYPE-->
     <string name="doctype_image">Afbeelding</string>
     <string name="doctype_text">Tekst</string>
     <string name="doctype_sound">Geluid</string>
     <string name="doctype_video">Video</string>
     <string name="doctype_3d">3D</string>
-
-    <!-- COUNTRIES -->
+    <!--COUNTRIES-->
     <string name="country_at">Oostenrijk</string>
     <string name="country_be">België</string>
     <string name="country_bg">Bulgarije</string>
@@ -141,7 +129,7 @@
     <string name="country_mk">Macedonië</string>
     <string name="country_mt">Malta</string>
     <string name="country_nl">Nederland</string>
-    <string name="country_no">Norwegen</string>
+    <string name="country_no">Noorwegen</string>
     <string name="country_pl">Polen</string>
     <string name="country_pt">Portugal</string>
     <string name="country_ro">Roemenië</string>
@@ -153,10 +141,8 @@
     <string name="country_tr">Turkije</string>
     <string name="country_ua">Oekraïne</string>
     <string name="country_uk">Verenigd Koningkrijk</string>
-
     <string name="country_eu">Europa</string>
-
-    <!-- LANGUAGES -->
+    <!--LANGUAGES-->
     <string name="locale_bg">Bulgaars</string>
     <string name="locale_ca">Catalaans</string>
     <string name="locale_cs">Tsjechisch</string>
@@ -180,14 +166,10 @@
     <string name="locale_sk">Slowaaks</string>
     <string name="locale_sr">Servisch</string>
     <string name="locale_sv">Zweeds</string>
-
     <string name="locale_mul">Meertalig</string>
-
-    <!-- CONTENT DESCRIPTORS -->
+    <!--CONTENT DESCRIPTORS-->
     <string name="contentdescriptor_searchitem_image">zoekresultaat voorbeeld afbeelding</string>
-
-    <!-- NOTIFICATIONS -->
+    <!--NOTIFICATIONS-->
     <string name="new_blog_notification_title_single">Nieuwe blog: %1$s</string>
     <string name="new_blog_notification_title_multiple">%1$d nieuwe blog items</string>
-
 </resources>
