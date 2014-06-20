@@ -12,10 +12,12 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <resources>
 
     <string name="app_name" translatable="false">Europeana Search (Beta)</string>
     <string name="msg_unknown_error">Unknown error occurred…</string>
+    <string name="msg_roaming">Using Europeana Search while roaming can lead to high costs!</string>
 
     <!-- HOME ACTIVITY -->
     <string name="fragment_home_blog_from">FROM THE EUROPEANA BLOG</string>
