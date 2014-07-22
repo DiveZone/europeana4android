@@ -16,6 +16,7 @@
 
 <resources>
     <string name="msg_unknown_error">Onverwachte fout opgetreden…</string>
+    <string name="msg_roaming">Het gebruik van Europeana Search tijdens roaming kan lijden tot hoge kosten!</string>
     <!--HOME ACTIVITY-->
     <string name="fragment_home_blog_from">VAN HET EUROPEANA BLOG</string>
     <string name="fragment_home_blog_posted">Geplaatst door %s</string>
