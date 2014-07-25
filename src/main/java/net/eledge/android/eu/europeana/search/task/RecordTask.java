@@ -29,10 +29,10 @@ import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.async.ListenerNotifier;
 
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Date;
 
 public class RecordTask extends AsyncTask<String, Void, RecordObject> {
 
@@ -42,7 +42,7 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
 
     private String recordId;
 
-    private long startTime;
+    private DateTime startTime;
 
     public RecordTask(Activity activity) {
         super();
@@ -51,7 +51,7 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
 
     @Override
     protected void onPreExecute() {
-        startTime = new Date().getTime();
+        startTime = DateTime.now();
         mActivity.runOnUiThread(new ListenerNotifier<>(recordController.listeners.values()));
     }
 
@@ -69,10 +69,12 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
 
     @Override
     protected void onPostExecute(RecordObject result) {
+        DateTime endTime = DateTime.now();
+        Interval interval = new Interval(startTime, endTime);
         Tracker tracker = ((EuropeanaApplication) mActivity.getApplication()).getAnalyticsTracker();
         tracker.send(new HitBuilders.TimingBuilder()
                 .setCategory("Tasks")
-                .setValue(new Date().getTime() - startTime)
+                .setValue(interval.toDurationMillis())
                 .setVariable("RecordTask")
                 .setLabel(recordId).build());
         recordController.record = result;

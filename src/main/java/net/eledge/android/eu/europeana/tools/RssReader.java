@@ -27,13 +27,13 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.joda.time.DateTime;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -44,9 +44,9 @@ public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
 
     private final TaskListener<List<BlogArticle>> mListener;
 
-    private final Date mLastViewed;
+    private final DateTime mLastViewed;
 
-    public RssReader(Date lastViewed, TaskListener<List<BlogArticle>> listener) {
+    public RssReader(DateTime lastViewed, TaskListener<List<BlogArticle>> listener) {
         super();
         mListener = listener;
         mLastViewed = lastViewed;
@@ -65,7 +65,7 @@ public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
         }
     }
 
-    public static List<BlogArticle> readFeed(String url, Date lastViewed) {
+    public static List<BlogArticle> readFeed(String url, DateTime lastViewed) {
         InputStream is = null;
         try {
             HttpGet request = new HttpGet(url);

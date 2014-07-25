@@ -25,8 +25,6 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 
 import net.eledge.android.eu.europeana.service.BlogCheckerService;
 
-import java.util.Calendar;
-
 public class BlogCheckerReceiver extends WakefulBroadcastReceiver {
 
     private AlarmManager alarmManager;
@@ -44,7 +42,6 @@ public class BlogCheckerReceiver extends WakefulBroadcastReceiver {
         Intent intent = new Intent(context, BlogCheckerReceiver.class);
         blogCheckerIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
-        Calendar calendar = Calendar.getInstance();
         alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 INTERVAL, INTERVAL, blogCheckerIntent);
 

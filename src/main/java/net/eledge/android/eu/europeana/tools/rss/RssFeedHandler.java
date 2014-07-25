@@ -19,6 +19,7 @@ import android.text.Html;
 
 import net.eledge.android.eu.europeana.db.model.BlogArticle;
 
+import org.joda.time.DateTime;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -35,20 +36,20 @@ public class RssFeedHandler extends DefaultHandler {
     private final SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
 
     private BlogArticle article;
-    private StringBuilder content = new StringBuilder();
+    private StringBuilder content = new StringBuilder(2048);
 
     public List<BlogArticle> articles = new ArrayList<>();
 
-    private final Date mLastViewed;
+    private final DateTime mLastViewed;
 
-    public RssFeedHandler(Date lastViewed) {
+    public RssFeedHandler(DateTime lastViewed) {
         super();
         mLastViewed = lastViewed;
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        content = new StringBuilder();
+        content = new StringBuilder(2048);
         if (localName.equalsIgnoreCase("item")) {
             article = new BlogArticle();
         }
@@ -58,7 +59,7 @@ public class RssFeedHandler extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
         if (localName.equalsIgnoreCase("item")) {
-            article.markedNew = mLastViewed.before(article.pubDate);
+            article.markedNew = mLastViewed.isBefore(article.pubDate.getTime());
             articles.add(article);
         } else if (article != null) {
             if (localName.equalsIgnoreCase("title")) {

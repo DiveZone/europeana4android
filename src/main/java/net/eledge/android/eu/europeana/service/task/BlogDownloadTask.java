@@ -28,6 +28,8 @@ import net.eledge.android.eu.europeana.tools.RssReader;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,12 +56,12 @@ public class BlogDownloadTask implements TaskListener<List<BlogArticle>> {
     }
 
     public void execute() {
-        Date lastViewed = new Date();
+        DateTime lastViewed = DateTime.now();
 
         SharedPreferences settings = mContext.getSharedPreferences(Preferences.BLOG, 0);
         long time = settings.getLong(Preferences.BLOG_LAST_VIEW, -1);
         if (time != -1) {
-            lastViewed.setTime(time);
+            lastViewed = new DateTime(new Date(time));
         }
         mRssReaderTask = new RssReader(lastViewed, this);
         mRssReaderTask.execute(UriHelper.URL_BLOGFEED);

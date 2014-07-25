@@ -245,7 +245,7 @@ public class SearchController {
 
     public String getFacetString() {
         if (hasFacetsSelected()) {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder(256);
             for (int i = 1; i < terms.size(); i++) {
                 // skipping 0 on purpose, is the search term 'query'
                 if (sb.length() > 0) {
