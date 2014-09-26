@@ -26,7 +26,8 @@ import net.eledge.android.eu.europeana.service.task.BlogDownloadTask;
 import net.eledge.android.eu.europeana.tools.RssReader;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 
-import java.util.Date;
+import org.joda.time.DateTime;
+
 import java.util.List;
 
 public class BlogCheckerService extends IntentService {
@@ -39,12 +40,9 @@ public class BlogCheckerService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         EuropeanaApplication application = (EuropeanaApplication) getApplication();
         if (application.isConnected()) {
-            Date lastViewed = new Date();
             SharedPreferences settings = this.getSharedPreferences(Preferences.BLOG, 0);
             long time = settings.getLong(Preferences.BLOG_LAST_VIEW, -1);
-            if (time != -1) {
-                lastViewed.setTime(time);
-            }
+            DateTime lastViewed = (time != -1 ? new DateTime(time) : DateTime.now());
             List<BlogArticle> articles = RssReader.readFeed(UriHelper.URL_BLOGFEED, lastViewed);
             BlogDownloadTask.processArticles(articles, this);
         }
