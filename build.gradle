@@ -21,6 +21,8 @@
 
 
 
+
+
 buildscript {
     repositories {
         mavenCentral()
@@ -85,7 +87,7 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:20.0.0'
     compile "com.android.support:appcompat-v7:20.0.0"
-    compile 'com.google.android.gms:play-services:5.2.08'
+    compile 'com.google.android.gms:play-services:6.1.11'
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     compile 'com.google.code.gson:gson:2.3'
     compile 'net.eledge:urlbuilder:1.1.0'
