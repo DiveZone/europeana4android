@@ -22,7 +22,7 @@ import net.eledge.android.toolkit.db.abstracts.Dao;
 public class BlogArticleDao extends Dao<BlogArticle> {
 
     public BlogArticleDao(DatabaseSetup helper) {
-        super(BlogArticle.class, helper);
+        super(helper);
     }
 
 }

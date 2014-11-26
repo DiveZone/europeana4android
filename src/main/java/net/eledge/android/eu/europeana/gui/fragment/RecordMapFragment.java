@@ -34,10 +34,11 @@ import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.Resource;
 import net.eledge.android.toolkit.async.listener.TaskListener;
-import net.eledge.android.toolkit.gui.ViewInjector;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang3.StringUtils;
+
+import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
 public class RecordMapFragment extends Fragment implements TaskListener<RecordObject> {
 
@@ -63,7 +64,7 @@ public class RecordMapFragment extends Fragment implements TaskListener<RecordOb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_record_map, null);
-        ViewInjector.inject(this, root);
+        inject(this, root);
         mMapView.onCreate(savedInstanceState);
         RecordObject record = recordController.record;
         text1.setText(StringUtils.join(Resource.getPreferred(record.place.prefLabel, ((EuropeanaApplication) getActivity().getApplication()).getLocale()), ";"));

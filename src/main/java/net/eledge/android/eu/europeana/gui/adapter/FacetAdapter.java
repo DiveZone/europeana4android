@@ -15,72 +15,121 @@
 
 package net.eledge.android.eu.europeana.gui.adapter;
 
-import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
+import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class FacetAdapter extends ArrayAdapter<FacetItem> {
+import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
-    private final LayoutInflater inflater;
+public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> {
+
     private final Typeface europeanaFont;
+    private final List<FacetItem> facetItems = new ArrayList<>(100);
+    private final FacetAdaptorClickListener mListener;
 
-    public FacetAdapter(EuropeanaApplication application, Context context, List<FacetItem> facetItems) {
-        super(context, 0, facetItems);
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public FacetAdapter(EuropeanaApplication application, FacetAdaptorClickListener listener) {
         this.europeanaFont = application.getEuropeanaFont();
+        this.mListener = listener;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        FacetItem item = getItem(position);
-        View view = inflater.inflate(item.itemType.getLayoutId(item.facetType), parent, false);
-        try {
-            TextView mTextView1 = (TextView) view.findViewById(android.R.id.text1);
-            if (item.itemType == FacetItemType.SECTION) {
-                mTextView1.setText(item.labelResource);
-                if (item.last) {
-                    // enable progress bar
-                    ProgressBar mProgressBar = (ProgressBar) view.findViewById(android.R.id.progress);
-                    mProgressBar.setVisibility(View.VISIBLE);
-                }
-            } else if (item.itemType == FacetItemType.BREADCRUMB) {
-                mTextView1.setText(item.description);
-            } else if ((item.itemType == FacetItemType.CATEGORY) || (item.itemType == FacetItemType.CATEGORY_OPENED)) {
-                mTextView1.setText(item.facetType.resId);
-            } else {
-                mTextView1.setText(item.description);
-                TextView mTextView2 = (TextView) view.findViewById(android.R.id.text2);
-                if ((mTextView2 != null) && (item.icon != null)) {
-                    mTextView2.setTypeface(europeanaFont);
-                    mTextView2.setText(item.icon);
-                }
+    public int getItemCount() {
+        return facetItems.size();
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        FacetItem item = facetItems.get(position);
+        if (item.itemType == FacetItemType.SECTION) {
+            holder.mLabelTextView.setText(item.labelResource);
+            if (item.last) {
+                // enable progress bar
+                holder.mProgressBar.setVisibility(View.VISIBLE);
             }
-        } catch (ClassCastException e) {
-            // not gonna happen
+        } else if (item.itemType == FacetItemType.BREADCRUMB) {
+            holder.mLabelTextView.setText(item.description);
+        } else if ((item.itemType == FacetItemType.CATEGORY) || (item.itemType == FacetItemType.CATEGORY_OPENED)) {
+            holder.mLabelTextView.setText(item.facetType.resId);
+        } else {
+            holder.mLabelTextView.setText(item.description);
+            if ((holder.mIconTextView != null) && (item.icon != null)) {
+                holder.mIconTextView.setText(item.icon);
+            }
         }
-        return view;
+        holder.position = position;
     }
 
     @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+        FacetItem item = facetItems.get(position);
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(item.itemType.getLayoutId(item.facetType), parent, false);
+        ViewHolder vh = new ViewHolder(v);
+        inject(vh, v);
+        if (vh.mIconTextView != null) {
+            vh.mIconTextView.setTypeface(europeanaFont);
+        }
+        return vh;
+    }
+
     public boolean areAllItemsEnabled() {
         return false;
     }
 
-    @Override
     public boolean isEnabled(int position) {
-        FacetItem item = getItem(position);
+        FacetItem item = facetItems.get(position);
         return item.itemType != FacetItemType.SECTION;
+    }
+
+    public void add(FacetItem item) {
+        facetItems.add(item);
+    }
+
+    public void clear() {
+        facetItems.clear();
+    }
+
+    public boolean isEmpty() {
+        return facetItems.isEmpty();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        @ViewResource(android.R.id.text1)
+        TextView mLabelTextView;
+
+        @ViewResource(android.R.id.text2)
+        TextView mIconTextView;
+
+        @ViewResource(android.R.id.progress)
+        ProgressBar mProgressBar;
+
+        public int position;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mListener.click(facetItems.get(position));
+        }
+    }
+
+    public interface FacetAdaptorClickListener {
+        void click(FacetItem item);
     }
 
 }

@@ -24,10 +24,11 @@ import android.widget.TextView;
 
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
-import net.eledge.android.toolkit.gui.ViewInjector;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import java.util.List;
+
+import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
 public class SuggestionAdapter extends ArrayAdapter<Item> {
 
@@ -44,7 +45,7 @@ public class SuggestionAdapter extends ArrayAdapter<Item> {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.griditem_suggestion, parent, false);
             holder = new SuggestionViewHolder();
-            ViewInjector.inject(holder, convertView);
+            inject(holder, convertView);
             convertView.setTag(holder);
         } else {
             holder = (SuggestionViewHolder) convertView.getTag();

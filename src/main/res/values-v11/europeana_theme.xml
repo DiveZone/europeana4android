@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2014 eLedge.net and the original author or authors.
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -22,6 +21,10 @@
         <!-- COMPAT STYLES -->
         <item name="actionBarStyle">@style/europeana_actionBarStyle</item>
         <item name="actionBarTabTextStyle">@style/europeana_tabTextStyle</item>
+
+        <!-- Set AppCompat’s color theming attrs -->
+        <item name="colorPrimary">@color/actionbar_background</item>
+        <item name="colorPrimaryDark">@color/actionbar_background_dark</item>
     </style>
 
 </resources>

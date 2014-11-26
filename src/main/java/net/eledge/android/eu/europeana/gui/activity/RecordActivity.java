@@ -27,7 +27,6 @@ import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
@@ -39,11 +38,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
@@ -58,9 +58,9 @@ import net.eledge.android.eu.europeana.myeuropeana.task.SaveTagTask;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;
+import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
-import net.eledge.android.toolkit.gui.ViewInjector;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang3.StringUtils;
@@ -68,6 +68,8 @@ import org.springframework.social.europeana.api.Europeana;
 import org.springframework.social.europeana.api.model.UserModification;
 
 import java.util.List;
+
+import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
 public class RecordActivity extends ActionBarActivity implements TabListener, TaskListener<RecordObject>, NameInputDialog.NameInputDialogListener {
 
@@ -85,7 +87,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
 
     // Views
     @ViewResource(R.id.drawer_items)
-    private ListView mResultsList;
+    private RecyclerView mResultsList;
     @ViewResource(value = R.id.drawerlayout_activity_record, optional = true)
     private DrawerLayout mDrawerLayout;
     @ViewResource(R.id.activity_record_pager)
@@ -102,26 +104,28 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
-        ViewInjector.inject(this);
+        inject(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        setSupportActionBar(toolbar);
 
         mApplication = (EuropeanaApplication) getApplication();
         mEuropeanaApi = mApplication.getMyEuropeanaApi();
         mTwoColumns = getResources().getBoolean(R.bool.home_support_landscape);
         recordController.registerListener(RecordActivity.class, this);
 
-        ResultAdapter mResultAdaptor = new ResultAdapter((EuropeanaApplication) getApplication(), this,
-                searchController.getSearchItems());
-        mResultsList.setAdapter(mResultAdaptor);
-        mResultsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ResultAdapter mResultAdaptor = new ResultAdapter((EuropeanaApplication) getApplication(),
+                searchController.getSearchItems(), new ResultAdapter.ResultAdaptorClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void click(int position, Item item) {
                 searchController.setItemSelected(position);
-                openRecord(searchController.getSearchItems().get(position).id);
+                openRecord(item.id);
                 if (mDrawerLayout != null) {
                     mDrawerLayout.closeDrawers();
                 }
             }
         });
+        mResultsList.setAdapter(mResultAdaptor);
 
         // ViewPager
         mRecordPagerAdapter = new RecordPagerAdapter(this, getSupportFragmentManager(), getApplicationContext());
@@ -147,13 +151,13 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         }
 
         // Drawer layout
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         if (searchController.hasResults()) {
             if (mDrawerLayout != null) {
                 mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-                mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
+                mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
                         R.string.drawer_facets_open, R.string.drawer_facets_close) {
                     public void onDrawerClosed(View view) {
                         // getActionBar().setTitle(mTitle);

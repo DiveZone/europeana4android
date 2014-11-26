@@ -13,22 +13,8 @@
   ~ limitations under the License.
   -->
 
-<resources>
-
-    <color name="background">#e5e5e5</color>
-    <color name="background_drawer">#fff3f3f3</color>
-
-    <color name="actionbar_background">#31b6e7</color>
-    <color name="actionbar_background_dark">#1196c7</color>
-    <!--#d5d5d5-->
-
-    <color name="background_facet_divider">#eee</color>
-    <color name="background_facet_section">#31b6e7</color>
-
-    <color name="emphasis">#31b6e7</color>
-    <color name="emphasis_transparant">#bf31b6e7</color>
-
-    <color name="warning">#ffff4444</color>
-
-
-</resources>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar_actionbar"
+    android:background="@null"
+    android:layout_width="match_parent"
+    android:layout_height="?actionBarSize" />

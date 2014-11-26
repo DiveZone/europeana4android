@@ -12,11 +12,11 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
--->
+  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.eledge.android.eu.europeana"
     android:versionCode="39"
-    android:versionName="v0.2-beta b39" >
+    android:versionName="v0.2-beta b39">
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -51,7 +51,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:launchMode="singleTop"
-        android:theme="@style/europeana_theme" >
+        android:theme="@style/Theme.Europeana">
         <meta-data
             android:name="eu.europeana.api.v2.API_PUBLIC_KEY"
             android:value="..." />
@@ -68,7 +68,7 @@
         <activity
             android:name="net.eledge.android.eu.europeana.gui.activity.HomeActivity"
             android:label="@string/app_name"
-            android:launchMode="singleInstance" >
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -79,7 +79,7 @@
             android:name="net.eledge.android.eu.europeana.gui.activity.SearchActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:parentActivityName="net.eledge.android.eu.europeana.gui.activity.HomeActivity" >
+            android:parentActivityName="net.eledge.android.eu.europeana.gui.activity.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -112,7 +112,7 @@
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:noHistory="true"
-            android:parentActivityName="net.eledge.android.eu.europeana.gui.activity.SearchActivity" >
+            android:parentActivityName="net.eledge.android.eu.europeana.gui.activity.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -145,17 +145,23 @@
             android:name="net.eledge.android.eu.europeana.gui.activity.SettingsActivity"
             android:label="@string/app_name" />
 
-        <receiver android:name="net.eledge.android.eu.europeana.service.receiver.BlogCheckerReceiver" android:enabled="true"/>
-        <receiver android:name="net.eledge.android.eu.europeana.gui.notification.receiver.UrlButtonReceiver" android:enabled="true"/>
+        <receiver
+            android:name="net.eledge.android.eu.europeana.service.receiver.BlogCheckerReceiver"
+            android:enabled="true" />
+        <receiver
+            android:name="net.eledge.android.eu.europeana.gui.notification.receiver.UrlButtonReceiver"
+            android:enabled="true" />
         <receiver
             android:name="net.eledge.android.eu.europeana.service.receiver.BootReceiver"
-            android:enabled="false" >
+            android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <service android:enabled="true" android:name="net.eledge.android.eu.europeana.service.BlogCheckerService" />
+        <service
+            android:enabled="true"
+            android:name="net.eledge.android.eu.europeana.service.BlogCheckerService" />
     </application>
 
 </manifest>

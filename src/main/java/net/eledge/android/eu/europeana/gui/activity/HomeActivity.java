@@ -21,9 +21,11 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -31,6 +33,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -52,7 +55,6 @@ import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.suggestion.Item;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
-import net.eledge.android.toolkit.gui.ViewInjector;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang3.StringUtils;
@@ -61,7 +63,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeActivity extends FragmentActivity implements TaskListener<Item[]>, OnItemClickListener {
+import static net.eledge.android.toolkit.gui.ViewInjector.inject;
+
+public class HomeActivity extends ActionBarActivity implements TaskListener<Item[]>, OnItemClickListener {
 
     private EuropeanaApplication mApplication;
 
@@ -78,6 +82,8 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
     private EditText mEditTextQuery;
     @ViewResource(R.id.activity_home_spinner_profile)
     private Spinner mSpinnerProfiles;
+    @ViewResource(R.id.toolbar_actionbar)
+    private Toolbar mActionBarToolbar;
 
     // adapters
     private SuggestionAdapter mSuggestionsAdaptor;
@@ -87,10 +93,16 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         mApplication = (EuropeanaApplication) getApplication();
         setContentView(R.layout.activity_home);
-        ViewInjector.inject(this);
+
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
+
         NewBlogNotification.cancel(this);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
@@ -266,6 +278,20 @@ public class HomeActivity extends FragmentActivity implements TaskListener<Item[
             mSuggestionsAdaptor.notifyDataSetChanged();
             switchBlogSuggestions(false);
         }
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        inject(this);
+        getActionBarToolbar();
+    }
+
+    protected Toolbar getActionBarToolbar() {
+        if (mActionBarToolbar == null) {
+            setSupportActionBar(mActionBarToolbar);
+        }
+        return mActionBarToolbar;
     }
 
     public void setLocale(String lang) {

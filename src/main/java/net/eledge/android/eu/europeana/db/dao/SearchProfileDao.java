@@ -22,7 +22,7 @@ import net.eledge.android.toolkit.db.abstracts.Dao;
 public class SearchProfileDao extends Dao<SearchProfile> {
 
     public SearchProfileDao(DatabaseSetup helper) {
-        super(SearchProfile.class, helper);
+        super(helper);
     }
 
 }

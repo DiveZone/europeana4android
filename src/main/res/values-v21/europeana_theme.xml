@@ -15,20 +15,7 @@
 
 <resources>
 
-    <color name="background">#e5e5e5</color>
-    <color name="background_drawer">#fff3f3f3</color>
-
-    <color name="actionbar_background">#31b6e7</color>
-    <color name="actionbar_background_dark">#1196c7</color>
-    <!--#d5d5d5-->
-
-    <color name="background_facet_divider">#eee</color>
-    <color name="background_facet_section">#31b6e7</color>
-
-    <color name="emphasis">#31b6e7</color>
-    <color name="emphasis_transparant">#bf31b6e7</color>
-
-    <color name="warning">#ffff4444</color>
-
+    <!-- doesn't contain the pre-L code from the values/styles.xml -->
+    <style name="Theme" parent="FrameworkRoot.Theme" />
 
 </resources>

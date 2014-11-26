@@ -25,12 +25,13 @@ import android.widget.TextView;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.db.model.BlogArticle;
 import net.eledge.android.toolkit.gui.GuiUtils;
-import net.eledge.android.toolkit.gui.ViewInjector;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
 public class BlogAdapter extends ArrayAdapter<BlogArticle> {
 
@@ -49,7 +50,7 @@ public class BlogAdapter extends ArrayAdapter<BlogArticle> {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listitem_home_blog, parent, false);
             holder = new ArticleViewHolder();
-            ViewInjector.inject(holder, convertView);
+            inject(holder, convertView);
             convertView.setTag(holder);
         } else {
             holder = (ArticleViewHolder) convertView.getTag();

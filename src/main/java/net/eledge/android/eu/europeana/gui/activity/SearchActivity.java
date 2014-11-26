@@ -28,18 +28,18 @@ import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.StrictMode;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import net.eledge.android.eu.europeana.Config;
 import net.eledge.android.eu.europeana.EuropeanaApplication;
@@ -57,15 +57,15 @@ import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.searchresults.FacetItem;
 import net.eledge.android.toolkit.StringArrayUtils;
 import net.eledge.android.toolkit.gui.GuiUtils;
-import net.eledge.android.toolkit.gui.ViewInjector;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends ActionBarActivity implements SearchTaskListener, NameInputDialog.NameInputDialogListener {
+import static net.eledge.android.toolkit.gui.ViewInjector.inject;
+
+public class SearchActivity extends ActionBarActivity implements FacetAdapter.FacetAdaptorClickListener, SearchTaskListener, NameInputDialog.NameInputDialogListener {
 
     // Controller
     private final SearchController searchController = SearchController._instance;
@@ -77,7 +77,7 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
     @ViewResource(value = R.id.drawerlayout_activity_search, optional = true)
     private DrawerLayout mDrawerLayout;
     @ViewResource(R.id.drawer_facets)
-    private ListView mFacetsList;
+    private RecyclerView mFacetsList;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -90,23 +90,25 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        ViewInjector.inject(this);
+        inject(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        setSupportActionBar(toolbar);
 
         searchController.registerListener(SearchActivity.class, this);
         searchController.searchPageSize = getResources().getInteger(R.integer.search_result_pagesize);
 
-        mFacetsAdaptor = new FacetAdapter((EuropeanaApplication) getApplication(), this, new ArrayList<FacetItem>());
+        mFacetsAdaptor = new FacetAdapter((EuropeanaApplication) getApplication(), this);
 
         mFacetsList.setAdapter(mFacetsAdaptor);
-        mFacetsList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         if (mDrawerLayout != null) {
             mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
+            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
                     R.string.drawer_facets_open, R.string.drawer_facets_close) {
                 public void onDrawerClosed(View view) {
                     // getActionBar().setTitle(mTitle);
@@ -395,44 +397,39 @@ public class SearchActivity extends ActionBarActivity implements SearchTaskListe
         }
     }
 
-    /* The click listener for ListView in the navigation drawer */
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            mFacetsList.setItemChecked(position, false);
-            FacetItem item = mFacetsAdaptor.getItem(position);
-            switch (item.itemType) {
-                case SECTION:
-                    // ignore, is disabled.
-                    break;
-                case BREADCRUMB:
-                    if (!searchController.removeRefineSearch(SearchActivity.this, item.facet)) {
-                        closeSearchActivity();
-                    } else if (mDrawerLayout != null) {
-                        mDrawerLayout.closeDrawers();
-                    }
-                    break;
-                case CATEGORY:
-                    searchController.setCurrentFacetType(item.facetType);
-                    updateFacetDrawer();
-                    break;
-                case CATEGORY_OPENED:
-                    searchController.setCurrentFacetType(null);
-                    updateFacetDrawer();
-                    break;
-                case ITEM:
-                    searchController.refineSearch(SearchActivity.this, item.facet);
-                    if (mDrawerLayout != null) {
-                        mDrawerLayout.closeDrawers();
-                    }
-                    break;
-                case ITEM_SELECTED:
-                    searchController.removeRefineSearch(SearchActivity.this, item.facet);
-                    if (mDrawerLayout != null) {
-                        mDrawerLayout.closeDrawers();
-                    }
-                    break;
-            }
+    @Override
+    public void click(FacetItem item) {
+        switch (item.itemType) {
+            case SECTION:
+                // ignore, is disabled.
+                break;
+            case BREADCRUMB:
+                if (!searchController.removeRefineSearch(this, item.facet)) {
+                    closeSearchActivity();
+                } else if (mDrawerLayout != null) {
+                    mDrawerLayout.closeDrawers();
+                }
+                break;
+            case CATEGORY:
+                searchController.setCurrentFacetType(item.facetType);
+                updateFacetDrawer();
+                break;
+            case CATEGORY_OPENED:
+                searchController.setCurrentFacetType(null);
+                updateFacetDrawer();
+                break;
+            case ITEM:
+                searchController.refineSearch(this, item.facet);
+                if (mDrawerLayout != null) {
+                    mDrawerLayout.closeDrawers();
+                }
+                break;
+            case ITEM_SELECTED:
+                searchController.removeRefineSearch(this, item.facet);
+                if (mDrawerLayout != null) {
+                    mDrawerLayout.closeDrawers();
+                }
+                break;
         }
     }
 

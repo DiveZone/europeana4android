@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2014 eLedge.net and the original author or authors.
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -16,11 +15,27 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="europeana_theme" parent="@style/Theme.AppCompat.Light">
+    <style name="FrameworkRoot.Theme" parent="Theme.AppCompat.Light" />
+
+    <style name="FrameworkRoot.Widget" parent="Theme.AppCompat" />
+
+    <style name="Theme" parent="FrameworkRoot.Theme">
+        <!-- Only needed for pre-L -->
+        <!--<item name="android:editTextBackground">@drawable/edit_text</item>-->
+        <!--<item name="android:editTextStyle">@style/Widget.IOSched.EditText</item>-->
+    </style>
+
+    <style name="Theme.Europeana.Base" parent="Theme">
         <!-- COMPAT STYLES -->
         <item name="actionBarStyle">@style/europeana_actionBarStyle</item>
         <item name="actionBarTabTextStyle">@style/europeana_tabTextStyle</item>
+
+        <!-- Set AppCompat’s color theming attrs -->
+        <item name="colorPrimary">@color/actionbar_background</item>
+        <item name="colorPrimaryDark">@color/actionbar_background_dark</item>
     </style>
+
+    <style name="Theme.Europeana" parent="Theme.Europeana.Base" />
 
     <style name="europeana_actionBarStyle" parent="@style/Widget.AppCompat.ActionBar">
         <item name="background">@color/actionbar_background</item>

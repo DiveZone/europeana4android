@@ -18,6 +18,8 @@ package net.eledge.android.eu.europeana.gui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,11 +28,6 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import net.eledge.android.eu.europeana.EuropeanaApplication;
@@ -42,15 +39,18 @@ import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchItems;
 import net.eledge.android.eu.europeana.search.model.searchresults.Item;
 import net.eledge.android.toolkit.gui.GuiUtils;
-import net.eledge.android.toolkit.gui.ViewInjector;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
+
+import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
 public class SearchResultsFragment extends Fragment implements SearchTaskListener {
 
     private ResultAdapter mResultAdaptor;
 
+    private RecyclerView.LayoutManager mLayoutManager;
+
     @ViewResource(R.id.fragment_search_gridview)
-    private GridView mGridView;
+    private RecyclerView mGridView;
 
     @ViewResource(R.id.fragment_search_textview_status)
     private TextView mStatusTextView;
@@ -61,26 +61,26 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mResultAdaptor = new ResultAdapter((EuropeanaApplication) this.getActivity().getApplication(),
-                this.getActivity(), searchController.getSearchItems());
+                searchController.getSearchItems(), new ResultAdapter.ResultAdaptorClickListener() {
+            @Override
+            public void click(int position, Item item) {
+                searchController.setItemSelected(position);
+                final Intent intent = new Intent(SearchResultsFragment.this.getActivity(), RecordActivity.class);
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.putExtra(RecordActivity.RECORD_ID, item.id);
+                SearchResultsFragment.this.getActivity().startActivity(intent);
+            }
+        });
         searchController.registerListener(SearchResultsFragment.class, this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_search_results, null);
-        ViewInjector.inject(this, root);
+        inject(this, root);
         mGridView.setAdapter(mResultAdaptor);
-        mGridView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final Item selected = searchController.getSearchItems().get(position);
-                searchController.setItemSelected(position);
-                final Intent intent = new Intent(SearchResultsFragment.this.getActivity(), RecordActivity.class);
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.putExtra(RecordActivity.RECORD_ID, selected.id);
-                SearchResultsFragment.this.getActivity().startActivity(intent);
-            }
-        });
+        mLayoutManager = new StaggeredGridLayoutManager(R.integer.search_results_columns, StaggeredGridLayoutManager.VERTICAL);
+        mGridView.setLayoutManager(mLayoutManager);
         if (searchController.isSearching()) {
             mStatusTextView.setText(R.string.msg_searching);
             showStatusText();
@@ -98,16 +98,18 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mGridView.setOnScrollListener(new OnScrollListener() {
+        mGridView.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
             private int priorFirst = -1;
 
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                // TODO: fix scroll
             }
 
-            @Override
-            public void onScroll(AbsListView view, int first, int visible, int total) {
+            public void onScroll(RecyclerView view, int first, int visible, int total) {
                 if (visible < total && (first + visible == total)) {
                     // see if we have more results
                     if ((first != priorFirst) && (searchController.hasMoreResults())) {

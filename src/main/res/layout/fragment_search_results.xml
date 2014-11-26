@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2014 eLedge.net and the original author or authors.
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -15,15 +14,14 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <GridView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/fragment_search_gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="@integer/search_results_columns"
-        android:stretchMode="columnWidth"/>
+        android:stretchMode="columnWidth" />
 
     <TextView
         android:id="@+id/fragment_search_textview_status"
@@ -36,6 +34,6 @@
         android:gravity="center"
         android:text="@string/msg_searching"
         android:textColor="@android:color/white"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </RelativeLayout>
