@@ -42,15 +42,10 @@
     <string name="msg_profile_saved">Search profile created</string>
 
     <!-- RECORD ACTIVITY -->
-    <string name="dialog_tag_saveas_text">Create a new social tag:</string>
-    <string name="dialog_tag_saveas_input">tag name</string>
     <string name="record_tab_details">Details</string>
     <string name="record_tab_map">Map</string>
     <string name="record_tab_seealso">See also</string>
     <string name="msg_copied2clipboard">Value copied to clipboard…</string>
-    <string name="msg_tag_saved">Social tag created</string>
-    <string name="msg_item_saved">MyEuropeana Item saved</string>
-    <string name="msg_item_removed">MyEuropeana Item removed</string>
 
     <string name="record_field_title">TITLE</string>
     <string name="record_field_media">MEDIA</string>
@@ -84,10 +79,6 @@
     <string name="action_previous">Previous item</string>
     <string name="action_next">Next item</string>
     <string name="action_save_profile">Save profile</string>
-    <string name="action_myeuropeana">My Europeana</string>
-    <string name="action_save_item">Save item</string>
-    <string name="action_remove_item">Remove item</string>
-    <string name="action_new_label">Add label</string>
     <string name="action_open_browser">Open in browser</string>
     <string name="action_open_app">Start Europeana</string>
 
