@@ -18,7 +18,6 @@ package net.eledge.android.eu.europeana;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -29,14 +28,6 @@ import com.google.android.gms.analytics.Tracker;
 
 import net.eledge.android.toolkit.net.ImageCacheManager;
 
-import org.springframework.security.crypto.encrypt.AndroidEncryptors;
-import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.connect.sqlite.SQLiteConnectionRepository;
-import org.springframework.social.connect.sqlite.support.SQLiteConnectionRepositoryHelper;
-import org.springframework.social.connect.support.ConnectionFactoryRegistry;
-import org.springframework.social.europeana.api.Europeana;
-import org.springframework.social.europeana.connect.EuropeanaConnectionFactory;
-
 import java.util.Locale;
 
 public class EuropeanaApplication extends Application {
@@ -44,9 +35,6 @@ public class EuropeanaApplication extends Application {
     // META DATA
     public static final String METADATA_EUROPEANA_API_PUBLICKEY = "eu.europeana.api.v2.API_PUBLIC_KEY";
     public static final String METADATA_EUROPEANA_API_PRIVATEKEY = "eu.europeana.api.v2.API_PRIVATE_KEY";
-
-    private ConnectionFactoryRegistry connectionFactoryRegistry;
-    private ConnectionRepository connectionRepository;
 
     private ImageCacheManager mImageCacheManager;
 
@@ -64,15 +52,6 @@ public class EuropeanaApplication extends Application {
     public void onCreate() {
         try {
             metaData = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES | PackageManager.GET_META_DATA).applicationInfo.metaData;
-            // create a new ConnectionFactoryLocator and populate it with Facebook ConnectionFactory
-            this.connectionFactoryRegistry = new ConnectionFactoryRegistry();
-            this.connectionFactoryRegistry.addConnectionFactory(new EuropeanaConnectionFactory(getEuropeanaPublicKey(),
-                    getEuropeanaPrivateKey()));
-
-            // set up the database and encryption
-            SQLiteOpenHelper repositoryHelper = new SQLiteConnectionRepositoryHelper(this);
-            this.connectionRepository = new SQLiteConnectionRepository(repositoryHelper,
-                    this.connectionFactoryRegistry, AndroidEncryptors.text("password", "5c0744940b5c369b"));
 
             //activate auto tracking
             getAnalyticsTracker();
@@ -129,19 +108,4 @@ public class EuropeanaApplication extends Application {
         return (activeNetwork != null) && (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI);
     }
 
-    public ConnectionRepository getConnectionRepository() {
-        return connectionRepository;
-    }
-
-    public EuropeanaConnectionFactory getEuropeanaConnectionFactory() {
-        return (EuropeanaConnectionFactory) this.connectionFactoryRegistry.getConnectionFactory(Europeana.class);
-    }
-
-    public Europeana getMyEuropeanaApi() {
-        return isMyEuropeanaConnected() ? connectionRepository.findPrimaryConnection(Europeana.class).getApi() : null;
-    }
-
-    public boolean isMyEuropeanaConnected() {
-        return (connectionRepository != null) && (connectionRepository.findPrimaryConnection(Europeana.class) != null);
-    }
 }

@@ -15,12 +15,14 @@
 
 
 
+
+
 buildscript {
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.14.4'
+        classpath 'com.android.tools.build:gradle:1.0.0-rc1'
     }
 }
 apply plugin: 'com.android.application'
@@ -35,7 +37,6 @@ repositories {
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.1"
-    compileOptions.encoding = "UTF-8"
     defaultConfig {
         minSdkVersion 10
         targetSdkVersion 21
@@ -82,19 +83,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.2'
     compile 'com.google.android.gms:play-services:6.1.71'
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
-    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
     compile 'net.eledge:urlbuilder:1.1.0'
     compile project(':AndroidToolkit')
-    compile('org.springframework.android:spring-android-auth:1.0.1.RELEASE') {
-        exclude group: 'org.springframework'
-    }
-    compile('org.springframework.security:spring-security-crypto:3.1.7.RELEASE') {
-        exclude group: 'org.springframework'
-    }
-    compile('org.springframework.social:spring-social-core:1.0.3.RELEASE') {
-        exclude group: 'org.springframework'
-    }
-    compile('net.eledge:spring-social-europeana:0.0.4-SNAPSHOT') {
-        exclude group: 'org.springframework'
-    }
 }

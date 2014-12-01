@@ -51,10 +51,6 @@ import net.eledge.android.eu.europeana.gui.adapter.RecordPagerAdapter;
 import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
 import net.eledge.android.eu.europeana.gui.dialog.NameInputDialog;
 import net.eledge.android.eu.europeana.gui.fragment.RecordDetailsFragment;
-import net.eledge.android.eu.europeana.myeuropeana.task.CheckItemTask;
-import net.eledge.android.eu.europeana.myeuropeana.task.RemoveItemTask;
-import net.eledge.android.eu.europeana.myeuropeana.task.SaveItemTask;
-import net.eledge.android.eu.europeana.myeuropeana.task.SaveTagTask;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
 import net.eledge.android.eu.europeana.search.model.record.RecordObject;
@@ -64,8 +60,6 @@ import net.eledge.android.toolkit.gui.GuiUtils;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.social.europeana.api.Europeana;
-import org.springframework.social.europeana.api.model.UserModification;
 
 import java.util.List;
 
@@ -76,7 +70,6 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     public static final String RECORD_ID = "RECORDID";
 
     private EuropeanaApplication mApplication;
-    private Europeana mEuropeanaApi;
 
     // Controller
     private final SearchController searchController = SearchController._instance;
@@ -110,7 +103,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         setSupportActionBar(toolbar);
 
         mApplication = (EuropeanaApplication) getApplication();
-        mEuropeanaApi = mApplication.getMyEuropeanaApi();
+//        mEuropeanaApi = mApplication.getMyEuropeanaApi();
         mTwoColumns = getResources().getBoolean(R.bool.home_support_landscape);
         recordController.registerListener(RecordActivity.class, this);
 
@@ -151,9 +144,6 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         }
 
         // Drawer layout
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
-
         if (searchController.hasResults()) {
             if (mDrawerLayout != null) {
                 mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -212,11 +202,6 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         }
         menu.findItem(R.id.action_previous).setVisible(searchController.hasPrevious());
         menu.findItem(R.id.action_next).setVisible(searchController.hasNext());
-        menu.findItem(R.id.action_new_label).setVisible(mApplication.isMyEuropeanaConnected());
-        MenuItem item = menu.findItem(R.id.action_save_item);
-        item.setVisible(mApplication.isMyEuropeanaConnected());
-        item.setIcon(recordController.isCurrentRecordSelected() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important);
-        item.setTitle(recordController.isCurrentRecordSelected() ? R.string.action_remove_item : R.string.action_save_item);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -283,18 +268,6 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
                 break;
             case R.id.action_share:
                 startActivity(createShareIntent());
-                break;
-            case R.id.action_new_label:
-                saveLabel();
-                break;
-            case R.id.action_save_item:
-                if (recordController.isCurrentRecordSelected()) {
-                    new RemoveItemTask(mEuropeanaApi).execute();
-                } else {
-                    new SaveItemTask(this, mEuropeanaApi, null).execute();
-                }
-                recordController.setCurrentRecordSelected(!recordController.isCurrentRecordSelected());
-                supportInvalidateOptionsMenu();
                 break;
             case R.id.action_search:
                 GuiUtils.startTopActivity(this, HomeActivity.class);
@@ -388,20 +361,20 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     private void openRecord(String id) {
         supportInvalidateOptionsMenu();
         recordController.readRecord(this, id);
-        if (mEuropeanaApi != null) {
-            new CheckItemTask(this, mEuropeanaApi, new TaskListener<Boolean>() {
-                @Override
-                public void onTaskStart() {
-                    // ignore
-                }
-
-                @Override
-                public void onTaskFinished(Boolean result) {
-                    recordController.setCurrentRecordSelected(result);
-                    RecordActivity.this.supportInvalidateOptionsMenu();
-                }
-            }).execute();
-        }
+//        if (mEuropeanaApi != null) {
+//            new CheckItemTask(this, mEuropeanaApi, new TaskListener<Boolean>() {
+//                @Override
+//                public void onTaskStart() {
+//                    // ignore
+//                }
+//
+//                @Override
+//                public void onTaskFinished(Boolean result) {
+//                    recordController.setCurrentRecordSelected(result);
+//                    RecordActivity.this.supportInvalidateOptionsMenu();
+//                }
+//            }).execute();
+//        }
     }
 
     private Intent createShareIntent() {
@@ -413,40 +386,40 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     }
 
     private void saveLabel() {
-        if (mApplication.isMyEuropeanaConnected()) {
-            Bundle bundle = new Bundle();
-            bundle.putInt(NameInputDialog.KEY_RESTITLE_INT, R.string.action_new_label);
-            bundle.putInt(NameInputDialog.KEY_RESTEXT_INT, R.string.dialog_tag_saveas_text);
-            bundle.putInt(NameInputDialog.KEY_RESINPUT_INT, R.string.dialog_tag_saveas_input);
-            bundle.putInt(NameInputDialog.KEY_RESPOSBUTTON_INT, R.string.action_new_label);
-            NameInputDialog dialog = new NameInputDialog();
-            dialog.setArguments(bundle);
-            dialog.show(getSupportFragmentManager(), "SaveAs");
-        }
+//        if (mApplication.isMyEuropeanaConnected()) {
+//            Bundle bundle = new Bundle();
+//            bundle.putInt(NameInputDialog.KEY_RESTITLE_INT, R.string.action_new_label);
+//            bundle.putInt(NameInputDialog.KEY_RESTEXT_INT, R.string.dialog_tag_saveas_text);
+//            bundle.putInt(NameInputDialog.KEY_RESINPUT_INT, R.string.dialog_tag_saveas_input);
+//            bundle.putInt(NameInputDialog.KEY_RESPOSBUTTON_INT, R.string.action_new_label);
+//            NameInputDialog dialog = new NameInputDialog();
+//            dialog.setArguments(bundle);
+//            dialog.show(getSupportFragmentManager(), "SaveAs");
+//        }
     }
 
     @Override
     public void positiveResponse(String input) {
         if (StringUtils.isNotBlank(input)) {
-            new SaveTagTask(RecordActivity.this, mEuropeanaApi, new TaskListener<UserModification>() {
-                @Override
-                public void onTaskStart() {
-                    // ignore
-                }
-
-                @Override
-                public void onTaskFinished(UserModification result) {
-                    if (result != null) {
-                        if (result.isSuccess()) {
-                            GuiUtils.toast(RecordActivity.this, R.string.msg_tag_saved);
-                        } else {
-                            GuiUtils.toast(RecordActivity.this, result.getError());
-                        }
-                    } else {
-                        GuiUtils.toast(RecordActivity.this, R.string.msg_unknown_error);
-                    }
-                }
-            }).execute(input);
+//            new SaveTagTask(RecordActivity.this, mEuropeanaApi, new TaskListener<UserModification>() {
+//                @Override
+//                public void onTaskStart() {
+//                    // ignore
+//                }
+//
+//                @Override
+//                public void onTaskFinished(UserModification result) {
+//                    if (result != null) {
+//                        if (result.isSuccess()) {
+//                            GuiUtils.toast(RecordActivity.this, R.string.msg_tag_saved);
+//                        } else {
+//                            GuiUtils.toast(RecordActivity.this, result.getError());
+//                        }
+//                    } else {
+//                        GuiUtils.toast(RecordActivity.this, R.string.msg_unknown_error);
+//                    }
+//                }
+//            }).execute(input);
         }
     }
 

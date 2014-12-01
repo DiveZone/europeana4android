@@ -23,8 +23,8 @@
         <item name="actionBarTabTextStyle">@style/europeana_tabTextStyle</item>
 
         <!-- Set AppCompat’s color theming attrs -->
-        <item name="colorPrimary">@color/actionbar_background</item>
-        <item name="colorPrimaryDark">@color/actionbar_background_dark</item>
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_color_dark</item>
     </style>
 
 </resources>
