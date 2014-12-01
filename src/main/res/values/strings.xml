@@ -27,16 +27,6 @@
     <string name="form_search_query">Search term(s)</string>
     <string name="form_search_profile_default">No search profile</string>
 
-    <!-- MYEUROPEANA DIALOG -->
-    <string name="dialog_myeuropeana_title">MyEuropeana profile</string>
-    <string name="dialog_myeuropeana_email">Login / Email address</string>
-    <string name="dialog_myeuropeana_username">MyEuropeana username</string>
-    <string name="dialog_myeuropeana_saveditem">Nr of saved items</string>
-    <string name="dialog_myeuropeana_savedsearch">Nr of saved searches</string>
-    <string name="dialog_myeuropeana_tags">Nr of social tags</string>
-    <string name="dialog_myeuropeana_button_close">Close</string>
-    <string name="dialog_myeuropeana_button_logoff">Disconnect</string>
-
     <!-- SEARCH ACTIVITY -->
     <string name="dialog_profile_saveas_title">Profile title</string>
     <string name="dialog_profile_saveas_text">Give a short descriptive name for your search profile:</string>

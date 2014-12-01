@@ -93,7 +93,7 @@ public class HomeActivity extends ActionBarActivity implements TaskListener<Item
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+        supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         mApplication = (EuropeanaApplication) getApplication();
         setContentView(R.layout.activity_home);

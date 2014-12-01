@@ -49,7 +49,6 @@ import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.gui.adapter.RecordPagerAdapter;
 import net.eledge.android.eu.europeana.gui.adapter.ResultAdapter;
-import net.eledge.android.eu.europeana.gui.dialog.NameInputDialog;
 import net.eledge.android.eu.europeana.gui.fragment.RecordDetailsFragment;
 import net.eledge.android.eu.europeana.search.RecordController;
 import net.eledge.android.eu.europeana.search.SearchController;
@@ -65,7 +64,7 @@ import java.util.List;
 
 import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
-public class RecordActivity extends ActionBarActivity implements TabListener, TaskListener<RecordObject>, NameInputDialog.NameInputDialogListener {
+public class RecordActivity extends ActionBarActivity implements TabListener, TaskListener<RecordObject> {
 
     public static final String RECORD_ID = "RECORDID";
 
@@ -103,7 +102,6 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         setSupportActionBar(toolbar);
 
         mApplication = (EuropeanaApplication) getApplication();
-//        mEuropeanaApi = mApplication.getMyEuropeanaApi();
         mTwoColumns = getResources().getBoolean(R.bool.home_support_landscape);
         recordController.registerListener(RecordActivity.class, this);
 
@@ -361,20 +359,6 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
     private void openRecord(String id) {
         supportInvalidateOptionsMenu();
         recordController.readRecord(this, id);
-//        if (mEuropeanaApi != null) {
-//            new CheckItemTask(this, mEuropeanaApi, new TaskListener<Boolean>() {
-//                @Override
-//                public void onTaskStart() {
-//                    // ignore
-//                }
-//
-//                @Override
-//                public void onTaskFinished(Boolean result) {
-//                    recordController.setCurrentRecordSelected(result);
-//                    RecordActivity.this.supportInvalidateOptionsMenu();
-//                }
-//            }).execute();
-//        }
     }
 
     private Intent createShareIntent() {
@@ -385,46 +369,4 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         return shareIntent;
     }
 
-    private void saveLabel() {
-//        if (mApplication.isMyEuropeanaConnected()) {
-//            Bundle bundle = new Bundle();
-//            bundle.putInt(NameInputDialog.KEY_RESTITLE_INT, R.string.action_new_label);
-//            bundle.putInt(NameInputDialog.KEY_RESTEXT_INT, R.string.dialog_tag_saveas_text);
-//            bundle.putInt(NameInputDialog.KEY_RESINPUT_INT, R.string.dialog_tag_saveas_input);
-//            bundle.putInt(NameInputDialog.KEY_RESPOSBUTTON_INT, R.string.action_new_label);
-//            NameInputDialog dialog = new NameInputDialog();
-//            dialog.setArguments(bundle);
-//            dialog.show(getSupportFragmentManager(), "SaveAs");
-//        }
-    }
-
-    @Override
-    public void positiveResponse(String input) {
-        if (StringUtils.isNotBlank(input)) {
-//            new SaveTagTask(RecordActivity.this, mEuropeanaApi, new TaskListener<UserModification>() {
-//                @Override
-//                public void onTaskStart() {
-//                    // ignore
-//                }
-//
-//                @Override
-//                public void onTaskFinished(UserModification result) {
-//                    if (result != null) {
-//                        if (result.isSuccess()) {
-//                            GuiUtils.toast(RecordActivity.this, R.string.msg_tag_saved);
-//                        } else {
-//                            GuiUtils.toast(RecordActivity.this, result.getError());
-//                        }
-//                    } else {
-//                        GuiUtils.toast(RecordActivity.this, R.string.msg_unknown_error);
-//                    }
-//                }
-//            }).execute(input);
-        }
-    }
-
-    @Override
-    public void negativeResponse() {
-        // ignore
-    }
 }

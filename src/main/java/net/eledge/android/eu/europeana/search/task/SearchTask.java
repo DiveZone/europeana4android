@@ -27,7 +27,7 @@ import net.eledge.android.eu.europeana.search.listeners.SearchTaskListener;
 import net.eledge.android.eu.europeana.search.model.SearchItems;
 import net.eledge.android.eu.europeana.tools.UriHelper;
 
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
@@ -65,7 +65,7 @@ public class SearchTask extends AsyncTask<String, Void, SearchItems> {
         String url = UriHelper.getSearchUrl(((EuropeanaApplication) mActivity.getApplication()).getEuropeanaPublicKey(), terms, pageLoad,
                 searchController.searchPageSize);
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         return restTemplate.getForObject(url, SearchItems.class);
     }
 

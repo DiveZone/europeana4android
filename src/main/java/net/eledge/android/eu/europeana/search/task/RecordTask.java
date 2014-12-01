@@ -31,7 +31,7 @@ import net.eledge.android.toolkit.async.ListenerNotifier;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 public class RecordTask extends AsyncTask<String, Void, RecordObject> {
@@ -63,7 +63,7 @@ public class RecordTask extends AsyncTask<String, Void, RecordObject> {
         recordId = params[0];
         String url = UriHelper.getRecordUrl(((EuropeanaApplication) mActivity.getApplication()).getEuropeanaPublicKey(), recordId);
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         return RecordObject.normalize(restTemplate.getForObject(url, Record.class).object);
     }
 

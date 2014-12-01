@@ -92,7 +92,7 @@ public class BlogDownloadTask implements TaskListener<List<BlogArticle>> {
             SharedPreferences settings = context.getSharedPreferences(Preferences.BLOG, 0);
             SharedPreferences.Editor editor = settings.edit();
             editor.putLong(Preferences.BLOG_LAST_UPDATE, new Date().getTime());
-            editor.commit();
+            editor.apply();
 
             if ((listener != null) && listener instanceof Fragment) {
                 ((Fragment) listener).getActivity().runOnUiThread(new Runnable() {

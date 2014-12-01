@@ -30,7 +30,7 @@ import net.eledge.android.toolkit.async.ListenerNotifier;
 import net.eledge.android.toolkit.async.listener.TaskListener;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
@@ -62,7 +62,7 @@ public class SuggestionTask extends AsyncTask<String, Void, Item[]> {
         term = params[0];
         String url = UriHelper.getSuggestionUrl(term, searchController.suggestionPageSize);
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         return restTemplate.getForObject(url, Suggestions.class).items;
     }
 

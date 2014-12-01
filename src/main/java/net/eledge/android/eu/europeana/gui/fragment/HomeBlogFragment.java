@@ -116,6 +116,7 @@ public class HomeBlogFragment extends Fragment implements BlogDownloadTask.BlogC
             SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);
             SharedPreferences.Editor editor = settings.edit();
             editor.putLong(Preferences.BLOG_LAST_VIEW, new Date().getTime());
+            editor.apply();
         }
     }
 }
