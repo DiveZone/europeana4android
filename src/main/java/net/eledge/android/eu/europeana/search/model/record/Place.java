@@ -15,10 +15,13 @@
 
 package net.eledge.android.eu.europeana.search.model.record;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import net.eledge.android.eu.europeana.search.model.record.abstracts.Resource;
 
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Place extends Resource {
 
     public Map<String, String[]> prefLabel;

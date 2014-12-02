@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -33,7 +32,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -43,7 +41,6 @@ import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import net.eledge.android.eu.europeana.EuropeanaApplication;
 import net.eledge.android.eu.europeana.R;
 import net.eledge.android.eu.europeana.db.dao.SearchProfileDao;
 import net.eledge.android.eu.europeana.db.model.SearchProfile;
@@ -66,8 +63,6 @@ import java.util.Locale;
 import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
 public class HomeActivity extends ActionBarActivity implements TaskListener<Item[]>, OnItemClickListener {
-
-    private EuropeanaApplication mApplication;
 
     // Controllers
     private final SearchController searchController = SearchController._instance;
@@ -93,15 +88,9 @@ public class HomeActivity extends ActionBarActivity implements TaskListener<Item
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
-        mApplication = (EuropeanaApplication) getApplication();
         setContentView(R.layout.activity_home);
-
-        ActionBar ab = getSupportActionBar();
-        if (ab != null) {
-            ab.setDisplayHomeAsUpEnabled(true);
-        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NewBlogNotification.cancel(this);
 
@@ -288,7 +277,7 @@ public class HomeActivity extends ActionBarActivity implements TaskListener<Item
     }
 
     protected Toolbar getActionBarToolbar() {
-        if (mActionBarToolbar == null) {
+        if (mActionBarToolbar != null) {
             setSupportActionBar(mActionBarToolbar);
         }
         return mActionBarToolbar;

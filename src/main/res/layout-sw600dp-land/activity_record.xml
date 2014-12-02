@@ -14,12 +14,18 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/background"
-              tools:context=".gui.activity.RecordActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".gui.activity.RecordActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_actionbar"
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_search" />
 
     <ListView
         android:id="@+id/drawer_items"
@@ -29,36 +35,34 @@
         android:background="@drawable/bordershadow_right"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"/>
+        android:dividerHeight="0dp" />
 
     <fragment
         android:id="@+id/activity_record_fragment_details"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:name="net.eledge.android.eu.europeana.gui.fragment.RecordDetailsFragment"/>
+        android:name="net.eledge.android.eu.europeana.gui.fragment.RecordDetailsFragment" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/activity_record_pager"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/bordershadow_left"
-        >
+        android:background="@drawable/bordershadow_left">
 
         <android.support.v4.view.PagerTitleStrip
             android:id="@+id/pager_title_strip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            style="@style/pagerTitleStrip"/>
+            style="@style/pagerTitleStrip" />
 
     </android.support.v4.view.ViewPager>
 
     <include
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        layout="@layout/include_record_loading"
-        />
+        layout="@layout/include_record_loading" />
 
 </LinearLayout>

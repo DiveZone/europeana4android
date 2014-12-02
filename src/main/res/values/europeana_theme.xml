@@ -17,8 +17,6 @@
 
     <style name="FrameworkRoot.Theme" parent="Theme.AppCompat.Light" />
 
-    <style name="FrameworkRoot.Widget" parent="Theme.AppCompat" />
-
     <style name="Theme" parent="FrameworkRoot.Theme">
         <!-- Only needed for pre-L -->
         <!--<item name="android:editTextBackground">@drawable/edit_text</item>-->
@@ -26,28 +24,27 @@
     </style>
 
     <style name="Theme.Europeana.Base" parent="Theme">
-        <!-- COMPAT STYLES -->
-        <item name="actionBarStyle">@style/europeana_actionBarStyle</item>
-        <item name="actionBarTabTextStyle">@style/europeana_tabTextStyle</item>
+        <!-- Here we setting appcompat’s actionBarStyle -->
+        <item name="windowActionBar">false</item>
 
-        <!-- Set AppCompat’s color theming attrs -->
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+
+        <!-- ...and here we setting appcompat’s color theming attrs -->
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryDark">@color/primary_color_dark</item>
+        <item name="colorAccent">@color/accent_color</item>
+
+        <item name="android:windowBackground">@color/background</item>
     </style>
 
     <style name="Theme.Europeana" parent="Theme.Europeana.Base" />
 
-    <style name="europeana_actionBarStyle" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="background">@color/primary_color</item>
-        <item name="backgroundStacked">@color/primary_color</item>
-        <item name="backgroundSplit">@color/primary_color</item>
-        <item name="android:background">@color/primary_color</item>
-        <item name="android:icon">@drawable/ic_actionbar</item>
-    </style>
-
     <!-- action bar tab text -->
-    <style name="europeana_tabTextStyle" parent="@style/Widget.AppCompat.ActionBar.TabText">
-        <!--<item name="android:textColor">@color/emphasis</item>-->
+    <style name="europeana_tabTextStyle" parent="@style/Widget.AppCompat.ActionBar.TabText"></style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">false</item>
+        <item name="color">@android:color/white</item>
     </style>
 
 </resources>

@@ -15,9 +15,12 @@
 
 package net.eledge.android.eu.europeana.search.model.record;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import net.eledge.android.eu.europeana.search.model.enums.DocType;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.Resource;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RecordObject extends Resource {
 
     public DocType type;

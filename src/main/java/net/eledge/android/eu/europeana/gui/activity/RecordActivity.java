@@ -98,7 +98,7 @@ public class RecordActivity extends ActionBarActivity implements TabListener, Ta
         setContentView(R.layout.activity_record);
         inject(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
 
         mApplication = (EuropeanaApplication) getApplication();

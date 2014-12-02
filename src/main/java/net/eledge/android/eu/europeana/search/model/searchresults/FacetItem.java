@@ -15,9 +15,12 @@
 
 package net.eledge.android.eu.europeana.search.model.searchresults;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import net.eledge.android.eu.europeana.search.model.facets.enums.FacetItemType;
 import net.eledge.android.eu.europeana.search.model.facets.enums.FacetType;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FacetItem {
 
     public FacetItemType itemType;

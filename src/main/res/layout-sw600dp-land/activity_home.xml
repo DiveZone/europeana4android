@@ -22,6 +22,13 @@
     android:orientation="horizontal"
     tools:context=".HomeActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_actionbar"
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_homescreen" />
+
+
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"

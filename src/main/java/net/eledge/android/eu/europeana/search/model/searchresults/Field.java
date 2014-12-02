@@ -15,6 +15,9 @@
 
 package net.eledge.android.eu.europeana.search.model.searchresults;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Field {
 
     public String label;

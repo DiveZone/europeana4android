@@ -92,7 +92,7 @@ public class SearchActivity extends ActionBarActivity implements FacetAdapter.Fa
         setContentView(R.layout.activity_search);
         inject(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
 
         searchController.registerListener(SearchActivity.class, this);

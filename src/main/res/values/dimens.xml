@@ -15,6 +15,9 @@
 
 <resources>
 
+    <dimen name="toolbar_homescreen">128dp</dimen>
+    <dimen name="toolbar_search">64dp</dimen>
+
     <dimen name="drawer_facets_width">240dp</dimen>
     <dimen name="drawer_facets_category_textsize">16sp</dimen>
     <dimen name="drawer_facets_minHeight">48dp</dimen>

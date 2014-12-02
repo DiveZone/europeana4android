@@ -15,12 +15,15 @@
 
 package net.eledge.android.eu.europeana.search.model.record;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import net.eledge.android.eu.europeana.search.model.enums.Right;
 import net.eledge.android.eu.europeana.search.model.record.abstracts.Resource;
 import net.eledge.android.toolkit.StringArrayUtils;
 
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Aggregation extends Resource {
 
     public Map<String, String[]> edmDataProvider;

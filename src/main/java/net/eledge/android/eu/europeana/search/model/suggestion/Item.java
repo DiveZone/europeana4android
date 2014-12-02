@@ -15,6 +15,9 @@
 
 package net.eledge.android.eu.europeana.search.model.suggestion;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Item {
 
     public String term;

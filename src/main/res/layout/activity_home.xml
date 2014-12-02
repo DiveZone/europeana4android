@@ -13,17 +13,22 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <include layout="@layout/include_toolbar" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_actionbar"
+        android:background="@color/primary_color"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_homescreen" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_actionbar"
         android:background="@color/background"
         tools:context=".HomeActivity">
 
@@ -64,4 +69,4 @@
             android:background="@color/background" />
 
     </RelativeLayout>
-</FrameLayout>
+</RelativeLayout>
