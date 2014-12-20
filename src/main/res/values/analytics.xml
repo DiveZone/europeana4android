@@ -21,8 +21,8 @@
     <bool name="ga_autoActivityTracking">true</bool>
     <bool name="ga_reportUncaughtExceptions">true</bool>
 
-    <string name="net.eledge.android.eu.europeana.gui.activity.HomeActivity">Home (Basic Search)</string>
-    <string name="net.eledge.android.eu.europeana.gui.activity.RecordActivity">Record Details</string>
-    <string name="net.eledge.android.eu.europeana.gui.activity.SearchActivity">Search Results</string>
+    <string name="net.eledge.android.europeana.gui.activity.HomeActivity">Home (Basic Search)</string>
+    <string name="net.eledge.android.europeana.gui.activity.RecordActivity">Record Details</string>
+    <string name="net.eledge.android.europeana.gui.activity.SearchActivity">Search Results</string>
 
 </resources>

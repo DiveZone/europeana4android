@@ -13,19 +13,18 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout
-    android:id="@+id/kitKatFrameLayout_activity_record"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/kitKatFrameLayout_activity_record"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_actionbar"
-        android:background="@null"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_search" />
+        android:layout_height="@dimen/toolbar_search"
+        android:background="@null" />
 
 
     <android.support.v4.widget.DrawerLayout
@@ -37,9 +36,9 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/activity_record_pager"
-            android:background="@color/background"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/background" />
 
         <ListView
             android:id="@+id/drawer_items"
@@ -50,10 +49,27 @@
             android:choiceMode="singleChoice"
             android:dividerHeight="0dp" />
 
-        <include
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/include_record_loading" />
+            android:layout_height="100dp">
+
+            <!--<com.google.android.gms.maps.MapView-->
+            <!--android:id="@+id/fragment_record_map_mapview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/background_card"-->
+            <!--android:layout_margin="@dimen/record_map_spacing"-->
+            <!--android:padding="@dimen/record_map_spacing"-->
+            <!--/>-->
+
+
+        </android.support.v7.widget.CardView>
+
+        <include
+            layout="@layout/include_record_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </android.support.v4.widget.DrawerLayout>
 </FrameLayout>

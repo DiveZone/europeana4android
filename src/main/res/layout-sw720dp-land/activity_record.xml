@@ -42,7 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
-        android:name="net.eledge.android.eu.europeana.gui.fragment.RecordDetailsFragment" />
+        android:name="net.eledge.android.europeana.gui.fragment.RecordDetailsFragment" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/activity_record_pager"

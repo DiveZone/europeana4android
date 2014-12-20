@@ -15,15 +15,19 @@
   ~ limitations under the License.
   -->
 
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="TypographyDashes">
 
     <string name="ga_trackingId">UA-5855364-5</string>
     <bool name="ga_autoActivityTracking">true</bool>
     <bool name="ga_reportUncaughtExceptions">true</bool>
     <integer name="ga_sessionTimeout">300</integer>
 
-    <screenName name="net.eledge.android.eu.europeana.gui.activity.HomeActivity">Home (Basic Search)</screenName>
-    <screenName name="net.eledge.android.eu.europeana.gui.activity.RecordActivity">Record Details</screenName>
-    <screenName name="net.eledge.android.eu.europeana.gui.activity.SearchActivity">Search Results</screenName>
+    <screenName name="net.eledge.android.europeana.gui.activity.HomeActivity">Home (Basic Search)
+    </screenName>
+    <screenName name="net.eledge.android.europeana.gui.activity.RecordActivity">Record Details
+    </screenName>
+    <screenName name="net.eledge.android.europeana.gui.activity.SearchActivity">Search Results
+    </screenName>
 
 </resources>

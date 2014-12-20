@@ -14,9 +14,7 @@
   ~ limitations under the License.
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.eledge.android.eu.europeana"
-    android:versionCode="39"
-    android:versionName="v0.2-beta b39">
+    package="net.eledge.android.europeana">
 
     <uses-feature
         android:glEsVersion="0x00020000"

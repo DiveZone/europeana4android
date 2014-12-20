@@ -17,56 +17,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".HomeActivity">
 
-    <android.support.v7.widget.Toolbar
+    <include
         android:id="@+id/toolbar_actionbar"
-        android:background="@color/primary_color"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_homescreen" />
+        layout="@layout/toolbar_searchform" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <FrameLayout
+        android:id="@+id/activity_home_fragment_blog"
         android:layout_below="@id/toolbar_actionbar"
-        android:background="@color/background"
-        tools:context=".HomeActivity">
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/bordershadow_top" />
 
-        <EditText
-            android:id="@+id/activity_home_edittext_query"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="@string/form_search_query"
-            android:ems="10"
-            android:drawableLeft="@drawable/ic_edittext_search"
-            android:imeOptions="actionSearch|flagNoExtractUi">
+    <GridView
+        android:id="@+id/activity_home_gridview_suggestions"
+        android:layout_below="@id/toolbar_actionbar"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:requiresFadingEdge="vertical"
+        android:numColumns="@integer/home_suggestions_columns"
+        android:background="@color/background" />
 
-            <requestFocus />
-        </EditText>
-
-        <Spinner
-            android:id="@+id/activity_home_spinner_profile"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:layout_below="@id/activity_home_edittext_query" />
-
-        <FrameLayout
-            android:id="@+id/activity_home_fragment_blog"
-            android:layout_below="@id/activity_home_spinner_profile"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:background="@drawable/bordershadow_top" />
-
-        <GridView
-            android:id="@+id/activity_home_gridview_suggestions"
-            android:layout_below="@id/activity_home_spinner_profile"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:requiresFadingEdge="vertical"
-            android:numColumns="@integer/home_suggestions_columns"
-            android:background="@color/background" />
-
-    </RelativeLayout>
 </RelativeLayout>
