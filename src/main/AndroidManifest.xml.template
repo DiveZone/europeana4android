@@ -32,10 +32,10 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <permission
-        android:name="net.eledge.android.eu.europeana.permission.MAPS_RECEIVE"
+        android:name="net.eledge.android.europeana.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="net.eledge.android.eu.europeana.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="net.eledge.android.europeana.permission.MAPS_RECEIVE" />
 
     <supports-screens
         android:anyDensity="true"
@@ -44,7 +44,7 @@
         android:smallScreens="true" />
 
     <application
-        android:name="net.eledge.android.eu.europeana.EuropeanaApplication"
+        android:name="net.eledge.android.europeana.EuropeanaApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -64,7 +64,7 @@
             android:value="..." />
 
         <activity
-            android:name="net.eledge.android.eu.europeana.gui.activity.HomeActivity"
+            android:name="net.eledge.android.europeana.gui.activity.HomeActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance">
             <intent-filter>
@@ -74,10 +74,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="net.eledge.android.eu.europeana.gui.activity.SearchActivity"
+            android:name="net.eledge.android.europeana.gui.activity.SearchActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:parentActivityName="net.eledge.android.eu.europeana.gui.activity.HomeActivity">
+            android:parentActivityName="net.eledge.android.europeana.gui.activity.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -98,19 +98,19 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="application/vnd.net.eledge.android.eu.europeana.search" />
+                <data android:mimeType="application/vnd.net.eledge.android.europeana.search" />
             </intent-filter>
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.eledge.android.eu.europeana.gui.activity.HomeActivity" />
+                android:value="net.eledge.android.europeana.gui.activity.HomeActivity" />
         </activity>
         <activity
-            android:name="net.eledge.android.eu.europeana.gui.activity.RecordActivity"
+            android:name="net.eledge.android.europeana.gui.activity.RecordActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:noHistory="true"
-            android:parentActivityName="net.eledge.android.eu.europeana.gui.activity.SearchActivity">
+            android:parentActivityName="net.eledge.android.europeana.gui.activity.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -131,26 +131,26 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="application/vnd.net.eledge.android.eu.europeana.record" />
+                <data android:mimeType="application/vnd.net.eledge.android.europeana.record" />
             </intent-filter>
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.eledge.android.eu.europeana.gui.activity.SearchActivity" />
+                android:value="net.eledge.android.europeana.gui.activity.SearchActivity" />
         </activity>
 
         <activity
-            android:name="net.eledge.android.eu.europeana.gui.activity.SettingsActivity"
+            android:name="net.eledge.android.europeana.gui.activity.SettingsActivity"
             android:label="@string/app_name" />
 
         <receiver
-            android:name="net.eledge.android.eu.europeana.service.receiver.BlogCheckerReceiver"
+            android:name="net.eledge.android.europeana.service.receiver.BlogCheckerReceiver"
             android:enabled="true" />
         <receiver
-            android:name="net.eledge.android.eu.europeana.gui.notification.receiver.UrlButtonReceiver"
+            android:name="net.eledge.android.europeana.gui.notification.receiver.UrlButtonReceiver"
             android:enabled="true" />
         <receiver
-            android:name="net.eledge.android.eu.europeana.service.receiver.BootReceiver"
+            android:name="net.eledge.android.europeana.service.receiver.BootReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -159,7 +159,7 @@
 
         <service
             android:enabled="true"
-            android:name="net.eledge.android.eu.europeana.service.BlogCheckerService" />
+            android:name="net.eledge.android.europeana.service.BlogCheckerService" />
     </application>
 
 </manifest>

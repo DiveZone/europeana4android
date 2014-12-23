@@ -12,6 +12,11 @@ Use the Issues functionality on
 or issues. Try to be as specific as possible, mention brand and type of 
 hardware, android version, screen size etc etc.
 
+### Translating
+Help us translating this app via our
+[online translations tool](https://eledge.oneskyapp.com/collaboration) so we can
+offer the app in more languages!
+
 ### Contribute code
 * __Get a fork__: The easiest way is to create a fork of our project, make 
 your changes and submit a pull request. Some of the core developers will 
@@ -49,7 +54,7 @@ Setting up the project is relatively easy.
 
 ### Development Environment
 This project requires the following setup:
-* __Android Studio 0.8.x__ or higher
+* __Android Studio 1.0.2__ or higher
 * __JDK 1.7__ or higher
 * __Gradle 2.0__ or higher
 
