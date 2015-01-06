@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (c) 2014 eLedge.net and the original author or authors.
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2013-2015 eLedge.net and the original author or authors.
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
   ~ You may obtain a copy of the License at
@@ -15,16 +14,15 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:text="TODO: SEE ALSO..."
-              android:layout_width="match_parent"
-              android:layout_height="fill_parent"
-              android:gravity="center"
-        />
+        android:text="TODO: SEE ALSO..."
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center" />
 
 </LinearLayout>
 

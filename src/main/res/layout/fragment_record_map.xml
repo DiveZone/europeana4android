@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2014 eLedge.net and the original author or authors.
+  ~ Copyright (c) 2013-2015 eLedge.net and the original author or authors.
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
   ~ You may obtain a copy of the License at
@@ -14,37 +14,33 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/recordDetailTitle"
-        android:text="@string/record_field_place_label"
-        />
+        android:text="@string/record_field_place_label" />
 
     <TextView
         android:id="@+id/fragment_record_map_textview_prefLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/recordDetailContent"
-        />
+        style="@style/recordDetailContent" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/recordDetailTitle"
-        android:text="@string/record_field_place_longlat"
-        />
+        android:text="@string/record_field_place_longlat" />
 
     <TextView
         android:id="@+id/fragment_record_map_textview_coordinates"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/recordDetailContent"
-        />
+        style="@style/recordDetailContent" />
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/fragment_record_map_mapview"
@@ -53,7 +49,6 @@
         android:layout_weight="1"
         android:background="@drawable/background_card"
         android:layout_margin="@dimen/record_map_spacing"
-        android:padding="@dimen/record_map_spacing"
-        />
+        android:padding="@dimen/record_map_spacing" />
 
 </LinearLayout>

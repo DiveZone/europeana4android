@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2014 eLedge.net and the original author or authors.
+  ~ Copyright (c) 2013-2015 eLedge.net and the original author or authors.
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
   ~ You may obtain a copy of the License at
@@ -14,9 +14,9 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="0dip"
@@ -28,14 +28,14 @@
             android:id="@android:id/text1"
             style="@style/recordDetailTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@android:id/text2"
             style="@style/recordTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="0dip"/>
+            android:layout_margin="0dip" />
 
     </LinearLayout>
 
@@ -44,6 +44,6 @@
         style="@style/recordTitleIcon"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_margin="0dip"/>
+        android:layout_margin="0dip" />
 
 </LinearLayout>
