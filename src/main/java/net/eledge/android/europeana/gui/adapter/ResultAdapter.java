@@ -16,7 +16,10 @@
 package net.eledge.android.europeana.gui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import net.eledge.android.europeana.EuropeanaApplication;
@@ -63,19 +67,29 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ResultAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(final ResultAdapter.ViewHolder viewHolder, int i) {
         Item item = resultItems.get(i);
         viewHolder.textTitle.setText(item.title[0]);
         viewHolder.icon.setText(item.type.icon);
         viewHolder.position = i;
         if (StringArrayUtils.isNotBlank(item.edmPreview)) {
-            Picasso.with(context).load(item.edmPreview[0]).into(viewHolder.image);
-//            manager.displayImage(item.edmPreview[0], viewHolder.image, -1, new AsyncLoaderListener<Bitmap>() {
-//                @Override
-//                public void onFinished(Bitmap result, int httpStatus) {
-//                    notifyDataSetChanged();
-//                }
-//            });
+            Picasso.with(context).load(item.edmPreview[0]).into(viewHolder.image, new Callback() {
+                @Override
+                public void onSuccess() {
+                    Bitmap bitmap = ((BitmapDrawable) viewHolder.image.getDrawable()).getBitmap();
+                    Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+                        public void onGenerated(Palette palette) {
+                            viewHolder.background.setBackgroundColor(
+                                    palette.getLightMutedColor(R.color.emphasis_transparant));
+                        }
+                    });
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
         }
     }
 
@@ -101,6 +115,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         public ImageView image = null;
         @ViewResource(R.id.griditem_searchresult_textview_type)
         public TextView icon = null;
+        @ViewResource(R.id.griditem_searchresult_background)
+        public View background = null;
 
         public int position;
 

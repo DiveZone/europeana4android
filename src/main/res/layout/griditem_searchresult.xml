@@ -13,19 +13,21 @@
   ~ limitations under the License.
   -->
 
-<net.eledge.android.toolkit.gui.widget.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/background_card">
 
     <ImageView
         android:id="@+id/griditem_searchresult_imageview_thumbnail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/contentdescriptor_searchitem_image"
-        android:scaleType="centerCrop" />
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter" />
 
     <LinearLayout
+        android:id="@+id/griditem_searchresult_background"
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:layout_alignBottom="@id/griditem_searchresult_imageview_thumbnail"
@@ -55,4 +57,4 @@
 
     </LinearLayout>
 
-</net.eledge.android.toolkit.gui.widget.SquareRelativeLayout>
+</RelativeLayout>
