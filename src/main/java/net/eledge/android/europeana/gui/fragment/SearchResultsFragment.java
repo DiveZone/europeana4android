@@ -79,7 +79,9 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
         View root = inflater.inflate(R.layout.fragment_search_results, null);
         inject(this, root);
         mGridView.setAdapter(mResultAdaptor);
-        mLayoutManager = new StaggeredGridLayoutManager(R.integer.search_results_columns, StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager = new StaggeredGridLayoutManager(
+                GuiUtils.getInteger(getActivity().getApplicationContext(), R.integer.search_results_columns),
+                StaggeredGridLayoutManager.VERTICAL);
         mGridView.setLayoutManager(mLayoutManager);
         if (searchController.isSearching()) {
             mStatusTextView.setText(R.string.msg_searching);

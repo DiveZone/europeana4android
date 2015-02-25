@@ -15,7 +15,7 @@
 
 package net.eledge.android.europeana.gui.adapter;
 
-import android.graphics.Bitmap;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,13 +24,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
-import net.eledge.android.europeana.search.SearchController;
 import net.eledge.android.europeana.search.model.searchresults.Item;
+import net.eledge.android.toolkit.StringArrayUtils;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
-import net.eledge.android.toolkit.net.ImageCacheManager;
-import net.eledge.android.toolkit.net.abstracts.AsyncLoaderListener;
 
 import java.util.List;
 
@@ -38,19 +38,17 @@ import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
 public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder> {
 
-    private final ImageCacheManager manager;
     private final Typeface europeanaFont;
     private final ResultAdaptorClickListener mListener;
-    private final SearchController searchController = SearchController._instance;
     private List<Item> resultItems;
+    private Context context;
 
     public ResultAdapter(EuropeanaApplication application, List<Item> resultItems,
                          ResultAdaptorClickListener listener) {
         this.resultItems = resultItems;
-        this.manager = application.getImageCacheManager();
         this.europeanaFont = application.getEuropeanaFont();
-        this.manager.clearQueue();
         this.mListener = listener;
+        this.context = application.getApplicationContext();
     }
 
     @Override
@@ -70,13 +68,14 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         viewHolder.textTitle.setText(item.title[0]);
         viewHolder.icon.setText(item.type.icon);
         viewHolder.position = i;
-        if ((item.edmPreview != null) && (item.edmPreview.length > 0)) {
-            manager.displayImage(item.edmPreview[0], viewHolder.image, -1, new AsyncLoaderListener<Bitmap>() {
-                @Override
-                public void onFinished(Bitmap result, int httpStatus) {
-                    notifyDataSetChanged();
-                }
-            });
+        if (StringArrayUtils.isNotBlank(item.edmPreview)) {
+            Picasso.with(context).load(item.edmPreview[0]).into(viewHolder.image);
+//            manager.displayImage(item.edmPreview[0], viewHolder.image, -1, new AsyncLoaderListener<Bitmap>() {
+//                @Override
+//                public void onFinished(Bitmap result, int httpStatus) {
+//                    notifyDataSetChanged();
+//                }
+//            });
         }
     }
 

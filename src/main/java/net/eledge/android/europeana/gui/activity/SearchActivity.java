@@ -34,6 +34,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -83,6 +84,7 @@ public class SearchActivity extends ActionBarActivity implements FacetAdapter.Fa
 
     // Adapters
     private FacetAdapter mFacetsAdaptor;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     private String runningSearch = null;
 
@@ -100,7 +102,9 @@ public class SearchActivity extends ActionBarActivity implements FacetAdapter.Fa
 
         mFacetsAdaptor = new FacetAdapter((EuropeanaApplication) getApplication(), this);
 
+        mLayoutManager = new LinearLayoutManager(this);
         mFacetsList.setAdapter(mFacetsAdaptor);
+        mFacetsList.setLayoutManager(mLayoutManager);
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);

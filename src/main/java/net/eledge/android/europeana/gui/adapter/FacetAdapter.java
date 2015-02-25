@@ -110,7 +110,7 @@ public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> 
         @ViewResource(android.R.id.text1)
         TextView mLabelTextView;
 
-        @ViewResource(android.R.id.text2)
+        @ViewResource(value = android.R.id.text2, optional = true)
         TextView mIconTextView;
 
         @ViewResource(android.R.id.progress)
