@@ -73,23 +73,26 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         viewHolder.icon.setText(item.type.icon);
         viewHolder.position = i;
         if (StringArrayUtils.isNotBlank(item.edmPreview)) {
-            Picasso.with(context).load(item.edmPreview[0]).into(viewHolder.image, new Callback() {
-                @Override
-                public void onSuccess() {
-                    Bitmap bitmap = ((BitmapDrawable) viewHolder.image.getDrawable()).getBitmap();
-                    Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
-                        public void onGenerated(Palette palette) {
-                            viewHolder.background.setBackgroundColor(
-                                    palette.getLightMutedColor(R.color.emphasis_transparant));
+            Picasso.with(context)
+                    .load(item.edmPreview[0])
+                    .stableKey(item.id)
+                    .into(viewHolder.image, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Bitmap bitmap = ((BitmapDrawable) viewHolder.image.getDrawable()).getBitmap();
+                            Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+                                public void onGenerated(Palette palette) {
+                                    viewHolder.background.setBackgroundColor(
+                                            palette.getLightMutedColor(R.color.emphasis_transparant));
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onError() {
+
                         }
                     });
-                }
-
-                @Override
-                public void onError() {
-
-                }
-            });
         }
     }
 
