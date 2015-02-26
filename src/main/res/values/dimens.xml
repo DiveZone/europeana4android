@@ -24,7 +24,7 @@
 
     <dimen name="drawer_items_width">200dp</dimen>
 
-    <dimen name="griditem_searchresult_textsize">12sp</dimen>
+    <dimen name="griditem_searchresult_textsize">14sp</dimen>
     <dimen name="griditem_searchresult_iconsize">14sp</dimen>
 
     <dimen name="griditem_suggestion_textsize_suggestion">16sp</dimen>
