@@ -47,12 +47,12 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     private List<Item> resultItems;
     private Context context;
 
-    public ResultAdapter(EuropeanaApplication application, List<Item> resultItems,
+    public ResultAdapter(Context context, List<Item> resultItems,
                          ResultAdaptorClickListener listener) {
         this.resultItems = resultItems;
         this.europeanaFont = application.getEuropeanaFont();
         this.mListener = listener;
-        this.context = application.getApplicationContext();
+        this.context = context;
     }
 
     @Override
