@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="@string/fragment_home_blog_from" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/fragment_home_blog_listview"
         android:layout_width="match_parent"
         android:layout_height="0dip"
