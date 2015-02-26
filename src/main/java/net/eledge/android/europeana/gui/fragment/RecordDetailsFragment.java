@@ -105,8 +105,8 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
                 RecordView record = mRecordViewAdapter.getItem(position);
                 Activity activity = RecordDetailsFragment.this.getActivity();
                 ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-                clipboard.setPrimaryClip(ClipData.newPlainText(GuiUtils.getString(getActivity(), record.getLabel()),
-                        StringUtils.join(record.getValues(recordController.record, (EuropeanaApplication) getActivity().getApplication()), ";")));
+                clipboard.setPrimaryClip(ClipData.newPlainText(GuiUtils.getString(activity, record.getLabel()),
+                        StringUtils.join(record.getValues(recordController.record, (EuropeanaApplication) activity.getApplication()), ";")));
                 GuiUtils.toast(activity, R.string.msg_copied2clipboard);
                 return true;
             }
