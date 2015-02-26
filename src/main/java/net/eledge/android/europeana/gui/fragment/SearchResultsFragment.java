@@ -60,7 +60,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mResultAdaptor = new ResultAdapter((EuropeanaApplication) this.getActivity().getApplication(),
+        mResultAdaptor = new ResultAdapter(this.getActivity(),
                 searchController.getSearchItems(), new ResultAdapter.ResultAdaptorClickListener() {
             @Override
             public void click(int position, Item item) {
@@ -80,7 +80,7 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
         inject(this, root);
         mGridView.setAdapter(mResultAdaptor);
         mLayoutManager = new StaggeredGridLayoutManager(
-                GuiUtils.getInteger(getActivity().getApplicationContext(), R.integer.search_results_columns),
+                GuiUtils.getInteger(getActivity(), R.integer.search_results_columns),
                 StaggeredGridLayoutManager.VERTICAL);
         mGridView.setLayoutManager(mLayoutManager);
         if (searchController.isSearching()) {
