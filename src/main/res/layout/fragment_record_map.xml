@@ -47,7 +47,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/background_card"
         android:layout_margin="@dimen/record_map_spacing"
         android:padding="@dimen/record_map_spacing" />
 

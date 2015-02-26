@@ -44,9 +44,9 @@ public class BlogArticle implements BaseColumns {
 
     @Column
     public String author;
-    
+
     @Column
-    public string image;
+    public String image;
 
     @Column
     public boolean markedNew;

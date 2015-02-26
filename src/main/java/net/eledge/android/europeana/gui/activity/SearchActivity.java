@@ -43,7 +43,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import net.eledge.android.europeana.Config;
-import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.db.dao.SearchProfileDao;
 import net.eledge.android.europeana.db.model.SearchProfile;
@@ -100,7 +99,7 @@ public class SearchActivity extends ActionBarActivity implements FacetAdapter.Fa
         searchController.registerListener(SearchActivity.class, this);
         searchController.searchPageSize = getResources().getInteger(R.integer.search_result_pagesize);
 
-        mFacetsAdaptor = new FacetAdapter((EuropeanaApplication) getApplication(), this);
+        mFacetsAdaptor = new FacetAdapter(this);
 
         mLayoutManager = new LinearLayoutManager(this);
         mFacetsList.setAdapter(mFacetsAdaptor);

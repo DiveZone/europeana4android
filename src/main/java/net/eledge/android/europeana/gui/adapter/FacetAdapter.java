@@ -15,7 +15,6 @@
 
 package net.eledge.android.europeana.gui.adapter;
 
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,12 +34,10 @@ import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
 public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> {
 
-    private final Typeface europeanaFont;
     private final List<FacetItem> facetItems = new ArrayList<>(100);
     private final FacetAdaptorClickListener mListener;
 
-    public FacetAdapter(EuropeanaApplication application, FacetAdaptorClickListener listener) {
-        this.europeanaFont = application.getEuropeanaFont();
+    public FacetAdapter(FacetAdaptorClickListener listener) {
         this.mListener = listener;
     }
 
@@ -79,7 +76,7 @@ public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> 
         ViewHolder vh = new ViewHolder(v);
         inject(vh, v);
         if (vh.mIconTextView != null) {
-            vh.mIconTextView.setTypeface(europeanaFont);
+            vh.mIconTextView.setTypeface(EuropeanaApplication.europeanaFont);
         }
         return vh;
     }

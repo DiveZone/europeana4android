@@ -18,20 +18,14 @@ package net.eledge.android.europeana.gui.fragment;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
-import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.Preferences;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.db.dao.BlogArticleDao;
@@ -40,23 +34,29 @@ import net.eledge.android.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.europeana.gui.adapter.BlogAdapter;
 import net.eledge.android.europeana.service.receiver.BlogCheckerReceiver;
 import net.eledge.android.europeana.service.task.BlogDownloadTask;
+import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
 public class HomeBlogFragment extends Fragment implements BlogDownloadTask.BlogCheckerListener {
 
     private BlogAdapter mBlogAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     private BlogArticleDao mBlogArticleDao;
 
-    private ListView mListView;
+    @ViewResource(R.id.fragment_home_blog_recyclerView)
+    private RecyclerView mRecyclerView;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBlogAdapter = new BlogAdapter(getActivity(), new ArrayList<BlogArticle>());
+        mBlogAdapter = new BlogAdapter(getActivity());
+        mLayoutManager = new LinearLayoutManager(getActivity());
         BlogDownloadTask.listener = this;
 
 
@@ -70,18 +70,19 @@ public class HomeBlogFragment extends Fragment implements BlogDownloadTask.BlogC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home_blog, null);
-        mListView = (ListView) root.findViewById(R.id.fragment_home_blog_listview);
-        mListView.setAdapter(mBlogAdapter);
-        mListView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BlogArticle article = mBlogAdapter.getItem(position);
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.guid));
-                Tracker tracker = ((EuropeanaApplication) getActivity().getApplication()).getAnalyticsTracker();
-                tracker.send(new HitBuilders.EventBuilder().setCategory("blog").setAction("click").setLabel(article.guid).build());
-                startActivity(browserIntent);
-            }
-        });
+        inject(this, root);
+        mRecyclerView.setAdapter(mBlogAdapter);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+//        mListView.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                BlogArticle article = mBlogAdapter.getItem(position);
+//                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.guid));
+//                Tracker tracker = ((EuropeanaApplication) getActivity().getApplication()).getAnalyticsTracker();
+//                tracker.send(new HitBuilders.EventBuilder().setCategory("blog").setAction("click").setLabel(article.guid).build());
+//                startActivity(browserIntent);
+//            }
+//        });
         loadFromDatabase();
 
         return root;
@@ -107,10 +108,8 @@ public class HomeBlogFragment extends Fragment implements BlogDownloadTask.BlogC
     @Override
     public void updatedArticles(List<BlogArticle> articles) {
         if (articles != null) {
-            mBlogAdapter.clear();
-            for (BlogArticle article : articles) {
-                mBlogAdapter.add(article);
-            }
+            mBlogAdapter.articles.clear();
+            mBlogAdapter.articles.addAll(articles);
             mBlogAdapter.notifyDataSetChanged();
 
             SharedPreferences settings = getActivity().getSharedPreferences(Preferences.BLOG, 0);

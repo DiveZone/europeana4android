@@ -17,7 +17,6 @@ package net.eledge.android.europeana.gui.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
@@ -42,7 +41,6 @@ import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
 public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder> {
 
-    private final Typeface europeanaFont;
     private final ResultAdaptorClickListener mListener;
     private List<Item> resultItems;
     private Context context;
@@ -50,7 +48,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     public ResultAdapter(Context context, List<Item> resultItems,
                          ResultAdaptorClickListener listener) {
         this.resultItems = resultItems;
-        this.europeanaFont = application.getEuropeanaFont();
         this.mListener = listener;
         this.context = context;
     }
@@ -62,7 +59,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
         ViewHolder vh = new ViewHolder(v);
         inject(vh, v);
-        vh.icon.setTypeface(europeanaFont);
+        vh.icon.setTypeface(EuropeanaApplication.europeanaFont);
         return vh;
     }
 

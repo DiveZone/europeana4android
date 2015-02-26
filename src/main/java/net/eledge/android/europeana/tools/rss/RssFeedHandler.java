@@ -72,8 +72,8 @@ public class RssFeedHandler extends DefaultHandler {
                 article.guid = content.toString();
             } else if (qName.equalsIgnoreCase("dc:creator")) {
                 article.author = content.toString();
-            } else if (qName.equalsIgnoreCase("content:encoded")) {
-                article.image = extractImageUrl(content.toString());
+//            } else if (qName.equalsIgnoreCase("content:encoded")) {
+//                article.image = extractImageUrl(content.toString());
             }
         }
     }
@@ -82,15 +82,15 @@ public class RssFeedHandler extends DefaultHandler {
     public void characters(char[] ch, int start, int length) throws SAXException {
         content.append(new String(ch, start, length));
     }
-    
-    private String extractImageUrl(String content) {
-        Pattern regex = Pattern.compile("src=\"([^\"]+)\"");
-    	Matcher regexMatcher = regex.matcher(subjectString);
-    	if (regexMatcher.find()) {
-    		return regexMatcher.group(1);
-    	}
-    	return null;
-    }
+
+//    private String extractImageUrl(String content) {
+//        Pattern regex = Pattern.compile("src=\"([^\"]+)\"");
+//    	Matcher regexMatcher = regex.matcher(subjectString);
+//    	if (regexMatcher.find()) {
+//    		return regexMatcher.group(1);
+//    	}
+//    	return null;
+//    }
 
     private Date convertDate(String str) {
         try {

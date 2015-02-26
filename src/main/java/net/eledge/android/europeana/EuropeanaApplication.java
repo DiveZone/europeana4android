@@ -26,8 +26,6 @@ import android.os.Bundle;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
-import net.eledge.android.toolkit.net.ImageCacheManager;
-
 import java.util.Locale;
 
 public class EuropeanaApplication extends Application {
@@ -36,9 +34,7 @@ public class EuropeanaApplication extends Application {
     public static final String METADATA_EUROPEANA_API_PUBLICKEY = "eu.europeana.api.v2.API_PUBLIC_KEY";
     public static final String METADATA_EUROPEANA_API_PRIVATEKEY = "eu.europeana.api.v2.API_PRIVATE_KEY";
 
-    private ImageCacheManager mImageCacheManager;
-
-    private Typeface europeanaFont;
+    public static Typeface europeanaFont;
 
     private Bundle metaData;
 
@@ -52,7 +48,7 @@ public class EuropeanaApplication extends Application {
     public void onCreate() {
         try {
             metaData = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES | PackageManager.GET_META_DATA).applicationInfo.metaData;
-
+            europeanaFont = Typeface.createFromAsset(getAssets(), "europeana.ttf");
             //activate auto tracking
             getAnalyticsTracker();
         } catch (PackageManager.NameNotFoundException e) {
@@ -74,21 +70,6 @@ public class EuropeanaApplication extends Application {
             mTracker = analytics.newTracker(R.xml.app_tracker);
         }
         return mTracker;
-    }
-
-    public ImageCacheManager getImageCacheManager() {
-        if (mImageCacheManager == null) {
-            mImageCacheManager = new ImageCacheManager(getApplicationContext(), 60 * 60 * 60 * 24);
-            mImageCacheManager.clearCache();
-        }
-        return mImageCacheManager;
-    }
-
-    public Typeface getEuropeanaFont() {
-        if (europeanaFont == null) {
-            europeanaFont = Typeface.createFromAsset(getAssets(), "europeana.ttf");
-        }
-        return europeanaFont;
     }
 
     public String getLocale() {

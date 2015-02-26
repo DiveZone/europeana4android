@@ -52,7 +52,7 @@ public enum RecordDetails implements RecordView {
             text2.setText(cleanCombineResults(getValues(record, application)));
 
             TextView icon1 = (TextView) view.findViewById(android.R.id.icon1);
-            icon1.setTypeface(application.getEuropeanaFont());
+            icon1.setTypeface(EuropeanaApplication.europeanaFont);
             icon1.setText(record.type.icon);
             return view;
         }

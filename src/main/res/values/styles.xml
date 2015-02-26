@@ -20,7 +20,6 @@
     </style>
 
     <style name="griditem_suggestion">
-        <item name="android:background">@drawable/background_card</item>
         <item name="android:height">@dimen/griditem_suggestion_height</item>
     </style>
 
