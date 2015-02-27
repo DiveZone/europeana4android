@@ -24,6 +24,12 @@
         android:id="@+id/toolbar_actionbar"
         layout="@layout/toolbar_searchform" />
 
+    <ImageButton
+        android:id="@+id/fab"
+        style="@style/buttonFab"
+        android:layout_marginTop="@dimen/toolbar_homescreen"
+        android:layout_alignParentRight="true" />
+
     <FrameLayout
         android:id="@+id/activity_home_fragment_blog"
         android:layout_below="@id/toolbar_actionbar"

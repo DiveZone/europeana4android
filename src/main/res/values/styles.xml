@@ -159,4 +159,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="buttonFab">
+        <item name="android:layout_width">?attr/actionBarSize</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:layout_margin">@dimen/spacing_large</item>
+        <item name="android:background">@drawable/fab_background</item>
+        <item name="android:src">@drawable/ic_action_search</item>
+        <!--<item name="android:outlineProvider">background</item>-->
+        <!--<item name="android:stateListAnimator">@anim/fab_elevation</item>-->
+    </style>
+
 </resources>

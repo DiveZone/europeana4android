@@ -13,26 +13,11 @@
   ~ limitations under the License.
   -->
 
-<resources>
-
-    <color name="background">#e5e5e5</color>
-    <color name="background_drawer">#fff3f3f3</color>
-
-    <!-- light blue 500 / 700 -->
-    <color name="primary">#03A9F4</color>
-    <color name="primary_dark">#0288D1</color>
-
-    <!-- Lime 500 -->
-    <color name="accent">#ffc0cd2e</color>
-    <color name="accent_bright">#fff0ff3d</color>
-
-    <color name="background_facet_divider">#eee</color>
-    <color name="background_facet_section">#31b6e7</color>
-
-    <color name="emphasis">#31b6e7</color>
-    <color name="emphasis_transparant">#bf31b6e7</color>
-
-    <color name="warning">#ffff4444</color>
-
-
-</resources>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/accent_bright">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/accent" />
+        </shape>
+    </item>
+</ripple>

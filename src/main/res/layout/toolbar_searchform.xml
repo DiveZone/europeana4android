@@ -14,7 +14,7 @@
   -->
 
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/primary_color"
+    android:background="@color/primary"
     android:layout_width="match_parent"
     android:layout_height="@dimen/toolbar_homescreen">
 

@@ -48,7 +48,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.griditem_searchresult, parent, false);
+                .inflate(R.layout.listitem_home_blog, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         inject(viewHolder, v);
         return viewHolder;
