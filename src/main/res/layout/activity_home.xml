@@ -21,30 +21,25 @@
     tools:context=".HomeActivity">
 
     <include
-        android:id="@+id/toolbar_actionbar"
+        android:id="@+id/toolbar"
         layout="@layout/toolbar_searchform" />
-
-    <ImageButton
-        android:id="@+id/fab"
-        style="@style/buttonFab"
-        android:layout_marginTop="@dimen/toolbar_homescreen"
-        android:layout_alignParentRight="true" />
 
     <FrameLayout
         android:id="@+id/activity_home_fragment_blog"
-        android:layout_below="@id/toolbar_actionbar"
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/bordershadow_top" />
 
     <GridView
         android:id="@+id/activity_home_gridview_suggestions"
-        android:layout_below="@id/toolbar_actionbar"
+        android:layout_below="@id/toolbar"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:requiresFadingEdge="vertical"
         android:numColumns="@integer/home_suggestions_columns"
         android:background="@color/background" />
+
 
 </RelativeLayout>

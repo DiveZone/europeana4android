@@ -38,7 +38,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import net.eledge.android.europeana.R;
@@ -75,10 +74,10 @@ public class HomeActivity extends ActionBarActivity implements TaskListener<Item
     private GridView mGridViewSuggestions;
     @ViewResource(R.id.toolbar_searchform_edittext_query)
     private EditText mEditTextQuery;
-    @ViewResource(R.id.activity_home_spinner_profile)
-    private Spinner mSpinnerProfiles;
-    @ViewResource(R.id.toolbar_actionbar)
-    private Toolbar mActionBarToolbar;
+//    @ViewResource(R.id.activity_home_spinner_profile)
+//    private Spinner mSpinnerProfiles;
+    @ViewResource(R.id.my_toolbar)
+    private Toolbar mToolbar;
 
     // adapters
     private SuggestionAdapter mSuggestionsAdaptor;
@@ -138,8 +137,8 @@ public class HomeActivity extends ActionBarActivity implements TaskListener<Item
             }
         });
 
-        mProfilesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
-        mSpinnerProfiles.setAdapter(mProfilesAdapter);
+//        mProfilesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
+//        mSpinnerProfiles.setAdapter(mProfilesAdapter);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -191,10 +190,10 @@ public class HomeActivity extends ActionBarActivity implements TaskListener<Item
         final Intent intent = new Intent(this, SearchActivity.class);
         intent.setAction(Intent.ACTION_SEARCH);
         intent.putExtra(SearchManager.QUERY, query);
-        SearchProfile selected = (SearchProfile) mSpinnerProfiles.getSelectedItem();
-        if ((selected != null) && (selected.facets != null)) {
-            intent.putExtra(SearchManager.USER_QUERY, selected.facets);
-        }
+//        SearchProfile selected = (SearchProfile) mSpinnerProfiles.getSelectedItem();
+//        if ((selected != null) && (selected.facets != null)) {
+//            intent.putExtra(SearchManager.USER_QUERY, selected.facets);
+//        }
         this.startActivity(intent);
     }
 
@@ -264,14 +263,14 @@ public class HomeActivity extends ActionBarActivity implements TaskListener<Item
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         inject(this);
-        getActionBarToolbar();
+        getToolbar();
     }
 
-    protected Toolbar getActionBarToolbar() {
-        if (mActionBarToolbar != null) {
-            setSupportActionBar(mActionBarToolbar);
+    protected Toolbar getToolbar() {
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
         }
-        return mActionBarToolbar;
+        return mToolbar;
     }
 
     public void setLocale(String lang) {

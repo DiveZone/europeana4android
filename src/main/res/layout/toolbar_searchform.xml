@@ -13,11 +13,16 @@
   ~ limitations under the License.
   -->
 
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/primary"
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/my_toolbar"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/toolbar_homescreen">
-
+    android:minHeight="?attr/actionBarSize"
+    android:background="#10000000"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     <EditText
         android:id="@+id/toolbar_searchform_edittext_query"
@@ -26,15 +31,14 @@
         android:inputType="text"
         android:hint="@string/form_search_query"
         android:ems="10"
-        android:drawableLeft="@drawable/ic_edittext_search"
         android:imeOptions="actionSearch|flagNoExtractUi">
 
         <requestFocus />
     </EditText>
 
-    <Spinner
-        android:id="@+id/activity_home_spinner_profile"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent" />
+    <!--<Spinner-->
+        <!--android:id="@+id/activity_home_spinner_profile"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="fill_parent" />-->
 
 </android.support.v7.widget.Toolbar>
