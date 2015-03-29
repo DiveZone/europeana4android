@@ -26,8 +26,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
@@ -70,12 +73,17 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         viewHolder.icon.setText(item.type.icon);
         viewHolder.position = i;
         if (StringArrayUtils.isNotBlank(item.edmPreview)) {
-            Picasso.with(context)
+            Glide.with(context)
                     .load(item.edmPreview[0])
-                    .stableKey(item.id)
-                    .into(viewHolder.image, new Callback() {
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .listener(new RequestListener<String, GlideDrawable>() {
                         @Override
-                        public void onSuccess() {
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                             Bitmap bitmap = ((BitmapDrawable) viewHolder.image.getDrawable()).getBitmap();
                             Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
                                 public void onGenerated(Palette palette) {
@@ -83,13 +91,10 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                                             palette.getLightMutedColor(R.color.emphasis_transparant));
                                 }
                             });
+                            return false;
                         }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    });
+                    })
+                    .into(viewHolder.image);
         }
     }
 

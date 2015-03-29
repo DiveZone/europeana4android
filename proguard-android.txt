@@ -27,3 +27,5 @@
 -keep class org.simpleframework.xml.** { *; }
 
 -dontwarn com.squareup.okhttp.**
+
+-keepnames class * net.eledge.android.europeana.GlideConfig

@@ -35,28 +35,22 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import net.eledge.android.europeana.R;
-import net.eledge.android.europeana.db.dao.SearchProfileDao;
-import net.eledge.android.europeana.db.model.SearchProfile;
-import net.eledge.android.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.europeana.gui.adapter.SuggestionAdapter;
 import net.eledge.android.europeana.gui.fragment.HomeBlogFragment;
 import net.eledge.android.europeana.gui.notification.NewBlogNotification;
 import net.eledge.android.europeana.search.SearchController;
 import net.eledge.android.europeana.search.model.suggestion.Item;
 import net.eledge.android.toolkit.async.listener.TaskListener;
-import net.eledge.android.toolkit.gui.GuiUtils;
 import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import static net.eledge.android.toolkit.gui.ViewInjector.inject;
@@ -74,14 +68,14 @@ public class HomeActivity extends ActionBarActivity implements TaskListener<Item
     private GridView mGridViewSuggestions;
     @ViewResource(R.id.toolbar_searchform_edittext_query)
     private EditText mEditTextQuery;
-//    @ViewResource(R.id.activity_home_spinner_profile)
+    //    @ViewResource(R.id.activity_home_spinner_profile)
 //    private Spinner mSpinnerProfiles;
     @ViewResource(R.id.my_toolbar)
     private Toolbar mToolbar;
 
     // adapters
     private SuggestionAdapter mSuggestionsAdaptor;
-    private ArrayAdapter<SearchProfile> mProfilesAdapter;
+//    private ArrayAdapter<SearchProfile> mProfilesAdapter;
 
     private boolean isLandscape;
 
@@ -158,15 +152,15 @@ public class HomeActivity extends ActionBarActivity implements TaskListener<Item
     protected void onResume() {
         super.onResume();
         // load/refresh search profiles...
-        mProfilesAdapter.clear();
-        SearchProfileDao searchProfileDao = new SearchProfileDao(new DatabaseSetup(this));
-        List<SearchProfile> profiles = searchProfileDao.findAll();
-        searchProfileDao.close();
-        mProfilesAdapter.add(new SearchProfile(GuiUtils.getString(this, R.string.form_search_profile_default), null));
-        for (SearchProfile sp : profiles) {
-            mProfilesAdapter.add(sp);
-        }
-        mProfilesAdapter.notifyDataSetChanged();
+//        mProfilesAdapter.clear();
+//        SearchProfileDao searchProfileDao = new SearchProfileDao(new DatabaseSetup(this));
+//        List<SearchProfile> profiles = searchProfileDao.findAll();
+//        searchProfileDao.close();
+//        mProfilesAdapter.add(new SearchProfile(GuiUtils.getString(this, R.string.form_search_profile_default), null));
+//        for (SearchProfile sp : profiles) {
+//            mProfilesAdapter.add(sp);
+//        }
+//        mProfilesAdapter.notifyDataSetChanged();
     }
 
     @Override
