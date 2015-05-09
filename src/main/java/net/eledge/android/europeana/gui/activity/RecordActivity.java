@@ -37,8 +37,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -64,7 +64,7 @@ import java.util.List;
 
 import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
-public class RecordActivity extends ActionBarActivity implements TabListener, TaskListener<RecordObject> {
+public class RecordActivity extends AppCompatActivity implements TabListener, TaskListener<RecordObject> {
 
     public static final String RECORD_ID = "RECORDID";
 

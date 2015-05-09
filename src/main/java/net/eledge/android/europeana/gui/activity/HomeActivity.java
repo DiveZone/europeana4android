@@ -23,7 +23,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -55,7 +55,7 @@ import java.util.Locale;
 
 import static net.eledge.android.toolkit.gui.ViewInjector.inject;
 
-public class HomeActivity extends ActionBarActivity implements TaskListener<Item[]>, OnItemClickListener {
+public class HomeActivity extends AppCompatActivity implements TaskListener<Item[]>, OnItemClickListener {
 
     // Controllers
     private final SearchController searchController = SearchController._instance;
