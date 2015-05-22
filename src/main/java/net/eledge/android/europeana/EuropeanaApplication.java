@@ -51,6 +51,7 @@ public class EuropeanaApplication extends Application {
             europeanaFont = Typeface.createFromAsset(getAssets(), "europeana.ttf");
             //activate auto tracking
             getAnalyticsTracker();
+            LeakCanary.install(this);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
