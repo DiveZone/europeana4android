@@ -40,7 +40,7 @@
             android:layout_height="match_parent"
             android:background="@color/background" />
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/drawer_items"
             android:layout_width="@dimen/drawer_items_width"
             android:layout_height="match_parent"

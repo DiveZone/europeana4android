@@ -15,122 +15,92 @@
 
 package net.eledge.android.europeana.search;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask.Status;
 
+import com.squareup.otto.Subscribe;
+
+import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
-import net.eledge.android.europeana.search.listeners.SearchTaskListener;
-import net.eledge.android.europeana.search.model.SearchFacets;
-import net.eledge.android.europeana.search.model.SearchItems;
+import net.eledge.android.europeana.search.event.SearchFacetsLoadedEvent;
+import net.eledge.android.europeana.search.event.SearchItemsLoadedEvent;
 import net.eledge.android.europeana.search.model.facets.enums.FacetItemType;
 import net.eledge.android.europeana.search.model.facets.enums.FacetType;
 import net.eledge.android.europeana.search.model.searchresults.Facet;
 import net.eledge.android.europeana.search.model.searchresults.FacetItem;
 import net.eledge.android.europeana.search.model.searchresults.Field;
-import net.eledge.android.europeana.search.model.suggestion.Item;
-import net.eledge.android.europeana.search.task.SearchFacetTask;
-import net.eledge.android.europeana.search.task.SearchTask;
-import net.eledge.android.europeana.search.task.SuggestionTask;
+import net.eledge.android.europeana.search.model.searchresults.Item;
 import net.eledge.android.europeana.tools.UriHelper;
-import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SearchController {
 
     public final static SearchController _instance = new SearchController();
+    public final static ApiTasks _tasks = ApiTasks.getInstance();
 
     public int searchPageSize = 12;
-    public int suggestionPageSize = 12;
 
-    public final Map<String, SearchTaskListener> listeners = new HashMap<>();
-    private final List<String> terms = new ArrayList<>();
+    private String[] terms = ArrayUtils.EMPTY_STRING_ARRAY;
 
     private int pageLoad = 1;
     private long totalResults;
     private int itemSelected = -1;
 
-    private final List<net.eledge.android.europeana.search.model.searchresults.Item> searchItems = new ArrayList<>();
+    private final List<Item> searchItems = new ArrayList<>();
     private final List<Facet> facets = new ArrayList<>();
-    private final Map<String, Item[]> suggestionCache = new HashMap<>();
 
     private FacetType selectedFacet = FacetType.TYPE;
 
-    private SearchTask mSearchTask;
-    private SearchFacetTask mSearchFacetTask;
-    private SuggestionTask mSuggestionTask;
-
     private SearchController() {
+        EuropeanaApplication.bus.register(this);
         // Singleton
     }
 
-    public void registerListener(Class<?> clazz, SearchTaskListener listener) {
-        listeners.put(clazz.getName(), listener);
+    public void suggestions(final String term) {
+        _tasks.runSuggestions(term);
     }
 
-    public void unregister(Class<?> clazz) {
-        listeners.remove(clazz.getName());
-    }
-
-    public void suggestions(TaskListener<Item[]> listener, String query) {
-        if (mSuggestionTask != null) {
-            mSuggestionTask.cancel(true);
-        }
-        query = StringUtils.lowerCase(StringUtils.trim(query));
-        if (suggestionCache.containsKey(query)) {
-            listener.onTaskFinished(suggestionCache.get(query));
-        } else {
-            mSuggestionTask = new SuggestionTask(listener);
-            mSuggestionTask.execute(query);
-        }
-    }
-
-    @SuppressWarnings("ManualArrayToCollectionCopy")
-    public void newSearch(Activity activity, String query, String... qf) {
+    public void newSearch(String query, String... qf) {
         reset();
-        terms.clear();
-        terms.add(query);
+        terms = ArrayUtils.add(ArrayUtils.EMPTY_STRING_ARRAY, query);
         for (String s : qf) {
-            terms.add(s);
+            terms = ArrayUtils.add(terms, s);
         }
-        search(activity);
+        search();
     }
 
-    @SuppressWarnings("ManualArrayToCollectionCopy")
-    public void refineSearch(Activity activity, String... qf) {
+    public void refineSearch(String... qf) {
         reset();
         for (String s : qf) {
-            terms.add(s);
+            terms = ArrayUtils.add(terms, s);
         }
-        search(activity);
+        search();
     }
 
-    public boolean removeRefineSearch(Activity activity, String... qf) {
+    public boolean removeRefineSearch(String... qf) {
         boolean changed = false;
         for (String s : qf) {
-            if (terms.contains(s)) {
-                terms.remove(s);
+            if (ArrayUtils.contains(terms, s)) {
+                terms = ArrayUtils.removeElement(terms, s);
                 changed = true;
             }
         }
-        if ((terms.size() > 0) && changed) {
+        if ((terms.length > 0) && changed) {
             reset();
-            search(activity);
+            search();
         }
-        return terms.size() > 0;
+        return terms.length > 0;
     }
 
-    public void continueSearch(Activity activity) {
+    public void continueSearch() {
         if (hasMoreResults()) {
-            search(activity);
+            search();
         }
     }
 
@@ -147,16 +117,11 @@ public class SearchController {
     }
 
     public boolean isSearching() {
-        return mSearchTask != null && mSearchTask.getStatus() != Status.FINISHED;
+        return _tasks.isSearching();
     }
 
     public void cancelSearch() {
-        if (mSearchTask != null) {
-            mSearchTask.cancel(true);
-        }
-        if (mSearchFacetTask != null) {
-            mSearchFacetTask.cancel(true);
-        }
+        _tasks.cancelSearchTasks();
     }
 
     void reset() {
@@ -170,15 +135,11 @@ public class SearchController {
         facets.clear();
     }
 
-    private void search(Activity activity) {
-        if (mSearchTask != null) {
-            cancelSearch();
-        }
-        mSearchTask = new SearchTask(activity, pageLoad++);
-        mSearchTask.execute(terms.toArray(new String[terms.size()]));
+    private void search() {
+        _tasks.cancelSearchTasks();
+        _tasks.runSearch(terms, pageLoad++, searchPageSize);
         if (facets.isEmpty()) {
-            mSearchFacetTask = new SearchFacetTask(activity);
-            mSearchFacetTask.execute(terms.toArray(new String[terms.size()]));
+            _tasks.runSearchFacets(terms);
         }
     }
 
@@ -220,7 +181,7 @@ public class SearchController {
                             item.facetType = type;
                             item.label = field.label;
                             item.facet = facet.name + ":" + field.label;
-                            item.itemType = terms.contains(item.facet) ? FacetItemType.ITEM_SELECTED
+                            item.itemType = ArrayUtils.contains(terms, item.facet) ? FacetItemType.ITEM_SELECTED
                                     : FacetItemType.ITEM;
                             item.description = type.createFacetLabel(context, field.label) + " (" + field.count + ")";
                             item.icon = type.getFacetIcon(field.label);
@@ -236,47 +197,45 @@ public class SearchController {
     }
 
     public String getPortalUrl() {
-        return UriHelper.createPortalSearchUrl(terms.toArray(new String[terms.size()]));
+        return UriHelper.createPortalSearchUrl(terms);
     }
 
     public boolean hasFacetsSelected() {
-        return (terms.size() > 1);
+        return (terms.length > 1);
     }
 
     public String getFacetString() {
         if (hasFacetsSelected()) {
             StringBuilder sb = new StringBuilder(256);
-            for (int i = 1; i < terms.size(); i++) {
+            for (int i = 1; i < terms.length; i++) {
                 // skipping 0 on purpose, is the search term 'query'
                 if (sb.length() > 0) {
                     sb.append("&");
                 }
-                sb.append("qf=").append(terms.get(i));
+                sb.append("qf=").append(terms[i]);
             }
             return sb.toString();
         }
         return null;
     }
 
-    public void cacheSuggestions(String term, Item[] suggestions) {
-        suggestionCache.put(term, suggestions);
-    }
-
-    public synchronized void onSearchFinish(SearchItems results) {
-        if (results != null) {
-            totalResults = results.totalResults;
-            searchItems.addAll(results.items);
+    @Subscribe
+    public synchronized void onSearchItemsFinishedEvent(SearchItemsLoadedEvent event) {
+        if (event.results != null) {
+            totalResults = event.results.totalResults;
+            searchItems.addAll(event.results.items);
         }
     }
 
-    public synchronized void onSearchFacetFinish(SearchFacets results) {
-        if (results != null) {
+    @Subscribe
+    public synchronized void onSearchFacetFinish(SearchFacetsLoadedEvent event) {
+        if (event.result != null) {
             facets.clear();
-            facets.addAll(results.facets);
+            facets.addAll(event.result.facets);
         }
     }
 
-    public synchronized List<net.eledge.android.europeana.search.model.searchresults.Item> getSearchItems() {
+    public synchronized List<Item> getSearchItems() {
         return searchItems;
     }
 
@@ -306,8 +265,8 @@ public class SearchController {
 
     public String getSearchTitle(Context context) {
         String title = GuiUtils.getString(context, R.string.app_name);
-        if (!terms.isEmpty()) {
-            title = terms.get(0);
+        if (terms.length > 0) {
+            title = terms[0];
             if (StringUtils.contains(title, ":")) {
                 title = StringUtils.substringAfter(title, ":");
             }

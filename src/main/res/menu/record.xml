@@ -14,38 +14,38 @@
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:support="http://schemas.android.com/apk/res-auto">
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <item
         android:id="@+id/action_previous"
         android:icon="@drawable/ic_action_previous_item"
         android:orderInCategory="1"
-        support:showAsAction="ifRoom"
-        android:title="@string/action_previous" />
+        android:title="@string/action_previous"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_next"
         android:icon="@drawable/ic_action_next_item"
         android:orderInCategory="2"
-        support:showAsAction="always"
-        android:title="@string/action_next" />
+        android:title="@string/action_next"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_action_share"
         android:orderInCategory="20"
-        support:showAsAction="ifRoom"
-        android:title="@string/action_share" />
+        android:title="@string/action_share"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_action_search"
         android:orderInCategory="30"
-        support:showAsAction="ifRoom"
-        android:title="@string/action_search" />
+        android:title="@string/action_search"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_action_settings"
         android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings" />
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
 
 </menu>

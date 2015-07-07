@@ -42,6 +42,7 @@
             android:gravity="top"
             android:maxLines="2"
             android:paddingLeft="2dp"
+            android:paddingRight="2dp"
             android:textColor="@android:color/white"
             android:textSize="@dimen/griditem_searchresult_textsize" />
 
@@ -49,7 +50,7 @@
             android:id="@+id/griditem_searchresult_textview_type"
             android:layout_width="24dp"
             android:layout_height="match_parent"
-            android:gravity="bottom|right"
+            android:gravity="bottom|end"
             android:padding="2dp"
             android:textColor="@android:color/white"
             android:textSize="@dimen/griditem_searchresult_iconsize" />

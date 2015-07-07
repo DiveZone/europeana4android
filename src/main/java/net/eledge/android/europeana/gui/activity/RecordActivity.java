@@ -27,6 +27,7 @@ import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
@@ -45,6 +46,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.squareup.otto.Subscribe;
+
 import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.gui.adapter.RecordPagerAdapter;
@@ -52,23 +55,22 @@ import net.eledge.android.europeana.gui.adapter.ResultAdapter;
 import net.eledge.android.europeana.gui.fragment.RecordDetailsFragment;
 import net.eledge.android.europeana.search.RecordController;
 import net.eledge.android.europeana.search.SearchController;
+import net.eledge.android.europeana.search.event.RecordLoadedEvent;
+import net.eledge.android.europeana.search.event.RecordLoadingEvent;
 import net.eledge.android.europeana.search.model.record.RecordObject;
 import net.eledge.android.europeana.search.model.searchresults.Item;
-import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
-import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-import static net.eledge.android.toolkit.gui.ViewInjector.inject;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class RecordActivity extends AppCompatActivity implements TabListener, TaskListener<RecordObject> {
+public class RecordActivity extends AppCompatActivity implements TabListener {
 
     public static final String RECORD_ID = "RECORDID";
-
-    private EuropeanaApplication mApplication;
 
     // Controller
     private final SearchController searchController = SearchController._instance;
@@ -78,12 +80,16 @@ public class RecordActivity extends AppCompatActivity implements TabListener, Ta
     private RecordDetailsFragment mDetailsFragment;
 
     // Views
-    @ViewResource(R.id.drawer_items)
-    private RecyclerView mResultsList;
-    @ViewResource(value = R.id.drawerlayout_activity_record, optional = true)
-    private DrawerLayout mDrawerLayout;
-    @ViewResource(R.id.activity_record_pager)
-    private ViewPager mViewPager;
+    @Bind(R.id.drawer_items)
+    RecyclerView mResultsList;
+
+    @Nullable
+    @Bind(R.id.drawerlayout_activity_record)
+    DrawerLayout mDrawerLayout;
+
+    @Bind(R.id.activity_record_pager)
+    ViewPager mViewPager;
+
     // NavigationDrawer
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -96,16 +102,15 @@ public class RecordActivity extends AppCompatActivity implements TabListener, Ta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
-        inject(this);
+        ButterKnife.bind(this);
+        EuropeanaApplication.bus.register(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
 
-        mApplication = (EuropeanaApplication) getApplication();
         mTwoColumns = getResources().getBoolean(R.bool.home_support_landscape);
-        recordController.registerListener(RecordActivity.class, this);
 
-        ResultAdapter mResultAdaptor = new ResultAdapter((EuropeanaApplication) getApplication(),
+        ResultAdapter mResultAdaptor = new ResultAdapter(getApplication(),
                 searchController.getSearchItems(), new ResultAdapter.ResultAdaptorClickListener() {
             @Override
             public void click(int position, Item item) {
@@ -226,17 +231,17 @@ public class RecordActivity extends AppCompatActivity implements TabListener, Ta
 
     @Override
     protected void onDestroy() {
-        recordController.unregister(RecordActivity.class);
         super.onDestroy();
+        EuropeanaApplication.bus.unregister(this);
     }
 
-    @Override
-    public void onTaskStart() {
+    @Subscribe
+    public void onRecordLoadingEvent(RecordLoadingEvent event) {
         switchViews(true);
     }
 
-    @Override
-    public void onTaskFinished(RecordObject result) {
+    @Subscribe
+    public void OnRecordLoadedEvent(RecordLoadedEvent event) {
         switchViews(false);
     }
 
@@ -358,7 +363,7 @@ public class RecordActivity extends AppCompatActivity implements TabListener, Ta
 
     private void openRecord(String id) {
         supportInvalidateOptionsMenu();
-        recordController.readRecord(this, id);
+        recordController.readRecord(id);
     }
 
     private Intent createShareIntent() {

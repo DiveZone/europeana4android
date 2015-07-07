@@ -28,6 +28,7 @@ import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.StrictMode;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -42,7 +43,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.squareup.otto.Subscribe;
+
 import net.eledge.android.europeana.Config;
+import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.db.dao.SearchProfileDao;
 import net.eledge.android.europeana.db.model.SearchProfile;
@@ -51,21 +55,21 @@ import net.eledge.android.europeana.gui.adapter.FacetAdapter;
 import net.eledge.android.europeana.gui.dialog.NameInputDialog;
 import net.eledge.android.europeana.gui.fragment.SearchResultsFragment;
 import net.eledge.android.europeana.search.SearchController;
-import net.eledge.android.europeana.search.listeners.SearchTaskListener;
-import net.eledge.android.europeana.search.model.SearchItems;
+import net.eledge.android.europeana.search.event.SearchFacetsLoadedEvent;
+import net.eledge.android.europeana.search.event.SearchStartedEvent;
 import net.eledge.android.europeana.search.model.facets.enums.FacetItemType;
 import net.eledge.android.europeana.search.model.searchresults.FacetItem;
 import net.eledge.android.toolkit.StringArrayUtils;
 import net.eledge.android.toolkit.gui.GuiUtils;
-import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-import static net.eledge.android.toolkit.gui.ViewInjector.inject;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class SearchActivity extends AppCompatActivity implements FacetAdapter.FacetAdaptorClickListener, SearchTaskListener, NameInputDialog.NameInputDialogListener {
+public class SearchActivity extends AppCompatActivity implements FacetAdapter.FacetAdaptorClickListener, NameInputDialog.NameInputDialogListener {
 
     // Controller
     private final SearchController searchController = SearchController._instance;
@@ -74,16 +78,17 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
     private SearchResultsFragment mSearchFragment;
 
     // Views
-    @ViewResource(value = R.id.drawerlayout_activity_search, optional = true)
-    private DrawerLayout mDrawerLayout;
-    @ViewResource(R.id.drawer_facets)
-    private RecyclerView mFacetsList;
+    @Nullable
+    @Bind(R.id.drawerlayout_activity_search)
+    DrawerLayout mDrawerLayout;
+
+    @Bind(R.id.drawer_facets)
+    RecyclerView mFacetsList;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
     // Adapters
     private FacetAdapter mFacetsAdaptor;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     private String runningSearch = null;
 
@@ -91,17 +96,17 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        inject(this);
+        ButterKnife.bind(this);
+        EuropeanaApplication.bus.register(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
 
-        searchController.registerListener(SearchActivity.class, this);
         searchController.searchPageSize = getResources().getInteger(R.integer.search_result_pagesize);
 
         mFacetsAdaptor = new FacetAdapter(this);
 
-        mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mFacetsList.setAdapter(mFacetsAdaptor);
         mFacetsList.setLayoutManager(mLayoutManager);
 
@@ -162,10 +167,11 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
     @Override
     protected void onDestroy() {
         searchController.cancelSearch();
-        searchController.unregister(SearchActivity.class);
+        EuropeanaApplication.bus.register(this);
         super.onDestroy();
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onResume() {
         super.onResume();
@@ -240,9 +246,9 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
         handleIntent(intent);
     }
 
-    @Override
-    public void onSearchStart(boolean isFacetSearch) {
-        if (isFacetSearch) {
+    @Subscribe
+    public void onSearchStart(SearchStartedEvent event) {
+        if (event.facetSearch) {
             mFacetsAdaptor.clear();
             if (mFacetsAdaptor.isEmpty()) {
                 createBreadcrumbs();
@@ -250,13 +256,8 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
         }
     }
 
-    @Override
-    public void onSearchItemsFinish(SearchItems results) {
-        // ignore
-    }
-
-    @Override
-    public void onSearchFacetFinish() {
+    @Subscribe
+    public void onSearchFacetFinish(SearchFacetsLoadedEvent event) {
         updateFacetDrawer();
         runningSearch = null;
     }
@@ -391,9 +392,9 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
             if (!TextUtils.isEmpty(query) && !TextUtils.equals(runningSearch, query)) {
                 runningSearch = query;
                 if (StringArrayUtils.isNotBlank(qf)) {
-                    searchController.newSearch(this, query, qf);
+                    searchController.newSearch(query, qf);
                 } else {
-                    searchController.newSearch(this, query);
+                    searchController.newSearch(query);
                 }
                 getSupportActionBar().setTitle(searchController.getSearchTitle(this));
             }
@@ -407,7 +408,7 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
                 // ignore, is disabled.
                 break;
             case BREADCRUMB:
-                if (!searchController.removeRefineSearch(this, item.facet)) {
+                if (!searchController.removeRefineSearch(item.facet)) {
                     closeSearchActivity();
                 } else if (mDrawerLayout != null) {
                     mDrawerLayout.closeDrawers();
@@ -422,13 +423,13 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
                 updateFacetDrawer();
                 break;
             case ITEM:
-                searchController.refineSearch(this, item.facet);
+                searchController.refineSearch(item.facet);
                 if (mDrawerLayout != null) {
                     mDrawerLayout.closeDrawers();
                 }
                 break;
             case ITEM_SELECTED:
-                searchController.removeRefineSearch(this, item.facet);
+                searchController.removeRefineSearch(item.facet);
                 if (mDrawerLayout != null) {
                     mDrawerLayout.closeDrawers();
                 }

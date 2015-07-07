@@ -30,36 +30,39 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
+
 import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.gui.activity.RecordActivity;
 import net.eledge.android.europeana.gui.adapter.ResultAdapter;
 import net.eledge.android.europeana.search.SearchController;
-import net.eledge.android.europeana.search.listeners.SearchTaskListener;
-import net.eledge.android.europeana.search.model.SearchItems;
+import net.eledge.android.europeana.search.event.SearchItemsLoadedEvent;
+import net.eledge.android.europeana.search.event.SearchStartedEvent;
 import net.eledge.android.europeana.search.model.searchresults.Item;
 import net.eledge.android.toolkit.gui.GuiUtils;
-import net.eledge.android.toolkit.gui.annotations.ViewResource;
+import net.eledge.android.toolkit.gui.listener.EndlessRecyclerOnScrollListener;
 
-import static net.eledge.android.toolkit.gui.ViewInjector.inject;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class SearchResultsFragment extends Fragment implements SearchTaskListener {
+public class SearchResultsFragment extends Fragment {
 
     private ResultAdapter mResultAdaptor;
+    private StaggeredGridLayoutManager mLayoutManager;
 
-    private RecyclerView.LayoutManager mLayoutManager;
+    @Bind(R.id.fragment_search_gridview)
+    RecyclerView mGridView;
 
-    @ViewResource(R.id.fragment_search_gridview)
-    private RecyclerView mGridView;
-
-    @ViewResource(R.id.fragment_search_textview_status)
-    private TextView mStatusTextView;
+    @Bind(R.id.fragment_search_textview_status)
+    TextView mStatusTextView;
 
     private final SearchController searchController = SearchController._instance;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EuropeanaApplication.bus.register(this);
         mResultAdaptor = new ResultAdapter(this.getActivity(),
                 searchController.getSearchItems(), new ResultAdapter.ResultAdaptorClickListener() {
             @Override
@@ -71,14 +74,14 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
                 SearchResultsFragment.this.getActivity().startActivity(intent);
             }
         });
-        searchController.registerListener(SearchResultsFragment.class, this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_search_results, null);
-        inject(this, root);
+        View root = inflater.inflate(R.layout.fragment_search_results, container, false);
+        ButterKnife.bind(this, root);
         mGridView.setAdapter(mResultAdaptor);
+
         mLayoutManager = new StaggeredGridLayoutManager(
                 GuiUtils.getInteger(getActivity(), R.integer.search_results_columns),
                 StaggeredGridLayoutManager.VERTICAL);
@@ -91,34 +94,25 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    @Override
     public void onDestroy() {
         searchController.cancelSearch();
-        searchController.unregister(SearchResultsFragment.class);
         super.onDestroy();
+        EuropeanaApplication.bus.unregister(this);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mGridView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            private int priorFirst = -1;
-
+        mGridView.addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager, 5) {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                // TODO: fix scroll
-            }
-
-            public void onScroll(RecyclerView view, int first, int visible, int total) {
-                if (visible < total && (first + visible == total)) {
-                    // see if we have more results
-                    if ((first != priorFirst) && (searchController.hasMoreResults())) {
-                        priorFirst = first;
-                        onLastListItemDisplayed();
-                    }
-                }
+            public void onLoadMore(int current_page) {
+                onLastListItemDisplayed();
             }
         });
         mGridView.setOnTouchListener(new OnTouchListener() {
@@ -157,13 +151,13 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
 
     void onLastListItemDisplayed() {
         if (searchController.hasMoreResults()) {
-            searchController.continueSearch(this.getActivity());
+            searchController.continueSearch();
         }
     }
 
-    @Override
-    public void onSearchStart(boolean isFacetSearch) {
-        if (!isFacetSearch) {
+    @Subscribe
+    public void onSearchStartedEvent(SearchStartedEvent event) {
+        if (!event.facetSearch) {
             if (mStatusTextView != null) {
                 mStatusTextView.setText(R.string.msg_searching);
                 showStatusText();
@@ -174,18 +168,13 @@ public class SearchResultsFragment extends Fragment implements SearchTaskListene
         }
     }
 
-    @Override
-    public void onSearchFacetFinish() {
-        // ignore
-    }
-
-    @Override
-    public void onSearchItemsFinish(SearchItems results) {
+    @Subscribe
+    public void onSearchItemsFinish(SearchItemsLoadedEvent event) {
         if (mResultAdaptor != null) {
             mResultAdaptor.notifyDataSetChanged();
         }
         mStatusTextView.setText(GuiUtils.format(this.getActivity(), R.string.msg_searchresults,
-                searchController.size(), results.totalResults));
+                searchController.size(), event.results.totalResults));
         showStatusText();
     }
 

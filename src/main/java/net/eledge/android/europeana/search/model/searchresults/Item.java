@@ -24,7 +24,7 @@ public class Item {
 
     public String id;
 
-    public String[] title = new String[]{"Invalid title..."};
+    public final String[] title = new String[]{"Invalid title..."};
 
     public DocType type;
 

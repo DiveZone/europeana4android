@@ -52,12 +52,12 @@ public enum FacetType implements FacetConverter {
         }
     };
 
-    private FacetType(boolean hasIcon, int resId) {
+    FacetType(boolean hasIcon, int resId) {
         this.hasIcon = hasIcon;
         this.resId = resId;
     }
 
-    private FacetType(boolean hasIcon, int resId, FacetConverter converter) {
+    FacetType(boolean hasIcon, int resId, FacetConverter converter) {
         this.hasIcon = hasIcon;
         this.resId = resId;
         if (converter != null) {

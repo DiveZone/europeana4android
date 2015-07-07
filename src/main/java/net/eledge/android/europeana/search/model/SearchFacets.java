@@ -25,7 +25,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchFacets {
 
-    public List<Facet> facets = new ArrayList<>();
+    public final List<Facet> facets = new ArrayList<>();
 
 
 }

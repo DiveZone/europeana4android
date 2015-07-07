@@ -20,20 +20,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.squareup.otto.Subscribe;
+
+import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.gui.activity.RecordActivity;
 import net.eledge.android.europeana.gui.fragment.RecordDetailsFragment;
 import net.eledge.android.europeana.gui.fragment.RecordMapFragment;
 import net.eledge.android.europeana.gui.fragment.RecordSeeAlsoFragment;
-import net.eledge.android.europeana.search.RecordController;
+import net.eledge.android.europeana.search.event.RecordLoadedEvent;
 import net.eledge.android.europeana.search.model.record.RecordObject;
-import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecordPagerAdapter extends FragmentStatePagerAdapter implements TaskListener<RecordObject> {
+public class RecordPagerAdapter extends FragmentStatePagerAdapter {
 
     private final Context mContext;
     private final RecordActivity mRecordActivity;
@@ -45,16 +47,12 @@ public class RecordPagerAdapter extends FragmentStatePagerAdapter implements Tas
         super(fm);
         mContext = context;
         mRecordActivity = activity;
-        RecordController._instance.registerListener(getClass(), this);
+        EuropeanaApplication.bus.register(this);
     }
 
-    @Override
-    public void onTaskStart() {
-        // left empty
-    }
-
-    @Override
-    public void onTaskFinished(RecordObject record) {
+    @Subscribe
+    public void OnRecordLoadedEvent(RecordLoadedEvent event) {
+        RecordObject record = event.result;
         if (record != null) {
             fragments.clear();
             labels.clear();

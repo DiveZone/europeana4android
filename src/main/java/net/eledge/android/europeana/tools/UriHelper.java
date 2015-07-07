@@ -16,6 +16,7 @@
 package net.eledge.android.europeana.tools;
 
 import net.eledge.android.europeana.Config;
+import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.urlbuilder.UrlBuilder;
 
 import org.apache.commons.lang3.StringUtils;
@@ -40,12 +41,21 @@ public class UriHelper {
     private static final String URL_PORTAL_SEARCH = URL_PORTAL + "search.html";
     private static final String URL_PORTAL_RECORD = URL_PORTAL + "record%s.html";
 
-    public static String getSearchUrl(String apiKey, String[] terms, int page, int pageSize) {
-        return createSearchUrl(apiKey, terms, page, pageSize).toString();
+    private static String _apiKey;
+
+    private static String getApiKey() {
+        if (_apiKey == null) {
+            _apiKey = EuropeanaApplication._instance.getEuropeanaPublicKey();
+        }
+        return _apiKey;
     }
 
-    public static String getRecordUrl(String apiKey, String id) {
-        return String.format(Locale.US, URL_API_RECORD, id, apiKey);
+    public static String getSearchUrl(String[] terms, int page, int pageSize) {
+        return createSearchUrl(terms, page, pageSize).toString();
+    }
+
+    public static String getRecordUrl(String id) {
+        return String.format(Locale.US, URL_API_RECORD, id, getApiKey());
     }
 
     public static String createPortalSearchUrl(String[] terms) {
@@ -58,10 +68,10 @@ public class UriHelper {
         return String.format(Locale.US, URL_PORTAL_RECORD, id);
     }
 
-    private static UrlBuilder createSearchUrl(String apiKey, String[] terms, int page, int pageSize) {
+    private static UrlBuilder createSearchUrl(String[] terms, int page, int pageSize) {
         UrlBuilder builder = new UrlBuilder(URL_API_SEARCH);
         builder.overrideParam("profile", pageSize == 1 ? "minimal+facets" : "minimal");
-        builder.overrideParam("wskey", apiKey);
+        builder.overrideParam("wskey", getApiKey());
         setSearchParams(builder, terms, page, pageSize);
         builder.disableEncoding();
         return builder;

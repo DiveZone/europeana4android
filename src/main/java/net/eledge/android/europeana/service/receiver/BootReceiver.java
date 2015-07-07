@@ -21,7 +21,7 @@ import android.content.Intent;
 
 public class BootReceiver extends BroadcastReceiver {
 
-    BlogCheckerReceiver blogCheckerReceiver = new BlogCheckerReceiver();
+    final BlogCheckerReceiver blogCheckerReceiver = new BlogCheckerReceiver();
 
     @Override
     public void onReceive(Context context, Intent intent) {

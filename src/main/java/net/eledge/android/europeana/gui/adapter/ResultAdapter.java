@@ -36,17 +36,17 @@ import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.search.model.searchresults.Item;
 import net.eledge.android.toolkit.StringArrayUtils;
-import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import java.util.List;
 
-import static net.eledge.android.toolkit.gui.ViewInjector.inject;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder> {
 
     private final ResultAdaptorClickListener mListener;
-    private List<Item> resultItems;
-    private Context context;
+    private final List<Item> resultItems;
+    private final Context context;
 
     public ResultAdapter(Context context, List<Item> resultItems,
                          ResultAdaptorClickListener listener) {
@@ -55,17 +55,18 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         this.context = context;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public ResultAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.griditem_searchresult, parent, false);
 
         ViewHolder vh = new ViewHolder(v);
-        inject(vh, v);
         vh.icon.setTypeface(EuropeanaApplication.europeanaFont);
         return vh;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onBindViewHolder(final ResultAdapter.ViewHolder viewHolder, int i) {
         Item item = resultItems.get(i);
@@ -85,7 +86,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                         @Override
                         public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                             Bitmap bitmap = ((BitmapDrawable) viewHolder.image.getDrawable()).getBitmap();
-                            Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+                            new Palette.Builder(bitmap).generate(new Palette.PaletteAsyncListener() {
                                 public void onGenerated(Palette palette) {
                                     viewHolder.background.setBackgroundColor(
                                             palette.getLightMutedColor(R.color.emphasis_transparant));
@@ -114,19 +115,20 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @ViewResource(R.id.griditem_searchresult_textview_title)
-        public TextView textTitle = null;
-        @ViewResource(R.id.griditem_searchresult_imageview_thumbnail)
-        public ImageView image = null;
-        @ViewResource(R.id.griditem_searchresult_textview_type)
-        public TextView icon = null;
-        @ViewResource(R.id.griditem_searchresult_background)
-        public View background = null;
+        @Bind(R.id.griditem_searchresult_textview_title)
+        TextView textTitle = null;
+        @Bind(R.id.griditem_searchresult_imageview_thumbnail)
+        ImageView image = null;
+        @Bind(R.id.griditem_searchresult_textview_type)
+        TextView icon = null;
+        @Bind(R.id.griditem_searchresult_background)
+        View background = null;
 
         public int position;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 

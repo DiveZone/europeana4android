@@ -93,7 +93,7 @@ of Europeana API public and private key.
 
 ## Project planning
 
-We have our todo list on a trello scrum board (although we don't do sprints (yet))
+We have our to do list on a trello scrum board (although we don't do sprints (yet))
 
 <https://trello.com/b/AykTks3F/europeana-4-android>
 

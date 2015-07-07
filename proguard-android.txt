@@ -22,10 +22,29 @@
     public static final ** CREATOR;
 }
 
--keep class org.springframework.** { *; }
 -keep class org.codehaus.jackson.** { *; }
--keep class org.simpleframework.xml.** { *; }
 
 -dontwarn com.squareup.okhttp.**
 
+# GLIDE
 -keepnames class * net.eledge.android.europeana.GlideConfig
+
+# OTTO
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @com.squareup.otto.Subscribe public *;
+    @com.squareup.otto.Produce public *;
+}
+
+# BUTEKNIFE
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}

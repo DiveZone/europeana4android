@@ -36,15 +36,10 @@
     <string name="msg_profile_selectfacets">Selecteer eerst 1 of meerdere facetten…</string>
     <string name="msg_profile_saved">Zoek profiel aangemaakt</string>
     <!--RECORD ACTIVITY-->
-    <string name="dialog_tag_saveas_text">Maak een sociale tag:</string>
-    <string name="dialog_tag_saveas_input">tag naam</string>
     <string name="record_tab_details">Details</string>
     <string name="record_tab_map">Kaart</string>
     <string name="record_tab_seealso">Zie ook</string>
     <string name="msg_copied2clipboard">Waarde gekopieerd naar clipboard…</string>
-    <string name="msg_tag_saved">Sociale tag gemaakt</string>
-    <string name="msg_item_saved">MyEuropeana Item opgeslagen</string>
-    <string name="msg_item_removed">MyEuropeana Item verwijderd</string>
     <string name="record_field_title">TITEL</string>
     <string name="record_field_media">MEDIA</string>
     <string name="record_field_media_warning">Openen van media op een mobiele connectie kan leiden tot extra kosten!</string>
@@ -74,10 +69,6 @@
     <string name="action_previous">Vorig item</string>
     <string name="action_next">Volgend item</string>
     <string name="action_save_profile">Profiel opslaan</string>
-    <string name="action_myeuropeana">My Europeana</string>
-    <string name="action_save_item">Opslaan item</string>
-    <string name="action_remove_item">Verwijderen item</string>
-    <string name="action_new_label">Nieuwe label</string>
     <string name="action_open_browser">Openen in browser</string>
     <string name="action_open_app">Start Europeana</string>
     <!--FACET TYPES-->

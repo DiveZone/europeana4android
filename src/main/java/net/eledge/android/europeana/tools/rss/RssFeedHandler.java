@@ -38,7 +38,7 @@ public class RssFeedHandler extends DefaultHandler {
     private BlogArticle article;
     private StringBuilder content = new StringBuilder(2048);
 
-    public List<BlogArticle> articles = new ArrayList<>();
+    public final List<BlogArticle> articles = new ArrayList<>();
 
     private final DateTime mLastViewed;
 

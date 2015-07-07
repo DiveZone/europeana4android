@@ -26,6 +26,7 @@ import android.os.Bundle;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.otto.Bus;
 
 import java.util.Locale;
 
@@ -41,8 +42,13 @@ public class EuropeanaApplication extends Application {
 
     private Tracker mTracker;
 
+    public static EuropeanaApplication _instance;
+
+    public static Bus bus;
+
     public EuropeanaApplication() {
         super();
+        _instance = this;
     }
 
     @Override
@@ -53,6 +59,7 @@ public class EuropeanaApplication extends Application {
             //activate auto tracking
             getAnalyticsTracker();
             LeakCanary.install(this);
+            bus = new Bus();
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

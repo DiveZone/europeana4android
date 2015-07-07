@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Field {
 
     public String label;
+
     public long count;
 
 }

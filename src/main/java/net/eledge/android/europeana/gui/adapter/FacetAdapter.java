@@ -15,6 +15,7 @@
 
 package net.eledge.android.europeana.gui.adapter;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +26,12 @@ import android.widget.TextView;
 import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.search.model.facets.enums.FacetItemType;
 import net.eledge.android.europeana.search.model.searchresults.FacetItem;
-import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.eledge.android.toolkit.gui.ViewInjector.inject;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> {
 
@@ -74,7 +75,6 @@ public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(item.itemType.getLayoutId(item.facetType), parent, false);
         ViewHolder vh = new ViewHolder(v);
-        inject(vh, v);
         if (vh.mIconTextView != null) {
             vh.mIconTextView.setTypeface(EuropeanaApplication.europeanaFont);
         }
@@ -104,19 +104,21 @@ public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @ViewResource(android.R.id.text1)
+        @Bind(android.R.id.text1)
         TextView mLabelTextView;
 
-        @ViewResource(value = android.R.id.text2, optional = true)
+        @Nullable
+        @Bind(value = android.R.id.text2)
         TextView mIconTextView;
 
-        @ViewResource(android.R.id.progress)
+        @Bind(android.R.id.progress)
         ProgressBar mProgressBar;
 
         public int position;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         @Override

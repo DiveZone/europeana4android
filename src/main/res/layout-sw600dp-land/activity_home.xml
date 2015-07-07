@@ -53,7 +53,7 @@
             android:layout_width="fill_parent"
             android:layout_below="@id/activity_home_edittext_query" />
 
-        <GridView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/activity_home_gridview_suggestions"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
@@ -68,6 +68,7 @@
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:paddingLeft="4dp"
+        android:paddingRight="4dp"
         android:background="@drawable/bordershadow_left" />
 
 </LinearLayout>

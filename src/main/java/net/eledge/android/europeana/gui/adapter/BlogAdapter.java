@@ -22,17 +22,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.db.model.BlogArticle;
+import net.eledge.android.europeana.gui.adapter.events.BlogItemClicked;
 import net.eledge.android.toolkit.gui.GuiUtils;
-import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.eledge.android.toolkit.gui.ViewInjector.inject;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ViewHolder> {
 
@@ -49,14 +51,14 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.listitem_home_blog, parent, false);
-        ViewHolder viewHolder = new ViewHolder(v);
-        inject(viewHolder, v);
-        return viewHolder;
+        return new ViewHolder(v);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         BlogArticle article = articles.get(position);
+        holder.article = article;
         holder.title.setText(article.title);
         holder.content.setText(article.description);
         holder.author.setText(GuiUtils.format(context, R.string.fragment_home_blog_posted, article.author));
@@ -69,22 +71,29 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ViewHolder> {
         return articles == null ? 0 : articles.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public BlogArticle article;
 
-        @ViewResource(R.id.listitem_home_blog_textview_title)
+        @Bind(R.id.listitem_home_blog_textview_title)
         TextView title = null;
 
-        @ViewResource(R.id.listitem_home_blog_textview_text)
+        @Bind(R.id.listitem_home_blog_textview_text)
         TextView content = null;
 
-        @ViewResource(R.id.listitem_home_blog_textview_author)
+        @Bind(R.id.listitem_home_blog_textview_author)
         TextView author = null;
 
-        @ViewResource(R.id.listitem_home_blog_textview_date)
+        @Bind(R.id.listitem_home_blog_textview_date)
         TextView date = null;
 
         private ViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            EuropeanaApplication.bus.post(new BlogItemClicked(article));
         }
     }
 

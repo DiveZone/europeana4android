@@ -50,7 +50,7 @@ public enum Language {
 
     public final int resourceId;
 
-    private Language(int resourceId) {
+    Language(int resourceId) {
         this.resourceId = resourceId;
     }
 

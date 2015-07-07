@@ -23,12 +23,21 @@ import android.view.ViewGroup;
 
 import net.eledge.android.europeana.R;
 
+import butterknife.ButterKnife;
+
 public class RecordSeeAlsoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(
-                R.layout.fragment_record_seealso, null);
+        View view = inflater.inflate(
+                R.layout.fragment_record_seealso, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

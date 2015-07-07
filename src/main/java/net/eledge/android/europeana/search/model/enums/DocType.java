@@ -30,7 +30,7 @@ public enum DocType {
     public final int resourceId;
     public final String icon;
 
-    private DocType(int resourceId, String icon) {
+    DocType(int resourceId, String icon) {
         this.resourceId = resourceId;
         this.icon = icon;
     }

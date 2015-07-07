@@ -170,7 +170,9 @@
     <string name="contentdescriptor_searchitem_image">Search Item image preview</string>
 
     <!-- NOTIFICATIONS -->
-    <string name="new_blog_notification_title_single">New blog: %1$s</string>
-    <string name="new_blog_notification_title_multiple">%1$d new blog items</string>
+    <plurals name="new_blog_notification_title_multiple">
+        <item quantity="one">New blog: %1$s</item>
+        <item quantity="other">%1$d new blog items</item>
+    </plurals>
 
 </resources>

@@ -18,6 +18,7 @@ package net.eledge.android.europeana.gui.fragment;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,39 +27,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.squareup.otto.Subscribe;
+
+import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.Preferences;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.db.dao.BlogArticleDao;
 import net.eledge.android.europeana.db.model.BlogArticle;
 import net.eledge.android.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.europeana.gui.adapter.BlogAdapter;
+import net.eledge.android.europeana.gui.adapter.events.BlogItemClicked;
+import net.eledge.android.europeana.service.event.BlogItemsLoadedEvent;
 import net.eledge.android.europeana.service.receiver.BlogCheckerReceiver;
 import net.eledge.android.europeana.service.task.BlogDownloadTask;
-import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import java.util.Date;
 import java.util.List;
 
-import static net.eledge.android.toolkit.gui.ViewInjector.inject;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class HomeBlogFragment extends Fragment implements BlogDownloadTask.BlogCheckerListener {
+public class HomeBlogFragment extends Fragment {
 
     private BlogAdapter mBlogAdapter;
     private LinearLayoutManager mLayoutManager;
 
-    private BlogArticleDao mBlogArticleDao;
-
-    @ViewResource(R.id.fragment_home_blog_recyclerView)
-    private RecyclerView mRecyclerView;
-
+    @Bind(R.id.fragment_home_blog_recyclerView)
+    RecyclerView mRecyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EuropeanaApplication.bus.register(this);
         mBlogAdapter = new BlogAdapter(getActivity());
         mLayoutManager = new LinearLayoutManager(getActivity());
-        BlogDownloadTask.listener = this;
-
 
         if (PendingIntent.getBroadcast(getActivity(), 0,
                 new Intent(new Intent(getActivity(), BlogCheckerReceiver.class)),
@@ -69,33 +73,42 @@ public class HomeBlogFragment extends Fragment implements BlogDownloadTask.BlogC
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_home_blog, null);
-        inject(this, root);
+        View root = inflater.inflate(R.layout.fragment_home_blog, container, false);
+        ButterKnife.bind(this, root);
         mRecyclerView.setAdapter(mBlogAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        mListView.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                BlogArticle article = mBlogAdapter.getItem(position);
-//                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.guid));
-//                Tracker tracker = ((EuropeanaApplication) getActivity().getApplication()).getAnalyticsTracker();
-//                tracker.send(new HitBuilders.EventBuilder().setCategory("blog").setAction("click").setLabel(article.guid).build());
-//                startActivity(browserIntent);
-//            }
-//        });
         loadFromDatabase();
 
         return root;
     }
 
+    @Subscribe
+    public void onBlogItemClicked(BlogItemClicked event) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.article.guid));
+        Tracker tracker = EuropeanaApplication._instance.getAnalyticsTracker();
+        tracker.send(new HitBuilders
+                .EventBuilder()
+                .setCategory("blog")
+                .setAction("click")
+                .setLabel(event.article.guid)
+                .build());
+        startActivity(browserIntent);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
     @Override
     public void onDestroy() {
-        BlogDownloadTask.listener = null;
         super.onDestroy();
+        EuropeanaApplication.bus.unregister(this);
     }
 
     private void loadFromDatabase() {
-        mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(getActivity()));
+        BlogArticleDao mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(getActivity()));
         List<BlogArticle> articles = mBlogArticleDao.findAll();
         mBlogArticleDao.close();
         if ((articles == null) || articles.isEmpty()) {
@@ -105,8 +118,12 @@ public class HomeBlogFragment extends Fragment implements BlogDownloadTask.BlogC
         }
     }
 
-    @Override
-    public void updatedArticles(List<BlogArticle> articles) {
+    @Subscribe
+    public void onBlogItemsLoadedEvent(BlogItemsLoadedEvent event) {
+        updatedArticles(event.articles);
+    }
+
+    private void updatedArticles(List<BlogArticle> articles) {
         if (articles != null) {
             mBlogAdapter.articles.clear();
             mBlogAdapter.articles.addAll(articles);

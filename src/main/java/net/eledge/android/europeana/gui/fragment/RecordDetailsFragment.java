@@ -29,21 +29,25 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.squareup.otto.Subscribe;
+
 import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.gui.adapter.RecordViewAdapter;
 import net.eledge.android.europeana.search.RecordController;
+import net.eledge.android.europeana.search.event.RecordLoadedEvent;
 import net.eledge.android.europeana.search.model.record.RecordObject;
 import net.eledge.android.europeana.search.model.record.abstracts.RecordView;
 import net.eledge.android.europeana.search.model.record.enums.RecordDetails;
-import net.eledge.android.toolkit.async.listener.TaskListener;
 import net.eledge.android.toolkit.gui.GuiUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
-public class RecordDetailsFragment extends Fragment implements TaskListener<RecordObject> {
+import butterknife.ButterKnife;
+
+public class RecordDetailsFragment extends Fragment {
 
     // Controller
     private final RecordController recordController = RecordController._instance;
@@ -53,15 +57,15 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recordController.registerListener(RecordDetailsFragment.class, this);
+        EuropeanaApplication.bus.register(this);
         mRecordViewAdapter = new RecordViewAdapter((EuropeanaApplication) this.getActivity().getApplication(),
                 this.getActivity(), new ArrayList<RecordView>());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_record_details, null);
-        ListView mListView = (ListView) root.findViewById(R.id.fragment_record_details_listview);
+        View root = inflater.inflate(R.layout.fragment_record_details, container, false);
+        ListView mListView = (ListView) root.findViewById(R.id.fragment_record_details_recyclerview);
         mListView.setAdapter(mRecordViewAdapter);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             setupClipboardAction(mListView);
@@ -72,24 +76,29 @@ public class RecordDetailsFragment extends Fragment implements TaskListener<Reco
     @Override
     public void onResume() {
         if (recordController.record != null) {
-            onTaskFinished(recordController.record);
+            redrawRecordDetails(recordController.record);
         }
         super.onResume();
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    @Override
     public void onDestroy() {
-        recordController.unregister(RecordDetailsFragment.class);
         super.onDestroy();
+        EuropeanaApplication.bus.unregister(this);
     }
 
-    @Override
-    public void onTaskStart() {
-        // ignore
+    @Subscribe
+    public void OnRecordLoadedEvent(RecordLoadedEvent event) {
+        redrawRecordDetails(event.result);
     }
 
-    @Override
-    public void onTaskFinished(final RecordObject record) {
+    private void redrawRecordDetails(RecordObject record) {
         mRecordViewAdapter.clear();
         for (RecordDetails detail : RecordDetails.getVisibles(record)) {
             mRecordViewAdapter.add(detail);

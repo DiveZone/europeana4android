@@ -27,44 +27,45 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+import com.squareup.otto.Subscribe;
 
 import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.search.RecordController;
+import net.eledge.android.europeana.search.event.RecordLoadedEvent;
 import net.eledge.android.europeana.search.model.record.RecordObject;
 import net.eledge.android.europeana.search.model.record.abstracts.Resource;
-import net.eledge.android.toolkit.async.listener.TaskListener;
-import net.eledge.android.toolkit.gui.annotations.ViewResource;
 
 import org.apache.commons.lang3.StringUtils;
 
-import static net.eledge.android.toolkit.gui.ViewInjector.inject;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class RecordMapFragment extends Fragment implements TaskListener<RecordObject> {
+public class RecordMapFragment extends Fragment {
 
     // Controller
     private final RecordController recordController = RecordController._instance;
 
-    @ViewResource(R.id.fragment_record_map_mapview)
-    private MapView mMapView;
+    @Bind(R.id.fragment_record_map_mapview)
+    MapView mMapView;
 
-    @ViewResource(R.id.fragment_record_map_textview_prefLabel)
-    private TextView text1;
+    @Bind(R.id.fragment_record_map_textview_prefLabel)
+    TextView text1;
 
-    @ViewResource(R.id.fragment_record_map_textview_coordinates)
-    private TextView text2;
+    @Bind(R.id.fragment_record_map_textview_coordinates)
+    TextView text2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recordController.registerListener(RecordMapFragment.class, this);
+        EuropeanaApplication.bus.register(this);
         MapsInitializer.initialize(this.getActivity().getBaseContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_record_map, null);
-        inject(this, root);
+        View root = inflater.inflate(R.layout.fragment_record_map, container, false);
+        ButterKnife.bind(this, root);
         mMapView.onCreate(savedInstanceState);
         RecordObject record = recordController.record;
         text1.setText(StringUtils.join(Resource.getPreferred(record.place.prefLabel, ((EuropeanaApplication) getActivity().getApplication()).getLocale()), ";"));
@@ -72,13 +73,12 @@ public class RecordMapFragment extends Fragment implements TaskListener<RecordOb
         return root;
     }
 
-    @Override
-    public void onTaskStart() {
-        // ignore
+    @Subscribe
+    public void OnRecordLoadedEvent(RecordLoadedEvent event) {
+        redrawRecordView(event.result);
     }
 
-    @Override
-    public void onTaskFinished(RecordObject record) {
+    private void redrawRecordView(RecordObject record) {
         if (mMapView != null) {
             if ((record.place.latitude != null) && (record.place.longitude != null)) {
                 GoogleMap map = mMapView.getMap();
@@ -91,8 +91,14 @@ public class RecordMapFragment extends Fragment implements TaskListener<RecordOb
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    @Override
     public void onDestroy() {
-        recordController.unregister(RecordMapFragment.class);
+        EuropeanaApplication.bus.unregister(this);
         if (mMapView != null) {
             mMapView.onDestroy();
         }
@@ -122,7 +128,7 @@ public class RecordMapFragment extends Fragment implements TaskListener<RecordOb
             mMapView.onResume();
         }
         if (recordController.record != null) {
-            onTaskFinished(recordController.record);
+            redrawRecordView(recordController.record);
         }
     }
 

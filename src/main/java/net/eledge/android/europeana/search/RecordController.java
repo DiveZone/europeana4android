@@ -15,47 +15,40 @@
 
 package net.eledge.android.europeana.search;
 
-import android.app.Activity;
+import com.squareup.otto.Subscribe;
 
+import net.eledge.android.europeana.EuropeanaApplication;
+import net.eledge.android.europeana.search.event.RecordLoadedEvent;
 import net.eledge.android.europeana.search.model.record.RecordObject;
-import net.eledge.android.europeana.search.task.RecordTask;
 import net.eledge.android.europeana.tools.UriHelper;
-import net.eledge.android.toolkit.async.ListenerNotifier;
-import net.eledge.android.toolkit.async.listener.TaskListener;
 
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RecordController {
 
     public final static RecordController _instance = new RecordController();
+    public final static ApiTasks _tasks = ApiTasks.getInstance();
 
     private String currentRecordId;
     private boolean currentRecordSelected = false;
 
     public RecordObject record;
 
-    private RecordTask mRecordTask;
+    public RecordController() {
+        EuropeanaApplication.bus.register(this);
+    }
 
-    public final Map<String, TaskListener<RecordObject>> listeners = new HashMap<>();
-
-    public void readRecord(Activity activity, String id) {
+    public void readRecord(String id) {
         if (StringUtils.isNotBlank(id)) {
             if ((record != null) && StringUtils.equals(id, record.about)) {
                 // don't load the same record twice but do notify listeners!;
-                activity.runOnUiThread(new ListenerNotifier<>(listeners.values(), record));
+                EuropeanaApplication.bus.post(new RecordLoadedEvent(record));
                 return;
             }
             record = null;
             currentRecordId = id;
             currentRecordSelected = false;
-            if (mRecordTask != null) {
-                mRecordTask.cancel(true);
-            }
-            mRecordTask = new RecordTask(activity);
-            mRecordTask.execute(id);
+            _tasks.loadRecord(id);
         }
     }
 
@@ -71,16 +64,15 @@ public class RecordController {
         currentRecordSelected = selected;
     }
 
-    public void registerListener(Class<?> clazz, TaskListener<RecordObject> listener) {
-        listeners.put(clazz.getName(), listener);
-    }
-
-    public void unregister(Class<?> clazz) {
-        listeners.remove(clazz.getName());
-    }
-
     public String getPortalUrl() {
         return UriHelper.getPortalRecordUrl(currentRecordId);
     }
 
+    @Subscribe
+    public void OnRecordLoadedEvent(RecordLoadedEvent event) {
+        if (StringUtils.equals(event.result.about, currentRecordId)) {
+            // make sure it is the latest requested record...
+            record = event.result;
+        }
+    }
 }

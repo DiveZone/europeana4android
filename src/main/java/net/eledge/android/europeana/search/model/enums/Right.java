@@ -56,7 +56,7 @@ public enum Right {
      * @param rightsText Text associated with the rights
      * @param fontIcon   Icon associated with the rights
      */
-    private Right(String url, String rightsText, String fontIcon) {
+    Right(String url, String rightsText, String fontIcon) {
         this.url = url;
         this.rightsText = rightsText;
         this.fontIcon = fontIcon;

@@ -22,8 +22,6 @@ import net.eledge.android.europeana.search.model.record.RecordObject;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Record {
 
-    public boolean success;
-
     public RecordObject object;
 
 }

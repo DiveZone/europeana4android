@@ -66,7 +66,7 @@ public enum Country {
     private final String hardcoded;
     public final int resourceId;
 
-    private Country(int resource, String hardcoded) {
+    Country(int resource, String hardcoded) {
         this.hardcoded = hardcoded;
         this.resourceId = resource;
     }

@@ -17,11 +17,11 @@ package net.eledge.android.europeana.search.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import net.eledge.android.europeana.search.model.suggestion.Item;
+import net.eledge.android.europeana.search.model.suggestion.Suggestion;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Suggestions {
 
-    public Item[] items;
+    public Suggestion[] items;
 
 }

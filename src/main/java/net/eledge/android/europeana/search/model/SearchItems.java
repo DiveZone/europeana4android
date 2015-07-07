@@ -25,10 +25,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchItems {
 
-    public boolean success;
-
     public Integer totalResults;
 
-    public List<Item> items = new ArrayList<>();
+    public final List<Item> items = new ArrayList<>();
 
 }

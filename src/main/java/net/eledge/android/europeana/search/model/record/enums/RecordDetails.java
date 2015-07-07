@@ -27,7 +27,6 @@ import net.eledge.android.europeana.search.model.record.abstracts.RecordView;
 import net.eledge.android.europeana.search.model.record.abstracts.Resource;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -412,7 +411,7 @@ public enum RecordDetails implements RecordView {
     private static boolean areAllBlank(Map<?, ?>... maps) {
         boolean allBlank = true;
         for (Map<?, ?> map : maps) {
-            allBlank &= CollectionUtils.isEmpty(map);
+            allBlank &= (map == null || map.isEmpty());
         }
         return allBlank;
     }

@@ -15,55 +15,73 @@
 
 package net.eledge.android.europeana.gui.adapter;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
-import net.eledge.android.europeana.search.model.suggestion.Item;
-import net.eledge.android.toolkit.gui.annotations.ViewResource;
+import net.eledge.android.europeana.gui.adapter.events.SuggestionClicked;
+import net.eledge.android.europeana.search.model.suggestion.Suggestion;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static net.eledge.android.toolkit.gui.ViewInjector.inject;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class SuggestionAdapter extends ArrayAdapter<Item> {
+public class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.ViewHolder> {
 
-    private final LayoutInflater inflater;
+    public final List<Suggestion> suggestions = new ArrayList<>();
 
-    public SuggestionAdapter(Context context, List<Item> suggestions) {
-        super(context, 0, suggestions);
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public SuggestionAdapter() {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        SuggestionViewHolder holder;
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.griditem_suggestion, parent, false);
-            holder = new SuggestionViewHolder();
-            inject(holder, convertView);
-            convertView.setTag(holder);
-        } else {
-            holder = (SuggestionViewHolder) convertView.getTag();
-        }
-        Item suggestion = getItem(position);
-        holder.suggestion.setText(suggestion.term);
-        holder.scope.setText(suggestion.field);
-        holder.count.setText(String.valueOf(suggestion.frequency));
-        return convertView;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.griditem_suggestion, parent, false);
+        return new ViewHolder(v);
     }
 
-    private class SuggestionViewHolder {
-        @ViewResource(R.id.griditem_suggestion_textview_suggestion)
-        TextView suggestion = null;
-        @ViewResource(R.id.griditem_suggestion_textview_scope)
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Suggestion suggestion = suggestions.get(position);
+        holder.suggestion = suggestion;
+        holder.suggestionText.setText(suggestion.term);
+        holder.scope.setText(suggestion.field);
+        holder.count.setText(String.valueOf(suggestion.frequency));
+    }
+
+    @Override
+    public int getItemCount() {
+        return suggestions == null ? 0 : suggestions.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        Suggestion suggestion;
+
+        @Bind(R.id.griditem_suggestion_textview_suggestion)
+        TextView suggestionText = null;
+
+        @Bind(R.id.griditem_suggestion_textview_scope)
         TextView scope = null;
-        @ViewResource(R.id.griditem_suggestion_textview_count)
+
+        @Bind(R.id.griditem_suggestion_textview_count)
         TextView count = null;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            EuropeanaApplication.bus.post(new SuggestionClicked(suggestion));
+        }
     }
 
 }

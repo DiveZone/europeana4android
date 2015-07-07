@@ -40,7 +40,7 @@
     <style name="Theme.Europeana" parent="Theme.Europeana.Base" />
 
     <!-- action bar tab text -->
-    <style name="europeana_tabTextStyle" parent="@style/Widget.AppCompat.ActionBar.TabText"></style>
+    <style name="europeana_tabTextStyle" parent="@style/Widget.AppCompat.ActionBar.TabText"/>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">false</item>

@@ -24,6 +24,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,29 +34,32 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
+
+import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.gui.adapter.SuggestionAdapter;
+import net.eledge.android.europeana.gui.adapter.events.SuggestionClicked;
 import net.eledge.android.europeana.gui.fragment.HomeBlogFragment;
 import net.eledge.android.europeana.gui.notification.NewBlogNotification;
+import net.eledge.android.europeana.search.ApiTasks;
 import net.eledge.android.europeana.search.SearchController;
-import net.eledge.android.europeana.search.model.suggestion.Item;
-import net.eledge.android.toolkit.async.listener.TaskListener;
-import net.eledge.android.toolkit.gui.annotations.ViewResource;
+import net.eledge.android.europeana.search.event.SuggestionsLoadedEvent;
+import net.eledge.android.europeana.search.model.suggestion.Suggestion;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
-import static net.eledge.android.toolkit.gui.ViewInjector.inject;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity implements TaskListener<Item[]>, OnItemClickListener {
+public class HomeActivity extends AppCompatActivity {
 
     // Controllers
     private final SearchController searchController = SearchController._instance;
@@ -64,17 +68,20 @@ public class HomeActivity extends AppCompatActivity implements TaskListener<Item
     private HomeBlogFragment mBlogFragment;
 
     // Views
-    @ViewResource(R.id.activity_home_gridview_suggestions)
-    private GridView mGridViewSuggestions;
-    @ViewResource(R.id.toolbar_searchform_edittext_query)
-    private EditText mEditTextQuery;
+    @Bind(R.id.activity_home_gridview_suggestions)
+    RecyclerView mGridViewSuggestions;
+
+    @Bind(R.id.toolbar_searchform_edittext_query)
+    EditText mEditTextQuery;
+
     //    @ViewResource(R.id.activity_home_spinner_profile)
 //    private Spinner mSpinnerProfiles;
-    @ViewResource(R.id.my_toolbar)
-    private Toolbar mToolbar;
+
+    @Bind(R.id.my_toolbar)
+    Toolbar mToolbar;
 
     // adapters
-    private SuggestionAdapter mSuggestionsAdaptor;
+    private SuggestionAdapter _suggestionAdaptor;
 //    private ArrayAdapter<SearchProfile> mProfilesAdapter;
 
     private boolean isLandscape;
@@ -83,18 +90,18 @@ public class HomeActivity extends AppCompatActivity implements TaskListener<Item
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        EuropeanaApplication.bus.register(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NewBlogNotification.cancel(this);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
-        searchController.suggestionPageSize = getResources().getInteger(R.integer.home_suggestions_pagesize);
+        ApiTasks.getInstance().suggestionPageSize = getResources().getInteger(R.integer.home_suggestions_pagesize);
         isLandscape = getResources().getBoolean(R.bool.home_support_landscape);
 
-        mSuggestionsAdaptor = new SuggestionAdapter(this, new ArrayList<Item>());
-        mGridViewSuggestions.setAdapter(mSuggestionsAdaptor);
-        mGridViewSuggestions.setOnItemClickListener(this);
+        _suggestionAdaptor = new SuggestionAdapter();
+        mGridViewSuggestions.setAdapter(_suggestionAdaptor);
 
         mEditTextQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -111,12 +118,12 @@ public class HomeActivity extends AppCompatActivity implements TaskListener<Item
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() > 2) {
                     if (mGridViewSuggestions.isShown()) {
-                        mSuggestionsAdaptor.clear();
-                        mSuggestionsAdaptor.notifyDataSetChanged();
+                        _suggestionAdaptor.suggestions.clear();
+                        _suggestionAdaptor.notifyDataSetChanged();
                     }
-                    searchController.suggestions(HomeActivity.this, s.toString());
+                    searchController.suggestions(s.toString());
                 } else {
-                    onTaskFinished(null);
+                    updateSuggestions(null);
                 }
             }
 
@@ -144,11 +151,6 @@ public class HomeActivity extends AppCompatActivity implements TaskListener<Item
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         // load/refresh search profiles...
@@ -161,6 +163,12 @@ public class HomeActivity extends AppCompatActivity implements TaskListener<Item
 //            mProfilesAdapter.add(sp);
 //        }
 //        mProfilesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EuropeanaApplication.bus.unregister(this);
     }
 
     @Override
@@ -191,11 +199,9 @@ public class HomeActivity extends AppCompatActivity implements TaskListener<Item
         this.startActivity(intent);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Item suggestion = mSuggestionsAdaptor.getItem(position);
-        searchController.suggestionPageSize = getResources().getInteger(R.integer.home_suggestions_pagesize);
-        performSearch(suggestion.query);
+    @Subscribe
+    public void onSuggestionClicked(SuggestionClicked event) {
+        performSearch(event.suggestion.query);
     }
 
     @Override
@@ -232,23 +238,19 @@ public class HomeActivity extends AppCompatActivity implements TaskListener<Item
         }
     }
 
-    @Override
-    public void onTaskStart() {
-        // ignore
+    @Subscribe
+    public void onSuggestionsLoadedEvent(SuggestionsLoadedEvent event) {
+        updateSuggestions(event.suggestions);
     }
 
-    @Override
-    public void onTaskFinished(Item[] suggestions) {
-        mSuggestionsAdaptor.clear();
-        if ((suggestions != null) && (suggestions.length > 0)) {
-            for (Item s : suggestions) {
-                mSuggestionsAdaptor.add(s);
-            }
-            mSuggestionsAdaptor.notifyDataSetChanged();
+    private void updateSuggestions(Suggestion[] suggestions) {
+        _suggestionAdaptor.suggestions.clear();
+        if (ArrayUtils.isNotEmpty(suggestions)) {
+            Collections.addAll(_suggestionAdaptor.suggestions, suggestions);
+            _suggestionAdaptor.notifyDataSetChanged();
             switchBlogSuggestions(true);
         } else {
-            mSuggestionsAdaptor.clear();
-            mSuggestionsAdaptor.notifyDataSetChanged();
+            _suggestionAdaptor.notifyDataSetChanged();
             switchBlogSuggestions(false);
         }
     }
@@ -256,7 +258,7 @@ public class HomeActivity extends AppCompatActivity implements TaskListener<Item
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        inject(this);
+        ButterKnife.bind(this);
         getToolbar();
     }
 
