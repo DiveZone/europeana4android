@@ -15,7 +15,7 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="FrameworkRoot.Theme" parent="Theme.AppCompat.Light" />
+    <style name="FrameworkRoot.Theme" parent="Theme.AppCompat.Light.NoActionBar" />
 
     <style name="Theme" parent="FrameworkRoot.Theme">
         <!-- Only needed for pre-L -->

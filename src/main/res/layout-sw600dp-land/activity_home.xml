@@ -54,7 +54,7 @@
             android:layout_below="@id/activity_home_edittext_query" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/activity_home_gridview_suggestions"
+            android:id="@+id/activity_home_recyclerview_suggestions"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_below="@id/activity_home_spinner_profile"

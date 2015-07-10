@@ -25,11 +25,8 @@
 
     <!-- SEARCH FORM -->
     <string name="form_search_query">Search term(s)</string>
-    <string name="form_search_profile_default">No search profile</string>
 
     <!-- SEARCH ACTIVITY -->
-    <string name="dialog_profile_saveas_title">Profile title</string>
-    <string name="dialog_profile_saveas_text">Give a short descriptive name for your search profile:</string>
     <string name="drawer_facets_open">Open facets drawer</string>
     <string name="drawer_facets_close">Close facets drawer</string>
     <string name="drawer_facets_section_breadcrumbs">MATCHES FOR</string>
@@ -38,8 +35,6 @@
     <string name="msg_searching">RETRIEVING RESULTS…</string>
     <string name="msg_searchresults">SHOWING %1$d OF %2$d RESULTS</string>
     <string name="msg_loading">RETRIEVING RECORD…</string>
-    <string name="msg_profile_selectfacets">Select one or more facets first…</string>
-    <string name="msg_profile_saved">Search profile created</string>
 
     <!-- RECORD ACTIVITY -->
     <string name="record_tab_details">Details</string>
@@ -78,7 +73,6 @@
     <string name="action_share">Share</string>
     <string name="action_previous">Previous item</string>
     <string name="action_next">Next item</string>
-    <string name="action_save_profile">Save profile</string>
     <string name="action_open_browser">Open in browser</string>
     <string name="action_open_app">Start Europeana</string>
 

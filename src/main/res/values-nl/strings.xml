@@ -21,10 +21,7 @@
     <string name="fragment_home_blog_posted">Geplaatst door %s</string>
     <!--SEARCH FORM-->
     <string name="form_search_query">Zoekterm(en)</string>
-    <string name="form_search_profile_default">Zonder zoekprofiel</string>
     <!--SEARCH ACTIVITY-->
-    <string name="dialog_profile_saveas_title">Profiel titel</string>
-    <string name="dialog_profile_saveas_text">Geef een korte beschrijvende naam voor zoek profiel:</string>
     <string name="drawer_facets_open">Open facetten lade</string>
     <string name="drawer_facets_close">Sluit facetten lade</string>
     <string name="drawer_facets_section_breadcrumbs">RESULTATEN VOOR</string>
@@ -33,8 +30,6 @@
     <string name="msg_searching">OPHALEN RESULTATEN…</string>
     <string name="msg_searchresults">TOONT %1$d VAN %2$d RESULTATEN</string>
     <string name="msg_loading">OPHALEN RECORD…</string>
-    <string name="msg_profile_selectfacets">Selecteer eerst 1 of meerdere facetten…</string>
-    <string name="msg_profile_saved">Zoek profiel aangemaakt</string>
     <!--RECORD ACTIVITY-->
     <string name="record_tab_details">Details</string>
     <string name="record_tab_map">Kaart</string>
@@ -68,7 +63,6 @@
     <string name="action_share">Delen</string>
     <string name="action_previous">Vorig item</string>
     <string name="action_next">Volgend item</string>
-    <string name="action_save_profile">Profiel opslaan</string>
     <string name="action_open_browser">Openen in browser</string>
     <string name="action_open_app">Start Europeana</string>
     <!--FACET TYPES-->
@@ -151,7 +145,4 @@
     <string name="locale_mul">Meertalig</string>
     <!--CONTENT DESCRIPTORS-->
     <string name="contentdescriptor_searchitem_image">zoekresultaat voorbeeld afbeelding</string>
-    <!--NOTIFICATIONS-->
-    <string name="new_blog_notification_title_single">Nieuwe blog: %1$s</string>
-    <string name="new_blog_notification_title_multiple">%1$d nieuwe blog items</string>
 </resources>

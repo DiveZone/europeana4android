@@ -23,12 +23,6 @@
         app:showAsAction="ifRoom"
         android:title="@string/action_share" />
     <item
-        android:id="@+id/action_save_profile"
-        android:icon="@drawable/ic_action_save"
-        android:orderInCategory="11"
-        app:showAsAction="ifRoom"
-        android:title="@string/action_save_profile" />
-    <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_action_search"
         android:orderInCategory="20"

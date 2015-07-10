@@ -68,21 +68,17 @@ public class HomeActivity extends AppCompatActivity {
     private HomeBlogFragment mBlogFragment;
 
     // Views
-    @Bind(R.id.activity_home_gridview_suggestions)
+    @Bind(R.id.activity_home_recyclerview_suggestions)
     RecyclerView mGridViewSuggestions;
 
     @Bind(R.id.toolbar_searchform_edittext_query)
     EditText mEditTextQuery;
 
-    //    @ViewResource(R.id.activity_home_spinner_profile)
-//    private Spinner mSpinnerProfiles;
-
     @Bind(R.id.my_toolbar)
     Toolbar mToolbar;
 
-    // adapters
+    // Adapters
     private SuggestionAdapter _suggestionAdaptor;
-//    private ArrayAdapter<SearchProfile> mProfilesAdapter;
 
     private boolean isLandscape;
 
@@ -138,9 +134,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-//        mProfilesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
-//        mSpinnerProfiles.setAdapter(mProfilesAdapter);
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (mBlogFragment == null) {
@@ -153,16 +146,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // load/refresh search profiles...
-//        mProfilesAdapter.clear();
-//        SearchProfileDao searchProfileDao = new SearchProfileDao(new DatabaseSetup(this));
-//        List<SearchProfile> profiles = searchProfileDao.findAll();
-//        searchProfileDao.close();
-//        mProfilesAdapter.add(new SearchProfile(GuiUtils.getString(this, R.string.form_search_profile_default), null));
-//        for (SearchProfile sp : profiles) {
-//            mProfilesAdapter.add(sp);
-//        }
-//        mProfilesAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -192,10 +175,6 @@ public class HomeActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, SearchActivity.class);
         intent.setAction(Intent.ACTION_SEARCH);
         intent.putExtra(SearchManager.QUERY, query);
-//        SearchProfile selected = (SearchProfile) mSpinnerProfiles.getSelectedItem();
-//        if ((selected != null) && (selected.facets != null)) {
-//            intent.putExtra(SearchManager.USER_QUERY, selected.facets);
-//        }
         this.startActivity(intent);
     }
 

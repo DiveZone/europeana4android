@@ -17,12 +17,12 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
 
-    <string name="ga_trackingId">UA-5855364-5</string>
+    <string name="ga_trackingId" translatable="false">UA-5855364-5</string>
     <bool name="ga_autoActivityTracking">true</bool>
     <bool name="ga_reportUncaughtExceptions">true</bool>
 
-    <string name="net.eledge.android.europeana.gui.activity.HomeActivity">Home (Basic Search)</string>
-    <string name="net.eledge.android.europeana.gui.activity.RecordActivity">Record Details</string>
-    <string name="net.eledge.android.europeana.gui.activity.SearchActivity">Search Results</string>
+    <string name="net.eledge.android.europeana.gui.activity.HomeActivity" translatable="false">Home (Basic Search)</string>
+    <string name="net.eledge.android.europeana.gui.activity.RecordActivity" translatable="false">Record Details</string>
+    <string name="net.eledge.android.europeana.gui.activity.SearchActivity" translatable="false">Search Results</string>
 
 </resources>

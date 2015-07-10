@@ -36,9 +36,4 @@
         <requestFocus />
     </EditText>
 
-    <!--<Spinner-->
-        <!--android:id="@+id/activity_home_spinner_profile"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_width="fill_parent" />-->
-
 </android.support.v7.widget.Toolbar>

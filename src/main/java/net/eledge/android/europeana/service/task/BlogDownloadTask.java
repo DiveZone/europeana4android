@@ -40,16 +40,7 @@ public class BlogDownloadTask {
 
     private final Context mContext;
 
-    private static BlogDownloadTask _instance;
-
-    public static BlogDownloadTask getInstance(Context c) {
-        if (_instance == null) {
-            _instance = new BlogDownloadTask(c);
-        }
-        return _instance;
-    }
-
-    private BlogDownloadTask(Context c) {
+    public BlogDownloadTask(Context c) {
         mContext = c;
         EuropeanaApplication.bus.register(this);
     }
@@ -68,6 +59,7 @@ public class BlogDownloadTask {
 
     @Subscribe
     public void onRssReaderFinish(BlogItemsLoadedEvent event) {
+        EuropeanaApplication.bus.unregister(this);
         processArticles(event.articles, mContext);
     }
 

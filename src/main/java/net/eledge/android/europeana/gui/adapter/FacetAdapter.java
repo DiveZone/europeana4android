@@ -119,6 +119,7 @@ public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override

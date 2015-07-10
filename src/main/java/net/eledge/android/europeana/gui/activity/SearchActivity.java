@@ -48,11 +48,7 @@ import com.squareup.otto.Subscribe;
 import net.eledge.android.europeana.Config;
 import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
-import net.eledge.android.europeana.db.dao.SearchProfileDao;
-import net.eledge.android.europeana.db.model.SearchProfile;
-import net.eledge.android.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.europeana.gui.adapter.FacetAdapter;
-import net.eledge.android.europeana.gui.dialog.NameInputDialog;
 import net.eledge.android.europeana.gui.fragment.SearchResultsFragment;
 import net.eledge.android.europeana.search.SearchController;
 import net.eledge.android.europeana.search.event.SearchFacetsLoadedEvent;
@@ -69,7 +65,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SearchActivity extends AppCompatActivity implements FacetAdapter.FacetAdaptorClickListener, NameInputDialog.NameInputDialogListener {
+public class SearchActivity extends AppCompatActivity implements FacetAdapter.FacetAdaptorClickListener {
 
     // Controller
     private final SearchController searchController = SearchController._instance;
@@ -207,9 +203,6 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
             case R.id.action_share:
                 startActivity(createShareIntent());
                 break;
-            case R.id.action_save_profile:
-                saveProfile();
-                break;
             case R.id.action_search:
                 GuiUtils.startTopActivity(this, HomeActivity.class);
                 break;
@@ -260,35 +253,6 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
     public void onSearchFacetFinish(SearchFacetsLoadedEvent event) {
         updateFacetDrawer();
         runningSearch = null;
-    }
-
-    private void saveProfile() {
-        if (!searchController.hasFacetsSelected()) {
-            GuiUtils.toast(this, R.string.msg_profile_selectfacets);
-            return;
-        }
-        Bundle bundle = new Bundle();
-        bundle.putInt(NameInputDialog.KEY_RESTITLE_INT, R.string.dialog_profile_saveas_title);
-        bundle.putInt(NameInputDialog.KEY_RESTEXT_INT, R.string.dialog_profile_saveas_text);
-        bundle.putInt(NameInputDialog.KEY_RESINPUT_INT, R.string.dialog_profile_saveas_title);
-        bundle.putInt(NameInputDialog.KEY_RESPOSBUTTON_INT, R.string.action_save_profile);
-        NameInputDialog dialog = new NameInputDialog();
-        dialog.setArguments(bundle);
-        dialog.show(getSupportFragmentManager(), "SaveAs");
-    }
-
-    @Override
-    public void positiveResponse(String input) {
-        SearchProfile profile = new SearchProfile(input, searchController.getFacetString());
-        SearchProfileDao dao = new SearchProfileDao(new DatabaseSetup(SearchActivity.this));
-        dao.store(profile);
-        dao.close();
-        GuiUtils.toast(SearchActivity.this, R.string.msg_profile_saved);
-    }
-
-    @Override
-    public void negativeResponse() {
-        // ignore
     }
 
     private void closeSearchActivity() {

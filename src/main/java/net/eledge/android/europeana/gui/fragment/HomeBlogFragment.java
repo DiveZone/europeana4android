@@ -82,19 +82,6 @@ public class HomeBlogFragment extends Fragment {
         return root;
     }
 
-    @Subscribe
-    public void onBlogItemClicked(BlogItemClicked event) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.article.guid));
-        Tracker tracker = EuropeanaApplication._instance.getAnalyticsTracker();
-        tracker.send(new HitBuilders
-                .EventBuilder()
-                .setCategory("blog")
-                .setAction("click")
-                .setLabel(event.article.guid)
-                .build());
-        startActivity(browserIntent);
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -112,7 +99,7 @@ public class HomeBlogFragment extends Fragment {
         List<BlogArticle> articles = mBlogArticleDao.findAll();
         mBlogArticleDao.close();
         if ((articles == null) || articles.isEmpty()) {
-            BlogDownloadTask.getInstance(this.getActivity()).execute();
+            new BlogDownloadTask(this.getActivity()).execute();
         } else {
             updatedArticles(articles);
         }
@@ -121,6 +108,20 @@ public class HomeBlogFragment extends Fragment {
     @Subscribe
     public void onBlogItemsLoadedEvent(BlogItemsLoadedEvent event) {
         updatedArticles(event.articles);
+    }
+
+
+    @Subscribe
+    public void onBlogItemClicked(BlogItemClicked event) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.article.guid));
+        Tracker tracker = EuropeanaApplication._instance.getAnalyticsTracker();
+        tracker.send(new HitBuilders
+                .EventBuilder()
+                .setCategory("blog")
+                .setAction("click")
+                .setLabel(event.article.guid)
+                .build());
+        startActivity(browserIntent);
     }
 
     private void updatedArticles(List<BlogArticle> articles) {
