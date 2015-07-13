@@ -25,14 +25,12 @@ import net.eledge.android.europeana.Preferences;
 import net.eledge.android.europeana.db.dao.BlogArticleDao;
 import net.eledge.android.europeana.db.model.BlogArticle;
 import net.eledge.android.europeana.db.setup.DatabaseSetup;
-import net.eledge.android.europeana.gui.notification.NewBlogNotification;
 import net.eledge.android.europeana.service.event.BlogItemsLoadedEvent;
 import net.eledge.android.europeana.tools.RssReader;
 import net.eledge.android.europeana.tools.UriHelper;
 
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -73,16 +71,6 @@ public class BlogDownloadTask {
             SharedPreferences.Editor editor = settings.edit();
             editor.putLong(Preferences.BLOG_LAST_UPDATE, new Date().getTime());
             editor.apply();
-
-            if (settings.getBoolean(Preferences.BLOG_NOTIFICATION_ENABLE, true)) {
-                List<BlogArticle> newArticles = new ArrayList<>();
-                for (BlogArticle item : articles) {
-                    if (item.markedNew) {
-                        newArticles.add(item);
-                    }
-                }
-                NewBlogNotification.notify(context, newArticles);
-            }
         }
     }
 

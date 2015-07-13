@@ -44,7 +44,6 @@ import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.gui.adapter.SuggestionAdapter;
 import net.eledge.android.europeana.gui.adapter.events.SuggestionClicked;
 import net.eledge.android.europeana.gui.fragment.HomeBlogFragment;
-import net.eledge.android.europeana.gui.notification.NewBlogNotification;
 import net.eledge.android.europeana.search.ApiTasks;
 import net.eledge.android.europeana.search.SearchController;
 import net.eledge.android.europeana.search.event.SuggestionsLoadedEvent;
@@ -88,8 +87,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         EuropeanaApplication.bus.register(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        NewBlogNotification.cancel(this);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 

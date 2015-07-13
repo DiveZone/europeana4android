@@ -60,11 +60,6 @@
 
     <string name="settings_locale_def">System default</string>
 
-    <!-- NOTIFICATION -->
-
-    <string name="settings_header_notification_title">Notifications</string>
-    <string name="settings_notification_enable">Notify new blog posts</string>
-
     <!-- ABOUT -->
 
     <string name="settings_header_about_title">About&#8230;</string>

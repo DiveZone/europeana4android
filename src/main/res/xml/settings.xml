@@ -34,17 +34,6 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:key="BLOG"
-        android:title="@string/settings_header_notification_title">
-
-        <CheckBoxPreference
-            android:key="settings_notification_enable"
-            android:title="@string/settings_notification_enable"
-            android:defaultValue="true" />
-
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/settings_header_about_title">
 
         <Preference

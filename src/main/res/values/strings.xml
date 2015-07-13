@@ -163,10 +163,4 @@
     <!-- CONTENT DESCRIPTORS -->
     <string name="contentdescriptor_searchitem_image">Search Item image preview</string>
 
-    <!-- NOTIFICATIONS -->
-    <plurals name="new_blog_notification_title_multiple">
-        <item quantity="one">New blog: %1$s</item>
-        <item quantity="other">%1$d new blog items</item>
-    </plurals>
-
 </resources>

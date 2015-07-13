@@ -22,9 +22,6 @@
     <!--LANGUAGES: APPLICATION-->
     <string name="settings_locale_content">Voorkeur content taal</string>
     <string name="settings_locale_def">Systeem standaard</string>
-    <!--NOTIFICATION-->
-    <string name="settings_header_notification_title">Notificaties</string>
-    <string name="settings_notification_enable">Notificatie bij nieuwe blogposts</string>
     <!--ABOUT-->
     <string name="settings_header_about_title">Over…</string>
     <string name="settings_about_version">Versie</string>

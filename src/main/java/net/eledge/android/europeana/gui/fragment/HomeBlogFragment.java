@@ -15,7 +15,6 @@
 
 package net.eledge.android.europeana.gui.fragment;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -40,7 +39,6 @@ import net.eledge.android.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.europeana.gui.adapter.BlogAdapter;
 import net.eledge.android.europeana.gui.adapter.events.BlogItemClicked;
 import net.eledge.android.europeana.service.event.BlogItemsLoadedEvent;
-import net.eledge.android.europeana.service.receiver.BlogCheckerReceiver;
 import net.eledge.android.europeana.service.task.BlogDownloadTask;
 
 import java.util.Date;
@@ -64,11 +62,6 @@ public class HomeBlogFragment extends Fragment {
         mBlogAdapter = new BlogAdapter(getActivity());
         mLayoutManager = new LinearLayoutManager(getActivity());
 
-        if (PendingIntent.getBroadcast(getActivity(), 0,
-                new Intent(new Intent(getActivity(), BlogCheckerReceiver.class)),
-                PendingIntent.FLAG_NO_CREATE) == null) {
-            new BlogCheckerReceiver().enableBlogChecker(getActivity());
-        }
     }
 
     @Override
