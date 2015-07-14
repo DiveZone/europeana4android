@@ -69,7 +69,7 @@ public class ApiTasks {
                                 EuropeanaApplication.bus.post(new SearchItemsLoadedEvent(result));
                             }
                         }
-                    }, SearchItems.class, UriHelper.getSearchUrl(terms, page, pageSize), Config.JSON_CHARSET);
+                    }, UriHelper.getSearchUrl(terms, page, pageSize), Config.JSON_CHARSET);
         }
     }
 
@@ -100,7 +100,7 @@ public class ApiTasks {
                                     }
                                 }
                             },
-                            Suggestions.class, url, Config.JSON_CHARSET);
+                            url, Config.JSON_CHARSET);
                 }
             }
         }
@@ -125,7 +125,7 @@ public class ApiTasks {
                             }
 
                         }
-                    }, SearchFacets.class, UriHelper.getSearchUrl(terms, 1, 1), Config.JSON_CHARSET);
+                    }, UriHelper.getSearchUrl(terms, 1, 1), Config.JSON_CHARSET);
         }
     }
 
@@ -147,7 +147,7 @@ public class ApiTasks {
                                     .setLabel(recordId).build());
                             EuropeanaApplication.bus.post(new RecordLoadedEvent(result));
                         }
-                    }, RecordObject.class, UriHelper.getRecordUrl(recordId), Config.JSON_CHARSET);
+                    }, UriHelper.getRecordUrl(recordId), Config.JSON_CHARSET);
         }
     }
 
