@@ -54,41 +54,20 @@ Setting up the project is relatively easy.
 
 ### Development Environment
 This project requires the following setup:
-* __Android Studio 1.0.2__ or higher
+* __Android Studio 1.3.0__ or higher
 * __JDK 1.7__ or higher
-* __Gradle 2.0__ or higher
+* __Gradle 2.4__ or higher
 
 Check **build.gradle** which SDK and build tools are required via the SDK manager.
 
-### Needed libraries
-The project is using several libraries but only the following one needs to be
-setup manually.
-* __eLedge Android Toolkit__ (open source, master version)
-
-
-### Creating a project structure
-1. Create a main directory where you want your project, ie. EuropeanaProject.
-2. In the project dir checkout both this and AndroidToolkit
-
-   ```sh
-.../EuropeanaProject$ git clone git@github.com:eLedge/AndroidToolkit.git
-.../EuropeanaProject$ git clone git@github.com:eLedge/Europeana4Android.git
-```
-3. Create two files: build.gradle and settings.gradle. build.gradle can be left 
-empty, settings.gradle needs the following content:
-
-   ```groovy
-include ':AndroidToolkit'
-include ':europeana4android'
-```
-
-4. In the europeana4android project, copy the src/main/AndroidManifest.xml.template
+### Creating a project
+1. Check out europeana4android on GIT.
+2. In the europeana4android project, copy the src/main/AndroidManifest.xml.template
 to AndroidManifest.xml in the same folder. The copied file is configured to be
 ignored by GIT.
-5. Import the project folder (EuropeanaProject) into AndroidStudio using the
-import project function. If you want to use gradle wrapper or a local gradle
-installation is up to you.
-6. Before testing you are required to have a Google Maps API key and combination
+3. Import the project folder into AndroidStudio using the import project function.
+If you want to use gradle wrapper or a local gradle installation is up to you.
+4. Before testing you are required to have a Google Maps API key and combination
 of Europeana API public and private key.
 
 ## Project planning

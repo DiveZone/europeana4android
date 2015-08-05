@@ -23,7 +23,6 @@ import net.eledge.android.europeana.db.model.BlogArticle;
 import net.eledge.android.europeana.service.event.BlogItemsLoadedEvent;
 import net.eledge.android.europeana.tools.rss.RssFeedHandler;
 
-import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTime;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -88,7 +87,12 @@ public class RssReader extends AsyncTask<String, Void, List<BlogArticle>> {
         } catch (IOException | SAXException | ParserConfigurationException e) {
             Log.e("RssReader", e.getMessage(), e);
         } finally {
-            IOUtils.closeQuietly(is);
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException ignored) {
+                }
+            }
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
