@@ -22,9 +22,7 @@ import com.squareup.otto.Subscribe;
 
 import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.Preferences;
-import net.eledge.android.europeana.db.dao.BlogArticleDao;
 import net.eledge.android.europeana.db.model.BlogArticle;
-import net.eledge.android.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.europeana.service.event.BlogItemsLoadedEvent;
 import net.eledge.android.europeana.tools.RssReader;
 import net.eledge.android.europeana.tools.UriHelper;
@@ -33,6 +31,8 @@ import org.joda.time.DateTime;
 
 import java.util.Date;
 import java.util.List;
+
+import io.realm.Realm;
 
 public class BlogDownloadTask {
 
@@ -63,10 +63,13 @@ public class BlogDownloadTask {
 
     public static void processArticles(final List<BlogArticle> articles, Context context) {
         if (articles != null) {
-            BlogArticleDao mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(context));
-            mBlogArticleDao.deleteAll();
-            mBlogArticleDao.store(articles);
-            mBlogArticleDao.close();
+            Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.clear(BlogArticle.class);
+                    realm.copyToRealmOrUpdate(articles);
+                }
+            });
             SharedPreferences settings = context.getSharedPreferences(Preferences.BLOG, 0);
             SharedPreferences.Editor editor = settings.edit();
             editor.putLong(Preferences.BLOG_LAST_UPDATE, new Date().getTime());

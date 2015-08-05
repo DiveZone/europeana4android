@@ -30,6 +30,9 @@ import com.squareup.otto.Bus;
 
 import java.util.Locale;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class EuropeanaApplication extends Application {
 
     // META DATA
@@ -54,12 +57,13 @@ public class EuropeanaApplication extends Application {
     @Override
     public void onCreate() {
         try {
+            LeakCanary.install(this);
             metaData = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES | PackageManager.GET_META_DATA).applicationInfo.metaData;
             europeanaFont = Typeface.createFromAsset(getAssets(), "europeana.ttf");
             //activate auto tracking
             getAnalyticsTracker();
-            LeakCanary.install(this);
             bus = new Bus();
+            Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this).build());
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

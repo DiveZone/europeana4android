@@ -59,19 +59,19 @@ public class RssFeedHandler extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
         if (localName.equalsIgnoreCase("item")) {
-            article.markedNew = mLastViewed.isBefore(article.pubDate.getTime());
+            article.setMarkedNew(mLastViewed.isBefore(article.getPubDate().getTime()));
             articles.add(article);
         } else if (article != null) {
             if (localName.equalsIgnoreCase("title")) {
-                article.title = content.toString();
+                article.setTitle(content.toString());
             } else if (localName.equalsIgnoreCase("description")) {
-                article.description = Html.fromHtml(content.toString().replaceAll("<.*?>", "")).toString();
+                article.setDescription( Html.fromHtml(content.toString().replaceAll("<.*?>", "")).toString());
             } else if (localName.equalsIgnoreCase("pubDate")) {
-                article.pubDate = convertDate(content.toString());
+                article.setPubDate(convertDate(content.toString()));
             } else if (localName.equalsIgnoreCase("link")) {
-                article.guid = content.toString();
+                article.setGuid(content.toString());
             } else if (qName.equalsIgnoreCase("dc:creator")) {
-                article.author = content.toString();
+                article.setAuthor(content.toString());
 //            } else if (qName.equalsIgnoreCase("content:encoded")) {
 //                article.image = extractImageUrl(content.toString());
             }

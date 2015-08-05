@@ -59,10 +59,10 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         BlogArticle article = articles.get(position);
         holder.article = article;
-        holder.title.setText(article.title);
-        holder.content.setText(article.description);
-        holder.author.setText(GuiUtils.format(context, R.string.fragment_home_blog_posted, article.author));
-        holder.date.setText(formatter.format(article.pubDate));
+        holder.title.setText(article.getTitle());
+        holder.content.setText(article.getDescription());
+        holder.author.setText(GuiUtils.format(context, R.string.fragment_home_blog_posted, article.getAuthor()));
+        holder.date.setText(formatter.format(article.getPubDate()));
 
     }
 

@@ -33,9 +33,7 @@ import com.squareup.otto.Subscribe;
 import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.Preferences;
 import net.eledge.android.europeana.R;
-import net.eledge.android.europeana.db.dao.BlogArticleDao;
 import net.eledge.android.europeana.db.model.BlogArticle;
-import net.eledge.android.europeana.db.setup.DatabaseSetup;
 import net.eledge.android.europeana.gui.adapter.BlogAdapter;
 import net.eledge.android.europeana.gui.adapter.events.BlogItemClicked;
 import net.eledge.android.europeana.service.event.BlogItemsLoadedEvent;
@@ -46,6 +44,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class HomeBlogFragment extends Fragment {
 
@@ -88,9 +88,7 @@ public class HomeBlogFragment extends Fragment {
     }
 
     private void loadFromDatabase() {
-        BlogArticleDao mBlogArticleDao = new BlogArticleDao(new DatabaseSetup(getActivity()));
-        List<BlogArticle> articles = mBlogArticleDao.findAll();
-        mBlogArticleDao.close();
+        RealmResults<BlogArticle> articles = Realm.getDefaultInstance().allObjects(BlogArticle.class);
         if ((articles == null) || articles.isEmpty()) {
             new BlogDownloadTask(this.getActivity()).execute();
         } else {
@@ -106,13 +104,13 @@ public class HomeBlogFragment extends Fragment {
 
     @Subscribe
     public void onBlogItemClicked(BlogItemClicked event) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.article.guid));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.article.getGuid()));
         Tracker tracker = EuropeanaApplication._instance.getAnalyticsTracker();
         tracker.send(new HitBuilders
                 .EventBuilder()
                 .setCategory("blog")
                 .setAction("click")
-                .setLabel(event.article.guid)
+                .setLabel(event.article.getGuid())
                 .build());
         startActivity(browserIntent);
     }

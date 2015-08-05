@@ -21,6 +21,5 @@ public class Preferences {
 
     public static final String BLOG_LAST_VIEW = "lastViewed";
     public static final String BLOG_LAST_UPDATE = "lastUpdate";
-    public static final String BLOG_NOTIFICATION_ENABLE = "settings_notification_enable";
 
 }
