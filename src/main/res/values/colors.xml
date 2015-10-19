@@ -19,11 +19,11 @@
     <color name="background_drawer">#fff3f3f3</color>
 
     <!-- light blue 500 / 700 -->
-    <color name="primary">#03A9F4</color>
-    <color name="primary_dark">#0288D1</color>
+    <color name="primary">#2196f3</color>
+    <color name="primary_dark">#1976d2</color>
 
     <!-- Lime 500 -->
-    <color name="accent">#ffc0cd2e</color>
+    <color name="accent">#69f0ae</color>
     <color name="accent_bright">#fff0ff3d</color>
 
     <color name="background_facet_divider">#eee</color>

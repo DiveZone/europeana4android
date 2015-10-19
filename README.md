@@ -24,29 +24,7 @@ look at your request and hopefully merge it into the master branch.
 
 * __Join the team__: It's also possible to be added to the development team 
 and submit directly into the repository. But it would be nice if we know you 
-a bit, so use the fork method first a few times. :-) 
-
-### Contribute translations
-If you want to contribute or correct translations of the application there
-are two ways to do so. We try to find a better way of doing this but till 
-then...
-
-1. __Pull requests__: same as the code contribution method, fork the project
-and add the language folder and the translated `strings.xml` or update an 
-existing one. Commit and send us a pull request to merge the translations 
-into our master branch.
-2. __Submit as issue__: download this file: 
-[strings.xml](https://raw.github.com/eLedge/europeana4android/blob/master/res/values/strings.xml)
-and translate it. Create an issue starting with the language and it's code 
-and post the complete translation into the issue between three of markdown 
-code quotes. A preview should look like this:
-
-  ```xml
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="app_name">Europeana.eu</string>
-</resources>
-```
+a bit, so use the fork method first. :-)
 
 ## Setup project
 This project is using the gradle building system coming with Android Studio.
