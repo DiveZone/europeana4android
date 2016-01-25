@@ -89,7 +89,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                             new Palette.Builder(bitmap).generate(new Palette.PaletteAsyncListener() {
                                 public void onGenerated(Palette palette) {
                                     viewHolder.background.setBackgroundColor(
-                                            palette.getLightMutedColor(R.color.emphasis_transparant));
+                                            palette.getLightMutedColor(context.getResources().getColor(R.color.emphasis_transparant)));
                                 }
                             });
                             return false;

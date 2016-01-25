@@ -56,6 +56,7 @@ public class EuropeanaApplication extends Application {
 
     @Override
     public void onCreate() {
+        super.onCreate();
         try {
             LeakCanary.install(this);
             metaData = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES | PackageManager.GET_META_DATA).applicationInfo.metaData;
