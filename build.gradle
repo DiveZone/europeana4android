@@ -39,6 +39,11 @@ android {
         versionCode 39
         versionName 'v0.2-beta b39'
         applicationId 'net.eledge.android.eu.europeana'
+        manifestPlaceholders = [
+            API_PUBLIC_KEY: E4A_API_PUBLIC_KEY,
+            API_PRIVATE_KEY: E4A_API_PRIVATE_KEY,
+            MAPS_API_KEY: E4A_MAPS_API_KEY
+        ]
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
