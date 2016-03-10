@@ -162,5 +162,6 @@
 
     <!-- CONTENT DESCRIPTORS -->
     <string name="contentdescriptor_searchitem_image">Search Item image preview</string>
+    <string name="backdrop_image">Backdrop image</string>
 
 </resources>

@@ -134,7 +134,7 @@ public class RecordActivity extends AppCompatActivity implements TabListener {
             if (mDetailsFragment == null) {
                 mDetailsFragment = new RecordDetailsFragment();
             }
-            fragmentTransaction.replace(R.id.activity_record_fragment_details, mDetailsFragment);
+//            fragmentTransaction.replace(R.id.activity_record_fragment_details, mDetailsFragment);
             fragmentTransaction.commit();
         } else {
             getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -249,7 +249,7 @@ public class RecordActivity extends AppCompatActivity implements TabListener {
         findViewById(R.id.include_record_loading).setVisibility(showLoading ? View.VISIBLE : View.GONE);
         findViewById(R.id.activity_record_pager).setVisibility(!showLoading ? View.VISIBLE : View.GONE);
         if (mTwoColumns) {
-            findViewById(R.id.activity_record_fragment_details).setVisibility(!showLoading ? View.VISIBLE : View.GONE);
+//            findViewById(R.id.activity_record_fragment_details).setVisibility(!showLoading ? View.VISIBLE : View.GONE);
         }
     }
 

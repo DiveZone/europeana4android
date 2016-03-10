@@ -17,69 +17,62 @@ package net.eledge.android.europeana.gui.activity;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.squareup.otto.Subscribe;
 
 import net.eledge.android.europeana.EuropeanaApplication;
+import net.eledge.android.europeana.Preferences;
 import net.eledge.android.europeana.R;
-import net.eledge.android.europeana.gui.adapter.SuggestionAdapter;
+import net.eledge.android.europeana.db.model.BlogArticle;
+import net.eledge.android.europeana.gui.adapter.BlogAdapter;
+import net.eledge.android.europeana.gui.adapter.events.BlogItemClicked;
 import net.eledge.android.europeana.gui.adapter.events.SuggestionClicked;
-import net.eledge.android.europeana.gui.fragment.HomeBlogFragment;
 import net.eledge.android.europeana.search.ApiTasks;
-import net.eledge.android.europeana.search.SearchController;
-import net.eledge.android.europeana.search.event.SuggestionsLoadedEvent;
-import net.eledge.android.europeana.search.model.suggestion.Suggestion;
+import net.eledge.android.europeana.service.event.BlogItemsLoadedEvent;
+import net.eledge.android.europeana.service.task.BlogDownloadTask;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class HomeActivity extends AppCompatActivity {
 
-    // Controllers
-    private final SearchController searchController = SearchController._instance;
-
-    // Fragments
-    private HomeBlogFragment mBlogFragment;
-
     // Views
-    @Bind(R.id.activity_home_recyclerview_suggestions)
-    RecyclerView mGridViewSuggestions;
-
-    @Bind(R.id.toolbar_searchform_edittext_query)
+//    @Bind(R.id.toolbar_searchform_edittext_query)
     EditText mEditTextQuery;
 
-    @Bind(R.id.my_toolbar)
+    @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
-    // Adapters
-    private SuggestionAdapter _suggestionAdaptor;
+    @Bind(R.id.activity_home_blog_recyclerView)
+    RecyclerView mRecyclerView;
 
     private boolean isLandscape;
+    private BlogAdapter mBlogAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,56 +86,24 @@ public class HomeActivity extends AppCompatActivity {
         ApiTasks.getInstance().suggestionPageSize = getResources().getInteger(R.integer.home_suggestions_pagesize);
         isLandscape = getResources().getBoolean(R.bool.home_support_landscape);
 
-        _suggestionAdaptor = new SuggestionAdapter();
-        mGridViewSuggestions.setAdapter(_suggestionAdaptor);
+        // setup BLOG
 
-        mEditTextQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((actionId == EditorInfo.IME_ACTION_SEARCH) || (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    performSearch(v.getText().toString());
-                    return true;
-                }
-                return false;
-            }
-        });
-        mEditTextQuery.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 2) {
-                    if (mGridViewSuggestions.isShown()) {
-                        _suggestionAdaptor.suggestions.clear();
-                        _suggestionAdaptor.notifyDataSetChanged();
-                    }
-                    searchController.suggestions(s.toString());
-                } else {
-                    updateSuggestions(null);
-                }
-            }
+        mBlogAdapter = new BlogAdapter(this);
+        mRecyclerView.setAdapter(mBlogAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        loadFromDatabase();
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
+//        mEditTextQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if ((actionId == EditorInfo.IME_ACTION_SEARCH) || (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+//                    performSearch(v.getText().toString());
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                // ignore
-            }
-        });
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (mBlogFragment == null) {
-            mBlogFragment = new HomeBlogFragment();
-        }
-        fragmentTransaction.replace(R.id.activity_home_fragment_blog, mBlogFragment);
-        fragmentTransaction.commit();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -201,34 +162,17 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void switchBlogSuggestions(boolean showSuggestions) {
-        if (!isLandscape) {
-            mGridViewSuggestions.setVisibility(showSuggestions ? View.VISIBLE : View.GONE);
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            if (showSuggestions) {
-                fragmentTransaction.hide(mBlogFragment);
-            } else {
-                fragmentTransaction.show(mBlogFragment);
-            }
-            fragmentTransaction.commitAllowingStateLoss();
-        }
-    }
-
-    @Subscribe
-    public void onSuggestionsLoadedEvent(SuggestionsLoadedEvent event) {
-        updateSuggestions(event.suggestions);
-    }
-
-    private void updateSuggestions(Suggestion[] suggestions) {
-        _suggestionAdaptor.suggestions.clear();
-        if (ArrayUtils.isNotEmpty(suggestions)) {
-            Collections.addAll(_suggestionAdaptor.suggestions, suggestions);
-            _suggestionAdaptor.notifyDataSetChanged();
-            switchBlogSuggestions(true);
-        } else {
-            _suggestionAdaptor.notifyDataSetChanged();
-            switchBlogSuggestions(false);
-        }
+//        if (!isLandscape) {
+//            mGridViewSuggestions.setVisibility(showSuggestions ? View.VISIBLE : View.GONE);
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            if (showSuggestions) {
+//                fragmentTransaction.hide(mBlogFragment);
+//            } else {
+//                fragmentTransaction.show(mBlogFragment);
+//            }
+//            fragmentTransaction.commitAllowingStateLoss();
+//        }
     }
 
     @Override
@@ -254,5 +198,47 @@ public class HomeActivity extends AppCompatActivity {
         Intent refresh = new Intent(this, HomeActivity.class);
         startActivity(refresh);
     }
+
+    private void loadFromDatabase() {
+        RealmResults<BlogArticle> articles = Realm.getDefaultInstance().allObjects(BlogArticle.class);
+        if ((articles == null) || articles.isEmpty()) {
+            new BlogDownloadTask(this).execute();
+        } else {
+            updatedArticles(articles);
+        }
+    }
+
+    @Subscribe
+    public void onBlogItemsLoadedEvent(BlogItemsLoadedEvent event) {
+        updatedArticles(event.articles);
+    }
+
+
+    @Subscribe
+    public void onBlogItemClicked(BlogItemClicked event) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.article.getGuid()));
+        Tracker tracker = EuropeanaApplication._instance.getAnalyticsTracker();
+        tracker.send(new HitBuilders
+                .EventBuilder()
+                .setCategory("blog")
+                .setAction("click")
+                .setLabel(event.article.getGuid())
+                .build());
+        startActivity(browserIntent);
+    }
+
+    private void updatedArticles(List<BlogArticle> articles) {
+        if (articles != null) {
+            mBlogAdapter.articles.clear();
+            mBlogAdapter.articles.addAll(articles);
+            mBlogAdapter.notifyDataSetChanged();
+
+            SharedPreferences settings = getSharedPreferences(Preferences.BLOG, 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putLong(Preferences.BLOG_LAST_VIEW, new Date().getTime());
+            editor.apply();
+        }
+    }
+
 
 }
