@@ -32,21 +32,19 @@ Setting up the project is relatively easy.
 
 ### Development Environment
 This project requires the following setup:
-* __Android Studio 1.3.0__ or higher
+* __Android Studio 1.5.0__ or higher
 * __JDK 1.7__ or higher
-* __Gradle 2.4__ or higher
 
 Check **build.gradle** which SDK and build tools are required via the SDK manager.
 
 ### Creating a project
 1. Check out europeana4android on GIT.
-2. In the europeana4android project, copy the src/main/AndroidManifest.xml.template
-to AndroidManifest.xml in the same folder. The copied file is configured to be
-ignored by GIT.
+2. Add to ~/.gradle/gradle.properties the following properties:
+  * E4A_API_PUBLIC_KEY (your europeana API public key)
+  * E4A_API_PRIVATE_KEY (your europeana API private key)
+  * E4A_MAPS_API_KEY (your google maps developer API key)
 3. Import the project folder into AndroidStudio using the import project function.
-If you want to use gradle wrapper or a local gradle installation is up to you.
-4. Before testing you are required to have a Google Maps API key and combination
-of Europeana API public and private key.
+The project is standard configured with a graddle wrapper, but you can also use your local gradle installation.
 
 ## Project planning
 
