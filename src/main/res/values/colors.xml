@@ -16,6 +16,7 @@
 <resources>
 
     <color name="background">#e5e5e5</color>
+    <color name="background_transparant">#c8e5e5e5</color>
     <color name="background_drawer">#fff3f3f3</color>
 
     <!-- light blue 500 / 700 -->

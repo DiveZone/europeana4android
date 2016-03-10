@@ -23,6 +23,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +32,9 @@ import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -62,7 +65,7 @@ import io.realm.RealmResults;
 public class HomeActivity extends AppCompatActivity {
 
     // Views
-//    @Bind(R.id.toolbar_searchform_edittext_query)
+    @Bind(R.id.toolbar_searchform_edittext_query)
     EditText mEditTextQuery;
 
     @Bind(R.id.toolbar)
@@ -79,7 +82,14 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         EuropeanaApplication.bus.register(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        final ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayShowHomeEnabled(true);
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setDisplayShowCustomEnabled(true);
+            ab.setDisplayShowTitleEnabled(false);
+        }
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
@@ -93,16 +103,16 @@ public class HomeActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         loadFromDatabase();
 
-//        mEditTextQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if ((actionId == EditorInfo.IME_ACTION_SEARCH) || (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-//                    performSearch(v.getText().toString());
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
+        mEditTextQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((actionId == EditorInfo.IME_ACTION_SEARCH) || (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    performSearch(v.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 
