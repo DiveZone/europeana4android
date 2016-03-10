@@ -10,8 +10,6 @@ build/
 *~
 *.swp
 
-**/AndroidManifest.xml
-
 # OSX
 .DS_Store
 /.nb-gradle/private/
