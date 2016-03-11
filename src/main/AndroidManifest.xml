@@ -145,6 +145,10 @@
         <activity
             android:name="net.eledge.android.europeana.gui.activity.SettingsActivity"
             android:label="@string/app_name" />
+            
+        <activity
+            android:name="net.eledge.android.europeana.gui.activity.WebviewActivity"
+            android:label="@string/app_name" />
 
     </application>
 
