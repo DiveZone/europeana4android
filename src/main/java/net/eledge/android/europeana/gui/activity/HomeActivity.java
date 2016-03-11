@@ -23,6 +23,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,6 +51,7 @@ import net.eledge.android.europeana.gui.adapter.events.SuggestionClicked;
 import net.eledge.android.europeana.search.ApiTasks;
 import net.eledge.android.europeana.service.event.BlogItemsLoadedEvent;
 import net.eledge.android.europeana.service.task.BlogDownloadTask;
+import net.eledge.android.toolkit.gui.CustomTabActivityUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -226,7 +228,6 @@ public class HomeActivity extends AppCompatActivity {
 
     @Subscribe
     public void onBlogItemClicked(BlogItemClicked event) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.article.getGuid()));
         Tracker tracker = EuropeanaApplication._instance.getAnalyticsTracker();
         tracker.send(new HitBuilders
                 .EventBuilder()
@@ -234,7 +235,12 @@ public class HomeActivity extends AppCompatActivity {
                 .setAction("click")
                 .setLabel(event.article.getGuid())
                 .build());
-        startActivity(browserIntent);
+        CustomTabActivityHelper.openCustomTab(
+            this, 
+            new CustomTabsIntent.Builder().build(), 
+            Uri.parse(event.article.getGuid()), 
+            new WebviewActivity.WebviewFallback()
+        );
     }
 
     private void updatedArticles(List<BlogArticle> articles) {
