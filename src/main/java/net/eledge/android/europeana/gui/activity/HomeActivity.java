@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,8 +32,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -51,7 +50,6 @@ import net.eledge.android.europeana.gui.adapter.events.SuggestionClicked;
 import net.eledge.android.europeana.search.ApiTasks;
 import net.eledge.android.europeana.service.event.BlogItemsLoadedEvent;
 import net.eledge.android.europeana.service.task.BlogDownloadTask;
-import net.eledge.android.toolkit.gui.CustomTabActivityUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -154,40 +152,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent i = new Intent(this, SettingsActivity.class);
-                startActivityForResult(i, 1);
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        return true;
-    }
-
-    private void switchBlogSuggestions(boolean showSuggestions) {
-//        if (!isLandscape) {
-//            mGridViewSuggestions.setVisibility(showSuggestions ? View.VISIBLE : View.GONE);
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            if (showSuggestions) {
-//                fragmentTransaction.hide(mBlogFragment);
-//            } else {
-//                fragmentTransaction.show(mBlogFragment);
-//            }
-//            fragmentTransaction.commitAllowingStateLoss();
-//        }
-    }
-
-    @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
@@ -235,12 +199,12 @@ public class HomeActivity extends AppCompatActivity {
                 .setAction("click")
                 .setLabel(event.article.getGuid())
                 .build());
-        CustomTabActivityHelper.openCustomTab(
-            this, 
-            new CustomTabsIntent.Builder().build(), 
-            Uri.parse(event.article.getGuid()), 
-            new WebviewActivity.WebviewFallback()
-        );
+
+        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder(null)
+                .setToolbarColor(ContextCompat.getColor(this, R.color.primary))
+                .setShowTitle(true)
+                .build();
+        customTabsIntent.launchUrl(HomeActivity.this, Uri.parse(event.article.getGuid()));
     }
 
     private void updatedArticles(List<BlogArticle> articles) {
