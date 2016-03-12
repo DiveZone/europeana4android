@@ -12,12 +12,9 @@ import net.eledge.android.europeana.search.event.RecordLoadingEvent;
 import net.eledge.android.europeana.search.event.SearchFacetsLoadedEvent;
 import net.eledge.android.europeana.search.event.SearchItemsLoadedEvent;
 import net.eledge.android.europeana.search.event.SearchStartedEvent;
-import net.eledge.android.europeana.search.event.SuggestionsLoadedEvent;
 import net.eledge.android.europeana.search.model.SearchFacets;
 import net.eledge.android.europeana.search.model.SearchItems;
-import net.eledge.android.europeana.search.model.Suggestions;
 import net.eledge.android.europeana.search.model.record.RecordObject;
-import net.eledge.android.europeana.search.model.suggestion.Suggestion;
 import net.eledge.android.europeana.tools.UriHelper;
 import net.eledge.android.toolkit.net.JsonUtils;
 import net.eledge.android.toolkit.net.abstracts.AsyncLoaderListener;
@@ -25,18 +22,10 @@ import net.eledge.android.toolkit.net.abstracts.AsyncLoaderListener;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ApiTasks {
 
     private static ApiTasks _instance;
 
-    private final Map<String, Suggestion[]> suggestionCache = new HashMap<>();
-
-    public int suggestionPageSize = 12;
-
-    private AsyncTask<String, Void, Suggestions> mSuggestionTask;
     private AsyncTask<String, Void, SearchItems> mSearchTask;
     private AsyncTask<String, Void, SearchFacets> mSearchFacetTask;
     private AsyncTask<String, Void, RecordObject> mRecordTask;
@@ -56,7 +45,7 @@ public class ApiTasks {
         cancelSearchTasks();
         if (ArrayUtils.isNotEmpty(terms)) {
             EuropeanaApplication.bus.post(new SearchStartedEvent(false));
-            mSearchTask = JsonUtils.parseJson(
+            mSearchTask = JsonUtils.parseJson(SearchItems.class,
                     new AsyncLoaderListener<SearchItems>() {
                         @Override
                         public void onFinished(SearchItems result, int httpStatus, long timing) {
@@ -73,45 +62,12 @@ public class ApiTasks {
         }
     }
 
-    void runSuggestions(final String query) {
-        if (mSuggestionTask != null) {
-            mSuggestionTask.cancel(true);
-        }
-        if (query != null) {
-            if (suggestionCache.containsKey(query)) {
-                EuropeanaApplication.bus.post(new SuggestionsLoadedEvent(suggestionCache.get(query)));
-            } else {
-                String url = UriHelper.getSuggestionUrl(query, suggestionPageSize);
-                if (url != null) {
-                    mSuggestionTask = JsonUtils.parseJson(
-                            new AsyncLoaderListener<Suggestions>() {
-                                @Override
-                                public void onFinished(Suggestions suggestions, int httpStatus, long timing) {
-                                    if (suggestions != null) {
-                                        suggestionCache.put(query, suggestions.items);
-                                        Tracker tracker = EuropeanaApplication._instance.getAnalyticsTracker();
-                                        tracker.send(new HitBuilders.TimingBuilder()
-                                                .setCategory("Tasks")
-                                                .setValue(timing)
-                                                .setVariable("SuggestionTask")
-                                                .setLabel(query).build());
-                                        EuropeanaApplication.bus
-                                                .post(new SuggestionsLoadedEvent(suggestions.items));
-                                    }
-                                }
-                            },
-                            url, Config.JSON_CHARSET);
-                }
-            }
-        }
-    }
-
     void runSearchFacets(String[] terms) {
         if (mSearchFacetTask != null) {
             mSearchFacetTask.cancel(true);
         }
         if (ArrayUtils.isNotEmpty(terms)) {
-            mSearchFacetTask = JsonUtils.parseJson(
+            mSearchFacetTask = JsonUtils.parseJson(SearchFacets.class,
                     new AsyncLoaderListener<SearchFacets>() {
                         @Override
                         public void onFinished(SearchFacets result, int httpStatus, long timing) {
@@ -135,7 +91,7 @@ public class ApiTasks {
                 mRecordTask.cancel(true);
             }
             EuropeanaApplication.bus.post(new RecordLoadingEvent());
-            mRecordTask = JsonUtils.parseJson(
+            mRecordTask = JsonUtils.parseJson(RecordObject.class,
                     new AsyncLoaderListener<RecordObject>() {
                         @Override
                         public void onFinished(RecordObject result, int httpStatus, long timing) {

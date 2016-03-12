@@ -42,9 +42,8 @@ public class JsonParserTask<T> extends AsyncTask<String, Void, T> {
     private final AsyncLoaderListener<T> mListener;
 
     @SuppressWarnings("unchecked")
-    public JsonParserTask(AsyncLoaderListener<T> mListener) {
-        this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-                .getActualTypeArguments()[0];
+    public JsonParserTask(Class<T> clazz, AsyncLoaderListener<T> mListener) {
+        this.clazz = clazz;
         this.mListener = mListener;
     }
 

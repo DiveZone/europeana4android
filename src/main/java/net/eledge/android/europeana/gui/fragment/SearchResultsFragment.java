@@ -174,7 +174,7 @@ public class SearchResultsFragment extends Fragment {
             mResultAdaptor.notifyDataSetChanged();
         }
         mStatusTextView.setText(GuiUtils.format(this.getActivity(), R.string.msg_searchresults,
-                searchController.size(), event.results.totalResults));
+                                                                                                                                           searchController.size(), event.results.totalResults));
         showStatusText();
     }
 

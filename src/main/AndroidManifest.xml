@@ -63,7 +63,7 @@
             android:value="${MAPS_API_KEY}" />
 
         <meta-data
-            android:name="net.eledge.android.europeana.tools.GlideConfig"
+            android:name="net.eledge.android.europeana.GlideConfig"
             android:value="GlideModule" />
 
         <activity

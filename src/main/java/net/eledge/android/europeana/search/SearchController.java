@@ -62,10 +62,6 @@ public class SearchController {
         // Singleton
     }
 
-    public void suggestions(final String term) {
-        _tasks.runSuggestions(term);
-    }
-
     public void newSearch(String query, String... qf) {
         reset();
         terms = ArrayUtils.add(ArrayUtils.EMPTY_STRING_ARRAY, query);

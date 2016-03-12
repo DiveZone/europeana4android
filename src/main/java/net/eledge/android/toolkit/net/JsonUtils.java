@@ -24,10 +24,14 @@ import net.eledge.android.toolkit.net.internal.json.JsonParserTask;
 
 public class JsonUtils {
 
-    public static <T> AsyncTask<String, Void, T> parseJson(@NonNull final AsyncLoaderListener<T> listener,
-                                                           @NonNull String url, @NonNull String charset) {
+    public static <T> AsyncTask<String, Void, T> parseJson(
+            @NonNull final Class<T> clazz,
+            @NonNull final AsyncLoaderListener<T> listener,
+            @NonNull String url,
+            @NonNull String charset
+    ) {
         disableConnectionReuseIfNecessary();
-        return new JsonParserTask<>(listener).execute(url, charset);
+        return new JsonParserTask<>(clazz, listener).execute(url, charset);
     }
 
     private static void disableConnectionReuseIfNecessary() {

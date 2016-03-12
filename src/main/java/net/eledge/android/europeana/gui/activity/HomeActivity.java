@@ -46,8 +46,6 @@ import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.db.model.BlogArticle;
 import net.eledge.android.europeana.gui.adapter.BlogAdapter;
 import net.eledge.android.europeana.gui.adapter.events.BlogItemClicked;
-import net.eledge.android.europeana.gui.adapter.events.SuggestionClicked;
-import net.eledge.android.europeana.search.ApiTasks;
 import net.eledge.android.europeana.service.event.BlogItemsLoadedEvent;
 import net.eledge.android.europeana.service.task.BlogDownloadTask;
 
@@ -93,7 +91,6 @@ public class HomeActivity extends AppCompatActivity {
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
-        ApiTasks.getInstance().suggestionPageSize = getResources().getInteger(R.integer.home_suggestions_pagesize);
         isLandscape = getResources().getBoolean(R.bool.home_support_landscape);
 
         // setup BLOG
@@ -144,11 +141,6 @@ public class HomeActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_SEARCH);
         intent.putExtra(SearchManager.QUERY, query);
         this.startActivity(intent);
-    }
-
-    @Subscribe
-    public void onSuggestionClicked(SuggestionClicked event) {
-        performSearch(event.suggestion.query);
     }
 
     @Override
@@ -204,7 +196,7 @@ public class HomeActivity extends AppCompatActivity {
                 .setToolbarColor(ContextCompat.getColor(this, R.color.primary))
                 .setShowTitle(true)
                 .build();
-        customTabsIntent.launchUrl(HomeActivity.this, Uri.parse(event.article.getGuid()));
+        customTabsIntent.launchUrl(this, Uri.parse(event.article.getGuid()));
     }
 
     private void updatedArticles(List<BlogArticle> articles) {
