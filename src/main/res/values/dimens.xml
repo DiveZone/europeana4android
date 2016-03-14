@@ -20,10 +20,6 @@
     <dimen name="spacing_large">16dp</dimen>
     <dimen name="spacing_xlarge">32dp</dimen>
 
-    <dimen name="elevation_low">9dp</dimen>
-    <dimen name="elevation_high">12dp</dimen>
-
-    <dimen name="toolbar_homescreen">128dp</dimen>
     <dimen name="toolbar_search">64dp</dimen>
 
     <dimen name="drawer_facets_width">240dp</dimen>
@@ -34,10 +30,6 @@
 
     <dimen name="griditem_searchresult_textsize">14sp</dimen>
     <dimen name="griditem_searchresult_iconsize">14sp</dimen>
-
-    <dimen name="griditem_suggestion_textsize_suggestion">16sp</dimen>
-    <dimen name="griditem_suggestion_textsize_info">12sp</dimen>
-    <dimen name="griditem_suggestion_height">68dp</dimen>
 
     <dimen name="record_map_spacing">8dp</dimen>
     <dimen name="record_media_height">100dp</dimen>

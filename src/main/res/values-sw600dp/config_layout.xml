@@ -16,8 +16,6 @@
 <resources>
 
     <item name="home_support_landscape" type="bool">false</item>
-    <item name="home_suggestions_columns" type="integer">3</item>
-    <item name="home_suggestions_pagesize" type="integer">18</item>
 
     <item name="search_results_columns" type="integer">3</item>
     <item name="search_result_pagesize" type="integer">24</item>

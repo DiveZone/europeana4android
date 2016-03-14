@@ -25,7 +25,6 @@
 
     <!-- Lime 500 -->
     <color name="accent">#69f0ae</color>
-    <color name="accent_bright">#fff0ff3d</color>
 
     <color name="background_facet_divider">#eee</color>
     <color name="background_facet_section">#31b6e7</color>
