@@ -19,19 +19,6 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="griditem_suggestion">
-        <item name="android:height">@dimen/griditem_suggestion_height</item>
-    </style>
-
-    <style name="griditem_suggestion_text">
-        <item name="android:textSize">@dimen/griditem_suggestion_textsize_suggestion</item>
-    </style>
-
-    <style name="griditem_suggestion_info">
-        <item name="android:textSize">@dimen/griditem_suggestion_textsize_info</item>
-        <item name="android:textColor">@color/emphasis</item>
-    </style>
-
     <style name="drawerItem"><!--  parent="android:Widget.Light.TextView"> -->
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:paddingLeft">8dp</item>
@@ -157,16 +144,6 @@
         <item name="android:background">@color/emphasis_transparant</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="buttonFab">
-        <item name="android:layout_width">?attr/actionBarSize</item>
-        <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:layout_margin">@dimen/spacing_large</item>
-        <item name="android:background">@drawable/fab_background</item>
-        <item name="android:src">@drawable/ic_action_search</item>
-        <!--<item name="android:outlineProvider">background</item>-->
-        <!--<item name="android:stateListAnimator">@anim/fab_elevation</item>-->
     </style>
 
 </resources>

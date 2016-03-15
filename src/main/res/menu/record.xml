@@ -19,19 +19,19 @@
 
     <item
         android:id="@+id/action_previous"
-        android:icon="@drawable/ic_action_previous_item"
+        android:icon="@drawable/ic_chevron_left"
         android:orderInCategory="1"
         android:title="@string/action_previous"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_next"
-        android:icon="@drawable/ic_action_next_item"
+        android:icon="@drawable/ic_chevron_right"
         android:orderInCategory="2"
         android:title="@string/action_next"
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_share"
-        android:icon="@drawable/ic_action_share"
+        android:icon="@drawable/ic_share"
         android:orderInCategory="20"
         android:title="@string/action_share"
         app:showAsAction="ifRoom"/>
@@ -43,7 +43,7 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_settings"
-        android:icon="@drawable/ic_action_settings"
+        android:icon="@drawable/ic_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never"/>

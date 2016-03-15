@@ -195,6 +195,7 @@ public class HomeActivity extends AppCompatActivity {
         CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder(null)
                 .setToolbarColor(ContextCompat.getColor(this, R.color.primary))
                 .setShowTitle(true)
+                .setCloseButtonIcon(R.drawable.ic_arrow_back)
                 .build();
         customTabsIntent.launchUrl(this, Uri.parse(event.article.getGuid()));
     }
