@@ -60,14 +60,14 @@
                     android:layout_gravity="bottom"
                     android:textColor="@android:color/black"
                     android:textColorHint="@android:color/darker_gray"
-                    android:cursorVisible="true"
+                    android:textCursorDrawable="@null"
                     android:textSize="16sp"
                     android:background="@color/background_transparant"
                     android:inputType="text"
                     android:singleLine="true"
                     android:imeOptions="actionSearch"
                     android:hint="@string/form_search_query"
-                    android:drawableLeft="@drawable/ic_edittext_search"
+                    android:drawableLeft="@drawable/ic_search_transparant"
                     />
 
                 <android.support.v7.widget.Toolbar

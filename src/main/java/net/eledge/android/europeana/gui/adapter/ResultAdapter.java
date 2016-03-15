@@ -85,13 +85,15 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
                         @Override
                         public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                            Bitmap bitmap = ((BitmapDrawable) viewHolder.image.getDrawable()).getBitmap();
-                            new Palette.Builder(bitmap).generate(new Palette.PaletteAsyncListener() {
-                                public void onGenerated(Palette palette) {
-                                    viewHolder.background.setBackgroundColor(
-                                            palette.getLightMutedColor(context.getResources().getColor(R.color.emphasis_transparant)));
-                                }
-                            });
+                            if ( (viewHolder.image != null) && (viewHolder.image.getDrawable() != null)) {
+                                Bitmap bitmap = ((BitmapDrawable) viewHolder.image.getDrawable()).getBitmap();
+                                new Palette.Builder(bitmap).generate(new Palette.PaletteAsyncListener() {
+                                    public void onGenerated(Palette palette) {
+                                        viewHolder.background.setBackgroundColor(
+                                                palette.getLightMutedColor(context.getResources().getColor(R.color.emphasis_transparant)));
+                                    }
+                                });
+                            }
                             return false;
                         }
                     })

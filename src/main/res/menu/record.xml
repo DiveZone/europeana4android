@@ -37,7 +37,7 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/ic_action_search"
+        android:icon="@drawable/ic_search"
         android:orderInCategory="30"
         android:title="@string/action_search"
         app:showAsAction="ifRoom"/>

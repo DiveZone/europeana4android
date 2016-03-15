@@ -24,7 +24,7 @@
         android:title="@string/action_share" />
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/ic_action_search"
+        android:icon="@drawable/ic_search"
         android:orderInCategory="20"
         app:showAsAction="ifRoom"
         android:title="@string/action_search" />
