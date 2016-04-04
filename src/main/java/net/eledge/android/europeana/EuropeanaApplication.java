@@ -23,7 +23,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.otto.Bus;
@@ -43,8 +42,6 @@ public class EuropeanaApplication extends Application {
 
     private Bundle metaData;
 
-    private Tracker mTracker;
-
     public static EuropeanaApplication _instance;
 
     public static Bus bus;
@@ -57,6 +54,7 @@ public class EuropeanaApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        AnalyticsTrackers.initialize(this);
         try {
             LeakCanary.install(this);
             metaData = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES | PackageManager.GET_META_DATA).applicationInfo.metaData;
@@ -79,11 +77,7 @@ public class EuropeanaApplication extends Application {
     }
 
     public synchronized Tracker getAnalyticsTracker() {
-        if (mTracker == null) {
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            mTracker = analytics.newTracker(R.xml.app_tracker);
-        }
-        return mTracker;
+        return AnalyticsTrackers.getInstance().get(AnalyticsTrackers.Target.APP);
     }
 
     public String getLocale() {

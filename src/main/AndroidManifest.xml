@@ -12,140 +12,137 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
-  -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.eledge.android.europeana">
+-->
+<manifest package="net.eledge.android.europeana"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true" />
+        android:required="true"/>
 
     <!-- PROTECTION_NORMAL -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.NFC" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.NFC"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <!-- OTHER -->
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
 
     <permission
         android:name="net.eledge.android.europeana.permission.MAPS_RECEIVE"
-        android:protectionLevel="signature" />
+        android:protectionLevel="signature"/>
 
-    <uses-permission android:name="net.eledge.android.europeana.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="net.eledge.android.europeana.permission.MAPS_RECEIVE"/>
 
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
-        android:smallScreens="true" />
+        android:smallScreens="true"/>
 
     <application
-        android:name="net.eledge.android.europeana.EuropeanaApplication"
+        android:name=".EuropeanaApplication"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Europeana"
-        android:fullBackupContent="true">
+        android:theme="@style/Theme.Europeana">
         <meta-data
             android:name="eu.europeana.api.v2.API_PUBLIC_KEY"
-            android:value="${API_PUBLIC_KEY}" />
+            android:value="${API_PUBLIC_KEY}"/>
         <meta-data
             android:name="eu.europeana.api.v2.API_PRIVATE_KEY"
-            android:value="${API_PRIVATE_KEY}" />
+            android:value="${API_PRIVATE_KEY}"/>
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="${MAPS_API_KEY}" />
-
+            android:value="${MAPS_API_KEY}"/>
         <meta-data
             android:name="net.eledge.android.europeana.GlideConfig"
-            android:value="GlideModule" />
+            android:value="GlideModule"/>
 
         <activity
-            android:name="net.eledge.android.europeana.gui.activity.HomeActivity"
+            android:name=".gui.activity.HomeActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name="net.eledge.android.europeana.gui.activity.SearchActivity"
+            android:name=".gui.activity.SearchActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:parentActivityName="net.eledge.android.europeana.gui.activity.HomeActivity">
+            android:parentActivityName=".gui.activity.HomeActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
                     android:host="www.europeana.eu"
                     android:path="/portal/search.html"
-                    android:scheme="http" />
+                    android:scheme="http"/>
                 <data
                     android:host="europeana.eu"
                     android:path="/portal/search.html"
-                    android:scheme="http" />
+                    android:scheme="http"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
-                <data android:mimeType="application/vnd.net.eledge.android.europeana.search" />
+                <data android:mimeType="application/vnd.net.eledge.android.europeana.search"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.eledge.android.europeana.gui.activity.HomeActivity" />
+                android:value="net.eledge.android.europeana.gui.activity.HomeActivity"/>
         </activity>
         <activity
-            android:name="net.eledge.android.europeana.gui.activity.RecordActivity"
+            android:name=".gui.activity.RecordActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:noHistory="true"
-            android:parentActivityName="net.eledge.android.europeana.gui.activity.SearchActivity">
+            android:parentActivityName=".gui.activity.SearchActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
                     android:host="www.europeana.eu"
                     android:pathPattern="/portal/record/.*/.*"
-                    android:scheme="http" />
+                    android:scheme="http"/>
                 <data
                     android:host="europeana.eu"
                     android:pathPattern="/portal/record/.*/.*"
-                    android:scheme="http" />
+                    android:scheme="http"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
-                <data android:mimeType="application/vnd.net.eledge.android.europeana.record" />
+                <data android:mimeType="application/vnd.net.eledge.android.europeana.record"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.eledge.android.europeana.gui.activity.SearchActivity" />
+                android:value="net.eledge.android.europeana.gui.activity.SearchActivity"/>
         </activity>
-
         <activity
-            android:name="net.eledge.android.europeana.gui.activity.SettingsActivity"
-            android:label="@string/app_name" />
-
+            android:name=".gui.activity.SettingsActivity"
+            android:label="@string/app_name"/>
     </application>
 
 </manifest>
