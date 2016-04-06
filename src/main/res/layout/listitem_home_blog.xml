@@ -12,46 +12,55 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="6dp">
-
-    <!-- android:layout_margin="@dimen/listitem_blog_spacing" -->
-
-    <TextView
-        android:id="@+id/listitem_home_blog_textview_title"
-        style="@style/homeBlogTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/listitem_home_blog_textview_text"
-        style="@style/homeBlogContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <data>
+        <import type="net.eledge.android.toolkit.gui.GuiUtils"/>
+        <variable
+            name="article"
+            type="net.eledge.android.europeana.db.model.BlogArticle"/>
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:padding="6dp">
+
+        <!-- android:layout_margin="@dimen/listitem_blog_spacing" -->
 
         <TextView
-            android:id="@+id/listitem_home_blog_textview_author"
-            style="@style/homeBlogAuthorDate"
-            android:layout_width="0dp"
+            style="@style/homeBlogTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:text='@{article.title}'/>
 
         <TextView
-            android:id="@+id/listitem_home_blog_textview_date"
-            style="@style/homeBlogAuthorDate"
-            android:layout_width="0dp"
+            style="@style/homeBlogContent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right" />
+            android:text='@{article.description}'/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/homeBlogAuthorDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text='@{@string/fragment_home_blog_posted(article.author)}'/>
+
+            <TextView
+                style="@style/homeBlogAuthorDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text='@{article.formattedDate}'/>
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
+</layout>

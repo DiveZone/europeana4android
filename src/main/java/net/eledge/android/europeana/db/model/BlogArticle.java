@@ -15,12 +15,18 @@
 
 package net.eledge.android.europeana.db.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class BlogArticle extends RealmObject {
+
+    @Ignore
+    private final DateFormat formatter = SimpleDateFormat.getDateTimeInstance();
 
     @PrimaryKey
     private String guid;
@@ -92,4 +98,9 @@ public class BlogArticle extends RealmObject {
     public void setMarkedNew(boolean markedNew) {
         this.markedNew = markedNew;
     }
+
+    public String getFormattedDate() {
+        return formatter.format(getPubDate());
+    }
+
 }

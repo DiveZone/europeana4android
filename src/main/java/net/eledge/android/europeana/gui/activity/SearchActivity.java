@@ -163,7 +163,7 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
     @Override
     protected void onDestroy() {
         searchController.cancelSearch();
-        EuropeanaApplication.bus.register(this);
+        EuropeanaApplication.bus.unregister(this);
         super.onDestroy();
     }
 

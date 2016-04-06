@@ -15,82 +15,60 @@
 
 package net.eledge.android.europeana.gui.adapter;
 
-import android.content.Context;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import net.eledge.android.europeana.BR;
 import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.db.model.BlogArticle;
 import net.eledge.android.europeana.gui.adapter.events.BlogItemClicked;
-import net.eledge.android.toolkit.gui.GuiUtils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ViewHolder> {
 
-    private final DateFormat formatter = SimpleDateFormat.getDateTimeInstance();
-
     public final List<BlogArticle> articles = new ArrayList<>();
-    private final Context context;
 
-    public BlogAdapter(Context context) {
-        this.context = context;
+    public BlogAdapter() {
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.listitem_home_blog, parent, false);
-        return new ViewHolder(v);
+        ViewDataBinding viewDataBinding =
+                DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.getContext()),
+                        R.layout.listitem_home_blog, parent, false
+                );
+        return new ViewHolder(viewDataBinding);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        BlogArticle article = articles.get(position);
-        holder.article = article;
-        holder.title.setText(article.getTitle());
-        holder.content.setText(article.getDescription());
-        holder.author.setText(GuiUtils.format(context, R.string.fragment_home_blog_posted, article.getAuthor()));
-        holder.date.setText(formatter.format(article.getPubDate()));
-
+        holder.article = articles.get(position);
+        holder.binding.setVariable(BR.article, holder.article);
+        holder.binding.executePendingBindings();
     }
 
     @Override
     public int getItemCount() {
-        return articles == null ? 0 : articles.size();
+        return articles.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public BlogArticle article;
+        private ViewDataBinding binding;
 
-        @Bind(R.id.listitem_home_blog_textview_title)
-        TextView title = null;
-
-        @Bind(R.id.listitem_home_blog_textview_text)
-        TextView content = null;
-
-        @Bind(R.id.listitem_home_blog_textview_author)
-        TextView author = null;
-
-        @Bind(R.id.listitem_home_blog_textview_date)
-        TextView date = null;
-
-        private ViewHolder(View itemView) {
-            super(itemView);
+        private ViewHolder(ViewDataBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
             itemView.setOnClickListener(this);
-            ButterKnife.bind(this, itemView);
         }
 
         @Override

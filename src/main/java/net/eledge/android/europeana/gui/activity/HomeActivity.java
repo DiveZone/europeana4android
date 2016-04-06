@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // setup BLOG
 
-        mBlogAdapter = new BlogAdapter(this);
+        mBlogAdapter = new BlogAdapter();
         mRecyclerView.setAdapter(mBlogAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         loadFromDatabase();

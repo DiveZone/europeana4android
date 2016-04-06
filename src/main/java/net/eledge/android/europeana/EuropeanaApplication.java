@@ -27,6 +27,8 @@ import com.google.android.gms.analytics.Tracker;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.otto.Bus;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import java.util.Locale;
 
 import io.realm.Realm;
@@ -55,6 +57,7 @@ public class EuropeanaApplication extends Application {
     public void onCreate() {
         super.onCreate();
         AnalyticsTrackers.initialize(this);
+        JodaTimeAndroid.init(this);
         try {
             LeakCanary.install(this);
             metaData = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES | PackageManager.GET_META_DATA).applicationInfo.metaData;
