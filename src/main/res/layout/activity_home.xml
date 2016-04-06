@@ -56,7 +56,8 @@
                     android:id="@+id/toolbar_searchform_edittext_query"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_margin="20dp"
+                    android:layout_margin="16dp"
+                    android:padding="4dp"
                     android:layout_gravity="bottom"
                     android:textColor="@android:color/black"
                     android:textColorHint="@android:color/darker_gray"
@@ -67,6 +68,7 @@
                     android:singleLine="true"
                     android:imeOptions="actionSearch"
                     android:hint="@string/form_search_query"
+                    android:drawableStart="@drawable/ic_search_transparant"
                     android:drawableLeft="@drawable/ic_search_transparant"
                     />
 
@@ -74,24 +76,13 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:title=""
+                    android:title="@string/app_name"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
         </android.support.design.widget.AppBarLayout>
-
-        <!--<android.support.design.widget.FloatingActionButton-->
-            <!--android:id="@+id/overview_floating_action_button"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="16dp"-->
-            <!--android:clickable="true"-->
-            <!--android:src="@drawable/ic_action_search"-->
-            <!--app:layout_anchor="@id/app_bar_layout"-->
-            <!--app:layout_anchorGravity="bottom|right|end" />-->
-        <!--app:layout_behavior="@string/fab_onscroll_behavior" />-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/activity_home_blog_recyclerView"
