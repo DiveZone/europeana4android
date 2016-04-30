@@ -55,7 +55,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -63,13 +63,13 @@ import io.realm.RealmResults;
 public class HomeActivity extends AppCompatActivity {
 
     // Views
-    @Bind(R.id.toolbar_searchform_edittext_query)
+    @BindView(R.id.toolbar_searchform_edittext_query)
     EditText mEditTextQuery;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @Bind(R.id.activity_home_blog_recyclerView)
+    @BindView(R.id.activity_home_blog_recyclerView)
     RecyclerView mRecyclerView;
 
     private boolean isLandscape;

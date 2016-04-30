@@ -24,20 +24,23 @@ import android.view.ViewGroup;
 import net.eledge.android.europeana.R;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class RecordSeeAlsoFragment extends Fragment {
+
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(
                 R.layout.fragment_record_seealso, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

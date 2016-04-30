@@ -37,7 +37,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SearchController {
 
@@ -53,6 +55,7 @@ public class SearchController {
     private int itemSelected = -1;
 
     private final List<Item> searchItems = new ArrayList<>();
+    private final Map<String, Item> itemMap = new HashMap<>();
     private final List<Facet> facets = new ArrayList<>();
 
     private FacetType selectedFacet = FacetType.TYPE;
@@ -128,6 +131,7 @@ public class SearchController {
         synchronized (searchItems) {
             searchItems.clear();
         }
+        itemMap.clear();
         facets.clear();
     }
 
@@ -219,6 +223,13 @@ public class SearchController {
     public synchronized void onSearchItemsFinishedEvent(SearchItemsLoadedEvent event) {
         if (event.results != null) {
             totalResults = event.results.totalResults;
+            for (Item item : event.results.items) {
+                item.backgroundColor.set(0);
+                searchItems.add(item);
+                if ((item.edmPreview != null) && (item.edmPreview.length > 0)) {
+                    itemMap.put(item.edmPreview[0], item);
+                }
+            }
             searchItems.addAll(event.results.items);
         }
     }
@@ -233,6 +244,13 @@ public class SearchController {
 
     public synchronized List<Item> getSearchItems() {
         return searchItems;
+    }
+
+    public synchronized Item getItemByImageUrl(String url) {
+        if (itemMap.containsKey(url)) {
+            return itemMap.get(url);
+        }
+        return null;
     }
 
     public int getItemSelected() {

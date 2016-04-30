@@ -38,22 +38,25 @@ import net.eledge.android.europeana.search.model.record.abstracts.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class RecordMapFragment extends Fragment {
 
     // Controller
     private final RecordController recordController = RecordController._instance;
 
-    @Bind(R.id.fragment_record_map_mapview)
+    @BindView(R.id.fragment_record_map_mapview)
     MapView mMapView;
 
-    @Bind(R.id.fragment_record_map_textview_prefLabel)
+    @BindView(R.id.fragment_record_map_textview_prefLabel)
     TextView text1;
 
-    @Bind(R.id.fragment_record_map_textview_coordinates)
+    @BindView(R.id.fragment_record_map_textview_coordinates)
     TextView text2;
+
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +68,7 @@ public class RecordMapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_record_map, container, false);
-        ButterKnife.bind(this, root);
+        unbinder = ButterKnife.bind(this, root);
         mMapView.onCreate(savedInstanceState);
         RecordObject record = recordController.record;
         text1.setText(StringUtils.join(Resource.getPreferred(record.place.prefLabel, ((EuropeanaApplication) getActivity().getApplication()).getLocale()), ";"));
@@ -93,7 +96,7 @@ public class RecordMapFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

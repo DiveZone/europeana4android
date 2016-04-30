@@ -15,7 +15,6 @@
 
 package net.eledge.android.europeana.gui.activity;
 
-import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -62,7 +61,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SearchActivity extends AppCompatActivity implements FacetAdapter.FacetAdaptorClickListener {
@@ -75,10 +74,10 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
 
     // Views
     @Nullable
-    @Bind(R.id.drawerlayout_activity_search)
+    @BindView(R.id.drawerlayout_activity_search)
     DrawerLayout mDrawerLayout;
 
-    @Bind(R.id.drawer_facets)
+    @BindView(R.id.drawer_facets)
     RecyclerView mFacetsList;
 
     private ActionBarDrawerToggle mDrawerToggle;
@@ -143,7 +142,6 @@ public class SearchActivity extends AppCompatActivity implements FacetAdapter.Fa
         handleIntent(getIntent());
     }
 
-    @TargetApi(14)
     private void createNdefPushMessageCallback() {
         NfcAdapter mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNfcAdapter != null) {

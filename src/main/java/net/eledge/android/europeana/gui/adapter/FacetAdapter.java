@@ -30,7 +30,7 @@ import net.eledge.android.europeana.search.model.searchresults.FacetItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> {
@@ -104,14 +104,14 @@ public class FacetAdapter extends RecyclerView.Adapter<FacetAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @Bind(android.R.id.text1)
+        @BindView(android.R.id.text1)
         TextView mLabelTextView;
 
         @Nullable
-        @Bind(value = android.R.id.text2)
+        @BindView(value = android.R.id.text2)
         TextView mIconTextView;
 
-        @Bind(android.R.id.progress)
+        @BindView(android.R.id.progress)
         ProgressBar mProgressBar;
 
         public int position;

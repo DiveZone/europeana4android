@@ -15,7 +15,6 @@
 
 package net.eledge.android.europeana.gui.activity;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -52,20 +51,19 @@ import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
 import net.eledge.android.europeana.gui.adapter.RecordPagerAdapter;
 import net.eledge.android.europeana.gui.adapter.ResultAdapter;
+import net.eledge.android.europeana.gui.adapter.events.SearchItemClicked;
 import net.eledge.android.europeana.gui.fragment.RecordDetailsFragment;
 import net.eledge.android.europeana.search.RecordController;
 import net.eledge.android.europeana.search.SearchController;
 import net.eledge.android.europeana.search.event.RecordLoadedEvent;
 import net.eledge.android.europeana.search.event.RecordLoadingEvent;
-import net.eledge.android.europeana.search.model.record.RecordObject;
-import net.eledge.android.europeana.search.model.searchresults.Item;
 import net.eledge.android.toolkit.gui.GuiUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecordActivity extends AppCompatActivity implements TabListener {
@@ -80,14 +78,14 @@ public class RecordActivity extends AppCompatActivity implements TabListener {
     private RecordDetailsFragment mDetailsFragment;
 
     // Views
-    @Bind(R.id.drawer_items)
+    @BindView(R.id.drawer_items)
     RecyclerView mResultsList;
 
     @Nullable
-    @Bind(R.id.drawerlayout_activity_record)
+    @BindView(R.id.drawerlayout_activity_record)
     DrawerLayout mDrawerLayout;
 
-    @Bind(R.id.activity_record_pager)
+    @BindView(R.id.activity_record_pager)
     ViewPager mViewPager;
 
     // NavigationDrawer
@@ -110,17 +108,8 @@ public class RecordActivity extends AppCompatActivity implements TabListener {
 
         mTwoColumns = getResources().getBoolean(R.bool.home_support_landscape);
 
-        ResultAdapter mResultAdaptor = new ResultAdapter(getApplication(),
-                searchController.getSearchItems(), new ResultAdapter.ResultAdaptorClickListener() {
-            @Override
-            public void click(int position, Item item) {
-                searchController.setItemSelected(position);
-                openRecord(item.id);
-                if (mDrawerLayout != null) {
-                    mDrawerLayout.closeDrawers();
-                }
-            }
-        });
+        ResultAdapter mResultAdaptor = new ResultAdapter(
+                searchController.getSearchItems());
         mResultsList.setAdapter(mResultAdaptor);
 
         // ViewPager
@@ -171,7 +160,6 @@ public class RecordActivity extends AppCompatActivity implements TabListener {
         handleIntent(getIntent());
     }
 
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void createNdefPushMessageCallback() {
         NfcAdapter mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNfcAdapter != null) {
@@ -185,6 +173,15 @@ public class RecordActivity extends AppCompatActivity implements TabListener {
                             NdefRecord.createApplicationRecord(getPackageName())});
                 }
             }, this);
+        }
+    }
+
+    @Subscribe
+    public void onSearchItemClicked(SearchItemClicked event) {
+        searchController.setItemSelected(event.position);
+        openRecord(event.item.id);
+        if (mDrawerLayout != null) {
+            mDrawerLayout.closeDrawers();
         }
     }
 

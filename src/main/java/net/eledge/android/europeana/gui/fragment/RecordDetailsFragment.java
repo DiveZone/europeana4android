@@ -46,6 +46,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class RecordDetailsFragment extends Fragment {
 
@@ -53,6 +54,8 @@ public class RecordDetailsFragment extends Fragment {
     private final RecordController recordController = RecordController._instance;
 
     private RecordViewAdapter mRecordViewAdapter;
+
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class RecordDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_record_details, container, false);
+        unbinder = ButterKnife.bind(this, root);
         ListView mListView = (ListView) root.findViewById(R.id.fragment_record_details_recyclerview);
         mListView.setAdapter(mRecordViewAdapter);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -84,7 +88,7 @@ public class RecordDetailsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

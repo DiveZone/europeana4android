@@ -19,13 +19,15 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0-beta1'
-        classpath "io.realm:realm-gradle-plugin:0.88.3"
+        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'io.realm:realm-gradle-plugin:0.88.3'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+apply plugin: 'com.neenbedankt.android-apt'
 
 repositories {
     mavenCentral()
@@ -108,10 +110,11 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.1-1'
     compile 'net.danlew:android.joda:2.9.3'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.jakewharton:butterknife:8.0.1'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile 'com.squareup:otto:1.3.8'
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.11'
+    gradleVersion = '2.12'
 }

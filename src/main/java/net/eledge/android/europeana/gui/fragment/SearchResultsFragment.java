@@ -15,7 +15,6 @@
 
 package net.eledge.android.europeana.gui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -34,28 +33,29 @@ import com.squareup.otto.Subscribe;
 
 import net.eledge.android.europeana.EuropeanaApplication;
 import net.eledge.android.europeana.R;
-import net.eledge.android.europeana.gui.activity.RecordActivity;
 import net.eledge.android.europeana.gui.adapter.ResultAdapter;
 import net.eledge.android.europeana.search.SearchController;
 import net.eledge.android.europeana.search.event.SearchItemsLoadedEvent;
 import net.eledge.android.europeana.search.event.SearchStartedEvent;
-import net.eledge.android.europeana.search.model.searchresults.Item;
 import net.eledge.android.toolkit.gui.GuiUtils;
 import net.eledge.android.toolkit.gui.listener.EndlessRecyclerOnScrollListener;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class SearchResultsFragment extends Fragment {
 
     private ResultAdapter mResultAdaptor;
     private StaggeredGridLayoutManager mLayoutManager;
 
-    @Bind(R.id.fragment_search_gridview)
+    @BindView(R.id.fragment_search_gridview)
     RecyclerView mGridView;
 
-    @Bind(R.id.fragment_search_textview_status)
+    @BindView(R.id.fragment_search_textview_status)
     TextView mStatusTextView;
+
+    private Unbinder unbinder;
 
     private final SearchController searchController = SearchController._instance;
 
@@ -63,23 +63,14 @@ public class SearchResultsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EuropeanaApplication.bus.register(this);
-        mResultAdaptor = new ResultAdapter(this.getActivity(),
-                searchController.getSearchItems(), new ResultAdapter.ResultAdaptorClickListener() {
-            @Override
-            public void click(int position, Item item) {
-                searchController.setItemSelected(position);
-                final Intent intent = new Intent(SearchResultsFragment.this.getActivity(), RecordActivity.class);
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.putExtra(RecordActivity.RECORD_ID, item.id);
-                SearchResultsFragment.this.getActivity().startActivity(intent);
-            }
-        });
+        mResultAdaptor = new ResultAdapter(
+                searchController.getSearchItems());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_search_results, container, false);
-        ButterKnife.bind(this, root);
+        unbinder = ButterKnife.bind(this, root);
         mGridView.setAdapter(mResultAdaptor);
 
         mLayoutManager = new StaggeredGridLayoutManager(
@@ -96,7 +87,7 @@ public class SearchResultsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

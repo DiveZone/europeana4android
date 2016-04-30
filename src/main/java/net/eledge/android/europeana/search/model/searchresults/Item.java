@@ -15,6 +15,9 @@
 
 package net.eledge.android.europeana.search.model.searchresults;
 
+import android.databinding.ObservableInt;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import net.eledge.android.europeana.search.model.enums.DocType;
@@ -29,6 +32,9 @@ public class Item {
     public DocType type;
 
     public String[] edmPreview;
+
+    @JsonIgnore
+    public ObservableInt backgroundColor;
 
     public void setType(String type) {
         this.type = DocType.safeValueOf(type);

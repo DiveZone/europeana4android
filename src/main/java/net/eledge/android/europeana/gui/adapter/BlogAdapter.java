@@ -62,7 +62,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public BlogArticle article;
+        private BlogArticle article;
         private ViewDataBinding binding;
 
         private ViewHolder(ViewDataBinding binding) {
