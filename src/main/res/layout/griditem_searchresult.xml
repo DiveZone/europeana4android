@@ -13,48 +13,64 @@
   ~ limitations under the License.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/griditem_searchresult_imageview_thumbnail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/contentdescriptor_searchitem_image"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter" />
+    <data>
 
-    <LinearLayout
-        android:id="@+id/griditem_searchresult_background"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_alignBottom="@id/griditem_searchresult_imageview_thumbnail"
-        android:layout_alignLeft="@id/griditem_searchresult_imageview_thumbnail"
-        android:orientation="horizontal"
-        android:background="@color/emphasis_transparant">
+        <import type="net.eledge.android.europeana.EuropeanaApplication" />
 
-        <TextView
-            android:id="@+id/griditem_searchresult_textview_title"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="top"
-            android:maxLines="2"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/griditem_searchresult_textsize" />
+        <variable
+            name="item"
+            type="net.eledge.android.europeana.search.model.searchresults.Item" />
+    </data>
 
-        <TextView
-            android:id="@+id/griditem_searchresult_textview_type"
-            android:layout_width="24dp"
-            android:layout_height="match_parent"
-            android:gravity="bottom|end"
-            android:padding="2dp"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/griditem_searchresult_iconsize" />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/griditem_searchresult_imageview_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/contentdescriptor_searchitem_image"
+            android:scaleType="fitCenter"
+            app:searchResultImageUrl="@{item.edmPreview != null ? item.edmPreview[0] : null}"
+            />
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_alignBottom="@id/griditem_searchresult_imageview_thumbnail"
+            android:layout_alignLeft="@id/griditem_searchresult_imageview_thumbnail"
+            android:layout_alignStart="@id/griditem_searchresult_imageview_thumbnail"
+            android:background="@{item.backgroundColor}"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="top"
+                android:maxLines="2"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:text="@{item.title[0]}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/griditem_searchresult_textsize" />
+
+            <TextView
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:gravity="bottom|end"
+                android:padding="2dp"
+                android:text="@{item.type.icon}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/griditem_searchresult_iconsize"
+                android:typeface="@{EuropeanaApplication.europeanaFont}" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>
