@@ -26,6 +26,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.squareup.otto.Subscribe;
 
@@ -81,14 +82,19 @@ public class RecordMapFragment extends Fragment {
         redrawRecordView(event.result);
     }
 
-    private void redrawRecordView(RecordObject record) {
+    private void redrawRecordView(final RecordObject record) {
         if (mMapView != null) {
             if ((record.place.latitude != null) && (record.place.longitude != null)) {
-                GoogleMap map = mMapView.getMap();
-                if (map != null) {
-                    LatLng pos = new LatLng(record.place.latitude, record.place.longitude);
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 12));
-                }
+                mMapView.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(GoogleMap googleMap) {
+                        if (googleMap != null) {
+                            LatLng pos = new LatLng(record.place.latitude, record.place.longitude);
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 12));
+                        }
+                    }
+                });
+
             }
         }
     }

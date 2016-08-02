@@ -103,8 +103,8 @@ dependencies {
     compile 'com.android.support:design:24.1.1'
     compile 'com.android.support:palette-v7:24.1.1'
     compile 'com.android.support:customtabs:24.1.1'
-    compile 'com.google.android.gms:play-services-maps:9.2.1'
-    compile 'com.google.android.gms:play-services-analytics:9.2.1'
+    compile 'com.google.android.gms:play-services-maps:9.4.0'
+    compile 'com.google.android.gms:play-services-analytics:9.4.0'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'net.eledge:urlbuilder:1.2.1'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
@@ -116,5 +116,5 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.13'
+    gradleVersion = '2.14.1'
 }

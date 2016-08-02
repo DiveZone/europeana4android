@@ -66,7 +66,7 @@ public class BlogDownloadTask {
             Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    realm.clear(BlogArticle.class);
+                    realm.where(BlogArticle.class).findAll().deleteAllFromRealm();
                     realm.copyToRealmOrUpdate(articles);
                 }
             });

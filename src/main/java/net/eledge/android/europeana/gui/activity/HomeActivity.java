@@ -168,8 +168,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadFromDatabase() {
-        RealmResults<BlogArticle> articles = Realm.getDefaultInstance().allObjects(BlogArticle.class);
-        if ((articles == null) || articles.isEmpty()) {
+        RealmResults<BlogArticle> articles = Realm.getDefaultInstance().where(BlogArticle.class).findAll();
+        if (articles.isEmpty()) {
             new BlogDownloadTask(this).execute();
         } else {
             updatedArticles(articles);
