@@ -13,27 +13,30 @@
  * limitations under the License.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package net.eledge.android.europeana.service.search.model.searchresults;
 
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath 'com.google.gms:google-services:3.0.0'
-        classpath 'io.realm:realm-gradle-plugin:1.2.0'
-    }
-}
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-allprojects {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-}
+import net.eledge.android.europeana.service.search.model.facets.enums.FacetItemType;
+import net.eledge.android.europeana.service.search.model.facets.enums.FacetType;
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class FacetItem {
+
+  public FacetItemType itemType;
+
+  public FacetType facetType;
+
+  public String label;
+
+  public int labelResource;
+
+  public String facet;
+
+  public String description;
+
+  public String icon;
+
+  public boolean last = false;
+
 }

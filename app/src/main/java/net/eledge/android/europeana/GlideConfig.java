@@ -12,28 +12,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package net.eledge.android.europeana;
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+import android.content.Context;
 
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath 'com.google.gms:google-services:3.0.0'
-        classpath 'io.realm:realm-gradle-plugin:1.2.0'
-    }
-}
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.module.GlideModule;
 
-allprojects {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-}
+public class GlideConfig implements GlideModule {
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+  @Override
+  public void applyOptions(Context context, GlideBuilder builder) {
+    builder.setDecodeFormat(DecodeFormat.PREFER_ARGB_8888);
+  }
+
+  @Override
+  public void registerComponents(Context context, Glide glide) {
+
+  }
 }

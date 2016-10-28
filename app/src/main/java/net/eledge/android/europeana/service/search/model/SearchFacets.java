@@ -13,27 +13,19 @@
  * limitations under the License.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package net.eledge.android.europeana.service.search.model;
 
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath 'com.google.gms:google-services:3.0.0'
-        classpath 'io.realm:realm-gradle-plugin:1.2.0'
-    }
-}
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-allprojects {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-}
+import net.eledge.android.europeana.service.search.model.searchresults.Facet;
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+import java.util.ArrayList;
+import java.util.List;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class SearchFacets {
+
+  public final List<Facet> facets = new ArrayList<>();
+
+
 }

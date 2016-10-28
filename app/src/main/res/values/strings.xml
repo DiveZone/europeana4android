@@ -1,0 +1,140 @@
+<!--
+  ~ Copyright (c) 2013-2016 eLedge.net and the original author or authors.
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="app_name" translatable="false">Europeana Search (Beta)</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- ACTIONS/MENU -->
+    <string name="action_settings">Settings</string>
+
+    <!-- RECORD ACTIVITY -->
+    <string name="record_tab_details">Details</string>
+    <string name="record_tab_map">Map</string>
+    <string name="record_tab_seealso">See also</string>
+    <string name="msg_copied2clipboard">Value copied to clipboard…</string>
+
+    <string name="record_field_title">TITLE</string>
+    <string name="record_field_media">MEDIA</string>
+    <string name="record_field_media_warning">Opening media on mobile connections can lead to extra costs!</string>
+    <string name="record_field_dc_creator">CREATOR</string>
+    <string name="record_field_dc_contributor">CONTRIBUTOR</string>
+    <string name="record_field_dc_date">DATE</string>
+    <string name="record_field_dc_description">DESCRIPTION</string>
+    <string name="record_field_dc_format">FORMAT</string>
+    <string name="record_field_dc_identifier">IDENTIFIER</string>
+    <string name="record_field_dc_rights">RIGHTS</string>
+    <string name="record_field_dc_subject">SUBJECT</string>
+    <string name="record_field_dc_source">SOURCE</string>
+    <string name="record_field_dc_type">TYPE</string>
+
+    <string name="record_field_dcterms_created">DATE OF CREATION</string>
+    <string name="record_field_dcterms_ispartof">IS PART OF</string>
+    <string name="record_field_dcterms_issued">PUBLICATION DATE</string>
+
+    <string name="record_field_edm_dataprovider">DATA PROVIDER</string>
+    <string name="record_field_edm_provider">PROVIDER</string>
+    <string name="record_field_edm_country">PROVIDING COUNTRY</string>
+    <string name="record_field_edm_rights">COPYRIGHT</string>
+    <string name="record_field_place_label">LOCATION NAME</string>
+    <string name="record_field_place_longlat">COORDINATES</string>
+
+    <!-- FACET TYPES -->
+    <string name="facettype_type">BY MEDIA TYPE</string>
+    <string name="facettype_language">BY LANGUAGE OF DESCRIPTION</string>
+    <string name="facettype_year">BY YEAR</string>
+    <string name="facettype_country">BY PROVIDING COUNTRY</string>
+    <string name="facettype_rights">BY COPYRIGHT</string>
+    <string name="facettype_provider">BY PROVIDER</string>
+    <string name="facettype_dataprovider">BY DATA PROVIDER</string>
+    <string name="facettype_ugc">Include content contributed by users</string>
+
+    <!-- DOCTYPE -->
+    <string name="doctype_image">Image</string>
+    <string name="doctype_text">Text</string>
+    <string name="doctype_sound">Sound</string>
+    <string name="doctype_video">Video</string>
+    <string name="doctype_3d">3D</string>
+
+    <!-- COUNTRIES -->
+    <string name="country_at">Austria</string>
+    <string name="country_be">Belgium</string>
+    <string name="country_bg">Bulgaria</string>
+    <string name="country_ch">Switzerland</string>
+    <string name="country_cy">Cyprus</string>
+    <string name="country_cz">Czech Republic</string>
+    <string name="country_de">Germany</string>
+    <string name="country_dk">Denmark</string>
+    <string name="country_ee">Estonia</string>
+    <string name="country_es">Spain</string>
+    <string name="country_fi">Finland</string>
+    <string name="country_fr">France</string>
+    <string name="country_gr">Greece</string>
+    <string name="country_hr">Croatia</string>
+    <string name="country_hu">Hungary</string>
+    <string name="country_ie">Ireland</string>
+    <string name="country_is">Iceland</string>
+    <string name="country_it">Italy</string>
+    <string name="country_lt">Lithuania</string>
+    <string name="country_lu">Luxembourg</string>
+    <string name="country_lv">Latvia</string>
+    <string name="country_mk">Macedonia</string>
+    <string name="country_mt">Malta</string>
+    <string name="country_nl">The Netherlands</string>
+    <string name="country_no">Norway</string>
+    <string name="country_pl">Poland</string>
+    <string name="country_pt">Portugal</string>
+    <string name="country_ro">Romania</string>
+    <string name="country_rs">Serbia</string>
+    <string name="country_ru">Russia</string>
+    <string name="country_se">Sweden</string>
+    <string name="country_si">Slovenia</string>
+    <string name="country_sk">Slovakia</string>
+    <string name="country_tr">Turkey</string>
+    <string name="country_ua">Ukraine</string>
+    <string name="country_uk">United Kingdom</string>
+
+    <string name="country_eu">Europe</string>
+
+    <!-- LANGUAGES -->
+    <string name="locale_bg">Bulgarian</string>
+    <string name="locale_ca">Catalan</string>
+    <string name="locale_cs">Czech</string>
+    <string name="locale_da">Danish</string>
+    <string name="locale_de">German</string>
+    <string name="locale_en">English</string>
+    <string name="locale_es">Spanish</string>
+    <string name="locale_et">Estonian</string>
+    <string name="locale_eu">Basque</string>
+    <string name="locale_fi">Finnish</string>
+    <string name="locale_fr">French</string>
+    <string name="locale_hu">Hungarian</string>
+    <string name="locale_it">Italian</string>
+    <string name="locale_le">Greek</string>
+    <string name="locale_nl">Dutch</string>
+    <string name="locale_no">Norwegian</string>
+    <string name="locale_pl">Polish</string>
+    <string name="locale_pt">Portuguese</string>
+    <string name="locale_ro">Romanian</string>
+    <string name="locale_ru">Russian</string>
+    <string name="locale_sk">Slovak</string>
+    <string name="locale_sr">Serbian</string>
+    <string name="locale_sv">Swedish</string>
+
+    <string name="locale_mul">Multilingual</string>
+
+</resources>
