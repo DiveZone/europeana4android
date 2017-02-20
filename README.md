@@ -11,6 +11,7 @@ Use the Issues functionality on
 [our GitHub page](https://github.com/eLedge/europeana4android) to add bug reports 
 or issues. Try to be as specific as possible, mention brand and type of 
 hardware, android version, screen size etc etc.
+Valid bug reports will be moved over to our YouTrack ticket system, see link below.
 
 ### Translating
 Help us translating this app via our
@@ -48,9 +49,9 @@ The project is standard configured with a graddle wrapper, but you can also use 
 
 ## Project planning
 
-We have our to do list on a trello scrum board (although we don't do sprints (yet))
+We have our to do list on a YouTrack scrum board (although we don't do sprints)
 
-<https://trello.com/b/AykTks3F/europeana-4-android>
+<https://eledge.myjetbrains.com/youtrack/issues/E4A>
 
 ## More project information
 
