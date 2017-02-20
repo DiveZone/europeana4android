@@ -62,7 +62,8 @@ public class EuropeanaApplication extends Application {
       europeanaFont = Typeface.createFromAsset(getAssets(), "europeana.ttf");
       //activate auto tracking
       bus = new Bus();
-      Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this).build());
+      Realm.init(this);
+      Realm.setDefaultConfiguration(new RealmConfiguration.Builder().build());
     } catch (PackageManager.NameNotFoundException e) {
       e.printStackTrace();
     }
