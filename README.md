@@ -8,7 +8,7 @@ You can contribute in several ways.
 
 ### Report bugs/suggestions
 Use the Issues functionality on 
-[our GitHub page](https://github.com/eLedge/europeana4android) to add bug reports 
+[our GitHub page](https://github.com/DiveZone/europeana4android) to add bug reports 
 or issues. Try to be as specific as possible, mention brand and type of 
 hardware, android version, screen size etc etc.
 Valid bug reports will be moved over to our YouTrack ticket system, see link below.
@@ -57,4 +57,4 @@ We have our to do list on a YouTrack scrum board (although we don't do sprints)
 
 For more detailed project documentation, visit the WIKI pages on:
 
-<https://github.com/eLedge/europeana4android/wiki>
+<https://github.com/DiveZone/europeana4android/wiki>
